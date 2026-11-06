@@ -134,7 +134,7 @@ for a,b in reps:
 js=js.replace('window.scrollTo(0,0);','try{ root.scrollIntoView({block:"start"}); }catch(e){}')
 assert 'location.hash' not in js and 'window.scrollTo' not in js
 
-shell='''<header class="top"><div class="top-in"><a class="brand" href="#home"><b>Examplify Network+</b><span class="badge">v4.0.0</span></a><a class="chipbtn" href="#cram" style="text-decoration:none;padding:6px 12px">Cram Sheet</a><a class="chipbtn" href="#progress" style="text-decoration:none;padding:6px 12px">Progress</a></div></header><main id="app"></main>'''
+shell='''<header class="top"><div class="top-in"><a class="brand" href="#home"><b>Examplify</b></a><a class="chipbtn" href="#cram" style="text-decoration:none;padding:6px 12px">Cram Sheet</a><a class="chipbtn" href="#progress" style="text-decoration:none;padding:6px 12px">Progress</a></div></header><main id="app"></main>'''
 out='''/* Examplify Network+ — in-note renderer asset. Mounts the tool into every ```netplus-fast-track block in the note viewer. */
 (function(){
   if(window.__nftLoaded) return; window.__nftLoaded=true;

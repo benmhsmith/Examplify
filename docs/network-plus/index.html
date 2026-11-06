@@ -351,7 +351,7 @@ html.mobile .dg::after{content:"Swipe sideways to see the whole diagram.";displa
 <body>
 <header class="top">
   <div class="top-in">
-    <a class="brand" href="#home"><b>Examplify Network+</b><span class="badge">v4.0.0</span></a>
+    <a class="brand" href="#home"><b>Examplify</b></a>
     <div class="viewsw" id="viewsw"><span class="lbl" data-v="desktop">Desktop</span><button class="sw" id="layoutSw" type="button" role="switch" aria-checked="false" aria-label="Mobile layout"><i></i></button><span class="lbl" data-v="mobile">Mobile</span></div>
     <a class="chipbtn" href="#cram" style="text-decoration:none;padding:6px 12px">Cram Sheet</a>
     <a class="chipbtn" href="#progress" style="text-decoration:none;padding:6px 12px">Progress</a>
@@ -1051,8 +1051,7 @@ function viewHome(){
   app.innerHTML=`
   <section class="hero">
     <div class="hero-txt">
-      <div class="kicker">CompTIA</div>
-      <h1>Network+ <span class="examcode">N10-009</span></h1>
+      <h1>CompTIA Network+ <span class="examcode">N10-009</span></h1>
       <p>Focused practice on the objectives the exam weighs most. Topics removed in N10-009 are left out. Work through the stages in order.</p>
       ${P.everMastered?`<a class="badge-plate" href="#progress" style="text-decoration:none;color:inherit">${badgeSVG(homeBadgeLevel(),56)}<span><b>${esc(badgeTitle(homeBadgeLevel()))}</b>${P.secret?`<small>Secret Prestige ${P.secret} of ${SECRET_MAX} · prestige ${currentBadgeLevel()} of ${PRESTIGE_MAX}</small>${P.secret>=SECRET_MAX||currentBadgeLevel()>=PRESTIGE_MAX?`<span class="reward">★ See instructor for reward</span>`:""}</span></a>`:""}${P.secret?"":`<small>${P.mastered&&currentBadgeLevel()<PRESTIGE_MAX?"All modules at Master. Prestige is ready on the Progress page.":currentBadgeLevel()?`Network+ Mastery Badge · prestige ${currentBadgeLevel()} of ${PRESTIGE_MAX}`:"Every module reached Master."}</small>${currentBadgeLevel()>=PRESTIGE_MAX?`<span class="reward">★ See instructor for reward</span>`:""}</span></a>`}`:""}
     </div>
@@ -1079,7 +1078,8 @@ function viewHome(){
       <span class="mcol">${ms?`<div class="meter"><i style="width:${pct(ms.v)}%"></i></div><div class="mcap">${pct(ms.v)}% · ${esc(ms.cap)}</div>`:""}</span>
     </a>`;}).join("")}
   </div></section>`).join("")}</div>
-  <p class="note" style="margin-top:14px">Progress saves in this browser only. To start over, open Progress and choose Reset all progress.</p>`;
+  <p class="note" style="margin-top:14px">Progress saves in this browser only. To start over, open Progress and choose Reset all progress.</p>
+  <p class="note">Examplify Network+ <span class="badge">v4.0.0</span> · Free and open source under the GNU GPL v3.0.</p>`;
 }
 
 /* ---- Ports ---- */
