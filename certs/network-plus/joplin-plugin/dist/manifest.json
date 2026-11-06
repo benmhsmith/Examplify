@@ -1,0 +1,23 @@
+{
+  "manifest_version": 1,
+  "id": "io.github.netplusfasttrack",
+  "app_min_version": "2.12",
+  "version": "4.0.0",
+  "name": "Examplify Network+",
+  "description": "Exam readiness tool for CompTIA Network+ (N10-009): port drills, subnetting practice, an acronym gym, a PBQ lab, troubleshooting steps, mini-exams, and a one-page cram sheet. To add it to a note, open Tools > Examplify Network+ > How to use and click Copy command, then paste into a note. Or type ```net+ on one line and ``` on the next.",
+  "author": "Ben",
+  "keywords": [
+    "study",
+    "comptia",
+    "network+"
+  ],
+  "categories": [
+    "productivity"
+  ],
+  "platforms": [
+    "desktop",
+    "mobile"
+  ],
+  "homepage_url": "https://github.com/benmhsmith/examplify",
+  "repository_url": "https://github.com/benmhsmith/examplify"
+}
