@@ -96,7 +96,7 @@ def release_notes(version):
             '## Downloads\n'
             f'- **Joplin plugin (desktop and Android):** `examplify-network-plus-v{version}.jpl`\n'
             f'- **Standalone web page (works offline):** `Examplify-Network-Plus-v{version}.html`\n'
-            '- **Use it in your browser:** https://benmhsmith.github.io/examplify/network-plus/\n\n'
+            '- **Use it in your browser:** https://benmhsmith.github.io/Examplify/network-plus/\n\n'
             f'Setup steps for each option: [Examplify Network+ README]({REPO_URL}/tree/main/certs/network-plus#how-to-use-it)\n\n'
             '## What changed\n' + section(version) + '\n\n'
             f'Full history: [CHANGELOG.md]({REPO_URL}/blob/main/certs/network-plus/CHANGELOG.md)\n')

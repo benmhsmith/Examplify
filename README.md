@@ -4,7 +4,7 @@ Free, open-source study tools for IT certification exams. Each tool drills the t
 
 Examplify works three ways: in your web browser, as a single file you can keep offline, or inside the [Joplin](https://joplinapp.org/) note-taking app on desktop and Android.
 
-**[Open the website →](https://benmhsmith.github.io/examplify/)**
+**[Open the website →](https://benmhsmith.github.io/Examplify/)**
 
 <p align="center"><img src="docs/images/home.png" alt="Examplify Network+ home page: the CompTIA Network+ N10-009 title, the official domain weighting bar, and the first study modules with their ranks." width="860"></p>
 

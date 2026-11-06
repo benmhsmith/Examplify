@@ -42,7 +42,7 @@ Pick whichever fits you. Your progress is saved on your own device and never lea
 
 ### Option 1: In your browser (nothing to install)
 
-Open the web version: **https://benmhsmith.github.io/examplify/network-plus/**
+Open the web version: **https://benmhsmith.github.io/Examplify/network-plus/**
 
 Works on Windows, Mac, Linux, Chromebooks, Android, iPhone, and iPad. Progress is saved in that browser on that device.
 
