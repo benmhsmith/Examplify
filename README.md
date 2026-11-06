@@ -41,7 +41,7 @@ Your progress is saved on your own device. Nothing is sent anywhere.
 
 ## Where to download
 
-Every version is published on the [Releases page](https://github.com/benmhsmith/examplify/releases). Each release has:
+Every version is published on the [Releases page](https://github.com/benmhsmith/Examplify/releases). Each release has:
 
 - `examplify-<exam>-vX.Y.Z.jpl`: the Joplin plugin
 - `Examplify-<Exam>-vX.Y.Z.html`: the standalone web page

@@ -2,7 +2,7 @@
 
 ## v4.0.0
 - Renamed to Examplify Network+. Examplify is the new home for free certification study tools, starting with CompTIA Network+ (N10-009). Your saved progress, ranks, and badges carry over; the Joplin plugin keeps the same ID, so installing this version updates the old one in place.
-- The source now lives on GitHub at github.com/benmhsmith/examplify, with each version published as a GitHub Release (the Joplin plugin and the standalone web page).
+- The source now lives on GitHub at github.com/benmhsmith/Examplify, with each version published as a GitHub Release (the Joplin plugin and the standalone web page).
 - The web version is also hosted on GitHub Pages, so iPhone and iPad users can open it in Safari and use Add to Home Screen.
 - The top bar now just says Examplify. The home page title reads CompTIA Network+ N10-009, and the version number moved to the bottom of the home page.
 

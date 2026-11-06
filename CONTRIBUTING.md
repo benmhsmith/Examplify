@@ -4,7 +4,7 @@ Thanks for helping. Examplify is built for brand-new learners, so accuracy and p
 
 ## Ways to help
 
-- **Report a wrong answer or a confusing question.** Open an [issue](https://github.com/benmhsmith/examplify/issues). Say which exam, which module, the question text, and why you think it is wrong. A link to an official source helps most.
+- **Report a wrong answer or a confusing question.** Open an [issue](https://github.com/benmhsmith/Examplify/issues). Say which exam, which module, the question text, and why you think it is wrong. A link to an official source helps most.
 - **Suggest a topic or feature.** Open an issue and describe what you want to practice.
 - **Change the code or content.** Follow the workflow below.
 

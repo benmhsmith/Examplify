@@ -34,7 +34,7 @@ OUT = os.path.join(CERT, 'build')
 LOG = os.path.join(CERT, 'CHANGELOG.md')
 UNREL = os.path.join(CERT, 'UNRELEASED.md')
 PAGES = os.path.join(REPO, 'docs', 'network-plus', 'index.html')
-REPO_URL = 'https://github.com/benmhsmith/examplify'
+REPO_URL = 'https://github.com/benmhsmith/Examplify'
 
 
 def run(cmd, cwd):

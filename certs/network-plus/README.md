@@ -2,7 +2,7 @@
 
 A free study lab for the **CompTIA Network+ N10-009** exam. It drills the topics the exam weighs most, tracks what you have mastered, and finishes with timed mini-exams that include performance-based questions (PBQs).
 
-**Current version:** see the [latest release](https://github.com/benmhsmith/examplify/releases/latest) · [What changed](CHANGELOG.md)
+**Current version:** see the [latest release](https://github.com/benmhsmith/Examplify/releases/latest) · [What changed](CHANGELOG.md)
 
 ## What's inside
 
@@ -50,7 +50,7 @@ Works on Windows, Mac, Linux, Chromebooks, Android, iPhone, and iPad. Progress i
 
 ### Option 2: As a single file (works offline)
 
-1. Go to the [latest release](https://github.com/benmhsmith/examplify/releases/latest).
+1. Go to the [latest release](https://github.com/benmhsmith/Examplify/releases/latest).
 2. Download `Examplify-Network-Plus-vX.Y.Z.html`.
 3. Double-click it to open it in your browser. No internet needed after that.
 
@@ -60,7 +60,7 @@ Works on Windows, Mac, Linux, Chromebooks, Android, iPhone, and iPad. Progress i
 
 **On a computer (Windows, Mac, Linux):**
 
-1. Download `examplify-network-plus-vX.Y.Z.jpl` from the [latest release](https://github.com/benmhsmith/examplify/releases/latest).
+1. Download `examplify-network-plus-vX.Y.Z.jpl` from the [latest release](https://github.com/benmhsmith/Examplify/releases/latest).
 2. In Joplin, open the **Configuration** screen (**Tools → Options** on Windows and Linux, **Joplin → Settings** on Mac) and go to **Plugins**.
 3. Click the **Plugin tools** gear button and choose **Install from file**. Pick the `.jpl` file.
 4. Restart Joplin when asked. If Joplin keeps running in the system tray, quit it fully first.
