@@ -9,7 +9,8 @@ Make a new version (run on your own machine or in a Claude session, then commit)
   version, builds the .jpl and .html into build/, and copies the web page into docs/network-plus/
   for GitHub Pages.
 
-Helper modes used by .github/workflows/release-network-plus.yml:
+Helper modes used by .github/workflows/release-network-plus.yml (it runs when a new
+version is merged into main):
     python3 certs/network-plus/scripts/release.py --build-only
         Rebuild the .jpl and .html for the version already committed (no files are edited).
     python3 certs/network-plus/scripts/release.py --notes 4.1.0
@@ -143,7 +144,7 @@ def new_version(version, notes):
     print(jpl)
     print(page)
     print(PAGES)
-    print(f'\nNext: commit, then push the tag network-plus-v{version} to publish the GitHub Release.')
+    print(f'\nNext: commit and merge into main. The release workflow then publishes network-plus-v{version}.')
 
 
 if __name__ == '__main__':
