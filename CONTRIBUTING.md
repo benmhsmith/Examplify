@@ -37,9 +37,11 @@ Thanks for helping. Examplify is built for brand-new learners, so accuracy and p
 Each exam is versioned separately with [semantic versioning](https://semver.org/): `MAJOR.MINOR.PATCH`.
 
 1. While you work, add one line per change to the exam's `UNRELEASED.md`.
-2. Run the release script, for example: `python3 certs/network-plus/scripts/release.py 4.1.0`
-3. Commit the result and tag it: `network-plus-v4.1.0`.
-4. Create a GitHub Release from that tag. Attach the `.jpl` and `.html` from the exam's `build/` folder, and paste the new `CHANGELOG.md` entry as the notes.
+2. Run the release script, for example: `python3 certs/network-plus/scripts/release.py 4.1.0`. It moves the notes into `CHANGELOG.md`, stamps the version, and updates the website copy in `docs/`.
+3. Commit, open a pull request, and merge it into `main`.
+4. Tag the merged commit and push the tag: `git tag network-plus-v4.1.0 && git push origin network-plus-v4.1.0`
+
+Pushing the tag starts the **Release Examplify Network+** workflow (`.github/workflows/release-network-plus.yml`). It checks that the tag matches the version in the plugin's `manifest.json`, builds the `.jpl` and `.html`, and publishes the GitHub Release with the changelog entry as its notes.
 
 Tags are prefixed with the exam name so each exam's releases stay separate on one Releases page.
 

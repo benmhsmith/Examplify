@@ -1,0 +1,42 @@
+name: Report a wrong or confusing question
+description: An answer looks wrong, two answers look right, or a question is hard to understand.
+title: "[Question] "
+labels: ["content"]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for reporting this. You don't need a GitHub background; just fill in what you can.
+  - type: dropdown
+    id: exam
+    attributes:
+      label: Which exam tool?
+      options:
+        - Examplify Network+
+    validations:
+      required: true
+  - type: input
+    id: module
+    attributes:
+      label: Which module or PBQ?
+      placeholder: "For example: 06 Security Drill, or PBQ Lab: VLAN and trunk troubleshooting"
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: The question and the answer choices
+      description: Copy the text, or attach a screenshot.
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What looks wrong?
+      description: Tell us what you think the right answer is and why. A link to an official source (exam objectives, an RFC, vendor docs) helps most.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Shown at the bottom of the home page, for example v4.0.0.

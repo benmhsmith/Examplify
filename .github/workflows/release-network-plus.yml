@@ -1,0 +1,43 @@
+# Publishes a GitHub Release for Examplify Network+ whenever a tag like
+# network-plus-v4.1.0 is pushed. It builds the Joplin plugin (.jpl) and the
+# standalone web page (.html) from the tagged commit and attaches both.
+name: Release Examplify Network+
+
+on:
+  push:
+    tags:
+      - 'network-plus-v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the tagged commit
+        uses: actions/checkout@v4
+
+      - name: Make sure the tag matches the plugin version
+        run: |
+          TAG_VERSION="${GITHUB_REF_NAME#network-plus-v}"
+          FILE_VERSION="$(python3 -c "import json;print(json.load(open('certs/network-plus/joplin-plugin/dist/manifest.json'))['version'])")"
+          echo "Tag says $TAG_VERSION, manifest.json says $FILE_VERSION"
+          test "$TAG_VERSION" = "$FILE_VERSION"
+          echo "VERSION=$TAG_VERSION" >> "$GITHUB_ENV"
+
+      - name: Build the plugin and the web page
+        run: python3 certs/network-plus/scripts/release.py --build-only
+
+      - name: Write the release notes from CHANGELOG.md
+        run: python3 certs/network-plus/scripts/release.py --notes "$VERSION" > release-notes.md
+
+      - name: Publish the GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            --title "Examplify Network+ v$VERSION" \
+            --notes-file release-notes.md \
+            "certs/network-plus/build/examplify-network-plus-v$VERSION.jpl" \
+            "certs/network-plus/build/Examplify-Network-Plus-v$VERSION.html"

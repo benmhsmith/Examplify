@@ -1,0 +1,22 @@
+name: Suggest a topic or feature
+description: Something you want to practice, or a way to make Examplify easier to use.
+title: "[Idea] "
+labels: ["idea"]
+body:
+  - type: dropdown
+    id: exam
+    attributes:
+      label: Which exam tool?
+      options:
+        - Examplify Network+
+        - A new exam
+        - All of Examplify
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: Your idea
+      description: What would you like, and how would it help you study?
+    validations:
+      required: true

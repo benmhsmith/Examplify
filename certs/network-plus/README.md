@@ -26,6 +26,16 @@ There is also a one-page **Cram Sheet** and a **Progress** page.
 
 Each module gives you a rank from Beginner to Grandmaster based on what you have actually mastered, not on one lucky run. Reach Master in every module to earn the Network+ Mastery Badge.
 
+## Screenshots
+
+<p><img src="../../docs/images/home.png" alt="Home page with the domain weighting bar and Stage 1 modules." width="860"></p>
+
+| Subnetting Gym | VLAN and trunk PBQ |
+|---|---|
+| <img src="../../docs/images/subnetting.png" alt="Subnetting Gym asking for the broadcast address of 172.29.149.7/27." width="420"> | <img src="../../docs/images/pbq-vlan.png" alt="Switch console with show spanning-tree vlan 10 output." width="420"> |
+| **Cable and port diagnostics PBQ** | **Phone, dark mode** |
+| <img src="../../docs/images/pbq-cable.png" alt="Cable tester wire map showing a short between pins 1 and 2." width="420"> | <img src="../../docs/images/phone-home.png" alt="Home page on a phone in dark mode." width="200"> |
+
 ## How to use it
 
 Pick whichever fits you. Your progress is saved on your own device and never leaves it.
