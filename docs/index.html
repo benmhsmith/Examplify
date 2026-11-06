@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Examplify</title>
+<meta name="description" content="Free, open-source study labs for IT certification exams, starting with CompTIA Network+ N10-009.">
+<link rel="stylesheet" href="fonts.css">
+<style>
+:root{
+  --bg:#F3F5F8; --surface:#FFFFFF; --sunk:#E9EDF2; --ink:#142030; --muted:#566476; --line:#D5DCE5;
+  --orange:#D9701A; --blue:#2360A6; --green:#2E8657; --accent-ink:#FFFFFF;
+  --font:"Atkinson Hyperlegible Next","Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:"Atkinson Hyperlegible Mono",ui-monospace,Consolas,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#16181B; --surface:#1F2226; --sunk:#272A2F; --ink:#E8E9EB; --muted:#A3A7AD; --line:#33373D;
+  --orange:#F08A35; --blue:#6EA4E8; --green:#4DBA80; --accent-ink:#1A1205; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#16181B; --surface:#1F2226; --sunk:#272A2F; --ink:#E8E9EB; --muted:#A3A7AD; --line:#33373D;
+  --orange:#F08A35; --blue:#6EA4E8; --green:#4DBA80; --accent-ink:#1A1205; color-scheme:dark }
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.55}
+.wrap{max-width:960px;margin:0 auto;padding-block:40px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:40px}
+header{display:grid;gap:10px}
+.eyebrow{font-family:var(--mono);font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);font-weight:600}
+h1{margin:0;font-size:clamp(2.2rem,6vw,3.2rem);line-height:1.05;text-wrap:balance}
+.lede{margin:0;max-width:60ch;color:var(--muted);font-size:1.1rem}
+h2{margin:0 0 14px;font-size:1.35rem;text-wrap:balance}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;display:grid;gap:10px;align-content:start;min-width:0}
+.card h3{margin:0;font-size:1.3rem}
+.code{font-family:var(--mono);font-size:.85rem;color:var(--muted)}
+.tag{justify-self:start;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:999px;border:1px solid currentColor}
+.tag.ok{color:var(--green)} .tag.soon{color:var(--muted)}
+.card p{margin:0;color:var(--muted)}
+.card.soon{background:transparent;border-style:dashed}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.btn{display:inline-block;padding:10px 16px;border-radius:8px;font-weight:700;text-decoration:none;border:1px solid var(--line);color:var(--ink);background:var(--surface)}
+.btn.primary{background:var(--orange);border-color:var(--orange);color:var(--accent-ink)}
+.btn:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+ol.steps{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;counter-reset:s}
+ol.steps li{counter-increment:s;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+ol.steps li::before{content:counter(s);display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--sunk);font-family:var(--mono);font-weight:700;margin-bottom:8px}
+ol.steps b{display:block}
+ol.steps span{color:var(--muted)}
+footer{border-top:1px solid var(--line);padding-top:20px;color:var(--muted);font-size:.9rem;display:grid;gap:8px}
+footer a,.card a:not(.btn){color:var(--blue)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Free · Open source · No sign-up</span>
+    <h1>Examplify</h1>
+    <p class="lede">Study labs for IT certification exams. Drill what the exam tests, see what you have mastered, then prove it with timed practice exams and performance-based questions.</p>
+  </header>
+
+  <section aria-labelledby="pick">
+    <h2 id="pick">Choose your exam</h2>
+    <div class="grid">
+      <article class="card">
+        <span class="tag ok">Available</span>
+        <h3>Network+</h3>
+        <span class="code">CompTIA · N10-009</span>
+        <p>11 modules from acronyms and ports to subnetting, security, troubleshooting, 10 PBQs, and timed mini-exams.</p>
+        <div class="actions">
+          <a class="btn primary" href="network-plus/">Start studying</a>
+          <a class="btn" href="https://github.com/benmhsmith/examplify/tree/main/certs/network-plus#how-to-use-it">Download or Joplin</a>
+        </div>
+      </article>
+      <article class="card soon">
+        <span class="tag soon">Planned</span>
+        <h3>Security+</h3>
+        <span class="code">CompTIA</span>
+        <p>Next on the list. Built on the same engine as Network+.</p>
+      </article>
+      <article class="card soon">
+        <span class="tag soon">Planned</span>
+        <h3>A+</h3>
+        <span class="code">CompTIA · Core 1 and Core 2</span>
+        <p>For learners starting their first IT certification.</p>
+      </article>
+    </div>
+  </section>
+
+  <section aria-labelledby="how">
+    <h2 id="how">How it works</h2>
+    <ol class="steps">
+      <li><b>Open your exam</b><span>Runs in any browser, phone included. On iPhone, tap Share, then Add to Home Screen.</span></li>
+      <li><b>Work the stages in order</b><span>Vocabulary first, then core skills, troubleshooting, exam technique, and practice exams.</span></li>
+      <li><b>Earn your ranks</b><span>Each module ranks you from Beginner to Grandmaster by what you have actually mastered.</span></li>
+    </ol>
+  </section>
+
+  <footer>
+    <span>Your progress stays in your own browser. Nothing is sent anywhere.</span>
+    <span>Source code, downloads, and the changelog: <a href="https://github.com/benmhsmith/examplify">github.com/benmhsmith/examplify</a> · Licensed under the <a href="https://github.com/benmhsmith/examplify/blob/main/LICENSE">GNU GPL v3.0</a>.</span>
+    <span>CompTIA, Network+, Security+, and A+ are trademarks of CompTIA, Inc. Examplify is not affiliated with or endorsed by CompTIA.</span>
+  </footer>
+</div>
+</body>
+</html>
