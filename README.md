@@ -4,6 +4,10 @@ Free, open-source study tools for IT certification exams. Each tool drills the t
 
 Examplify works three ways: in your web browser, as a single file you can keep offline, or inside the [Joplin](https://joplinapp.org/) note-taking app on desktop and Android.
 
+**[Open the website →](https://benmhsmith.github.io/examplify/)**
+
+<p align="center"><img src="docs/images/home.png" alt="Examplify Network+ home page: the CompTIA Network+ N10-009 title, the official domain weighting bar, and the first study modules with their ranks." width="860"></p>
+
 ## Choose your exam
 
 | Exam | Exam code | Status | Start here |
@@ -11,6 +15,16 @@ Examplify works three ways: in your web browser, as a single file you can keep o
 | CompTIA Network+ | N10-009 | **Available** | [Examplify Network+](certs/network-plus/) |
 | CompTIA Security+ | Current version when built | Planned | — |
 | CompTIA A+ | Current version when built | Planned | — |
+
+## See it in action
+
+| Hands-on PBQs with real command output | Cable tester wire maps and port diagnostics |
+|---|---|
+| <img src="docs/images/pbq-vlan.png" alt="VLAN and trunk troubleshooting PBQ: a switch console showing show spanning-tree output." width="420"> | <img src="docs/images/pbq-cable.png" alt="Cable diagnostics PBQ: a wire map with a short between pins 1 and 2, plus switch port status." width="420"> |
+| **Routing tables you build and test** | **A NOC dashboard to read like a pro** |
+| <img src="docs/images/pbq-routing.png" alt="Routing PBQ: a four-router network diagram with tickets to solve." width="420"> | <img src="docs/images/pbq-noc.png" alt="NOC monitoring dashboard PBQ showing wireless access point statistics." width="420"> |
+| **Ranks that show what you have actually mastered** | **Works on your phone, light or dark** |
+| <img src="docs/images/modules.png" alt="Module list with ranks from Beginner to Expert and progress bars." width="420"> | <img src="docs/images/phone-security.png" alt="Security Drill on a phone in dark mode, with topic progress chips and a question." width="200"> |
 
 ## New to this? Start here
 

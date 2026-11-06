@@ -47,6 +47,14 @@ ol.steps b{display:block}
 ol.steps span{color:var(--muted)}
 footer{border-top:1px solid var(--line);padding-top:20px;color:var(--muted);font-size:.9rem;display:grid;gap:8px}
 footer a,.card a:not(.btn){color:var(--blue)}
+.shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px}
+.shot{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:grid;min-width:0}
+.shot img{display:block;width:100%;height:auto;aspect-ratio:1800/1140;object-fit:cover;object-position:top;border-bottom:1px solid var(--line)}
+.shot figcaption{padding:12px 16px}
+.shot figcaption b{display:block}
+.shot figcaption span{color:var(--muted);font-size:.95rem}
+.shot.phone{grid-template-columns:minmax(0,180px) minmax(0,1fr);align-items:center}
+.shot.phone img{aspect-ratio:390/844;border-bottom:0;border-right:1px solid var(--line)}
 </style>
 </head>
 <body>
@@ -85,6 +93,17 @@ footer a,.card a:not(.btn){color:var(--blue)}
     </div>
   </section>
 
+  <section aria-labelledby="look">
+    <h2 id="look">Take a look</h2>
+    <div class="shots">
+      <figure class="shot"><img src="images/pbq-vlan.png" alt="Switch console showing show spanning-tree vlan 10 output in the VLAN troubleshooting PBQ." loading="lazy"><figcaption><b>Performance-based questions</b><span>Run show commands on switches, read the output, and find the fault.</span></figcaption></figure>
+      <figure class="shot"><img src="images/pbq-cable.png" alt="Cable tester wire map with a short between pins 1 and 2, and the switch port status." loading="lazy"><figcaption><b>Real troubleshooting evidence</b><span>Wire maps, port counters, and ipconfig output, just like on the job.</span></figcaption></figure>
+      <figure class="shot"><img src="images/subnetting.png" alt="Subnetting Gym asking for the broadcast address of 172.29.149.7/27." loading="lazy"><figcaption><b>Drills that build speed</b><span>Unlimited subnetting, ports, acronyms, and more, with a walkthrough for every answer.</span></figcaption></figure>
+      <figure class="shot"><img src="images/modules.png" alt="Module list with ranks from Beginner to Expert and progress bars." loading="lazy"><figcaption><b>Ranks you earn</b><span>Each module ranks you by what you have mastered, not by one lucky run.</span></figcaption></figure>
+      <figure class="shot phone"><img src="images/phone-security.png" alt="Security Drill on a phone in dark mode." loading="lazy"><figcaption><b>On your phone too</b><span>Study anywhere. On iPhone, add it to your Home Screen and it opens like an app. Light and dark mode follow your device.</span></figcaption></figure>
+    </div>
+  </section>
+
   <section aria-labelledby="how">
     <h2 id="how">How it works</h2>
     <ol class="steps">
@@ -96,6 +115,7 @@ footer a,.card a:not(.btn){color:var(--blue)}
 
   <footer>
     <span>Your progress stays in your own browser. Nothing is sent anywhere.</span>
+    <span>Found a wrong answer or have an idea? <a href="https://github.com/benmhsmith/examplify/issues/new/choose">Tell us on GitHub</a>.</span>
     <span>Source code, downloads, and the changelog: <a href="https://github.com/benmhsmith/examplify">github.com/benmhsmith/examplify</a> · Licensed under the <a href="https://github.com/benmhsmith/examplify/blob/main/LICENSE">GNU GPL v3.0</a>.</span>
     <span>CompTIA, Network+, Security+, and A+ are trademarks of CompTIA, Inc. Examplify is not affiliated with or endorsed by CompTIA.</span>
   </footer>
