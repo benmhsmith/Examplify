@@ -1,0 +1,1 @@
+- Progress page: the Mastery Badge hint now says Expert (80%+), matching what the badge actually requires.

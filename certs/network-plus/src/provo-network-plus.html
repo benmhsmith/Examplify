@@ -3722,7 +3722,7 @@ function masteryCard(justEarned){
   const head=P.everMastered?badgeSVG(lvl,88):badgeSVG(0,88,true);
   const status=lvl>=PRESTIGE_MAX?`<b>Max prestige reached.</b> You hold all ${PRESTIGE_MAX} prestige badges.<br><span class="reward">★ See instructor for reward</span>`
     : ready?`<b>${justEarned?"Network+ Mastery Badge earned!":"All modules at Expert."}</b> You can prestige to reset your progress and earn the next badge.`
-    : `Reach Master (90%+) in every module to ${P.everMastered?"unlock the next prestige":"earn the Network+ Mastery Badge"}. <b>${ex} of ${total}</b> modules at Expert or Pro.`;
+    : `Reach Expert (80%+) in every module to ${P.everMastered?"unlock the next prestige":"earn the Network+ Mastery Badge"}. <b>${ex} of ${total}</b> modules at Expert or Pro.`;
   return `<div class="card" id="masterycard" style="margin-top:16px"><div class="mastery-card">${head}<div>
     <h3 style="font-size:1.3rem">${P.everMastered?esc(badgeTitle(lvl)):"Network+ Mastery Badge"}</h3>
     <p style="margin:.3em 0">${status}</p>
