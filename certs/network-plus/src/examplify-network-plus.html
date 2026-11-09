@@ -816,16 +816,16 @@ const BANK = [
 ];
 
 const MODULES = [
- {id:"acro",n:"01",stage:1,name:"Acronym Gym",desc:"104 core exam acronyms, asked four different ways.",covers:"Acronyms that appear in the N10-009 objective bullets, the tested topics. Glossary-only and niche acronyms are left out."},
- {id:"osi",n:"02",stage:1,name:"OSI Sorter",desc:"Three question types on devices, protocols, and data units. Master all 7 layers.",covers:"Domain 1.0: concepts related to the OSI reference model. Troubleshooting questions also reuse the layers."},
- {id:"ports",n:"03",stage:1,name:"Port & Protocol Drill",desc:"All 20 ports on the official N10-009 list, with spaced repetition.",covers:"Domain 1.0: common networking ports, protocols, services, and traffic types. This is CompTIA's complete port list for N10-009."},
- {id:"subnet",n:"04",stage:2,name:"Subnetting Gym",desc:"Master every prefix from /16 to /30: mask, CIDR, hosts, network, and broadcast.",covers:"Domain 1.0: use appropriate IPv4 network addressing. This is the only scenario objective in Domain 1, and it carries into troubleshooting questions."},
- {id:"media",n:"05",stage:2,name:"Media & Wireless Match",desc:"Cabling, fiber, connectors, transceivers, Wi-Fi, and installation, with pictures.",covers:"Domain 1.0 transmission media and transceivers, plus Domain 2.0 wireless and physical installations."},
- {id:"security",n:"06",stage:2,name:"Security Drill",desc:"59 security concepts, attacks, and defenses, asked four ways. Master each term.",covers:"Domain 4.0: basic security concepts (4.1), attacks and their impact (4.2), and security features and defenses (4.3). Every term comes from those objective bullets."},
- {id:"ladder",n:"07",stage:3,name:"Troubleshooting Ladder",desc:"The 7 steps, their order, and what comes NEXT. Master each step.",covers:"Domain 5.0: explain the troubleshooting methodology. The step wording matches the N10-009 objectives."},
- {id:"tools",n:"08",stage:3,name:"Which Tool / Command",desc:"Tools, CLI commands, or both: scenarios, command output, and pictures.",covers:"Domain 5.0: use the appropriate tool or protocol. Hardware tools, software tools, and basic device show commands from the official list."},
- {id:"qualifier",n:"09",stage:4,name:"Qualifier Trainer",desc:"Questions where FIRST, NEXT, BEST, MOST likely, or MINIMUM decides the answer.",covers:"All domains. 35 scenarios across five qualifiers, each with a defensible runner-up, and the explanation says why the qualifier rules it out."},
- {id:"pbq",n:"10",stage:4,name:"PBQ Lab",desc:"Performance-based practice: multi-part tasks graded by the piece. Untimed here; timed in the mini-exams.",covers:"Simulated performance-based questions built from the Given-a-scenario objectives. Each one has several graded parts, like the real exam."},
+ {id:"acro",n:"01",stage:1,name:"Acronyms",desc:"104 core exam acronyms, asked four different ways.",covers:"Acronyms that appear in the N10-009 objective bullets, the tested topics. Glossary-only and niche acronyms are left out."},
+ {id:"osi",n:"02",stage:1,name:"OSI Model",desc:"Three question types on devices, protocols, and data units. Master all 7 layers.",covers:"Domain 1.0: concepts related to the OSI reference model. Troubleshooting questions also reuse the layers."},
+ {id:"ports",n:"03",stage:1,name:"Ports & Protocols",desc:"All 20 ports on the official N10-009 list, with spaced repetition.",covers:"Domain 1.0: common networking ports, protocols, services, and traffic types. This is CompTIA's complete port list for N10-009."},
+ {id:"subnet",n:"04",stage:2,name:"Subnetting",desc:"Master every prefix from /16 to /30: mask, CIDR, hosts, network, and broadcast.",covers:"Domain 1.0: use appropriate IPv4 network addressing. This is the only scenario objective in Domain 1, and it carries into troubleshooting questions."},
+ {id:"media",n:"05",stage:2,name:"Media & Wireless",desc:"Cabling, fiber, connectors, transceivers, Wi-Fi, and installation, with pictures.",covers:"Domain 1.0 transmission media and transceivers, plus Domain 2.0 wireless and physical installations."},
+ {id:"security",n:"06",stage:2,name:"Security",desc:"59 security concepts, attacks, and defenses, asked four ways. Master each term.",covers:"Domain 4.0: basic security concepts (4.1), attacks and their impact (4.2), and security features and defenses (4.3). Every term comes from those objective bullets."},
+ {id:"ladder",n:"07",stage:3,name:"Troubleshooting Methodology",desc:"The 7 steps, their order, and what comes NEXT. Master each step.",covers:"Domain 5.0: explain the troubleshooting methodology. The step wording matches the N10-009 objectives."},
+ {id:"tools",n:"08",stage:3,name:"Tools & Commands",desc:"Tools, CLI commands, or both: scenarios, command output, and pictures.",covers:"Domain 5.0: use the appropriate tool or protocol. Hardware tools, software tools, and basic device show commands from the official list."},
+ {id:"qualifier",n:"09",stage:4,name:"Question Qualifiers",desc:"Questions where FIRST, NEXT, BEST, MOST likely, or MINIMUM decides the answer.",covers:"All domains. 35 scenarios across five qualifiers, each with a defensible runner-up, and the explanation says why the qualifier rules it out."},
+ {id:"pbq",n:"10",stage:4,name:"Performance-Based Questions",desc:"Multi-part tasks graded by the piece. Untimed here; timed in the mini-exams.",covers:"Simulated performance-based questions built from the Given-a-scenario objectives. Each one has several graded parts, like the real exam."},
  {id:"exam",n:"11",stage:5,name:"Mini-Exams",desc:"10, 20, or 40 questions with PBQs first, or an all-PBQ exam. Timed and weighted to the official domains.",covers:"All five domains, picked in proportion to CompTIA's weights (23 / 20 / 19 / 14 / 24)."},
  {id:"cram",n:"",menu:true,name:"Cram Sheet",desc:"Every high-yield fact on one page, for the night before.",covers:"The highest-yield facts from every module. Topics removed in N10-009 are left out."},
  {id:"progress",n:"",menu:true,name:"Progress",desc:"Mastery per module and what to study next.",covers:"Progress is stored only in this browser. Clearing browser data or switching devices starts fresh."}
@@ -1258,7 +1258,7 @@ function viewSubnet(){
     return {type:k,p,tracked:true,total:k==="hosts"&&Math.random()<0.4};
   }
   function practice(){
-    app.innerHTML=modHead(m,`<button class="btn ghost" id="cheat">Block-size table</button>`)+`<div class="examtop"><button class="chipbtn" id="snmenu" type="button">← Subnetting Gym menu</button><span id="snprog"></span></div><div id="cheatbox" hidden></div><div id="area"></div>`;
+    app.innerHTML=modHead(m,`<button class="btn ghost" id="cheat">Block-size table</button>`)+`<div class="examtop"><button class="chipbtn" id="snmenu" type="button">← Subnetting menu</button><span id="snprog"></span></div><div id="cheatbox" hidden></div><div id="area"></div>`;
     $("#cheatbox").innerHTML=`<div class="card" style="margin-bottom:14px"><div class="tw"><table><thead><tr><th>Prefix</th><th>Mask</th><th>Block size</th><th>Usable hosts</th></tr></thead><tbody>${rowsFor()}</tbody></table></div></div>`;
     $("#cheat").addEventListener("click",()=>{ const c=$("#cheatbox"); c.hidden=!c.hidden; });
     $("#snmenu").addEventListener("click",menu);
@@ -1385,7 +1385,7 @@ function viewLadder(){
   }
   function ref(){
     curKeys=null;
-    app.innerHTML=head()+`<div class="examtop"><button class="chipbtn" id="ladback" type="button">← Troubleshooting Ladder menu</button><span>The 7 steps</span></div>
+    app.innerHTML=head()+`<div class="examtop"><button class="chipbtn" id="ladback" type="button">← Troubleshooting menu</button><span>The 7 steps</span></div>
     <div class="card"><ol class="steps" style="padding-left:1.4em">${STEPS.map((st,i)=>`<li style="margin:.7em 0"><b>${esc(st)}</b><ul style="margin:.3em 0 0;padding-left:1.1em">${LADDER_ACTIONS[i].map(a=>`<li class="note" style="margin:.1em 0">${esc(a)}</li>`).join("")}</ul></li>`).join("")}</ol>
     <div class="q-actions" style="margin-top:14px"><button class="btn" id="ladgo">Start questions</button></div></div>`;
     $("#ladback").addEventListener("click",menu);
@@ -1431,7 +1431,7 @@ function viewLadder(){
       app.innerHTML=head()+strip()+`<div class="card"><h3 style="font-size:1.4rem">${S.quit?"Stopped":"Set complete"}: ${S.r} of ${S.t} correct${S.t?` (${pct(S.r/S.t)}%)`:""}</h3>
       <p style="margin:.4em 0">${nowM.length?`Newly mastered: <b>${nowM.map(x=>"step "+(x.k+1)).join(", ")}</b>.`:"No new steps mastered this set."} ${ladderState().filter(x=>x.mastered).length} of 7 mastered overall.</p>
       ${S.missed.length?`<h4 style="margin:14px 0 6px">Review these steps</h4><ol class="steps">${S.missed.sort((a,b)=>a-b).map(k=>`<li value="${k+1}"><b>${esc(STEPS[k])}</b><br><span class="note">${esc(LADDER_ACTIONS[k].join(" · "))}</span></li>`).join("")}</ol>`:""}
-      <div class="q-actions" style="margin-top:14px"><button class="btn" id="ladagain">Another set of ${N}</button><button class="btn ghost" id="ladref2">View the 7 steps</button><button class="btn ghost" id="ladmenu">Ladder menu</button></div></div>`;
+      <div class="q-actions" style="margin-top:14px"><button class="btn" id="ladagain">Another set of ${N}</button><button class="btn ghost" id="ladref2">View the 7 steps</button><button class="btn ghost" id="ladmenu">Troubleshooting menu</button></div></div>`;
       $("#ladagain").addEventListener("click",()=>drill(N)); $("#ladref2").addEventListener("click",ref); $("#ladmenu").addEventListener("click",menu);
     }
     next();
@@ -1474,7 +1474,7 @@ function viewQual(){
   }
   function ref(){
     curKeys=null;
-    app.innerHTML=head()+`<div class="examtop"><button class="chipbtn" id="qback" type="button">← Qualifier Trainer menu</button><span>Qualifier guide</span></div>
+    app.innerHTML=head()+`<div class="examtop"><button class="chipbtn" id="qback" type="button">← Qualifiers menu</button><span>Qualifier guide</span></div>
     <div class="card"><dl style="margin:0">${QUAL_GROUPS.map(g=>`<dt style="font-weight:700;margin-top:.8em"><mark>${esc(g.q)}</mark></dt><dd style="margin:.2em 0 0 0">${esc(g.rule)}</dd>`).join("")}</dl>
     <p class="note" style="margin-top:14px">On every qualifier question, read the last sentence first, circle the qualifier, then eliminate options that fail a stated requirement. Of what is left, the qualifier picks the winner.</p>
     <div class="q-actions" style="margin-top:14px"><button class="btn" id="qgo">Start questions</button></div></div>`;
@@ -1716,7 +1716,7 @@ function viewSecurity(){
   }
   function ref(){
     curKeys=null;
-    app.innerHTML=head()+`<div class="examtop"><button class="chipbtn" id="secback" type="button">← Security Drill menu</button><span>Glossary</span></div>
+    app.innerHTML=head()+`<div class="examtop"><button class="chipbtn" id="secback" type="button">← Security menu</button><span>Glossary</span></div>
     <div class="card">${SEC_GROUPS.map(([g,name])=>`<h3 style="font-size:1.2rem;margin:14px 0 6px">${esc(name)}</h3><div class="tw"><table><thead><tr><th style="width:30%">Term</th><th>What it is</th>${SEC.some(x=>x.g===g&&x.fix)?"<th>Best defense</th>":""}</tr></thead><tbody>${SEC.filter(x=>x.g===g).map(x=>`<tr><td><b>${esc(x.t)}</b>${secMastered(x.id)?' <span class="note" style="color:var(--green)">✓</span>':""}</td><td>${esc(x.def)}</td>${x.fix?`<td>${esc(x.fix)}</td>`:SEC.some(y=>y.g===g&&y.fix)?"<td></td>":""}</tr>`).join("")}</tbody></table></div>`).join("")}
     <div class="q-actions" style="margin-top:14px"><button class="btn" id="secgo">Start questions</button></div></div>`;
     $("#secback").addEventListener("click",menu); $("#secgo").addEventListener("click",menu);
@@ -1923,7 +1923,7 @@ function viewAcro(){
       app.innerHTML=head()+`<div class="card"><h3 style="font-size:1.4rem">${S.quit?"Drill stopped":"Set complete"}: ${S.r} of ${S.t} correct${S.t?` (${pct(p)}%)`:""}</h3>
       <p style="margin:.4em 0">${nowM.length?`Newly mastered this set: <b>${nowM.map(x=>esc(x.a)).join(", ")}</b>.`:"No new acronyms mastered this set."} ${acroMastered(acroActive())} of ${acroActive().length} mastered overall.</p>
       ${S.missed.length?`<h4 style="margin:14px 0 6px">Review what you missed</h4><div class="tw"><table><tbody>${S.missed.map(x=>`<tr><td class="mono"><b>${esc(x.a)}</b></td><td>${esc(x.x)}</td><td class="note">${esc(x.d)}</td></tr>`).join("")}</tbody></table></div>`:""}
-      <div class="q-actions" style="margin-top:14px"><button class="btn" id="acroagain">Another set of ${N}</button><button class="btn ghost" id="acroglos2">Open glossary</button><button class="btn ghost" id="acromenu">Acronym Gym menu</button></div></div>`;
+      <div class="q-actions" style="margin-top:14px"><button class="btn" id="acroagain">Another set of ${N}</button><button class="btn ghost" id="acroglos2">Open glossary</button><button class="btn ghost" id="acromenu">Acronyms menu</button></div></div>`;
       $("#acroagain").addEventListener("click",()=>drill(N));
       $("#acroglos2").addEventListener("click",glossary);
       $("#acromenu").addEventListener("click",menu);
@@ -1933,7 +1933,7 @@ function viewAcro(){
   function glossary(){
     curKeys=null;
     const list=acroActive(); const groups=[...new Set(list.map(x=>x.g))];
-    app.innerHTML=head()+`<div class="examtop"><button class="chipbtn" id="acroback" type="button">← Acronym Gym menu</button><span>Glossary</span></div>
+    app.innerHTML=head()+`<div class="examtop"><button class="chipbtn" id="acroback" type="button">← Acronyms menu</button><span>Glossary</span></div>
     <div class="card"><input class="ans" id="acroq" placeholder="Search acronyms or meanings" aria-label="Search acronyms" style="width:min(420px,100%);font-family:var(--font-body);margin-bottom:12px">
     <p class="note" style="margin:0 0 10px">${acroMastered(list)} of ${list.length} mastered. Mastered acronyms are marked ●.</p>
     <div class="tw"><table><thead><tr><th>Acronym</th><th>Stands for</th><th>What it does</th></tr></thead><tbody>
@@ -2284,7 +2284,7 @@ function viewPBQRouting(){
   const switchHtml=(id,lan,ports)=>`<div class="card" data-dev="${id}" style="padding:12px 14px"><div class="note" style="margin-bottom:6px">Layer 2 access switch on ${esc(sc.nets[lan].label)}. All ports in VLAN 1. No configuration needed for this task.</div>
     <div class="tw"><table class="rtt"><thead><tr><th>Port</th><th>Status</th><th>Connected device</th></tr></thead><tbody>${ports.map((p,i)=>`<tr><td class="mono">Gi0/${i+1}</td><td style="color:var(--ok)">up</td><td>${esc(p)}</td></tr>`).join("")}</tbody></table></div></div>`;
   const deviceTitle={R1:"R1 routing table",R2:"R2 routing table",R3:"R3 routing table",R4:"R4 routing table",SW1:"SW1 (HQ switch)",SW2:"SW2 (Servers switch)",SW3:"SW3 (Branch switch)",PC1:"HQ workstation",FS1:"Intranet file server",WEB1:"Intranet web server",DNS1:"DNS server",PC2:"Branch workstation",PR1:"Branch printer"};
-  app.innerHTML=`${EMB?EMB.header:`<a class="back" href="#pbq">← PBQ Lab</a>`}
+  app.innerHTML=`${EMB?EMB.header:`<a class="back" href="#pbq">← All PBQs</a>`}
   <div class="mhead"><h2>PBQ · Routing and connectivity</h2></div>
   <p class="covers">${esc(spec.obj)}</p>
   <div class="card">
@@ -2503,7 +2503,7 @@ function viewPBQFirewall(){
   const hostCard=id=>{ const h=sc.hosts[id]; return `<div class="card" data-dev="${id}" style="padding:12px 14px"><div class="tw"><table class="rtt"><tbody><tr><td style="width:8em">Zone</td><td>${h.zone==="dmz"?"DMZ (screened subnet)":"Inside LAN"}</td></tr><tr><td>IP address</td><td class="mono">${id==="PC"?sc.inside+".50 – "+sc.inside+".200":h.ip}</td></tr><tr><td>Services</td><td>${esc(h.svc)}</td></tr></tbody></table></div></div>`; };
   const titles={FW:"Edge firewall rules",WEB:"Web server",MAIL:"Mail server",PC:"Inside workstations",DB:"Database server",FS:"File server",DNS:"Internal DNS server"};
   const ticketItems=mode==="troubleshoot"?fwRun(sc,rules,tests).filter(x=>!x.ok).map(x=>x.symptom):[];
-  app.innerHTML=`${EMB?EMB.header:`<a class="back" href="#pbq">← PBQ Lab</a>`}
+  app.innerHTML=`${EMB?EMB.header:`<a class="back" href="#pbq">← All PBQs</a>`}
   <div class="mhead"><h2>PBQ · Firewall rule builder</h2></div>
   <p class="covers">${esc(spec.obj)}</p>
   <div class="card">
@@ -2632,7 +2632,7 @@ function viewPBQPlacement(){
   const distract=shuffle(PL_DISTRACTORS.slice()).slice(0,2);
   const bank=shuffle([...emptySlots.map(s=>s.dev),...distract.map(d=>d.dev)]);
   const placed={}; let picked=null, done=false, flagged=false;
-  app.innerHTML=`${EMB?EMB.header:`<a class="back" href="#pbq">← PBQ Lab</a>`}
+  app.innerHTML=`${EMB?EMB.header:`<a class="back" href="#pbq">← All PBQs</a>`}
   <div class="mhead"><h2>PBQ · Device placement</h2></div>
   <p class="covers">${esc(spec.obj)}</p>
   <div class="card">
@@ -2768,7 +2768,7 @@ function viewPBQWireless(){
    <tr class="wl-ent"><td>RADIUS shared secret</td><td>${inp("wl-secret",c.secret,"shared secret","password")}</td></tr>
    <tr><td>Transmit power</td><td>${sel("wl-power",[["auto","Auto"],["high","High"],["medium","Medium"],["low","Low"]],c.power)}</td></tr>
    </tbody></table></div></div>`; };
-  app.innerHTML=`${EMB?EMB.header:`<a class="back" href="#pbq">← PBQ Lab</a>`}
+  app.innerHTML=`${EMB?EMB.header:`<a class="back" href="#pbq">← All PBQs</a>`}
   <div class="mhead"><h2>PBQ · Wireless configuration</h2></div>
   <p class="covers">${esc(spec.obj)}</p>
   <div class="card">
@@ -2859,7 +2859,7 @@ function viewPBQMatching(setId){
   const all=shuffle(set.pairs.slice()); const used=all.slice(0,6); const decoys=all.slice(6,8);
   const bank=shuffle([...used.map(x=>x[0]),...decoys.map(x=>x[0])]);
   const placed={}; let picked=null, done=false, flagged=false;
-  app.innerHTML=`${EMB?EMB.header:`<a class="back" href="#pbq">← PBQ Lab</a>`}
+  app.innerHTML=`${EMB?EMB.header:`<a class="back" href="#pbq">← All PBQs</a>`}
   <div class="mhead"><h2>PBQ · Matching: ${esc(set.title)}</h2></div>
   <p class="covers">${esc(set.obj)}</p>
   <div class="card">
@@ -2909,7 +2909,7 @@ function viewPBQSubnet(){
   const sc=pbqSubnetGen(); const spec=PBQS[0];
   const shown=shuffle(sc.depts.map((d,i)=>i)); // show departments in random order, not largest-first
   const t0=Date.now(); let flagged=false, done=false;
-  app.innerHTML=`${EMB?EMB.header:`<a class="back" href="#pbq">← PBQ Lab</a>`}
+  app.innerHTML=`${EMB?EMB.header:`<a class="back" href="#pbq">← All PBQs</a>`}
   <div class="mhead"><h2>PBQ · Subnet allocation</h2></div>
   <p class="covers">${esc(spec.obj)}</p>
   <div class="card">
@@ -3120,7 +3120,7 @@ function viewPBQVlan(){
   const BLK=["It is a backup path: STP blocks it to prevent a switching loop and unblocks it if Gi0/1 fails","The port has a hardware fault and should be replaced","BPDU guard has err-disabled the port","It is blocking because of a native VLAN mismatch"];
   const blkOrder=shuffle([0,1,2,3]);
   const nonRoot=sc.other(sc.root);
-  app.innerHTML=`${EMB?EMB.header:`<a class="back" href="#pbq">← PBQ Lab</a>`}
+  app.innerHTML=`${EMB?EMB.header:`<a class="back" href="#pbq">← All PBQs</a>`}
   <div class="mhead"><h2>PBQ · VLAN and trunk troubleshooting</h2></div>
   <p class="covers">${esc(spec.obj)}</p>
   <div class="card">
@@ -3235,7 +3235,7 @@ function viewPBQSwport(){
   const diagram=`<svg viewBox="0 0 900 150" style="width:100%;max-width:900px;display:block;margin:6px 0 10px" role="img" aria-label="Front panel of a 12-port switch. Each port is labeled with what is connected. Click a port to configure it.">
     <rect x="10" y="20" width="880" height="122" rx="8" fill="var(--sunk)" stroke="var(--ink)" stroke-width="2"/><text x="30" y="44" font-size="13" font-weight="700" fill="var(--ink)">ACCESS-SW3 · 12 × 1 GbE</text><text x="870" y="44" text-anchor="end" font-size="10" fill="var(--blue)">click a port to configure it</text>
     ${[1,2,3,4,5,6,7,8,9,10,11,12].map(p=>portBox(28+(p-1)*71,66,p)).join("")}</svg>`;
-  app.innerHTML=`${EMB?EMB.header:`<a class="back" href="#pbq">← PBQ Lab</a>`}
+  app.innerHTML=`${EMB?EMB.header:`<a class="back" href="#pbq">← All PBQs</a>`}
   <div class="mhead"><h2>PBQ · Switch port configuration</h2></div>
   <p class="covers">${esc(spec.obj)}</p>
   <div class="card">
@@ -3383,7 +3383,7 @@ function viewPBQCable(){
     <h4 style="margin:10px 0 4px">Cable tester (wall jack to patch panel)</h4>${cbWireSvg(ev)}<p class="mono" style="margin:4px 0 0;font-size:.85rem;color:${ev.fail?"var(--bad)":"var(--ink)"}">${esc(ev.verdict)}</p>
     <h4 style="margin:12px 0 4px">Switch port</h4><pre class="cli">${esc(ev.sw)}</pre>
     <h4 style="margin:12px 0 4px">PC</h4><pre class="cli">${esc(ev.host)}</pre><p class="note mono" style="margin:4px 0 0">${esc(ev.nic)}</p></div>`; };
-  app.innerHTML=`${EMB?EMB.header:`<a class="back" href="#pbq">← PBQ Lab</a>`}
+  app.innerHTML=`${EMB?EMB.header:`<a class="back" href="#pbq">← All PBQs</a>`}
   <div class="mhead"><h2>PBQ · Cable and port diagnostics</h2></div>
   <p class="covers">${esc(spec.obj)}</p>
   <div class="card">
@@ -3513,7 +3513,7 @@ function viewPBQNoc(){
       opts:[["dhcp","The DHCP scope for 10.30.0.0/24 has no free leases"],["brute",`Someone is guessing SSH passwords from ${sc.att}`],["flap","An uplink interface on access-sw-3a is flapping up and down"],["ntp","Servers have lost time synchronization (NTP)"]],ans:sc.logType}
   ];
   const tabs=[["WAN","WAN and top talkers",wanT+talkT],["Devices","Device health",devT],["Wireless","Wireless",rfT],["Logs","Logs",logT]];
-  app.innerHTML=`${EMB?EMB.header:`<a class="back" href="#pbq">← PBQ Lab</a>`}
+  app.innerHTML=`${EMB?EMB.header:`<a class="back" href="#pbq">← All PBQs</a>`}
   <div class="mhead"><h2>PBQ · NOC monitoring dashboard</h2></div>
   <p class="covers">${esc(spec.obj)}</p>
   <div class="card">
@@ -3624,7 +3624,7 @@ function runExam(len,timed){
     app.innerHTML=`<a class="back" href="#exam">← Back to exam setup</a>
     <div class="mhead"><h2>Result: ${score} / ${total} (${pct(p)}%)</h2></div>
     ${timeUp?`<div class="callout"><b>Time ran out.</b> PBQs in progress were graded as they stood; unanswered questions count as wrong.</div>`:""}
-    <div class="callout">${p>=0.8?"On track. Practice-test scores of 80%+ give a reasonable margin.":p>=0.7?"Close. Aim for a steady 80%+ before booking the exam.":(qs.length?"Keep drilling, starting with the weakest area below.":"Keep practicing in the PBQ Lab, starting with the lowest-scoring PBQ below.")} The real exam is scaled to 100–900 with 720 to pass, so a percentage here is only a rough guide.</div>
+    <div class="callout">${p>=0.8?"On track. Practice-test scores of 80%+ give a reasonable margin.":p>=0.7?"Close. Aim for a steady 80%+ before booking the exam.":(qs.length?"Keep drilling, starting with the weakest area below.":"Keep practicing in Performance-Based Questions, starting with the lowest-scoring PBQ below.")} The real exam is scaled to 100–900 with 720 to pass, so a percentage here is only a rough guide.</div>
     <div class="card"><h3 style="font-size:1.3rem;margin-bottom:8px">Performance-based questions <span class="note" style="font-weight:400">(each worth ${PBQ_WEIGHT} questions)</span></h3>
     ${pbqs.map((x,i)=>{ const r=x.result; const v=r?r.score/r.total:0; return `<div class="dombar"><span>${esc(x.spec.name)}</span><div class="meter"><i style="width:${pct(v)}%;background:var(--blue)"></i></div><span class="mono">${r?`${r.score}/${r.total}`:"not answered"}</span></div>${r?`<details style="margin:2px 0 10px"><summary class="note" style="cursor:pointer">Review this PBQ</summary><div class="fb wide" style="margin-top:6px">${r.html}</div></details>`:""}`; }).join("")}
     <p class="note">${qs.length?`Multiple choice: ${mcScore} of ${qs.length}. `:""}PBQs: ${Math.round(pbqPts.reduce((a,b)=>a+b,0)*10)/10} of ${PBQ_WEIGHT*pbqs.length} points.</p></div>
@@ -3756,11 +3756,11 @@ function viewGuide(){
   <ol><li>Show the question and start the 60-second timer.</li><li>Students commit: fingers up for A–D, mini whiteboards, or a poll.</li><li>Click the option most of the class chose, then press <i>Reveal answer</i> (or Enter).</li><li>Spend 30 seconds on the runner-up: why would someone pick it, and what in the stem rules it out?</li></ol>
   <h3>Suggested six-session flow</h3>
   <div class="tw"><table><thead><tr><th>Session</th><th>In class (Instructor mode)</th><th>Homework (Student mode)</th></tr></thead><tbody>
-  <tr><td>1</td><td>OSI Sorter, then Port Drill reference tab and secure pairs</td><td>Port Drill to box 3+ on most cards</td></tr>
-  <tr><td>2</td><td>Subnetting Gym, with the block-size table open, worked out loud</td><td>25 subnetting problems; aim for 80%</td></tr>
+  <tr><td>1</td><td>OSI Model, then the Ports & Protocols reference tab and secure pairs</td><td>Ports & Protocols to box 3+ on most cards</td></tr>
+  <tr><td>2</td><td>Subnetting, with the block-size table open, worked out loud</td><td>25 subnetting problems; aim for 80%</td></tr>
   <tr><td>3</td><td>Media & Wireless, then a 10-question mini-exam</td><td>Media module to 80%+</td></tr>
-  <tr><td>4</td><td>Troubleshooting Ladder (order, then NEXT), then Which Tool</td><td>Tools module to 80%+</td></tr>
-  <tr><td>5</td><td>Qualifier Trainer, then the Security section of the Cram Sheet</td><td>20-question mini-exam, timed</td></tr>
+  <tr><td>4</td><td>Troubleshooting Methodology (order, then NEXT), then Tools & Commands</td><td>Tools module to 80%+</td></tr>
+  <tr><td>5</td><td>Question Qualifiers, then the Security section of the Cram Sheet</td><td>20-question mini-exam, timed</td></tr>
   <tr><td>6</td><td>40-question mini-exam reviewed together</td><td>Repeat timed 40-question exams until consistently 80%+</td></tr></tbody></table></div>
   <h3>Why these topics</h3>
   <p>Content is scoped to CompTIA's N10-009 exam objectives. Troubleshooting (24%) and Implementation (20%) are split across only five and four sub-objectives, so each of their topics carries more weight than a single Concepts topic. Most "Given a scenario" objectives sit in Troubleshooting.</p>
