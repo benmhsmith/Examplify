@@ -1,16 +1,17 @@
-# Contributing to Examplify
+# Contributing to Provo
 
-Thanks for helping. Examplify is built for brand-new learners, so accuracy and plain language matter more than anything else.
+Provo is proprietary software owned by MyComputerCareer. It is built for brand-new learners, so accuracy and plain language matter more than anything else.
 
-## Ways to help
+## Report a problem or suggest an idea (anyone)
 
-- **Report a wrong answer or a confusing question.** Open an [issue](https://github.com/benmhsmith/examplify/issues). Say which exam, which module, the question text, and why you think it is wrong. A link to an official source helps most.
-- **Suggest a topic or feature.** Open an issue and describe what you want to practice.
-- **Change the code or content.** Follow the workflow below.
+- **Wrong answer or confusing question:** open an [issue](https://github.com/benmhsmith/Provo/issues/new/choose) and choose **Wrong answer or confusing question**. Say which exam, which module, the question text, and why you think it is wrong. A link to an official source helps most.
+- **Topic or feature idea:** open an issue and choose **Idea**.
+
+Reports and ideas are welcome from everyone. Code and content changes are accepted only from MyComputerCareer staff and people MyComputerCareer has approved in writing.
 
 ## Content rules
 
-1. **Original questions only.** Never copy questions from a real exam, a "brain dump," or a paid course. Sharing real exam content breaks the exam's candidate agreement and can get learners' certifications revoked.
+1. **Original questions only.** Never copy questions from a real exam, a "brain dump", or a paid course. Sharing real exam content breaks the exam's candidate agreement and can get learners' certifications revoked.
 2. **Check every fact against a primary source**: the official exam objectives, the relevant RFC or IEEE standard, or vendor documentation. Put the source in your pull request.
 3. **One defensible answer.** Every wrong option should be clearly wrong for a stated reason, and the explanation should say why the runner-up loses.
 4. **Plain language.** Short sentences, terms defined the first time they appear, no jokes that depend on insider knowledge.
@@ -18,7 +19,7 @@ Thanks for helping. Examplify is built for brand-new learners, so accuracy and p
 ## Branches
 
 - `main` always matches the latest release. Do not commit straight to it.
-- Do your work on a branch named for what it is:
+- Work on a branch named for what it is:
   - `network-plus/<short-description>` for changes to one exam, for example `network-plus/fix-ospf-question`
   - `core/<short-description>` for shared engine work
   - `security-plus` (or another exam name) while a new exam is being built
@@ -37,13 +38,13 @@ Thanks for helping. Examplify is built for brand-new learners, so accuracy and p
 Each exam is versioned separately with [semantic versioning](https://semver.org/): `MAJOR.MINOR.PATCH`.
 
 1. While you work, add one line per change to the exam's `UNRELEASED.md`.
-2. Run the release script, for example: `python3 certs/network-plus/scripts/release.py 4.1.0`. It moves the notes into `CHANGELOG.md`, stamps the version, and updates the website copy in `docs/`.
+2. Run the release script, for example: `python3 certs/network-plus/scripts/release.py 5.1.0`. It moves the notes into `CHANGELOG.md`, stamps the version, and updates the website copy in `docs/`.
 3. Commit, open a pull request, and merge it into `main`.
 
-That's it. Merging a new version into `main` starts the **Release Examplify Network+** workflow (`.github/workflows/release-network-plus.yml`). It builds the `.jpl` and `.html`, creates the tag `network-plus-v4.1.0`, and publishes the GitHub Release with the changelog entry as its notes. If that version is already released, it does nothing. To rerun it by hand, open the repo's **Actions** tab, choose the workflow, and click **Run workflow**.
+Merging a new version into `main` starts the **Release Provo Network+** workflow (`.github/workflows/release-network-plus.yml`). It builds the `.jpl` and `.html`, creates the tag `network-plus-v5.1.0`, and publishes the GitHub Release with the changelog entry as its notes. If that version is already released, it does nothing. To rerun it by hand, open the repo's **Actions** tab, choose the workflow, and click **Run workflow**.
 
 Tags are prefixed with the exam name so each exam's releases stay separate on one Releases page.
 
-## License
+## Ownership of contributions
 
-By contributing, you agree that your contribution is licensed under the [GNU GPL v3.0](LICENSE), the same as the rest of the project.
+By submitting a change, you agree that MyComputerCareer owns it and may use it under the terms in [LICENSE](LICENSE).

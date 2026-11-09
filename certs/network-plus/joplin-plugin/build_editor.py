@@ -1,6 +1,6 @@
 import os
 HERE=os.path.dirname(os.path.abspath(__file__)); os.chdir(HERE)
-SRC=os.path.join(HERE,'..','src','examplify-network-plus.html')
+SRC=os.path.join(HERE,'..','src','provo-network-plus.html')
 import json
 src=open(SRC).read()
 css=src.split('<style>',1)[1].split('</style>',1)[0]
@@ -28,7 +28,7 @@ R=[
 for a,b in R:
     assert js.count(a)==1, 'missing: '+a[:60]
     js=js.replace(a,b)
-out='''/* Examplify Network+ — Joplin editor view (full editor area). */
+out='''/* Provo Network+ — Joplin editor view (full editor area). */
 (function(){
   function ready(){ return document.getElementById('app') && document.querySelector('.top-in'); }
   function applyTheme(){

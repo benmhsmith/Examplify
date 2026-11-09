@@ -1,4 +1,4 @@
-# Publishes the GitHub Release for Examplify Network+.
+# Publishes the GitHub Release for Provo Network+.
 #
 # It runs when a change to the plugin version (manifest.json) is merged into main,
 # when this workflow file changes, or when someone clicks "Run workflow" on the
@@ -6,7 +6,7 @@
 # Otherwise it builds the Joplin plugin (.jpl) and the standalone page (.html),
 # creates the tag network-plus-vX.Y.Z, and publishes the release with notes taken
 # from CHANGELOG.md.
-name: Release Examplify Network+
+name: Release Provo Network+
 
 on:
   push:
@@ -61,8 +61,8 @@ jobs:
         run: |
           gh release create "$TAG" \
             --target "$GITHUB_SHA" \
-            --title "Examplify Network+ v$VERSION" \
+            --title "Provo Network+ v$VERSION" \
             --notes-file release-notes.md \
             --latest \
-            "certs/network-plus/build/examplify-network-plus-v$VERSION.jpl" \
-            "certs/network-plus/build/Examplify-Network-Plus-v$VERSION.html"
+            "certs/network-plus/build/provo-network-plus-v$VERSION.jpl" \
+            "certs/network-plus/build/Provo-Network-Plus-v$VERSION.html"

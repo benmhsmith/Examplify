@@ -1,8 +1,8 @@
-# Examplify Network+
+# Provo Network+
 
-A free study lab for the **CompTIA Network+ N10-009** exam. It drills the topics the exam weighs most, tracks what you have mastered, and finishes with timed mini-exams that include performance-based questions (PBQs).
+MyComputerCareer's study lab for the **CompTIA Network+ N10-009** exam. It drills the topics the exam weighs most, tracks what you have mastered, and finishes with timed mini-exams that include performance-based questions (PBQs).
 
-**Current version:** see the [latest release](https://github.com/benmhsmith/examplify/releases/latest) · [What changed](CHANGELOG.md)
+**Current version:** see the [latest release](https://github.com/benmhsmith/Provo/releases/latest) · [What changed](CHANGELOG.md)
 
 ## What's inside
 
@@ -10,31 +10,31 @@ The lab has 11 modules in 5 stages. Work through them in order.
 
 | Stage | Module | What you practice |
 |---|---|---|
-| 1 · Foundations | 01 Acronym Gym | 104 core exam acronyms, asked four ways |
-| | 02 OSI Sorter | Devices, protocols, and data units by layer |
-| | 03 Port & Protocol Drill | All 20 ports on the official N10-009 list |
-| 2 · Core skills | 04 Subnetting Gym | Every prefix from /16 to /30: mask, CIDR, hosts, network, broadcast |
-| | 05 Media & Wireless Match | Cabling, fiber, connectors, transceivers, Wi-Fi, installation |
-| | 06 Security Drill | 59 security concepts, attacks, and defenses (Domain 4.0) |
-| 3 · Troubleshooting | 07 Troubleshooting Ladder | The 7-step method and what comes next |
-| | 08 Which Tool / Command | Hardware tools and CLI commands, with output and pictures |
-| 4 · Exam skills | 09 Qualifier Trainer | FIRST, NEXT, BEST, MOST likely, and MINIMUM questions |
-| | 10 PBQ Lab | 10 performance-based questions with randomized scenarios |
+| 1 · Foundations | 01 Acronyms | 104 core exam acronyms, asked four ways |
+| | 02 OSI Model | Devices, protocols, and data units by layer |
+| | 03 Ports & Protocols | All 20 ports on the official N10-009 list |
+| 2 · Core skills | 04 Subnetting | Every prefix from /16 to /30: mask, CIDR, hosts, network, broadcast |
+| | 05 Media & Wireless | Cabling, fiber, connectors, transceivers, Wi-Fi, installation |
+| | 06 Security | 59 security concepts, attacks, and defenses (Domain 4.0) |
+| 3 · Troubleshooting | 07 Troubleshooting Methodology | The 7-step method and what comes next |
+| | 08 Tools & Commands | Hardware tools and CLI commands, with output and pictures |
+| 4 · Exam skills | 09 Question Qualifiers | FIRST, NEXT, BEST, MOST likely, and MINIMUM questions |
+| | 10 Performance-Based Questions | 10 performance-based questions with randomized scenarios |
 | 5 · Test | 11 Mini-Exams | Timed exams with PBQs first, weighted to the official domains |
 
 There is also a one-page **Cram Sheet** and a **Progress** page.
 
-Each module gives you a rank from Beginner to Grandmaster based on what you have actually mastered, not on one lucky run. Reach Master in every module to earn the Network+ Mastery Badge.
+Each module gives you a rank from Beginner to Pro based on what you have actually mastered, not on one lucky run. Reach Expert (80%) in every module to earn the Network+ Mastery Badge, and Pro (100%) in a module to perfect it.
 
 ## Screenshots
 
 <p><img src="../../docs/images/home.png" alt="Home page with the domain weighting bar and Stage 1 modules." width="860"></p>
 
-| Subnetting Gym | VLAN and trunk PBQ |
+| Subnetting | VLAN and trunk PBQ |
 |---|---|
-| <img src="../../docs/images/subnetting.png" alt="Subnetting Gym asking for the broadcast address of 172.29.149.7/27." width="420"> | <img src="../../docs/images/pbq-vlan.png" alt="Switch console with show spanning-tree vlan 10 output." width="420"> |
+| <img src="../../docs/images/subnetting.png" alt="Subnetting module asking a question about an IPv4 address and prefix." width="420"> | <img src="../../docs/images/pbq-vlan.png" alt="Switch console with show spanning-tree vlan 10 output." width="420"> |
 | **Cable and port diagnostics PBQ** | **Phone, dark mode** |
-| <img src="../../docs/images/pbq-cable.png" alt="Cable tester wire map showing a short between pins 1 and 2." width="420"> | <img src="../../docs/images/phone-home.png" alt="Home page on a phone in dark mode." width="200"> |
+| <img src="../../docs/images/pbq-cable.png" alt="Cable tester wire map and switch port output for one desk." width="420"> | <img src="../../docs/images/phone-home.png" alt="Home page on a phone in dark mode." width="200"> |
 
 ## How to use it
 
@@ -42,7 +42,7 @@ Pick whichever fits you. Your progress is saved on your own device and never lea
 
 ### Option 1: In your browser (nothing to install)
 
-Open the web version: **https://benmhsmith.github.io/examplify/network-plus/**
+Open the web version: **https://benmhsmith.github.io/Provo/network-plus/**
 
 Works on Windows, Mac, Linux, Chromebooks, Android, iPhone, and iPad. Progress is saved in that browser on that device.
 
@@ -50,8 +50,8 @@ Works on Windows, Mac, Linux, Chromebooks, Android, iPhone, and iPad. Progress i
 
 ### Option 2: As a single file (works offline)
 
-1. Go to the [latest release](https://github.com/benmhsmith/examplify/releases/latest).
-2. Download `Examplify-Network-Plus-vX.Y.Z.html`.
+1. Go to the [latest release](https://github.com/benmhsmith/Provo/releases/latest).
+2. Download `Provo-Network-Plus-vX.Y.Z.html`.
 3. Double-click it to open it in your browser. No internet needed after that.
 
 ### Option 3: Inside Joplin (desktop and Android)
@@ -60,11 +60,11 @@ Works on Windows, Mac, Linux, Chromebooks, Android, iPhone, and iPad. Progress i
 
 **On a computer (Windows, Mac, Linux):**
 
-1. Download `examplify-network-plus-vX.Y.Z.jpl` from the [latest release](https://github.com/benmhsmith/examplify/releases/latest).
+1. Download `provo-network-plus-vX.Y.Z.jpl` from the [latest release](https://github.com/benmhsmith/Provo/releases/latest).
 2. In Joplin, open the **Configuration** screen (**Tools → Options** on Windows and Linux, **Joplin → Settings** on Mac) and go to **Plugins**.
 3. Click the **Plugin tools** gear button and choose **Install from file**. Pick the `.jpl` file.
 4. Restart Joplin when asked. If Joplin keeps running in the system tray, quit it fully first.
-5. Open **Tools → Examplify Network+ → How to use** and click **Copy command**. Paste it into any note.
+5. Open **Tools → Provo Network+ → How to use** and click **Copy command**. Paste it into any note.
 
 **On Android:**
 
@@ -86,11 +86,11 @@ Joplin on iPhone and iPad only allows plugins from its recommended list, so use 
 
 ```
 network-plus/
-├── src/examplify-network-plus.html   ← the whole app: one HTML file (HTML, CSS, JS)
+├── src/provo-network-plus.html       ← the whole app: one HTML file (HTML, CSS, JS)
 ├── joplin-plugin/                    ← Joplin plugin wrapper and build scripts
 │   ├── build.py                      ← builds the in-note viewer (dist/nft.js, nft.css)
 │   ├── build_editor.py               ← builds the full-width editor view (dist/editor.js)
-│   ├── fonts.css                     ← embedded Atkinson Hyperlegible fonts
+│   ├── fonts.css                     ← embedded Montserrat and Atkinson Hyperlegible Mono fonts
 │   └── dist/                         ← plugin files (index.js, manifest.json, ...)
 ├── scripts/
 │   ├── release.py                    ← builds and versions a release
@@ -102,11 +102,13 @@ network-plus/
 To build a release you need Python 3 and Node.js:
 
 ```
-python3 certs/network-plus/scripts/release.py 4.1.0
+python3 certs/network-plus/scripts/release.py 5.1.0
 ```
 
 This writes the `.jpl` and `.html` into `certs/network-plus/build/` and updates the website copy in `docs/network-plus/`.
 
 ---
 
-CompTIA and Network+ are trademarks of CompTIA, Inc. Examplify is not affiliated with or endorsed by CompTIA.
+© 2026 MyComputerCareer. All rights reserved. See [LICENSE](../../LICENSE).
+
+CompTIA and Network+ are trademarks of CompTIA, Inc. Provo contains no CompTIA exam questions.

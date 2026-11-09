@@ -1,4 +1,4 @@
-"""Build and release Examplify Network+.
+"""Build and release Provo Network+.
 
 Make a new version (run on your own machine or in a Claude session, then commit):
     python3 certs/network-plus/scripts/release.py 4.1.0
@@ -27,14 +27,14 @@ import tarfile
 
 CERT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 REPO = os.path.normpath(os.path.join(CERT, '..', '..'))
-SRC = os.path.join(CERT, 'src', 'examplify-network-plus.html')
+SRC = os.path.join(CERT, 'src', 'provo-network-plus.html')
 PLUGIN = os.path.join(CERT, 'joplin-plugin')
 DIST = os.path.join(PLUGIN, 'dist')
 OUT = os.path.join(CERT, 'build')
 LOG = os.path.join(CERT, 'CHANGELOG.md')
 UNREL = os.path.join(CERT, 'UNRELEASED.md')
 PAGES = os.path.join(REPO, 'docs', 'network-plus', 'index.html')
-REPO_URL = 'https://github.com/benmhsmith/examplify'
+REPO_URL = 'https://github.com/benmhsmith/Provo'
 
 
 def run(cmd, cwd):
@@ -82,22 +82,22 @@ def build(version):
     run([sys.executable, '-I', 'build_editor.py'], PLUGIN)
     for f in ['nft.js', 'editor.js', 'index.js']:
         run(['node', '--check', os.path.join('dist', f)], PLUGIN)
-    jpl = os.path.join(OUT, f'examplify-network-plus-v{version}.jpl')
+    jpl = os.path.join(OUT, f'provo-network-plus-v{version}.jpl')
     with tarfile.open(jpl, 'w', format=tarfile.PAX_FORMAT) as tar:
         for f in ['manifest.json', 'index.js', 'contentScript.js', 'nft.js', 'nft.css', 'editor.js', 'editor.css', 'OFL.txt']:
             tar.add(os.path.join(DIST, f), arcname=f)
-    page = os.path.join(OUT, f'Examplify-Network-Plus-v{version}.html')
+    page = os.path.join(OUT, f'Provo-Network-Plus-v{version}.html')
     run([sys.executable, '-I', os.path.join(CERT, 'scripts', 'mkstand.py'), SRC, page], CERT)
     return jpl, page
 
 
 def release_notes(version):
-    return (f'**Examplify Network+ v{version}** for CompTIA Network+ N10-009.\n\n'
+    return (f'**Provo Network+ v{version}** for CompTIA Network+ N10-009.\n\n'
             '## Downloads\n'
-            f'- **Joplin plugin (desktop and Android):** `examplify-network-plus-v{version}.jpl`\n'
-            f'- **Standalone web page (works offline):** `Examplify-Network-Plus-v{version}.html`\n'
-            '- **Use it in your browser:** https://benmhsmith.github.io/examplify/network-plus/\n\n'
-            f'Setup steps for each option: [Examplify Network+ README]({REPO_URL}/tree/main/certs/network-plus#how-to-use-it)\n\n'
+            f'- **Joplin plugin (desktop and Android):** `provo-network-plus-v{version}.jpl`\n'
+            f'- **Standalone web page (works offline):** `Provo-Network-Plus-v{version}.html`\n'
+            '- **Use it in your browser:** https://benmhsmith.github.io/Provo/network-plus/\n\n'
+            f'Setup steps for each option: [Provo Network+ README]({REPO_URL}/tree/main/certs/network-plus#how-to-use-it)\n\n'
             '## What changed\n' + section(version) + '\n\n'
             f'Full history: [CHANGELOG.md]({REPO_URL}/blob/main/certs/network-plus/CHANGELOG.md)\n')
 
