@@ -1,4 +1,13 @@
-# Examplify Network+ changelog
+# Provo Network+ changelog
+
+## v5.0.0
+- Renamed to Provo Network+, by MyComputerCareer. Your saved progress, ranks, and badges carry over; the Joplin plugin keeps the same ID, so installing this version updates the old one in place.
+- New look in MyComputerCareer colors: the MyComputerCareer logo and the Provo name in the top bar, the MyComputerCareer icon at the center of the home page diagram, and Montserrat for all text. Command output keeps its monospaced font. Dark mode keeps the dark grey theme.
+- The home page title now shows CompTIA and the exam code N10-009 in small red text around Network+.
+- Modules now use plain topic names: Acronyms, OSI Model, Ports & Protocols, Subnetting, Media & Wireless, Security, Troubleshooting Methodology, Tools & Commands, Question Qualifiers, Performance-Based Questions, and Mini-Exams.
+- Five ranks instead of seven: Beginner (under 50%), Intermediate (50%+), Advanced (70%+), Expert (80%+), and Pro (100%). Ranks show as rings that fill with your progress.
+- The Network+ Mastery Badge now unlocks when every module reaches Expert (80%), down from 90%. Secret prestige still needs Pro in every module.
+- Provo is now proprietary software owned by MyComputerCareer. See LICENSE in the repository. Versions up to v4.0.0 were released under the GNU GPL v3.0.
 
 ## v4.0.0
 - Renamed to Examplify Network+. Examplify is the new home for free certification study tools, starting with CompTIA Network+ (N10-009). Your saved progress, ranks, and badges carry over; the Joplin plugin keeps the same ID, so installing this version updates the old one in place.

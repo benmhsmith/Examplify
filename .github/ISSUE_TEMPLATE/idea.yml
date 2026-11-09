@@ -1,5 +1,5 @@
 name: Suggest a topic or feature
-description: Something you want to practice, or a way to make Examplify easier to use.
+description: Something you want to practice, or a way to make Provo easier to use.
 title: "[Idea] "
 labels: ["idea"]
 body:
@@ -8,9 +8,9 @@ body:
     attributes:
       label: Which exam tool?
       options:
-        - Examplify Network+
+        - Provo Network+
         - A new exam
-        - All of Examplify
+        - All of Provo
     validations:
       required: true
   - type: textarea
