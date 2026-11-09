@@ -1,4 +1,4 @@
-<title>Examplify Network+</title>
+<title>keiko Network+</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -6,8 +6,8 @@
 <style>
 /* Layout: patch-panel index on home (one row per module, like a labeled patch panel), single-column drill views; T568B pair colors accent the cram cards. */
 :root{
-  --bg:#F3F5F8; --surface:#FFFFFF; --sunk:#E9EDF2; --ink:#142030; --muted:#566476; --line:#D5DCE5;
-  --orange:#D9701A; --blue:#2360A6; --brown:#7B4F2E; --green:#2E8657; --violet:#6B4FA8; --gold:#A87600;
+  --bg:#F6F1E7; --surface:#FFFDF8; --sunk:#EDE5D6; --ink:#1C1A17; --muted:#5E584F; --line:#DED5C4; --shu:#C73E1D;
+  --orange:#C73E1D; --blue:#2B4C6F; --brown:#7B4F2E; --green:#2E8657; --violet:#6B4FA8; --gold:#A87600;
   --accent:var(--orange); --accent-ink:#FFFFFF;
   --ok:#1E8A55; --ok-bg:#E3F4EA; --warn:#A8650A; --warn-bg:#FCF0DC; --bad:#C23A3A; --bad-bg:#FBE7E7; --pick:#2360A6; --pick-bg:#E4EDF8;
   --font-display:"Atkinson Hyperlegible Next","Segoe UI",system-ui,sans-serif;
@@ -16,14 +16,14 @@
   --r:10px;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#16181B; --surface:#1F2226; --sunk:#272A2F; --ink:#E8E9EB; --muted:#A3A7AD; --line:#33373D;
-  --orange:#F08A35; --blue:#6EA4E8; --brown:#C08B62; --green:#4DBA80; --violet:#A994E0; --gold:#E8C25A;
-  --accent-ink:#1A1205; --ok:#4DBA80; --ok-bg:#12301F; --warn:#F0B45A; --warn-bg:#3A2A10; --bad:#F07070; --bad-bg:#3A1717; --pick:#6EA4E8; --pick-bg:#17304E;
+  --bg:#141210; --surface:#1E1B18; --sunk:#29251F; --ink:#F6F1E7; --muted:#ABA396; --line:#3A342C; --shu:#E2502C;
+  --orange:#E2502C; --blue:#93ADCB; --brown:#C08B62; --green:#4DBA80; --violet:#A994E0; --gold:#E8C25A;
+  --accent-ink:#141210; --ok:#4DBA80; --ok-bg:#12301F; --warn:#F0B45A; --warn-bg:#3A2A10; --bad:#F07070; --bad-bg:#3A1717; --pick:#6EA4E8; --pick-bg:#17304E;
   color-scheme:dark }}
 :root[data-theme="dark"]{
-  --bg:#16181B; --surface:#1F2226; --sunk:#272A2F; --ink:#E8E9EB; --muted:#A3A7AD; --line:#33373D;
-  --orange:#F08A35; --blue:#6EA4E8; --brown:#C08B62; --green:#4DBA80; --violet:#A994E0; --gold:#E8C25A;
-  --accent-ink:#1A1205; --ok:#4DBA80; --ok-bg:#12301F; --warn:#F0B45A; --warn-bg:#3A2A10; --bad:#F07070; --bad-bg:#3A1717; --pick:#6EA4E8; --pick-bg:#17304E;
+  --bg:#141210; --surface:#1E1B18; --sunk:#29251F; --ink:#F6F1E7; --muted:#ABA396; --line:#3A342C; --shu:#E2502C;
+  --orange:#E2502C; --blue:#93ADCB; --brown:#C08B62; --green:#4DBA80; --violet:#A994E0; --gold:#E8C25A;
+  --accent-ink:#141210; --ok:#4DBA80; --ok-bg:#12301F; --warn:#F0B45A; --warn-bg:#3A2A10; --bad:#F07070; --bad-bg:#3A1717; --pick:#6EA4E8; --pick-bg:#17304E;
   color-scheme:dark }
 
 html{font-size:16px}
@@ -95,9 +95,21 @@ main{max-width:1080px;margin:0 auto;padding-block:20px 48px;padding-left:max(16p
 .rank .bars i:nth-child(1){height:3px}.rank .bars i:nth-child(2){height:4.5px}.rank .bars i:nth-child(3){height:6px}.rank .bars i:nth-child(4){height:7.5px}.rank .bars i:nth-child(5){height:9px}.rank .bars i:nth-child(6){height:10.5px}.rank .bars i:nth-child(7){height:12px}
 .rank.r5 .bars i.on,.rank.r6 .bars i.on{background:linear-gradient(var(--gold),var(--orange))}
 .rank.r6 .bars i.on{box-shadow:0 0 5px var(--gold)}
+.brand{align-items:center}
+.brand .kmark{width:30px;height:30px;flex:none}
+.brand b{font-weight:800;letter-spacing:-.02em;text-transform:lowercase}
+.brand .ktag{font-size:.78rem;color:var(--muted);font-style:italic}
+html.mobile .brand .ktag{display:none}
+.rank .ring{width:15px;height:15px;flex:none}
+.rank .ring .tr{stroke:var(--line)}
+.rank .ring .fg{stroke:var(--rc)}
+.rank .ring .dot{fill:var(--shu)}
+.rank.r6 .seal{fill:var(--shu)}
+.rank.r6 .seal-t{fill:#FFFDF8;font:700 22px "Noto Serif JP","Yu Mincho","Hiragino Mincho ProN",serif}
+.rank.r1{--rc:var(--muted)}.rank.r2{--rc:var(--ink)}.rank.r3{--rc:var(--ink)}.rank.r4{--rc:var(--shu)}.rank.r5{--rc:var(--shu)}.rank.r6{--rc:var(--shu);text-shadow:none}
 /* Grandmaster: the module glows */
-.prow.gm{box-shadow:inset 0 0 0 2px var(--gold);background:linear-gradient(100deg,color-mix(in srgb,var(--gold) 16%,var(--surface)),var(--surface) 65%);animation:gmrow 3s ease-in-out infinite}
-@keyframes gmrow{0%,100%{box-shadow:inset 0 0 0 2px var(--gold),inset 0 0 0 0 transparent}50%{box-shadow:inset 0 0 0 2px var(--gold),inset 0 0 26px 0 color-mix(in srgb,var(--gold) 45%,transparent)}}
+.prow.gm{box-shadow:inset 0 0 0 2px var(--shu);background:linear-gradient(100deg,color-mix(in srgb,var(--shu) 10%,var(--surface)),var(--surface) 65%);animation:gmrow 3s ease-in-out infinite}
+@keyframes gmrow{0%,100%{box-shadow:inset 0 0 0 2px var(--shu),inset 0 0 0 0 transparent}50%{box-shadow:inset 0 0 0 2px var(--shu),inset 0 0 22px 0 color-mix(in srgb,var(--shu) 35%,transparent)}}
 .gm-aura{position:fixed;inset:0;pointer-events:none;z-index:4;box-shadow:inset 0 0 60px 8px color-mix(in srgb,var(--gold) 38%,transparent);animation:gmaura 3.2s ease-in-out infinite}
 @keyframes gmaura{0%,100%{opacity:.55}50%{opacity:1}}
 .gm-banner{display:flex;align-items:center;gap:10px;margin:0 0 12px;padding:10px 14px;border-radius:10px;border:1.5px solid var(--gold);background:linear-gradient(100deg,color-mix(in srgb,var(--gold) 22%,var(--surface)),var(--surface));font-weight:700}
@@ -333,7 +345,7 @@ html.mobile .dg::after{content:"Swipe sideways to see the whole diagram.";displa
 
 <header class="top">
   <div class="top-in">
-    <a class="brand" href="#home"><b>Examplify</b></a>
+    <a class="brand" href="#home"><svg class="kmark" viewBox="0 0 88 88" aria-hidden="true"><circle cx="44" cy="44" r="7.5" fill="var(--shu)"/><path d="M44 24 A20 20 0 1 1 25.2 37.2" fill="none" stroke="var(--ink)" stroke-width="6.5" stroke-linecap="round"/><path d="M44 10 A34 34 0 1 1 13.6 28.8" fill="none" stroke="var(--ink)" stroke-width="6.5" stroke-linecap="round" opacity="0.45"/></svg><b>keiko</b><span class="ktag">practice until it&#39;s yours</span></a>
     <div class="viewsw" id="viewsw"><span class="lbl" data-v="desktop">Desktop</span><button class="sw" id="layoutSw" type="button" role="switch" aria-checked="false" aria-label="Mobile layout"><i></i></button><span class="lbl" data-v="mobile">Mobile</span></div>
     <a class="chipbtn" href="#cram" style="text-decoration:none;padding:6px 12px">Cram Sheet</a>
     <a class="chipbtn" href="#progress" style="text-decoration:none;padding:6px 12px">Progress</a>
@@ -881,7 +893,11 @@ function currentBadgeLevel(){ return (P.prestige||0); }
 function mysterySVG(size){ return `<svg class="pbadge" width="${size}" height="${size}" viewBox="0 0 100 100" role="img" aria-label="Hidden badge"><path d="M50 3 L95 48 L50 97 L5 48 Z" fill="var(--sunk)" stroke="var(--line)" stroke-width="3" stroke-dasharray="6 5"/><text x="50" y="60" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="30" fill="var(--muted)">?</text></svg>`; }
 function homeBadgeLevel(){ return P.secret? PRESTIGE_MAX+P.secret : currentBadgeLevel(); }
 function rankOf(v){ let k=0; RANKS.forEach((x,i)=>{ if(v+1e-9>=x.min) k=i; }); return k; }
-function rankBadge(v){ const k=rankOf(v||0); return `<span class="rank r${k}" title="${RANK_TIP}"><span class="bars" aria-hidden="true">${[0,1,2,3,4,5,6].map(i=>`<i class="${i<=k?"on":""}"></i>`).join("")}</span>${RANKS[k].name}</span>`; }
+function rankBadge(v){ const k=rankOf(v||0), C=188.5, f=Math.max(0,Math.min(1,v||0));
+  const ring = k===6
+    ? `<svg class="ring" viewBox="0 0 88 88" aria-hidden="true"><circle cx="44" cy="44" r="34" fill="none" stroke="var(--ink)" stroke-width="10"/><rect class="seal" x="26" y="26" width="36" height="36" rx="3"/><text class="seal-t" x="44" y="52" text-anchor="middle">稽</text></svg>`
+    : `<svg class="ring" viewBox="0 0 88 88" aria-hidden="true"><circle class="tr" cx="44" cy="44" r="30" fill="none" stroke-width="12"/><circle class="fg" cx="44" cy="44" r="30" fill="none" stroke-width="12" stroke-linecap="round" stroke-dasharray="${(C*f).toFixed(1)} ${C}" transform="rotate(-90 44 44)"/><circle class="dot" cx="44" cy="44" r="9"/></svg>`;
+  return `<span class="rank r${k}" title="${RANK_TIP}">${ring}${RANKS[k].name}</span>`; }
 
 /* ================= STATE ================= */
 const KEY="netplus-ft-v1", MKEY="netplus-ft-mode";
@@ -1041,8 +1057,7 @@ function viewHome(){
       <g class="links">${[[60,40],[300,40],[40,150],[180,166],[320,150]].map(([x,y])=>`<line x1="180" y1="86" x2="${x}" y2="${y}"/>`).join("")}</g>
       <g class="flow">${[[60,40],[300,40],[40,150],[180,166],[320,150]].map(([x,y],i)=>`<line x1="180" y1="86" x2="${x}" y2="${y}" style="stroke:${DOMC[i+1]};animation-delay:-${i*0.7}s"/>`).join("")}</g>
       ${[[60,40],[300,40],[40,150],[180,166],[320,150]].map(([x,y],i)=>`<g transform="translate(${x-22} ${y-11})"><rect width="44" height="22" rx="4" fill="var(--surface)" stroke="${DOMC[i+1]}" stroke-width="2"/>${[0,1,2,3].map(k=>`<rect x="${8+k*8}" y="9" width="4" height="4" rx="1" fill="${DOMC[i+1]}"/>`).join("")}</g>`).join("")}
-      ${P.everMastered?badgeSVG(homeBadgeLevel(),76).replace('<svg class="pbadge"','<svg class="pbadge hero-badge" x="142" y="48"'):`<g transform="translate(180 86)"><circle r="26" fill="var(--surface)" stroke="var(--ink)" stroke-width="2.5"/>
-        <path d="M-12 -4 H8 M3 -9 L8 -4 L3 1 M12 4 H-8 M-3 -1 L-8 4 L-3 9" fill="none" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></g>`}
+      ${P.everMastered?badgeSVG(homeBadgeLevel(),76).replace('<svg class="pbadge"','<svg class="pbadge hero-badge" x="142" y="48"'):`<g transform="translate(180 86)"><circle r="34" fill="var(--bg)"/><g transform="translate(-29 -29) scale(.66)"><circle cx="44" cy="44" r="7.5" fill="var(--shu)"/><path d="M44 24 A20 20 0 1 1 25.2 37.2" fill="none" stroke="var(--ink)" stroke-width="6.5" stroke-linecap="round"/><path d="M44 10 A34 34 0 1 1 13.6 28.8" fill="none" stroke="var(--ink)" stroke-width="6.5" stroke-linecap="round" opacity="0.45"/></g></g>`}
     </svg>
   </section>
   <section class="weights">
@@ -1061,7 +1076,7 @@ function viewHome(){
     </a>`;}).join("")}
   </div></section>`).join("")}</div>
   <p class="note" style="margin-top:14px">Progress saves in this browser only. To start over, open Progress and choose Reset all progress.</p>
-  <p class="note">Examplify Network+ <span class="badge">v4.0.0</span> · Free and open source under the GNU GPL v3.0.</p>`;
+  <p class="note">keiko Network+ <span class="badge">v4.0.0</span> · Free and open source under the GNU GPL v3.0.</p>`;
 }
 
 /* ---- Ports ---- */

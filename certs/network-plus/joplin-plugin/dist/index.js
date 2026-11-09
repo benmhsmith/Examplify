@@ -232,7 +232,7 @@ ${[notes, folders].filter(Boolean).join(',\n')} { border-radius: 6px; animation:
     const handles = [];
     async function setup(h) {
       handles.push(h); DIAG.setupCalls++; DIAG.handle = h;
-      await editors.setHtml(h, '<div id="nft-root"><header class="top"><div class="top-in"><a class="brand" href="#home"><b>Examplify</b></a><a class="chipbtn" href="#cram" style="text-decoration:none;padding:6px 12px">Cram Sheet</a><a class="chipbtn" href="#progress" style="text-decoration:none;padding:6px 12px">Progress</a></div></header><main id="app"><p style="padding:16px">Loading…</p></main></div>');
+      await editors.setHtml(h, '<div id="nft-root"><header class="top"><div class="top-in"><a class="brand" href="#home"><svg class="kmark" viewBox="0 0 88 88" aria-hidden="true"><circle cx="44" cy="44" r="7.5" fill="var(--shu)"/><path d="M44 24 A20 20 0 1 1 25.2 37.2" fill="none" stroke="var(--ink)" stroke-width="6.5" stroke-linecap="round"/><path d="M44 10 A34 34 0 1 1 13.6 28.8" fill="none" stroke="var(--ink)" stroke-width="6.5" stroke-linecap="round" opacity="0.45"/></svg><b>keiko</b><span class="ktag">practice until it&#39;s yours</span></a><a class="chipbtn" href="#cram" style="text-decoration:none;padding:6px 12px">Cram Sheet</a><a class="chipbtn" href="#progress" style="text-decoration:none;padding:6px 12px">Progress</a></div></header><main id="app"><p style="padding:16px">Loading…</p></main></div>');
       await editors.addScript(h, './editor.css');
       await editors.addScript(h, './editor.js');
       await editors.onMessage(h, handle);

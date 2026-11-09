@@ -134,7 +134,7 @@ for a,b in reps:
 js=js.replace('window.scrollTo(0,0);','try{ root.scrollIntoView({block:"start"}); }catch(e){}')
 assert 'location.hash' not in js and 'window.scrollTo' not in js
 
-shell='''<header class="top"><div class="top-in"><a class="brand" href="#home"><b>Examplify</b></a><a class="chipbtn" href="#cram" style="text-decoration:none;padding:6px 12px">Cram Sheet</a><a class="chipbtn" href="#progress" style="text-decoration:none;padding:6px 12px">Progress</a></div></header><main id="app"></main>'''
+shell='''<header class="top"><div class="top-in"><a class="brand" href="#home"><svg class="kmark" viewBox="0 0 88 88" aria-hidden="true"><circle cx="44" cy="44" r="7.5" fill="var(--shu)"/><path d="M44 24 A20 20 0 1 1 25.2 37.2" fill="none" stroke="var(--ink)" stroke-width="6.5" stroke-linecap="round"/><path d="M44 10 A34 34 0 1 1 13.6 28.8" fill="none" stroke="var(--ink)" stroke-width="6.5" stroke-linecap="round" opacity="0.45"/></svg><b>keiko</b><span class="ktag">practice until it&#39;s yours</span></a><a class="chipbtn" href="#cram" style="text-decoration:none;padding:6px 12px">Cram Sheet</a><a class="chipbtn" href="#progress" style="text-decoration:none;padding:6px 12px">Progress</a></div></header><main id="app"></main>'''
 out='''/* Examplify Network+ — in-note renderer asset. Mounts the tool into every ```netplus-fast-track block in the note viewer. */
 (function(){
   if(window.__nftLoaded) return; window.__nftLoaded=true;
