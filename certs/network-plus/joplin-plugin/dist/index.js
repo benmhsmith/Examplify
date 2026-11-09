@@ -232,7 +232,7 @@ ${[notes, folders].filter(Boolean).join(',\n')} { border-radius: 6px; animation:
     const handles = [];
     async function setup(h) {
       handles.push(h); DIAG.setupCalls++; DIAG.handle = h;
-      await editors.setHtml(h, '<div id="nft-root"><header class="top"><div class="top-in"><a class="brand" href="#home"><b>Examplify</b></a><a class="chipbtn" href="#cram" style="text-decoration:none;padding:6px 12px">Cram Sheet</a><a class="chipbtn" href="#progress" style="text-decoration:none;padding:6px 12px">Progress</a></div></header><main id="app"><p style="padding:16px">Loading…</p></main></div>');
+      await editors.setHtml(h, '<div id="nft-root"><header class="top"><div class="top-in"><a class="brand" href="#home"><span class="mycc-mark" aria-hidden="true"></span><b>Provo</b><span class="ktag">by MyComputerCareer</span></a><a class="chipbtn" href="#cram" style="text-decoration:none;padding:6px 12px">Cram Sheet</a><a class="chipbtn" href="#progress" style="text-decoration:none;padding:6px 12px">Progress</a></div></header><main id="app"><p style="padding:16px">Loading…</p></main></div>');
       await editors.addScript(h, './editor.css');
       await editors.addScript(h, './editor.js');
       await editors.onMessage(h, handle);
