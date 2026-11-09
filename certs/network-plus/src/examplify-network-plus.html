@@ -6,7 +6,7 @@
 <style>
 /* Layout: patch-panel index on home (one row per module, like a labeled patch panel), single-column drill views; T568B pair colors accent the cram cards. */
 :root{
-  --bg:#F2F5FA; --surface:#FFFFFF; --sunk:#E6ECF5; --ink:#12223D; --muted:#4F5F78; --line:#D3DCEA; --brand:#2258A9; --logo:#2258A9; --pv1:#2360A6; --pv2:#2E8657; --pv3:#B8860B; --pv4:#C23A3A; --pv5:#6B5B95;
+  --bg:#F2F5FA; --surface:#FFFFFF; --sunk:#E6ECF5; --ink:#12223D; --muted:#4F5F78; --line:#D3DCEA; --brand:#2258A9; --logo:#2258A9; --ctred:#C8202F; --pv1:#2360A6; --pv2:#2E8657; --pv3:#B8860B; --pv4:#C23A3A; --pv5:#6B5B95;
   --orange:#2258A9; --blue:#2258A9; --brown:#7B4F2E; --green:#2E8657; --violet:#6B4FA8; --gold:#A87600;
   --accent:var(--orange); --accent-ink:#FFFFFF;
   --ok:#1E8A55; --ok-bg:#E3F4EA; --warn:#A8650A; --warn-bg:#FCF0DC; --bad:#C23A3A; --bad-bg:#FBE7E7; --pick:#2360A6; --pick-bg:#E4EDF8;
@@ -16,12 +16,12 @@
   --r:10px;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#16181B; --surface:#1F2226; --sunk:#272A2F; --ink:#E8E9EB; --muted:#A3A7AD; --line:#33373D; --brand:#7FA8E6; --logo:#5E93E0; --pv1:#6EA4E8; --pv2:#4DBA80; --pv3:#E8C25A; --pv4:#F07070; --pv5:#A994E0;
+  --bg:#16181B; --surface:#1F2226; --sunk:#272A2F; --ink:#E8E9EB; --muted:#A3A7AD; --line:#33373D; --brand:#7FA8E6; --logo:#5E93E0; --ctred:#F0646E; --pv1:#6EA4E8; --pv2:#4DBA80; --pv3:#E8C25A; --pv4:#F07070; --pv5:#A994E0;
   --orange:#7FA8E6; --blue:#7FA8E6; --brown:#C08B62; --green:#4DBA80; --violet:#A994E0; --gold:#E8C25A;
   --accent-ink:#16181B; --ok:#4DBA80; --ok-bg:#12301F; --warn:#F0B45A; --warn-bg:#3A2A10; --bad:#F07070; --bad-bg:#3A1717; --pick:#6EA4E8; --pick-bg:#17304E;
   color-scheme:dark }}
 :root[data-theme="dark"]{
-  --bg:#16181B; --surface:#1F2226; --sunk:#272A2F; --ink:#E8E9EB; --muted:#A3A7AD; --line:#33373D; --brand:#7FA8E6; --logo:#5E93E0; --pv1:#6EA4E8; --pv2:#4DBA80; --pv3:#E8C25A; --pv4:#F07070; --pv5:#A994E0;
+  --bg:#16181B; --surface:#1F2226; --sunk:#272A2F; --ink:#E8E9EB; --muted:#A3A7AD; --line:#33373D; --brand:#7FA8E6; --logo:#5E93E0; --ctred:#F0646E; --pv1:#6EA4E8; --pv2:#4DBA80; --pv3:#E8C25A; --pv4:#F07070; --pv5:#A994E0;
   --orange:#7FA8E6; --blue:#7FA8E6; --brown:#C08B62; --green:#4DBA80; --violet:#A994E0; --gold:#E8C25A;
   --accent-ink:#16181B; --ok:#4DBA80; --ok-bg:#12301F; --warn:#F0B45A; --warn-bg:#3A2A10; --bad:#F07070; --bad-bg:#3A1717; --pick:#6EA4E8; --pick-bg:#17304E;
   color-scheme:dark }
@@ -59,7 +59,8 @@ main{max-width:1080px;margin:0 auto;padding-block:20px 48px;padding-left:max(16p
 .hero{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:24px;align-items:center;margin:6px 0 26px}
 .hero h1{font-size:2.6rem;line-height:1.05;font-weight:700;display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px}
 .kicker{font-size:.82rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--orange);margin-bottom:4px}
-.examcode{font-family:var(--font-mono);font-size:.5em;font-weight:600;padding:4px 10px;border:1.5px solid var(--line);border-radius:6px;color:var(--muted);letter-spacing:.04em}
+.examcode{font-family:var(--font-body);font-size:.42em;font-weight:700;color:var(--ctred);letter-spacing:.06em;align-self:flex-end;margin-bottom:.32em}
+.hero h1 .vendor{flex-basis:100%;font-size:.42em;font-weight:700;color:var(--ctred);letter-spacing:.02em;line-height:1;margin-bottom:-2px}
 .hero-art{width:100%;max-width:380px;justify-self:end;display:block}
 .hero-art line{stroke-width:2}
 .hero-art .links line{stroke:var(--line)}
@@ -1055,7 +1056,7 @@ function viewHome(){
   app.innerHTML=`
   <section class="hero">
     <div class="hero-txt">
-      <h1>CompTIA Network+ <span class="examcode">N10-009</span></h1>
+      <h1><span class="vendor">CompTIA</span> <span class="cert">Network+</span> <span class="examcode">N10-009</span></h1>
       <p>Focused practice on the objectives the exam weighs most. Topics removed in N10-009 are left out. Work through the stages in order.</p>
       ${P.everMastered?`<a class="badge-plate" href="#progress" style="text-decoration:none;color:inherit">${badgeSVG(homeBadgeLevel(),56)}<span><b>${esc(badgeTitle(homeBadgeLevel()))}</b>${P.secret?`<small>Secret Prestige ${P.secret} of ${SECRET_MAX} · prestige ${currentBadgeLevel()} of ${PRESTIGE_MAX}</small>${P.secret>=SECRET_MAX||currentBadgeLevel()>=PRESTIGE_MAX?`<span class="reward">★ See instructor for reward</span>`:""}</span></a>`:""}${P.secret?"":`<small>${P.mastered&&currentBadgeLevel()<PRESTIGE_MAX?"All modules at Master. Prestige is ready on the Progress page.":currentBadgeLevel()?`Network+ Mastery Badge · prestige ${currentBadgeLevel()} of ${PRESTIGE_MAX}`:"Every module reached Master."}</small>${currentBadgeLevel()>=PRESTIGE_MAX?`<span class="reward">★ See instructor for reward</span>`:""}</span></a>`}`:""}
     </div>
