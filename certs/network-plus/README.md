@@ -24,7 +24,7 @@ The lab has 11 modules in 5 stages. Work through them in order.
 
 There is also a one-page **Cram Sheet** and a **Progress** page.
 
-Each module gives you a rank from Beginner to Pro based on what you have actually mastered, not on one lucky run. Reach 90% in every module to earn the Network+ Mastery Badge, and 100% (Pro) in a module to perfect it.
+Each module gives you a rank from Beginner to Pro based on what you have actually mastered, not on one lucky run. Reach Expert (80%) in every module to earn the Network+ Mastery Badge, and Pro (100%) in a module to perfect it.
 
 ## Screenshots
 

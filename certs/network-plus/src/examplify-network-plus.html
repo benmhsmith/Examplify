@@ -838,7 +838,7 @@ const PRESTIGE_MAX=20;
 const PRESTIGE_NAMES=["Patch Cable","Switch Port","VLAN","Trunk Link","Subnet","Default Gateway","Router","Firewall","Load Balancer","Backbone","Spanning Tree","OSPF Area","BGP Peer","Data Center","Fiber Core","Autonomous System","Edge Network","Global Mesh","Undersea Cable","The Internet"];
 const BADGE_METALS=[{n:"Bronze",a:"#E3A36B",b:"#9C5B2E",ink:"#3A1E08"},{n:"Silver",a:"#E6EBF0",b:"#8C98A6",ink:"#1E2731"},{n:"Gold",a:"#F7D56A",b:"#C0901A",ink:"#3D2A00"},{n:"Platinum",a:"#C9F1F7",b:"#4BA7BD",ink:"#0B3640"}];
 function modulesForMastery(){ return MODULES.filter(m=>!m.menu); }
-const MASTER_MIN=.9;
+const MASTER_MIN=.8;
 function expertCount(){ return modulesForMastery().filter(m=>{ const ms=mastery(m.id); return ms&&ms.v+1e-9>=MASTER_MIN; }).length; }
 function gmCount(){ return modulesForMastery().filter(m=>{ const ms=mastery(m.id); return ms&&ms.v+1e-9>=1; }).length; }
 function gmAll(){ return gmCount()===modulesForMastery().length; }
@@ -1058,7 +1058,7 @@ function viewHome(){
     <div class="hero-txt">
       <h1><span class="vendor">CompTIA</span> <span class="cert">Network+</span> <span class="examcode">N10-009</span></h1>
       <p>Focused practice on the objectives the exam weighs most. Topics removed in N10-009 are left out. Work through the stages in order.</p>
-      ${P.everMastered?`<a class="badge-plate" href="#progress" style="text-decoration:none;color:inherit">${badgeSVG(homeBadgeLevel(),56)}<span><b>${esc(badgeTitle(homeBadgeLevel()))}</b>${P.secret?`<small>Secret Prestige ${P.secret} of ${SECRET_MAX} · prestige ${currentBadgeLevel()} of ${PRESTIGE_MAX}</small>${P.secret>=SECRET_MAX||currentBadgeLevel()>=PRESTIGE_MAX?`<span class="reward">★ See instructor for reward</span>`:""}</span></a>`:""}${P.secret?"":`<small>${P.mastered&&currentBadgeLevel()<PRESTIGE_MAX?"All modules at 90%+. Prestige is ready on the Progress page.":currentBadgeLevel()?`Network+ Mastery Badge · prestige ${currentBadgeLevel()} of ${PRESTIGE_MAX}`:"Every module reached 90%+."}</small>${currentBadgeLevel()>=PRESTIGE_MAX?`<span class="reward">★ See instructor for reward</span>`:""}</span></a>`}`:""}
+      ${P.everMastered?`<a class="badge-plate" href="#progress" style="text-decoration:none;color:inherit">${badgeSVG(homeBadgeLevel(),56)}<span><b>${esc(badgeTitle(homeBadgeLevel()))}</b>${P.secret?`<small>Secret Prestige ${P.secret} of ${SECRET_MAX} · prestige ${currentBadgeLevel()} of ${PRESTIGE_MAX}</small>${P.secret>=SECRET_MAX||currentBadgeLevel()>=PRESTIGE_MAX?`<span class="reward">★ See instructor for reward</span>`:""}</span></a>`:""}${P.secret?"":`<small>${P.mastered&&currentBadgeLevel()<PRESTIGE_MAX?"All modules at Expert. Prestige is ready on the Progress page.":currentBadgeLevel()?`Network+ Mastery Badge · prestige ${currentBadgeLevel()} of ${PRESTIGE_MAX}`:"Every module reached Expert."}</small>${currentBadgeLevel()>=PRESTIGE_MAX?`<span class="reward">★ See instructor for reward</span>`:""}</span></a>`}`:""}
     </div>
     <svg class="hero-art" viewBox="0 0 360 190" role="img" aria-label="Network diagram: a core router linked to five switches, one in each exam domain color">
       <g class="links">${[[60,40],[300,40],[40,150],[180,166],[320,150]].map(([x,y])=>`<line x1="180" y1="86" x2="${x}" y2="${y}"/>`).join("")}</g>
@@ -3721,8 +3721,8 @@ function masteryCard(justEarned){
   const total=modulesForMastery().length, ex=expertCount(), lvl=P.prestige||0, ready=P.mastered&&lvl<PRESTIGE_MAX;
   const head=P.everMastered?badgeSVG(lvl,88):badgeSVG(0,88,true);
   const status=lvl>=PRESTIGE_MAX?`<b>Max prestige reached.</b> You hold all ${PRESTIGE_MAX} prestige badges.<br><span class="reward">★ See instructor for reward</span>`
-    : ready?`<b>${justEarned?"Network+ Mastery Badge earned!":"All modules at 90%+."}</b> You can prestige to reset your progress and earn the next badge.`
-    : `Reach Master (90%+) in every module to ${P.everMastered?"unlock the next prestige":"earn the Network+ Mastery Badge"}. <b>${ex} of ${total}</b> modules at 90%+.`;
+    : ready?`<b>${justEarned?"Network+ Mastery Badge earned!":"All modules at Expert."}</b> You can prestige to reset your progress and earn the next badge.`
+    : `Reach Master (90%+) in every module to ${P.everMastered?"unlock the next prestige":"earn the Network+ Mastery Badge"}. <b>${ex} of ${total}</b> modules at Expert or Pro.`;
   return `<div class="card" id="masterycard" style="margin-top:16px"><div class="mastery-card">${head}<div>
     <h3 style="font-size:1.3rem">${P.everMastered?esc(badgeTitle(lvl)):"Network+ Mastery Badge"}</h3>
     <p style="margin:.3em 0">${status}</p>
