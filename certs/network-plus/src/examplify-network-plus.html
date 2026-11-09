@@ -831,8 +831,8 @@ const MODULES = [
  {id:"progress",n:"",menu:true,name:"Progress",desc:"Mastery per module and what to study next.",covers:"Progress is stored only in this browser. Clearing browser data or switching devices starts fresh."}
 ];
 /* Module rank comes from the module's progress bar */
-const RANKS=[{name:"Beginner",min:0},{name:"Novice",min:.3},{name:"Intermediate",min:.5},{name:"Advanced",min:.7},{name:"Expert",min:.8},{name:"Master",min:.9},{name:"Grandmaster",min:1}];
-const RANK_TIP="Module rank, set by your progress: Beginner under 30%, Novice 30–49%, Intermediate 50–69%, Advanced 70–79%, Expert 80–89%, Master 90–99%, Grandmaster 100%.";
+const RANKS=[{name:"Trainee",min:0},{name:"Help Desk I",min:.3},{name:"Help Desk II",min:.5},{name:"Technician",min:.7},{name:"Administrator",min:.8},{name:"Engineer",min:.9},{name:"Architect",min:1}];
+const RANK_TIP="Module rank, set by your progress: Trainee under 30%, Help Desk I 30–49%, Help Desk II 50–69%, Technician 70–79%, Administrator 80–89%, Engineer 90–99%, Architect 100%.";
 /* Network+ Mastery Badge and prestige. P.prestige (0-20) and P.everMastered survive a prestige; P.mastered is this cycle. */
 const PRESTIGE_MAX=20;
 const PRESTIGE_NAMES=["Patch Cable","Switch Port","VLAN","Trunk Link","Subnet","Default Gateway","Router","Firewall","Load Balancer","Backbone","Spanning Tree","OSPF Area","BGP Peer","Data Center","Fiber Core","Autonomous System","Edge Network","Global Mesh","Undersea Cable","The Internet"];
@@ -842,7 +842,7 @@ const MASTER_MIN=.9;
 function expertCount(){ return modulesForMastery().filter(m=>{ const ms=mastery(m.id); return ms&&ms.v+1e-9>=MASTER_MIN; }).length; }
 function gmCount(){ return modulesForMastery().filter(m=>{ const ms=mastery(m.id); return ms&&ms.v+1e-9>=1; }).length; }
 function gmAll(){ return gmCount()===modulesForMastery().length; }
-/* Secret Prestige: 5 hidden badges, unlocked by Grandmaster in every module (at any prestige level) */
+/* Secret Prestige: 5 hidden badges, unlocked by Architect in every module (at any prestige level) */
 const SECRET_MAX=5, SECRET_NAMES=["Root Bridge","Anycast","Dark Fiber","Zero Trust","Grand Architect"];
 function checkMastery(){ if(!P.mastered && expertCount()===modulesForMastery().length){ P.mastered=true; P.everMastered=true; save(); return true; } return false; }
 function badgeTitle(level){ return level>PRESTIGE_MAX? `Secret ${level-PRESTIGE_MAX}: ${SECRET_NAMES[level-PRESTIGE_MAX-1]}` : level? `Prestige ${level}: ${PRESTIGE_NAMES[level-1]}` : "Network+ Mastery"; }
@@ -1018,7 +1018,7 @@ function textQ(area,cfg){
 const app=$("#app");
 function modHead(m,extra="",noScore=false){
   return `<a class="back" href="#home">← All modules</a>
-  ${(()=>{ const ms=mastery(m.id); return ms&&ms.v+1e-9>=1?`<div class="gm-aura" aria-hidden="true"></div><div class="gm-banner">★ Grandmaster <span>You have perfected this module.</span></div>`:""; })()}
+  ${(()=>{ const ms=mastery(m.id); return ms&&ms.v+1e-9>=1?`<div class="gm-aura" aria-hidden="true"></div><div class="gm-banner">★ Architect <span>You have perfected this module.</span></div>`:""; })()}
   <div class="mhead"><h2>${m.n} · ${esc(m.name)}</h2>${(()=>{ const ms=mastery(m.id); return ms?rankBadge(ms.v):""; })()}${extra}${noScore?"":`<span class="score" id="score" data-state="none" title="Correct answers since you opened this module. Green = 80% or better, amber = 60–79%, red = below 60%. Resets when you leave the module; long-term progress is on the Progress page."><small>This session</small><b>No answers yet</b></span>`}</div>
   <p class="covers">${esc(m.covers)}</p>`;
 }
@@ -1058,7 +1058,7 @@ function viewHome(){
     <div class="hero-txt">
       <h1><span class="vendor">CompTIA</span> <span class="cert">Network+</span> <span class="examcode">N10-009</span></h1>
       <p>Focused practice on the objectives the exam weighs most. Topics removed in N10-009 are left out. Work through the stages in order.</p>
-      ${P.everMastered?`<a class="badge-plate" href="#progress" style="text-decoration:none;color:inherit">${badgeSVG(homeBadgeLevel(),56)}<span><b>${esc(badgeTitle(homeBadgeLevel()))}</b>${P.secret?`<small>Secret Prestige ${P.secret} of ${SECRET_MAX} · prestige ${currentBadgeLevel()} of ${PRESTIGE_MAX}</small>${P.secret>=SECRET_MAX||currentBadgeLevel()>=PRESTIGE_MAX?`<span class="reward">★ See instructor for reward</span>`:""}</span></a>`:""}${P.secret?"":`<small>${P.mastered&&currentBadgeLevel()<PRESTIGE_MAX?"All modules at Master. Prestige is ready on the Progress page.":currentBadgeLevel()?`Network+ Mastery Badge · prestige ${currentBadgeLevel()} of ${PRESTIGE_MAX}`:"Every module reached Master."}</small>${currentBadgeLevel()>=PRESTIGE_MAX?`<span class="reward">★ See instructor for reward</span>`:""}</span></a>`}`:""}
+      ${P.everMastered?`<a class="badge-plate" href="#progress" style="text-decoration:none;color:inherit">${badgeSVG(homeBadgeLevel(),56)}<span><b>${esc(badgeTitle(homeBadgeLevel()))}</b>${P.secret?`<small>Secret Prestige ${P.secret} of ${SECRET_MAX} · prestige ${currentBadgeLevel()} of ${PRESTIGE_MAX}</small>${P.secret>=SECRET_MAX||currentBadgeLevel()>=PRESTIGE_MAX?`<span class="reward">★ See instructor for reward</span>`:""}</span></a>`:""}${P.secret?"":`<small>${P.mastered&&currentBadgeLevel()<PRESTIGE_MAX?"All modules at Engineer. Prestige is ready on the Progress page.":currentBadgeLevel()?`Network+ Mastery Badge · prestige ${currentBadgeLevel()} of ${PRESTIGE_MAX}`:"Every module reached Engineer."}</small>${currentBadgeLevel()>=PRESTIGE_MAX?`<span class="reward">★ See instructor for reward</span>`:""}</span></a>`}`:""}
     </div>
     <svg class="hero-art" viewBox="0 0 360 190" role="img" aria-label="Network diagram: a core router linked to five switches, one in each exam domain color">
       <g class="links">${[[60,40],[300,40],[40,150],[180,166],[320,150]].map(([x,y])=>`<line x1="180" y1="86" x2="${x}" y2="${y}"/>`).join("")}</g>
@@ -3699,13 +3699,13 @@ function viewProgress(){
   <div class="q-actions" style="margin-top:16px" id="resetzone"><button class="btn ghost" id="reset">Reset all progress</button></div>`;
   const pb=$("#prestige"); if(pb) pb.addEventListener("click",()=>{
     const n=(P.prestige||0)+1;
-    $("#prestigezone").innerHTML=`<span class="confirm">Prestige ${n}: all module progress resets to Beginner. You keep your badge, which becomes <b>${esc(PRESTIGE_NAMES[n-1])}</b>. <button class="btn" id="py">Prestige</button><button class="btn ghost" id="pn">Cancel</button></span>`;
+    $("#prestigezone").innerHTML=`<span class="confirm">Prestige ${n}: all module progress resets to Trainee. You keep your badge, which becomes <b>${esc(PRESTIGE_NAMES[n-1])}</b>. <button class="btn" id="py">Prestige</button><button class="btn ghost" id="pn">Cancel</button></span>`;
     $("#py").addEventListener("click",()=>{ const keep={prestige:n,everMastered:true,secret:P.secret||0,secretOpen:!!P.secretOpen}; P=Object.assign({ports:{},items:{},subnet:[],ladderOrder:false,exams:[],acro:{},acroSecond:false,pbq:{}},keep); save(); viewProgress(); const c=$("#masterycard"); if(c) c.scrollIntoView({block:"center"}); });
     $("#pn").addEventListener("click",viewProgress);
   });
   const sg=$("#secretgo"); if(sg) sg.addEventListener("click",()=>{
     const n=Math.min(PRESTIGE_MAX,(P.prestige||0)+1);
-    $("#secretzone").innerHTML=`<span class="confirm">All module progress resets to Beginner${(P.prestige||0)<PRESTIGE_MAX?` and you move to prestige ${n}`:""}. You get <b>Secret 1: ${esc(SECRET_NAMES[0])}</b> now and can claim the rest right after. <button class="btn" id="sy">Enter</button><button class="btn ghost" id="sn">Cancel</button></span>`;
+    $("#secretzone").innerHTML=`<span class="confirm">All module progress resets to Trainee${(P.prestige||0)<PRESTIGE_MAX?` and you move to prestige ${n}`:""}. You get <b>Secret 1: ${esc(SECRET_NAMES[0])}</b> now and can claim the rest right after. <button class="btn" id="sy">Enter</button><button class="btn ghost" id="sn">Cancel</button></span>`;
     $("#sy").addEventListener("click",()=>{ P=Object.assign({ports:{},items:{},subnet:[],ladderOrder:false,exams:[],acro:{},acroSecond:false,pbq:{}},{prestige:n,everMastered:true,secret:1,secretOpen:true,secretBonus:(P.prestige||0)<PRESTIGE_MAX?n:0}); save(); viewProgress(); const c=$("#masterycard"); if(c) c.scrollIntoView({block:"center"}); });
     $("#sn").addEventListener("click",viewProgress);
   });
@@ -3721,12 +3721,12 @@ function masteryCard(justEarned){
   const total=modulesForMastery().length, ex=expertCount(), lvl=P.prestige||0, ready=P.mastered&&lvl<PRESTIGE_MAX;
   const head=P.everMastered?badgeSVG(lvl,88):badgeSVG(0,88,true);
   const status=lvl>=PRESTIGE_MAX?`<b>Max prestige reached.</b> You hold all ${PRESTIGE_MAX} prestige badges.<br><span class="reward">★ See instructor for reward</span>`
-    : ready?`<b>${justEarned?"Network+ Mastery Badge earned!":"All modules at Master."}</b> You can prestige to reset your progress and earn the next badge.`
-    : `Reach Master (90%+) in every module to ${P.everMastered?"unlock the next prestige":"earn the Network+ Mastery Badge"}. <b>${ex} of ${total}</b> modules at Master.`;
+    : ready?`<b>${justEarned?"Network+ Mastery Badge earned!":"All modules at Engineer."}</b> You can prestige to reset your progress and earn the next badge.`
+    : `Reach Master (90%+) in every module to ${P.everMastered?"unlock the next prestige":"earn the Network+ Mastery Badge"}. <b>${ex} of ${total}</b> modules at Engineer.`;
   return `<div class="card" id="masterycard" style="margin-top:16px"><div class="mastery-card">${head}<div>
     <h3 style="font-size:1.3rem">${P.everMastered?esc(badgeTitle(lvl)):"Network+ Mastery Badge"}</h3>
     <p style="margin:.3em 0">${status}</p>
-    <p class="note" style="margin:.3em 0">Prestige is just for fun. It resets every module to Beginner and keeps your badge on the home page. There are ${PRESTIGE_MAX} prestige levels, each with its own badge.</p>
+    <p class="note" style="margin:.3em 0">Prestige is just for fun. It resets every module to Trainee and keeps your badge on the home page. There are ${PRESTIGE_MAX} prestige levels, each with its own badge.</p>
     <div class="q-actions" id="prestigezone">${ready?`<button class="btn" id="prestige">Prestige to level ${lvl+1}</button>`:""}</div>
     ${secretZone()}
   </div></div>
@@ -3740,7 +3740,7 @@ function secretZone(){
   if(got>=SECRET_MAX) return `<div class="secret-zone"><b>Secret Prestige complete.</b> You hold all ${SECRET_MAX} secret badges.<br><span class="reward">★ See instructor for reward</span></div>`;
   const bonus=P.secretBonus?`<div style="display:flex;align-items:center;gap:10px;margin:0 0 8px">${badgeSVG(P.secretBonus,40)}<span>Entering Secret Prestige also earned you <b>${esc(badgeTitle(P.secretBonus))}</b>.</span></div>`:"";
   if(P.secretOpen) return `<div class="secret-zone">${got<SECRET_MAX?bonus:""}<b>Secret Prestige is open.</b> ${SECRET_MAX-got} secret badge${SECRET_MAX-got===1?"":"s"} left to claim. No more resets needed. <div class="q-actions" style="margin-top:8px"><button class="btn" id="secretclaim">Claim Secret ${got+1}: ${esc(SECRET_NAMES[got])}</button></div></div>`;
-  if(gmAll()) return `<div class="secret-zone"><b>★ Secret Prestige unlocked.</b> Grandmaster in every module. Entering resets your module progress once, counts as this cycle's prestige, and opens ${SECRET_MAX} secret badges you can claim back to back. <div class="q-actions" id="secretzone" style="margin-top:8px"><button class="btn" id="secretgo">Enter Secret Prestige</button></div></div>`;
+  if(gmAll()) return `<div class="secret-zone"><b>★ Secret Prestige unlocked.</b> Architect in every module. Entering resets your module progress once, counts as this cycle's prestige, and opens ${SECRET_MAX} secret badges you can claim back to back. <div class="q-actions" id="secretzone" style="margin-top:8px"><button class="btn" id="secretgo">Enter Secret Prestige</button></div></div>`;
   return "";
 }
 
