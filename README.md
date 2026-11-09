@@ -1,14 +1,29 @@
+<p align="center"><img src="docs/images/mycc-logo.png" alt="MyComputerCareer: Training for a better life" width="320"></p>
+
 # Provo by MyComputerCareer
 
-Study labs for IT certification exams. Each tool drills the topics an exam actually tests, tracks what you have mastered, and gives you timed practice exams with performance-based questions (PBQs).
+Provo is MyComputerCareer's exam-readiness lab for IT certifications. It turns each exam's official objectives into short drills, hands-on performance-based questions (PBQs), and timed practice exams, and it shows students exactly which topics they have mastered and which still need work.
 
-Provo works three ways: in your web browser, as a single file you can keep offline, or inside the [Joplin](https://joplinapp.org/) note-taking app on desktop and Android.
+**[Open Provo →](https://benmhsmith.github.io/Provo/)**
 
-**[Open the website →](https://benmhsmith.github.io/Provo/)**
+<p align="center"><img src="docs/images/provo-home.png" alt="Provo Network+ home page: the MyComputerCareer logo, the CompTIA Network+ N10-009 title, the official domain weighting bar, and the first study modules with their ranks." width="860"></p>
 
-<p align="center"><img src="docs/images/home.png" alt="Provo Network+ home page: the MyComputerCareer logo, the CompTIA Network+ N10-009 title, the official domain weighting bar, and the first study modules with their ranks." width="860"></p>
+## About MyComputerCareer
 
-## Choose your exam
+MyComputerCareer (MyCC) trains people for careers in information technology. Its programs take students who are new to IT through industry certifications such as CompTIA A+, Network+, Security+, and CySA+. Its motto is *Training for a better life*.
+
+Provo was built by a MyCC instructor to support that training. It gives students a place to practice between classes and a clear, honest picture of when they are ready to book the exam.
+
+## What Provo does
+
+- **Follows the official objectives.** Every module maps to the exam's published domains, weighted the way the exam weighs them. Topics removed from the current exam version are left out.
+- **Builds skills in stages.** Students start with vocabulary (acronyms, ports, the OSI model), move to core skills (subnetting, media, security), then troubleshooting, exam technique, and timed practice exams.
+- **Practices the hard questions.** Randomized performance-based questions put students at a switch console, a cable tester, a routing table, a firewall rule set, or a NOC dashboard, the same kinds of tasks the exam asks for.
+- **Measures real mastery.** Each module ranks a student from Beginner to Intermediate, Advanced, Expert, and Pro, based on what they have answered correctly over time, not on one lucky run. Reaching Expert in every module earns the Mastery Badge.
+- **Uses original content only.** No question is copied from a real exam or a brain dump. Answers are checked against the exam objectives, the relevant standards, or vendor documentation.
+- **Keeps progress private.** Progress is saved on the student's own device. Nothing is sent anywhere, and there is no account to create.
+
+## Exams
 
 | Exam | Exam code | Status | Start here |
 |---|---|---|---|
@@ -20,46 +35,34 @@ Provo works three ways: in your web browser, as a single file you can keep offli
 
 | Hands-on PBQs with real command output | Cable tester wire maps and port diagnostics |
 |---|---|
-| <img src="docs/images/pbq-vlan.png" alt="VLAN and trunk troubleshooting PBQ: a switch console showing show spanning-tree output." width="420"> | <img src="docs/images/pbq-cable.png" alt="Cable diagnostics PBQ: a cable tester wire map plus switch port status for one desk." width="420"> |
+| <img src="docs/images/provo-pbq-vlan.png" alt="VLAN and trunk troubleshooting PBQ: a switch console showing show spanning-tree output." width="420"> | <img src="docs/images/provo-pbq-cable.png" alt="Cable diagnostics PBQ: a cable tester wire map plus switch port status for one desk." width="420"> |
 | **Routing tables you build and test** | **A NOC dashboard to read like a pro** |
-| <img src="docs/images/pbq-routing.png" alt="Routing PBQ: a four-router network diagram with tickets to solve." width="420"> | <img src="docs/images/pbq-noc.png" alt="NOC monitoring dashboard PBQ showing wireless access point statistics." width="420"> |
-| **Ranks that show what you have actually mastered** | **Works on your phone, light or dark** |
-| <img src="docs/images/modules.png" alt="Module list with ranks from Intermediate to Pro and progress bars." width="420"> | <img src="docs/images/phone-security.png" alt="Security module on a phone in dark mode, with topic progress chips and a question." width="200"> |
+| <img src="docs/images/provo-pbq-routing.png" alt="Routing PBQ: a four-router network diagram with tickets to solve." width="420"> | <img src="docs/images/provo-pbq-noc.png" alt="NOC monitoring dashboard PBQ showing wireless access point statistics." width="420"> |
+| **Ranks that show what each student has mastered** | **Works on phones, light or dark** |
+| <img src="docs/images/provo-modules.png" alt="Module list with ranks from Intermediate to Pro and progress bars." width="420"> | <img src="docs/images/provo-phone-security.png" alt="Security module on a phone in dark mode, with topic progress chips and a question." width="200"> |
 
-## New to this? Start here
+## How students use it
 
-You don't need to know anything about GitHub to use Provo.
+Provo runs three ways. Each exam's page has step-by-step setup for all three.
 
-1. **Find your exam** in the table above and click its link.
-2. **Pick how you want to study.** The exam's page explains each option in plain steps:
-   - **In your browser:** nothing to install. Works on computers, tablets, and phones.
-   - **As a file:** download one `.html` file and open it, even with no internet.
-   - **In Joplin:** install the plugin and the tool opens inside your study notes.
-3. **Follow the modules in order.** Each tool is laid out in stages, from vocabulary to full practice exams.
+- **In a web browser:** [open Provo](https://benmhsmith.github.io/Provo/). Nothing to install. Works on computers, tablets, and phones. On iPhone, tap Share, then Add to Home Screen.
+- **As a single file:** download the `.html` file from the [Releases page](https://github.com/benmhsmith/Provo/releases) and open it, even with no internet.
+- **Inside Joplin:** install the `.jpl` plugin from the [Releases page](https://github.com/benmhsmith/Provo/releases), and the lab opens inside the student's [Joplin](https://joplinapp.org/) study notes on desktop or Android.
 
-Your progress is saved on your own device. Nothing is sent anywhere.
+## For MyCC instructors and staff
 
-## Where to download
-
-Every version is published on the [Releases page](https://github.com/benmhsmith/Provo/releases). Each release has:
-
-- `provo-<exam>-vX.Y.Z.jpl`: the Joplin plugin
-- `Provo-<Exam>-vX.Y.Z.html`: the standalone web page
-
-## How this repository is organized
+- Each exam's folder lists its modules, how ranks are earned, and its [changelog](certs/network-plus/CHANGELOG.md).
+- Every version is published on the [Releases page](https://github.com/benmhsmith/Provo/releases).
+- To report a wrong answer or suggest a topic, open an [issue](https://github.com/benmhsmith/Provo/issues/new/choose).
+- To change content or code, follow [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ```
 Provo/
-├── README.md            ← you are here
 ├── certs/               ← one folder per exam
 │   └── network-plus/    ← Provo Network+: source, Joplin plugin, changelog
-├── core/                ← shared engine (planned; see core/README.md)
+├── core/                ← shared engine (planned)
 └── docs/                ← the website served by GitHub Pages
 ```
-
-- **Students** only need the exam's page and the Releases page.
-- **Instructors** can find each tool's coverage and the changelog in its exam folder.
-- **Contributors** should read [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
@@ -67,4 +70,4 @@ Copyright (c) 2026 MyComputerCareer. All rights reserved. Provo is proprietary s
 
 Versions up to and including v4.0.0 were released under the GNU GPL v3.0 under earlier names. Third-party parts, such as the embedded fonts, keep their own licenses; see [NOTICE.md](NOTICE.md).
 
-CompTIA, Network+, Security+, and A+ are trademarks of CompTIA, Inc. Provo contains no CompTIA exam questions.
+CompTIA, Network+, Security+, A+, and CySA+ are trademarks of CompTIA, Inc. Provo contains no CompTIA exam questions.
