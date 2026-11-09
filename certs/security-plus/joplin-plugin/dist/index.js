@@ -81,10 +81,34 @@ joplin.plugins.register({
         DIAG.scan = list.length + ' study notes';
       } catch (e) { note(DIAG.errors, 'scan: ' + (e && e.message || e)); }
     }
+    /* Turn the outline off without a restart (for example after "Reset everything, including badges").
+       A chrome stylesheet cannot be unloaded, so a later stylesheet cancels it, and old files are deleted
+       so nothing is left for the next session. */
+    async function archOff() {
+      if (archBusy) return;
+      archBusy = true;
+      try {
+        const fs = joplin.require('fs-extra');
+        const dir = await joplin.plugins.dataDir();
+        if (lastCss) {
+          /* the outline is showing in this session: cancel it with a later stylesheet */
+          const file = dir + '/grand-architect-off-' + Date.now() + '.css';
+          await fs.writeFile(file, '/* Provo Security+: Grand Architect off */\n.note-list-item-wrapper[data-id], .list-item-container[data-folder-id] { animation: none !important; box-shadow: none !important; }\n', 'utf8');
+          await joplin.window.loadChromeCssFile(file);
+          lastCss = '';
+          DIAG.arch = 'off';
+        } else if (!archCleaned) {
+          /* nothing loaded this session: delete stylesheets left over from earlier sessions */
+          archCleaned = true;
+          try { (await fs.readdir(dir)).filter(f => /^grand-architect-(off-)?\d+\.css$/.test(f)).forEach(f => fs.remove(dir + '/' + f).catch(() => {})); } catch (e) {}
+        }
+      } catch (e) { note(DIAG.errors, 'archOff: ' + (e && e.message || e)); }
+      archBusy = false;
+    }
     async function archCheck(progressJson) {
       if (PLATFORM !== 'desktop' || archBusy) return;
       let secret = 0; try { secret = (JSON.parse(progressJson || '{}').secret) || 0; } catch (e) {}
-      if (secret < 5) return;
+      if (secret < 5) { await archOff(); return; }
       archBusy = true;
       try {
         if (!archScanned) { archScanned = true; await scanStudyNotes(); }
@@ -107,7 +131,7 @@ ${[notes, folders].filter(Boolean).join(',\n')} { border-radius: 6px; animation:
         lastCss = css;
         const fs = joplin.require('fs-extra');
         const dir = await joplin.plugins.dataDir();
-        if (!archCleaned) { archCleaned = true; try { (await fs.readdir(dir)).filter(f => /^grand-architect-\d+\.css$/.test(f)).forEach(f => fs.remove(dir + '/' + f).catch(() => {})); } catch (e) {} }
+        if (!archCleaned) { archCleaned = true; try { (await fs.readdir(dir)).filter(f => /^grand-architect-(off-)?\d+\.css$/.test(f)).forEach(f => fs.remove(dir + '/' + f).catch(() => {})); } catch (e) {} }
         const file = dir + '/grand-architect-' + Date.now() + '.css';
         await fs.writeFile(file, css, 'utf8');
         await joplin.window.loadChromeCssFile(file);
