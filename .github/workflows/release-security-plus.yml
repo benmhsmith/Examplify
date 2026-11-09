@@ -1,0 +1,68 @@
+# Publishes the GitHub Release for Provo Security+.
+#
+# It runs when a change to the plugin version (manifest.json) is merged into main,
+# when this workflow file changes, or when someone clicks "Run workflow" on the
+# Actions tab. If a release for the current version already exists, it does nothing.
+# Otherwise it builds the Joplin plugin (.jpl) and the standalone page (.html),
+# creates the tag security-plus-vX.Y.Z, and publishes the release with notes taken
+# from CHANGELOG.md.
+name: Release Provo Security+
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'certs/security-plus/joplin-plugin/dist/manifest.json'
+      - '.github/workflows/release-security-plus.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-security-plus
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+
+      - name: Read the version
+        run: |
+          VERSION="$(python3 -c "import json;print(json.load(open('certs/security-plus/joplin-plugin/dist/manifest.json'))['version'])")"
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+          echo "TAG=security-plus-v$VERSION" >> "$GITHUB_ENV"
+          echo "Version in manifest.json: $VERSION"
+
+      - name: Skip if this version is already released
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Release $TAG already exists. Nothing to do."
+            echo "SKIP=1" >> "$GITHUB_ENV"
+          fi
+
+      - name: Build the plugin and the web page
+        if: env.SKIP != '1'
+        run: python3 certs/security-plus/scripts/release.py --build-only
+
+      - name: Write the release notes from CHANGELOG.md
+        if: env.SKIP != '1'
+        run: python3 certs/security-plus/scripts/release.py --notes "$VERSION" > release-notes.md
+
+      - name: Tag and publish the GitHub Release
+        if: env.SKIP != '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$TAG" \
+            --target "$GITHUB_SHA" \
+            --title "Provo Security+ v$VERSION" \
+            --notes-file release-notes.md \
+            --latest=false \
+            "certs/security-plus/build/provo-security-plus-v$VERSION.jpl" \
+            "certs/security-plus/build/Provo-Security-Plus-v$VERSION.html"
