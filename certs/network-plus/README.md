@@ -65,6 +65,7 @@ Works on Windows, Mac, Linux, Chromebooks, Android, iPhone, and iPad. Progress i
 3. Click the **Plugin tools** gear button and choose **Install from file**. Pick the `.jpl` file.
 4. Restart Joplin when asked. If Joplin keeps running in the system tray, quit it fully first.
 5. Choose **Tools → Provo Network+ → Add Provo Network+ note**. A note named **Provo Network+** is created in the notebook you have open and opens in the full-width tool. Delete it any time; your progress is saved in Joplin and comes back when you add the note again.
+6. For a distraction-free view, choose **Tools → Provo Network+ → Open Provo Network+ in its own window**. The tool opens in a separate window with nothing else around it (Joplin 3.2 or later).
 
 **On Android:**
 

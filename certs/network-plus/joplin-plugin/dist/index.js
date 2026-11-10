@@ -150,10 +150,11 @@ ${[notes, folders].filter(Boolean).join(',\n')} { border-radius: 6px; animation:
     });
     const COMMAND_TEXT = '```net+\n```\n';
     const NOTE_TITLE = 'Provo Network+';
+    const NOTE_BODY = COMMAND_TEXT + '\n<!-- This note opens Provo Network+. If you see this text, click Toggle editor (top right) to go back to the tool. Keep the two lines above. -->\n';
     /* Add a ready-made study note: creates "Provo Network+" in the notebook that is open (or in a "Provo" notebook
        if none is open) and opens it, which shows the full-width tool. Progress lives in Joplin's settings,
        not in the note, so notes can be deleted and added again without losing anything. */
-    async function addStudyNote() {
+    async function addStudyNote(quiet) {
       try {
         let folderId = '';
         try { const f = await joplin.workspace.selectedFolder(); folderId = (f && f.id) || ''; } catch (e) {}
@@ -163,14 +164,35 @@ ${[notes, folders].filter(Boolean).join(',\n')} { border-radius: 6px; animation:
           const existing = (res.items || []).find(function (f) { return f.title === 'Provo'; });
           folderId = existing ? existing.id : (await joplin.data.post(['folders'], null, { title: 'Provo' })).id;
         }
-        const created = await joplin.data.post(['notes'], null, { title: NOTE_TITLE, body: COMMAND_TEXT, parent_id: folderId });
-        await joplin.commands.execute('openNote', created.id);
-        try { await joplin.views.dialogs.showToast({ message: NOTE_TITLE + ' note added.', type: 'success', duration: 3000 }); } catch (e) {}
+        const created = await joplin.data.post(['notes'], null, { title: NOTE_TITLE, body: NOTE_BODY, parent_id: folderId });
+        if (!quiet) await joplin.commands.execute('openNote', created.id);
+        return created.id;
+        if (!quiet) { try { await joplin.views.dialogs.showToast({ message: NOTE_TITLE + ' note added.', type: 'success', duration: 3000 }); } catch (e) {} }
       } catch (e) {
         note(DIAG.errors, 'add note: ' + (e && e.message || e));
+        if (quiet) return '';
         await joplin.views.dialogs.showMessageBox('Could not add the note automatically. Create a note and type ```net+ on one line and ``` on the next line instead.');
       }
     }
+    /* Open the tool in its own Joplin window (no notebook or note list beside it). Reuses the newest
+       Provo note, or adds one first. Needs Joplin desktop 3.2 or later; otherwise it opens in the main window. */
+    async function openOwnWindow() {
+      let id = '';
+      try {
+        const list = await studyList();
+        for (const x of list.slice().reverse()) {
+          try { const n = await joplin.data.get(['notes', x.note], { fields: ['id', 'body', 'deleted_time'] }); if (n && !n.deleted_time && FENCE.test(n.body || '')) { id = n.id; break; } } catch (e) {}
+        }
+        if (!id) id = await addStudyNote(true);
+        if (!id) return;
+        await joplin.commands.execute('openNoteInNewWindow', id);
+      } catch (e) {
+        note(DIAG.errors, 'own window: ' + (e && e.message || e));
+        if (id) { try { await joplin.commands.execute('openNote', id); } catch (e2) {} }
+        try { await joplin.views.dialogs.showToast({ message: 'This version of Joplin cannot open a separate window, so Provo Network+ opened here instead.', type: 'info', duration: 5000 }); } catch (e3) {}
+      }
+    }
+    await joplin.commands.register({ name: 'netplusft.ownWindow', label: 'Open Provo Network+ in its own window', iconName: 'fas fa-external-link-alt', execute: openOwnWindow });
     await joplin.commands.register({ name: 'netplusft.addNote', label: 'Add Provo Network+ note', iconName: 'fas fa-plus-circle', execute: addStudyNote });
     const dialog = await joplin.views.dialogs.create('netplusft_howto');
     await joplin.views.dialogs.setHtml(dialog, `
@@ -179,6 +201,7 @@ ${[notes, folders].filter(Boolean).join(',\n')} { border-radius: 6px; animation:
         <p style="margin:0 0 12px">A study tool for the CompTIA Network+ (N10-009) exam. It focuses on what the exam weighs most: port drills, subnetting practice, exam acronyms, PBQ practice, the troubleshooting steps, mini-exams, and a one-page cram sheet. Your progress saves automatically.</p>
         <h3 style="margin:0 0 6px;font-size:1.1em">Add it to Joplin</h3>
         <p style="margin:0 0 12px">Click <b>Add Provo Network+ note</b> below, or choose <b>Tools → Provo Network+ → Add Provo Network+ note</b>. A note named <b>Provo Network+</b> is created in the notebook you have open, and it opens straight into the full-width tool. You can delete the note at any time: your progress is saved in Joplin, not in the note, so adding the note again picks up where you left off.</p>
+        <p style="margin:0 0 12px">For a distraction-free view, choose <b>Tools → Provo Network+ → Open Provo Network+ in its own window</b>. The tool opens in a separate window with nothing else around it.</p>
         <h3 style="margin:0 0 6px;font-size:1.1em">Or add it to a note yourself</h3>
         <ol style="margin:0 0 12px;padding-left:1.3em">
           <li>Create a new note, or open the note you want to use.</li>
@@ -229,6 +252,7 @@ ${[notes, folders].filter(Boolean).join(',\n')} { border-radius: 6px; animation:
     /* Tools (and Help) > Provo Network+ > How to use / Changelog */
     const SUB = [
       { commandName: 'netplusft.addNote', label: 'Add Provo Network+ note' },
+      { commandName: 'netplusft.ownWindow', label: 'Open Provo Network+ in its own window' },
       { commandName: 'netplusft.howTo', label: 'How to use' },
       { commandName: 'netplusft.changelog', label: 'Changelog' }
     ];
@@ -243,6 +267,7 @@ ${[notes, folders].filter(Boolean).join(',\n')} { border-radius: 6px; animation:
           await joplin.views.menus.create('netplusft_help_menu', 'Provo Network+', SUB, 'help');
         } else {
           await joplin.views.menuItems.create('netplusft_addnote_tools', 'netplusft.addNote', 'tools');
+          await joplin.views.menuItems.create('netplusft_ownwindow_tools', 'netplusft.ownWindow', 'tools');
           await joplin.views.menuItems.create('netplusft_howto_tools', 'netplusft.howTo', 'tools');
           await joplin.views.menuItems.create('netplusft_changelog_tools', 'netplusft.changelog', 'tools');
         }
