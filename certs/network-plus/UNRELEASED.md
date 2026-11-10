@@ -3,4 +3,4 @@
 - Joplin: the Grand Architect outline on study notes and notebooks now turns off right away when the secret badges are reset, and leftover outline files from earlier sessions are cleaned up.
 - Joplin: new "Add Provo Network+ note" command (Tools → Provo Network+, and a button in the How to use window). It creates a note named Provo Network+ in the notebook you have open and opens it straight into the full-width tool, so there is nothing to copy and paste. Delete the note any time; your progress is kept and comes back when you add the note again.
 - Joplin: notes added by the plugin include a short hidden line that tells anyone who switches to the Markdown editor how to get back to the tool.
-- Joplin: the How to use and Changelog windows now have a fixed size with a scroll bar, so their buttons stay on screen even when Joplin cannot be made larger.
+- Joplin: the How to use and Changelog windows now have a fixed size and scroll, so long text is no longer cut off and the buttons stay on screen even when Joplin cannot be made larger.
