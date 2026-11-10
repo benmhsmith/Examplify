@@ -415,6 +415,24 @@ html.mobile .kf-row{grid-template-columns:1fr} html.mobile .kf-wire{flex-directi
 .ph-seg.hit{background:var(--ok-bg);box-shadow:inset 0 0 0 1.5px var(--ok)} .ph-seg.miss{background:var(--warn-bg);box-shadow:inset 0 0 0 1.5px var(--warn)} .ph-seg.extra{background:var(--bad-bg);box-shadow:inset 0 0 0 1.5px var(--bad)}
 .ph-status{padding:6px 14px;border-top:1px solid var(--line);font:.8rem var(--font-mono,monospace);color:var(--muted);background:var(--sunk);overflow-wrap:anywhere}
 .ph-missed b{color:var(--warn)}
+.ph-seg.hit,.ph-seg.miss,.ph-seg.extra{border-bottom-color:transparent}
+/* Smishing phone, address check, kill chain */
+.sms-phone{max-width:340px;margin:0 auto;border:2px solid var(--ink);border-radius:28px;overflow:hidden;background:var(--surface)}
+.sms-top{padding:14px 14px 10px;border-bottom:1px solid var(--line);text-align:center;background:var(--sunk);display:flex;flex-direction:column;align-items:center;gap:2px}
+.sms-top small{color:var(--muted);font-size:.75rem}
+.sms-chat{padding:14px;display:flex;flex-direction:column;gap:8px;min-height:180px}
+.sms-b{align-self:flex-start;max-width:88%;background:var(--sunk);border-radius:16px 16px 16px 4px;padding:8px 10px;font-size:.95rem}
+.sms-chat .note{font-size:.72rem}
+.url-list{display:flex;flex-direction:column;gap:6px;border:1.5px solid var(--line);border-radius:10px;padding:10px;background:var(--surface)}
+.url-row{font:.92rem var(--font-mono,monospace);padding:6px 8px;width:100%;border:1px solid var(--line)}
+.kc-chain{display:flex;flex-direction:column;gap:6px}
+.kc-stage{display:flex;gap:10px;align-items:flex-start}
+.kc-n{flex:none;width:28px;height:28px;border-radius:50%;background:var(--logo);color:#fff;display:grid;place-items:center;font-weight:700;margin-top:2px}
+.kc-slot{width:100%;min-height:44px;margin-top:4px}
+.kc-slot .kf-fill{color:var(--ink);font-size:.9rem}
+.kc-slot:not(.filled) .kf-fill{color:var(--muted)}
+.kc-pool{display:flex;flex-direction:column;gap:6px;margin-top:12px;padding:10px;border:1px dashed var(--line);border-radius:10px;background:var(--sunk)}
+.kc-ev{text-align:left;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:8px 10px;font:.9rem var(--font-body)}
 </style>
 
 <header class="top">
@@ -937,43 +955,43 @@ const TERMSETS = {
   {id:"t33",g:"vector",d:2,t:"Image-based vector",def:"Malicious code or links hidden inside image files",sc:"A malicious SVG image runs embedded script when a user opens it. Which type of threat vector is this?",alt:["image based"]},
   {id:"t34",g:"vector",d:2,t:"File-based vector",def:"Malicious code hidden in documents or other files, such as Office macros or PDFs",sc:"A spreadsheet on a shared drive contains a macro that downloads malware when someone enables it. Which type of threat vector is this?",alt:["file based", "malicious attachment"]}
  ]},
- attacks:{need:2,groups:[["app","Application flaws","Application"],["plat","Platform, mobile & cloud flaws","Platform"],["mal","Malware","Malware"],["net","Network & password attacks","Network"],["phys","Physical, wireless & crypto attacks","Other"],["ind","Indicators of malicious activity","Indicators"],["mit","Mitigation techniques","Mitigation"]],items:[
-  {id:"a1",g:"app",d:2,t:"SQL injection",def:"Inserting database commands into application input so the database runs them",sc:"A login form accepts ' OR 1=1 -- as a username and lets the attacker in. What attack is this?",fix:"Input validation and parameterized queries",fixAvoid:["a2","a3"]},
-  {id:"a2",g:"app",d:2,t:"Cross-site scripting (XSS)",def:"Injecting malicious script into a web page so it runs in other users' browsers",sc:"An attacker posts a comment containing a script tag that runs in every visitor's browser. What attack is this?",fix:"Input validation and output encoding",fixAvoid:["a1","a3"]},
-  {id:"a3",g:"app",d:2,t:"Buffer overflow",def:"Writing more data into a memory buffer than it can hold, overwriting adjacent memory",sc:"An application crashes when a field receives far more characters than it expects, and the attacker gains code execution. What vulnerability is this?",fix:"Bounds checking and input validation in the code",fixAvoid:["a1","a2"]},
-  {id:"a5",g:"app",d:2,t:"Race condition",def:"A flaw where the result depends on the timing between two operations, such as checking a value and then using it",sc:"Two transactions run at the same moment and both pass a balance check before either withdrawal is recorded. What vulnerability is this?",avoid:["a18"]},
+ attacks:{need:2,typed:true,labs:["vulnhunt","malware","kill"],groups:[["app","Application flaws","Application"],["plat","Platform, mobile & cloud flaws","Platform"],["mal","Malware","Malware"],["net","Network & password attacks","Network"],["phys","Physical, wireless & crypto attacks","Other"],["ind","Indicators of malicious activity","Indicators"],["mit","Mitigation techniques","Mitigation"]],items:[
+  {id:"a1",g:"app",d:2,t:"SQL injection",def:"Inserting database commands into application input so the database runs them",sc:"A login form accepts ' OR 1=1 -- as a username and lets the attacker in. What attack is this?",fix:"Input validation and parameterized queries",fixAvoid:["a2","a3"],alt:["sqli", "sql injection attack"]},
+  {id:"a2",g:"app",d:2,t:"Cross-site scripting (XSS)",def:"Injecting malicious script into a web page so it runs in other users' browsers",sc:"An attacker posts a comment containing a script tag that runs in every visitor's browser. What attack is this?",fix:"Input validation and output encoding",fixAvoid:["a1","a3"],alt:["xss", "cross site scripting"]},
+  {id:"a3",g:"app",d:2,t:"Buffer overflow",def:"Writing more data into a memory buffer than it can hold, overwriting adjacent memory",sc:"An application crashes when a field receives far more characters than it expects, and the attacker gains code execution. What vulnerability is this?",fix:"Bounds checking and input validation in the code",fixAvoid:["a1","a2"],alt:["overflow", "buffer overrun"]},
+  {id:"a5",g:"app",d:2,t:"Race condition",def:"A flaw where the result depends on the timing between two operations, such as checking a value and then using it",sc:"Two transactions run at the same moment and both pass a balance check before either withdrawal is recorded. What vulnerability is this?",avoid:["a18"],alt:["race"]},
   {id:"a13",g:"app",d:2,t:"Memory injection",def:"Writing malicious code into the memory of a running process so it runs inside that process",sc:"Malware writes its code into the memory of a trusted running process so it runs under that process's name. What attack is this?"},
   {id:"a14",g:"app",d:2,t:"Directory traversal",def:"Using ../ sequences in input to reach files outside the folder an application meant to allow",sc:"A request for /download?file=../../../../etc/passwd returns the server's account file. What attack is this?"},
   {id:"a15",g:"app",d:2,t:"Privilege escalation",def:"Gaining higher permissions than an account was given",sc:"A standard user exploits a flaw in a service to get administrator rights on the server. What attack is this?"},
-  {id:"a18",g:"app",d:2,t:"Time-of-check to time-of-use (TOCTOU)",def:"A race condition where a resource changes between the moment it is checked and the moment it is used",sc:"A program checks that a file is safe, but an attacker swaps the file before the program opens it. What specific flaw is this?"},
-  {id:"a4",g:"plat",d:2,t:"Zero-day vulnerability",def:"A flaw unknown to the vendor, so no patch exists yet",sc:"Attackers exploit a flaw that the software maker has not discovered and has no fix for. What is it called?"},
-  {id:"a17",g:"plat",d:2,t:"Malicious update",def:"A software update that was tampered with so that it delivers malware",sc:"Attackers break into a vendor's update server, and customers install a backdoored patch. What vulnerability is this?",fix:"Verifying the digital signature on every update"},
-  {id:"a19",g:"plat",d:2,t:"Sideloading",def:"Installing apps from outside the official app store",sc:"A user installs an Android app from a website instead of the Play Store. What is this called?"},
-  {id:"a20",g:"plat",d:2,t:"Jailbreaking",def:"Removing a mobile operating system's built-in restrictions to get full control of the device",sc:"A user removes Apple's restrictions from an iPhone to install unapproved apps and tweaks. What is this called?"},
-  {id:"a21",g:"plat",d:2,t:"Misconfiguration",def:"An insecure setting, such as an open cloud storage bucket or a default left in place",sc:"A cloud storage bucket holding customer files was set to allow public access. What type of vulnerability is this?"},
-  {id:"a22",g:"plat",d:2,t:"Virtual machine escape",def:"Breaking out of a virtual machine to reach the hypervisor or other virtual machines",sc:"Malware in one guest VM exploits a flaw to run code on the host's hypervisor. What attack is this?"},
+  {id:"a18",g:"app",d:2,t:"Time-of-check to time-of-use (TOCTOU)",def:"A race condition where a resource changes between the moment it is checked and the moment it is used",sc:"A program checks that a file is safe, but an attacker swaps the file before the program opens it. What specific flaw is this?",alt:["toctou", "toc tou"]},
+  {id:"a4",g:"plat",d:2,t:"Zero-day vulnerability",def:"A flaw unknown to the vendor, so no patch exists yet",sc:"Attackers exploit a flaw that the software maker has not discovered and has no fix for. What is it called?",alt:["zero day", "0day", "zero-day"]},
+  {id:"a17",g:"plat",d:2,t:"Malicious update",def:"A software update that was tampered with so that it delivers malware",sc:"Attackers break into a vendor's update server, and customers install a backdoored patch. What vulnerability is this?",fix:"Verifying the digital signature on every update",alt:["malicious updates"]},
+  {id:"a19",g:"plat",d:2,t:"Sideloading",def:"Installing apps from outside the official app store",sc:"A user installs an Android app from a website instead of the Play Store. What is this called?",alt:["side loading"]},
+  {id:"a20",g:"plat",d:2,t:"Jailbreaking",def:"Removing a mobile operating system's built-in restrictions to get full control of the device",sc:"A user removes Apple's restrictions from an iPhone to install unapproved apps and tweaks. What is this called?",alt:["jailbreak", "rooting"]},
+  {id:"a21",g:"plat",d:2,t:"Misconfiguration",def:"An insecure setting, such as an open cloud storage bucket or a default left in place",sc:"A cloud storage bucket holding customer files was set to allow public access. What type of vulnerability is this?",alt:["misconfigured"]},
+  {id:"a22",g:"plat",d:2,t:"Virtual machine escape",def:"Breaking out of a virtual machine to reach the hypervisor or other virtual machines",sc:"Malware in one guest VM exploits a flaw to run code on the host's hypervisor. What attack is this?",alt:["vm escape"]},
   {id:"a23",g:"plat",d:2,t:"Resource reuse",def:"Leftover data in memory or storage that is handed to a new virtual machine or user",sc:"A new cloud VM is given disk space that still holds another customer's old data. What virtualization vulnerability is this?"},
   {id:"a6",g:"mal",d:2,t:"Ransomware",def:"Malware that encrypts files and demands payment for the decryption key",sc:"Files across a file server are encrypted and a note demands cryptocurrency. What malware is this?",fix:"Offline backups and endpoint protection",fixAvoid:["a25"]},
   {id:"a7",g:"mal",d:2,t:"Logic bomb",def:"Malicious code that runs when a specific condition or date is met",sc:"Code planted by a former administrator deletes the payroll database when his account is removed. What is this?"},
   {id:"a8",g:"mal",d:2,t:"Rootkit",def:"Malware that hides deep in the operating system to keep privileged access and avoid detection",sc:"Malware modifies the operating system kernel so that its files and processes do not appear in normal tools. What is it?"},
   {id:"a9",g:"mal",d:2,t:"Keylogger",def:"Malware or hardware that records keystrokes to capture credentials",sc:"A small device between a keyboard and a PC records everything typed. What is it?",avoid:["a27"]},
-  {id:"a24",g:"mal",d:2,t:"Trojan",def:"Malware disguised as legitimate software",sc:"A free game download secretly installs a backdoor along with the game. What malware is this?"},
+  {id:"a24",g:"mal",d:2,t:"Trojan",def:"Malware disguised as legitimate software",sc:"A free game download secretly installs a backdoor along with the game. What malware is this?",alt:["trojan horse"]},
   {id:"a25",g:"mal",d:2,t:"Worm",def:"Malware that spreads across a network by itself, with no user action",sc:"Malware spreads from server to server through an unpatched network service without anyone opening anything. What is it?",fix:"Patching and network segmentation",fixAvoid:["a6"]},
   {id:"a26",g:"mal",d:2,t:"Virus",def:"Malware that attaches to files or programs and spreads when a user runs or shares them",sc:"Malicious code attaches itself to programs and spreads each time users run and share those programs. What is it?"},
   {id:"a27",g:"mal",d:2,t:"Spyware",def:"Malware that secretly gathers information about a user's activity",sc:"Hidden software tracks a user's browsing and sends it to a third party. What malware is this?"},
   {id:"a28",g:"mal",d:2,t:"Bloatware",def:"Unneeded software that comes preinstalled by the manufacturer and can add vulnerabilities",sc:"A new laptop comes with trial apps and utilities the user never asked for. What are they called?"},
-  {id:"a10",g:"net",d:2,t:"Password spraying",def:"Trying a few common passwords against many accounts to avoid lockouts",sc:"Logs show one failed login for each of hundreds of accounts, all with the password Spring2026!. What attack is this?",fix:"Multifactor authentication",fixAvoid:["a31"]},
-  {id:"a11",g:"net",d:2,t:"On-path attack",def:"An attacker secretly intercepts and possibly alters traffic between two parties",sc:"An attacker on a café's Wi-Fi relays and reads traffic between a user and a website. What attack is this?",fix:"Encrypted protocols such as TLS",fixAvoid:["a37"]},
-  {id:"a12",g:"net",d:2,t:"Distributed denial of service (DDoS)",def:"Many compromised systems flood a target so legitimate users cannot reach it",sc:"Thousands of infected devices flood a company's website with traffic until it stops responding. What attack is this?",fix:"Upstream traffic filtering from a DDoS protection service",avoid:["a33"]},
+  {id:"a10",g:"net",d:2,t:"Password spraying",def:"Trying a few common passwords against many accounts to avoid lockouts",sc:"Logs show one failed login for each of hundreds of accounts, all with the password Spring2026!. What attack is this?",fix:"Multifactor authentication",fixAvoid:["a31"],alt:["spraying"]},
+  {id:"a11",g:"net",d:2,t:"On-path attack",def:"An attacker secretly intercepts and possibly alters traffic between two parties",sc:"An attacker on a café's Wi-Fi relays and reads traffic between a user and a website. What attack is this?",fix:"Encrypted protocols such as TLS",fixAvoid:["a37"],alt:["on path", "man in the middle", "mitm"]},
+  {id:"a12",g:"net",d:2,t:"Distributed denial of service (DDoS)",def:"Many compromised systems flood a target so legitimate users cannot reach it",sc:"Thousands of infected devices flood a company's website with traffic until it stops responding. What attack is this?",fix:"Upstream traffic filtering from a DDoS protection service",avoid:["a33"],alt:["ddos"]},
   {id:"a16",g:"net",d:2,t:"Replay attack",def:"Capturing valid data, such as a login exchange or token, and sending it again later",sc:"An attacker records a valid login exchange and sends it again later to log in as the user. What attack is this?",fix:"Timestamps and one-time session tokens"},
-  {id:"a31",g:"net",d:2,t:"Brute-force attack",def:"Trying every possible password against an account until one works",sc:"An attacker tries thousands of passwords against one admin account until one works. What attack is this?",fix:"Account lockout after repeated failed attempts",fixAvoid:["a10"]},
-  {id:"a32",g:"net",d:2,t:"DNS poisoning",def:"Corrupting DNS records or caches so names resolve to an attacker's address",sc:"Users who type the bank's correct address are sent to a fake site because a DNS server's cache was corrupted. What attack is this?",fix:"DNSSEC"},
-  {id:"a33",g:"net",d:2,t:"Amplification attack",def:"Sending small requests with a spoofed source address to services that send much larger replies to the victim",sc:"Attackers send small DNS queries with the victim's address spoofed, and open resolvers flood the victim with large replies. What attack is this?"},
+  {id:"a31",g:"net",d:2,t:"Brute-force attack",def:"Trying every possible password against an account until one works",sc:"An attacker tries thousands of passwords against one admin account until one works. What attack is this?",fix:"Account lockout after repeated failed attempts",fixAvoid:["a10"],alt:["brute force"]},
+  {id:"a32",g:"net",d:2,t:"DNS poisoning",def:"Corrupting DNS records or caches so names resolve to an attacker's address",sc:"Users who type the bank's correct address are sent to a fake site because a DNS server's cache was corrupted. What attack is this?",fix:"DNSSEC",alt:["dns cache poisoning", "dns spoofing"]},
+  {id:"a33",g:"net",d:2,t:"Amplification attack",def:"Sending small requests with a spoofed source address to services that send much larger replies to the victim",sc:"Attackers send small DNS queries with the victim's address spoofed, and open resolvers flood the victim with large replies. What attack is this?",alt:["amplified ddos", "reflected ddos", "amplification"]},
   {id:"a34",g:"phys",d:2,t:"Evil twin",def:"A fake access point that copies a real network's name to lure users",sc:"An attacker sets up a hotspot named CoffeeShop-WiFi next to the real one and captures users' traffic. What is this?"},
-  {id:"a35",g:"phys",d:2,t:"RFID cloning",def:"Copying the data from an RFID badge to make a working duplicate",sc:"An attacker stands near employees with a hidden reader and later opens doors with copies of their badges. What attack is this?"},
+  {id:"a35",g:"phys",d:2,t:"RFID cloning",def:"Copying the data from an RFID badge to make a working duplicate",sc:"An attacker stands near employees with a hidden reader and later opens doors with copies of their badges. What attack is this?",alt:["badge cloning", "rfid skimming"]},
   {id:"a36",g:"phys",d:2,t:"Environmental attack",def:"Attacking the systems that keep equipment running, such as cooling or power",sc:"Attackers turn off a data center's cooling so its servers overheat. What type of physical attack is this?"},
-  {id:"a37",g:"phys",d:2,t:"Downgrade attack",def:"Forcing a connection to use an older, weaker protocol version or cipher",sc:"An on-path attacker makes a browser and server fall back from TLS 1.3 to an old, weak version. What attack is this?",fix:"Disabling old protocol versions on servers",fixAvoid:["a11"]},
-  {id:"a38",g:"phys",d:2,t:"Hash collision",def:"Two different inputs that produce the same hash value",sc:"An attacker crafts a malicious file with the same MD5 hash as a legitimate one. What is this called?",fix:"A stronger hashing algorithm such as SHA-256",avoid:["a39"]},
+  {id:"a37",g:"phys",d:2,t:"Downgrade attack",def:"Forcing a connection to use an older, weaker protocol version or cipher",sc:"An on-path attacker makes a browser and server fall back from TLS 1.3 to an old, weak version. What attack is this?",fix:"Disabling old protocol versions on servers",fixAvoid:["a11"],alt:["downgrade"]},
+  {id:"a38",g:"phys",d:2,t:"Hash collision",def:"Two different inputs that produce the same hash value",sc:"An attacker crafts a malicious file with the same MD5 hash as a legitimate one. What is this called?",fix:"A stronger hashing algorithm such as SHA-256",avoid:["a39"],alt:["collision"]},
   {id:"a39",g:"phys",d:2,t:"Birthday attack",def:"Using the math of probability to find hash collisions much faster than trying every value",sc:"An attacker uses the same math that makes shared birthdays common in a small group to find two inputs with matching hashes. What attack is this?"},
   {id:"a40",g:"ind",d:2,t:"Impossible travel",def:"Logins for one account from places too far apart to travel between in the time",sc:"A user signs in from Chicago and, 20 minutes later, from Singapore. Which indicator is this?",avoid:["a41"]},
   {id:"a41",g:"ind",d:2,t:"Concurrent session usage",def:"One account logged in from several places at the same time",sc:"The same account has active sessions on three different computers at once, though the user has only one. Which indicator is this?"},
@@ -983,15 +1001,15 @@ const TERMSETS = {
   {id:"a45",g:"ind",d:2,t:"Resource consumption",def:"Unexplained spikes in CPU, memory, disk, or bandwidth use",sc:"A file server's outbound bandwidth spikes overnight although no backup is scheduled. Which indicator is this?"},
   {id:"a46",g:"ind",d:2,t:"Blocked content",def:"Security tools blocking attempts to reach known bad sites or files",sc:"A proxy log shows a workstation trying again and again to reach a known command-and-control domain and being blocked. Which indicator is this?"},
   {id:"a47",g:"ind",d:2,t:"Published or documented",def:"The organization's data or flaws already reported publicly, such as on a leak site",sc:"Company login credentials appear on a public paste site. Which indicator is this?"},
-  {id:"a48",g:"mit",d:2,t:"Segmentation",def:"Dividing a network into separate zones so a breach in one cannot spread easily",sc:"Point-of-sale terminals are moved to their own VLAN, separate from the office network. Which mitigation is this?",avoid:["a49"]},
+  {id:"a48",g:"mit",d:2,t:"Segmentation",def:"Dividing a network into separate zones so a breach in one cannot spread easily",sc:"Point-of-sale terminals are moved to their own VLAN, separate from the office network. Which mitigation is this?",avoid:["a49"],alt:["network segmentation"]},
   {id:"a49",g:"mit",d:2,t:"Isolation",def:"Cutting a compromised or risky system off from everything else",sc:"An infected workstation is moved to a quarantine network that can reach nothing else. Which mitigation is this?"},
-  {id:"a50",g:"mit",d:2,t:"Application allow list",def:"Letting only approved applications run",sc:"Only the applications IT approves can run on the point-of-sale terminals. Which mitigation is this?"},
-  {id:"a51",g:"mit",d:2,t:"Patching",def:"Installing vendor updates that fix known vulnerabilities",sc:"A vendor releases a fix for a critical flaw, and IT installs it on every affected server. Which mitigation is this?"},
+  {id:"a50",g:"mit",d:2,t:"Application allow list",def:"Letting only approved applications run",sc:"Only the applications IT approves can run on the point-of-sale terminals. Which mitigation is this?",alt:["allow list", "allowlist", "whitelist", "application allowlist"]},
+  {id:"a51",g:"mit",d:2,t:"Patching",def:"Installing vendor updates that fix known vulnerabilities",sc:"A vendor releases a fix for a critical flaw, and IT installs it on every affected server. Which mitigation is this?",alt:["patch", "patch management"]},
   {id:"a52",g:"mit",d:2,t:"Configuration enforcement",def:"Automatically checking and reapplying approved settings so systems do not drift",sc:"A management tool checks every laptop daily and resets any setting that differs from the approved baseline. Which mitigation is this?"},
-  {id:"a53",g:"mit",d:2,t:"Decommissioning",def:"Retiring a system securely: wiping its data and removing it from the network",sc:"An old server is wiped, removed from the domain, and unplugged from the network. Which mitigation is this?"},
+  {id:"a53",g:"mit",d:2,t:"Decommissioning",def:"Retiring a system securely: wiping its data and removing it from the network",sc:"An old server is wiped, removed from the domain, and unplugged from the network. Which mitigation is this?",alt:["decommission"]},
   {id:"a54",g:"mit",d:2,t:"Host-based firewall",def:"A firewall on the device itself that controls its own inbound and outbound traffic",sc:"Each laptop runs its own firewall that blocks inbound connections, even on hotel Wi-Fi. Which hardening technique is this?"},
-  {id:"a55",g:"mit",d:2,t:"Disabling ports and protocols",def:"Turning off network ports and protocols that are not needed",sc:"An admin turns off Telnet and FTP on a switch and shuts down its unused ports. Which hardening technique is this?"},
-  {id:"a56",g:"mit",d:2,t:"Removing unnecessary software",def:"Uninstalling software that is not needed, which shrinks the attack surface",sc:"Before deployment, a technician uninstalls games and trial apps from a new laptop. Which hardening technique is this?"}
+  {id:"a55",g:"mit",d:2,t:"Disabling ports and protocols",def:"Turning off network ports and protocols that are not needed",sc:"An admin turns off Telnet and FTP on a switch and shuts down its unused ports. Which hardening technique is this?",alt:["disable unused ports", "disabling unused ports"]},
+  {id:"a56",g:"mit",d:2,t:"Removing unnecessary software",def:"Uninstalling software that is not needed, which shrinks the attack surface",sc:"Before deployment, a technician uninstalls games and trial apps from a new laptop. Which hardening technique is this?",alt:["uninstall unnecessary software"]}
  ]},
  arch:{need:2,groups:[["model","Architecture models","Models"],["infra","Securing infrastructure","Infrastructure"],["data","Protecting data","Data"],["res","Sites & high availability","Resilience"],["backup","Backups, power & testing","Recovery"]],items:[
   {id:"r1",g:"model",d:3,t:"Infrastructure as code (IaC)",def:"Defining servers and networks in configuration files so they deploy the same way every time",sc:"Every server is built from version-controlled template files, so all deployments are identical. What practice is this?"},
@@ -1970,22 +1988,47 @@ const PHISH=[
   subject:["Delivery failed: action required",null],
   body:[["Dear recipient,","A generic greeting."],["We could not deliver your package because of an unpaid $1.99 customs fee.","A tiny fee makes you less suspicious, but the real goal is your card number."],["Pay now to reschedule: ",null,{text:"Pay fee",href:"http://pp-redeliver.top/pay",why:"The button hides an address on an unrelated .top domain."}],["Packages not claimed within 48 hours will be returned.","A deadline to rush you."]],attach:null}
 ];
+/* Text messages (smishing) and look-alike addresses (typosquatting) join the inbox. */
+PHISH.push(
+ {id:"sms-parcel",type:"sms",kind:"phish",terms:["t8"],sender:["+1 (844) 555-0199","Companies text from short codes they publish, not from a random 10-digit number."],
+  msgs:[["ParcelPoint: Your package is on hold because of an incomplete address.",null],["Update it within 12 hours or it will be returned: ","A deadline to rush you.",{text:"parcelpoint.delivery-update.info/track",href:"http://parcelpoint.delivery-update.info/track",why:"The real domain here is delivery-update.info. ParcelPoint's name is just a subdomain in front of it."}]]},
+ {id:"sms-gift",type:"sms",kind:"phish",terms:["t8","t21"],sender:["+1 (720) 555-0143","An unknown number claiming to be the CEO."],
+  msgs:[["Hi, it's Dana. I'm about to board a flight and can't talk.","Being unreachable stops you from checking that it is really her."],["Can you buy five $200 gift cards for a client meeting and text me the codes? I'll pay you back today.","Gift cards are a favorite payout for scammers: once the codes are sent, the money is gone."]]},
+ {id:"sms-code",type:"sms",kind:"legit",terms:["t8"],sender:["72045",null],
+  msgs:[["Larkspur Bank: Your verification code is 482913. It expires in 10 minutes.",null],["Larkspur Bank will never call or text to ask for this code.",null]],
+  why:"It comes from the bank's short code, has no link, asks for nothing, and you just asked for the code yourself. Never read a code like this out to someone who calls you."},
+ {id:"sms-alert",type:"sms",kind:"phish",terms:["t8","t26"],sender:["+1 (303) 555-0117","Not the bank's short code."],
+  msgs:[["Larkspur Bank ALERT: Unusual charge of $894.20 at ELECTRO-MART.","A scary charge is meant to make you act before you think."],["Reply YES if this was you, or tap to dispute now: ",null,{text:"larkspur-bank-alerts.com",href:"https://larkspur-bank-alerts.com/dispute",why:"An extra hyphenated word makes a look-alike domain. The bank's site is larkspurbank.com."}]]},
+ {id:"urls-1",type:"urls",kind:"urls",terms:["t11"],intro:"Your company's domain is pinecrest-logistics.com and your bank is larkspurbank.com. Tap every address that is fake.",
+  urls:[["https://benefits.pinecrest-logistics.com/enroll",null],["https://pinecrest-logistlcs.com/login","An l in place of the i in logistics: typosquatting."],["https://www.larkspurbank.com/login",null],["https://pinecrest-logistics.co/payroll","The right name with the wrong ending: .co, not .com."],["https://larkspurbank.com.verify-login.net/","Read the domain from the right: this is verify-login.net, with the bank's name stuck on the front."],["https://mail.pinecrest-logistics.com",null],["https://www.larkspur-bank.com/secure","A hyphen the real domain does not have."],["https://pinecrest-logistics.com@203.0.113.50/login","Everything before the @ is ignored. This really goes to the IP address 203.0.113.50."]]},
+ {id:"urls-2",type:"urls",kind:"urls",terms:["t11"],intro:"Your company's domain is pinecrest-logistics.com and your bank is larkspurbank.com. Tap every address that is fake.",
+  urls:[["https://pinecrest-logistics.com/it/helpdesk",null],["https://pinecrestlogistics.com/helpdesk","The hyphen is missing, so this is someone else's domain."],["https://www.larkspurbank.com/cards",null],["https://larkspurbamk.com/login","An m in place of the n: easy to miss at a glance."],["https://sso.pinecrest-logistics.com/",null],["https://pinecrest-logistics.com.secure-sso.io/","Read the domain from the right: this is secure-sso.io."],["http://www.larkspurbank.com.co/","An extra .co at the end makes this a different domain, and it uses plain http."],["https://pinecrest-logistics.com/benefits",null]]}
+);
 function labPhish(mod,back){
   const done=labDone(mod,"phish"); let order=shuffle(PHISH.slice()), i=0;
+  const kindName=E=>E.type==="sms"?"text message":E.type==="urls"?"address check":"email";
   function render(){
-    const E=order[i]; const segs=[]; let checked=false, firstTry=true, verdict=null;
+    const E=order[i], type=E.type||"email"; const segs=[]; let checked=false;
     const seg=(text,why,cls="")=>{ segs.push(why); return `<button type="button" class="ph-seg ${cls}" data-s="${segs.length-1}">${esc(text)}</button>`; };
-    const body=E.body.map(([t,why,link])=>`<p>${seg(t,why)}${link?`<button type="button" class="ph-seg ph-link" data-s="${(segs.push(link.why),segs.length-1)}" data-href="${esc(link.href)}">${esc(link.text)}</button>`:""}</p>`).join("");
-    app.innerHTML=modHead(M(mod))+`<div class="examtop"><button class="chipbtn" id="labback" type="button">← ${esc(M(mod).name)} menu</button><span>Spot the Phish · email ${i+1} of ${order.length}</span></div>
-    <div class="card" id="ph"><p style="margin:0 0 10px">Tap every part of this email that is a red flag. Hover over or tap a link to see where it really goes. Then report it or keep it. Some emails are legitimate.</p>
-      <div class="ph-mail">
-        <div class="ph-hdr"><div><span class="ph-k">From</span>${seg(E.from[0],E.from[1],"ph-name")} ${seg("<"+E.addr[0]+">",E.addr[1],"ph-addr")}</div>
-          <div><span class="ph-k">To</span><span class="note">${esc(E.to)}</span></div>
-          <div><span class="ph-k">Subject</span>${seg(E.subject[0],E.subject[1],"ph-subj")}</div></div>
-        <div class="ph-body">${body}${E.attach?`<p>${seg("Attachment: "+E.attach[0],E.attach[1],"ph-att")}</p>`:""}</div>
-        <div class="ph-status" id="phstatus">Point at a link to see its real address.</div>
-      </div>
-      <div class="q-actions" style="margin-top:12px"><button class="btn" id="phreport">Report as phishing</button><button class="btn ghost" id="phkeep">Looks legitimate</button><button class="btn ghost" id="phnext" hidden>Next email</button></div>
+    const link=l=>`<button type="button" class="ph-seg ph-link" data-s="${(segs.push(l.why),segs.length-1)}" data-href="${esc(l.href)}">${esc(l.text)}</button>`;
+    let card="", intro="", buttons=`<button class="btn" id="phreport">Report as phishing</button><button class="btn ghost" id="phkeep">Looks legitimate</button>`;
+    if(type==="email"){
+      const body=E.body.map(([t,why,l])=>`<p>${seg(t,why)}${l?link(l):""}</p>`).join("");
+      const hdr=`<div><span class="ph-k">From</span>${seg(E.from[0],E.from[1],"ph-name")} ${seg("<"+E.addr[0]+">",E.addr[1],"ph-addr")}</div><div><span class="ph-k">To</span><span class="note">${esc(E.to)}</span></div><div><span class="ph-k">Subject</span>${seg(E.subject[0],E.subject[1],"ph-subj")}</div>`;
+      intro="Tap every part of this email that is a red flag. Hover over or tap a link to see where it really goes. Then report it or keep it. Some messages are legitimate.";
+      card=`<div class="ph-mail"><div class="ph-hdr">${hdr}</div><div class="ph-body">${body}${E.attach?`<p>${seg("Attachment: "+E.attach[0],E.attach[1],"ph-att")}</p>`:""}</div><div class="ph-status" id="phstatus">Point at a link to see its real address.</div></div>`;
+    } else if(type==="sms"){
+      const from=seg(E.sender[0],E.sender[1],"ph-name");
+      const bubbles=E.msgs.map(([t,why,l])=>`<div class="sms-b">${seg(t,why)}${l?link(l):""}</div>`).join("");
+      intro="A text message on a work phone. Tap every part that is a red flag, tap a link to see where it goes, then report it or keep it.";
+      card=`<div class="sms-phone"><div class="sms-top"><small>Text message from</small>${from}</div><div class="sms-chat">${bubbles}<small class="note">Today 9:41 AM</small></div><div class="ph-status" id="phstatus">Tap a link to see its real address.</div></div>`;
+    } else {
+      intro=E.intro; buttons=`<button class="btn" id="phurls">Check</button>`;
+      card=`<div class="url-list">${shuffle(E.urls.slice()).map(([u,why])=>`<div>${seg(u,why,"url-row")}</div>`).join("")}</div>`;
+    }
+    app.innerHTML=modHead(M(mod))+`<div class="examtop"><button class="chipbtn" id="labback" type="button">← ${esc(M(mod).name)} menu</button><span>Spot the Phish · ${kindName(E)} · ${i+1} of ${order.length}</span></div>
+    <div class="card" id="ph"><p style="margin:0 0 10px">${esc(intro)}</p>${card}
+      <div class="q-actions" style="margin-top:12px">${buttons}<button class="btn ghost" id="phnext" hidden>Next</button></div>
       <div class="fb" id="phfb" hidden></div></div>`;
     const root=$("#ph");
     root.querySelectorAll(".ph-seg").forEach(b=>{
@@ -1995,15 +2038,18 @@ function labPhish(mod,back){
     const grade=v=>{
       const flagged=[...root.querySelectorAll(".ph-seg.flag")].map(b=>+b.dataset.s); const red=segs.map((w,k)=>w?k:-1).filter(k=>k>=0);
       const found=red.filter(k=>flagged.includes(k)), missed=red.filter(k=>!flagged.includes(k)), extra=flagged.filter(k=>!segs[k]);
-      const vOk=(v==="phish")===(E.kind==="phish"); const all=vOk&&!missed.length&&!extra.length;
-      root.querySelectorAll(".ph-seg").forEach(b=>{ const k=+b.dataset.s; b.classList.remove("hit","miss","extra"); if(segs[k]&&flagged.includes(k)) b.classList.add("hit"); else if(segs[k]) b.classList.add("miss"); else if(flagged.includes(k)) b.classList.add("extra"); });
-      $("#phfb").hidden=false;
-      const lines=red.map(k=>`<li class="${flagged.includes(k)?"":"ph-missed"}"><b>${flagged.includes(k)?"Found":"Missed"}:</b> ${esc(segs[k])}</li>`).join("")+extra.map(k=>`<li><b>Not a red flag:</b> "${esc(root.querySelector(`[data-s="${k}"]`).textContent)}" is normal here.</li>`).join("");
-      $("#phfb").innerHTML=`<div class="v ${all?"ok":"bad"}">${vOk?(E.kind==="phish"?"Right: this is phishing.":"Right: this one is legitimate."):(E.kind==="phish"?"This one is phishing.":"This one is actually legitimate.")} ${E.kind==="phish"?`You found ${found.length} of ${red.length} red flags${extra.length?`, and flagged ${extra.length} part${extra.length>1?"s":""} that ${extra.length>1?"are":"is"} fine`:""}.`:extra.length?`Nothing in it was a red flag.`:""}</div>`+(lines?`<ul class="steps">${lines}</ul>`:"")+(E.why?`<p style="margin:.4em 0 0">${esc(E.why)}</p>`:"");
-      checked=true; ["phreport","phkeep"].forEach(id=>$("#"+id).hidden=true); $("#phnext").hidden=false; $("#phnext").textContent=i+1<order.length?"Next email":"Start over";
+      const vOk=type==="urls"||(v==="phish")===(E.kind==="phish"); const all=vOk&&!missed.length&&!extra.length;
+      root.querySelectorAll(".ph-seg").forEach(b=>{ const k=+b.dataset.s; if(segs[k]&&flagged.includes(k)) b.classList.add("hit"); else if(segs[k]) b.classList.add("miss"); else if(flagged.includes(k)) b.classList.add("extra"); });
+      const text=k=>root.querySelector(`[data-s="${k}"]`).textContent;
+      const lines=red.map(k=>`<li class="${flagged.includes(k)?"":"ph-missed"}"><b>${flagged.includes(k)?"Found":"Missed"}:</b> ${type==="urls"?`<code>${esc(text(k))}</code>. `:""}${esc(segs[k])}</li>`).join("")+extra.map(k=>`<li><b>Not a red flag:</b> "${esc(text(k))}" is ${type==="urls"?"a real address":"normal here"}.</li>`).join("");
+      const head=type==="urls"?(all?`All ${red.length} fakes found, and no real addresses flagged.`:`You found ${found.length} of ${red.length} fakes${extra.length?` and flagged ${extra.length} real address${extra.length>1?"es":""}`:""}.`)
+        :`${vOk?(E.kind==="phish"?"Right: this is phishing.":"Right: this one is legitimate."):(E.kind==="phish"?"This one is phishing.":"This one is actually legitimate.")} ${E.kind==="phish"?`You found ${found.length===red.length?`all ${red.length}`:`${found.length} of ${red.length}`} red flags${extra.length?`, and flagged ${extra.length} part${extra.length>1?"s":""} that ${extra.length>1?"are":"is"} fine`:""}.`:extra.length?"Nothing in it was a red flag.":""}`;
+      $("#phfb").hidden=false; $("#phfb").innerHTML=`<div class="v ${all?"ok":"bad"}">${head}</div>`+(lines?`<ul class="steps">${lines}</ul>`:"")+(E.why?`<p style="margin:.4em 0 0">${esc(E.why)}</p>`:"");
+      checked=true; root.querySelectorAll("#phreport,#phkeep,#phurls").forEach(b=>b.hidden=true); $("#phnext").hidden=false; $("#phnext").textContent=i+1<order.length?"Next":"Start over";
       if(all&&mode==="student"){ done[E.id]=true; labCredit(mod,E.terms); }
     };
-    $("#phreport").addEventListener("click",()=>grade("phish")); $("#phkeep").addEventListener("click",()=>grade("legit"));
+    root.querySelector("#phreport")?.addEventListener("click",()=>grade("phish")); root.querySelector("#phkeep")?.addEventListener("click",()=>grade("legit"));
+    root.querySelector("#phurls")?.addEventListener("click",()=>grade(null));
     $("#phnext").addEventListener("click",()=>{ i++; if(i>=order.length){ order=shuffle(PHISH.slice()); i=0; } render(); });
     $("#labback").addEventListener("click",back);
   }
@@ -2012,7 +2058,147 @@ function labPhish(mod,back){
 Object.assign(LABS,{
   profiler:{name:"Threat Actor Profiler",run:labProfiler,desc:"Four threat actors, three blank lines each. Drag in where each comes from, how much money and skill it has, and why it attacks."},
   map:{name:"Attack Surface Map",run:labMap,desc:"Six incidents pinned around a fictional company: the parking lot, the front desk, the inbox, the server room. Drag the threat vector that names each one."},
-  phish:{name:"Spot the Phish",run:labPhish,desc:"Read fictional emails like a security analyst. Tap every red flag, check where links really go, then report it or keep it. Some are legitimate."}
+  phish:{name:"Spot the Phish",run:labPhish,desc:"Read emails and text messages like a security analyst: tap every red flag, check where links really go, then report or keep. Some are legitimate. Address checks mix in look-alike domains to spot."}
+});
+/* Pin board: a shared engine for "drag the right name onto each case" labs (Malware Lineup, Vulnerability Hunt).
+   cfg: {key, title, intro, cases:[{id, cat, s}], cats:{key:[label, explanation]}, pick, extras, slotLabel, label, again} */
+function labPins(mod,back,cfg){
+  const done=labDone(mod,cfg.key);
+  function render(){
+    const cats=shuffle(Object.keys(cfg.cats)); const cases=[];
+    cats.forEach(c=>{ if(cases.length<cfg.pick){ const pool=shuffle(cfg.cases.filter(x=>x.cat===c)); if(pool.length) cases.push(pool[0]); } });
+    const used=new Set(cases.map(c=>c.cat)); const tiles=shuffle([...used].concat(shuffle(Object.keys(cfg.cats).filter(c=>!used.has(c))).slice(0,cfg.extras)));
+    const fill={}; let checked=false, firstTry=true;
+    app.innerHTML=modHead(M(mod))+`<div class="examtop"><button class="chipbtn" id="labback" type="button">← ${esc(M(mod).name)} menu</button><span>${esc(cfg.label)}${done.rounds?` · ${done.rounds} perfect round${done.rounds>1?"s":""}`:""}</span></div>
+    <div class="card" id="pin"><h3 style="font-size:1.3rem;margin:0 0 4px">${esc(cfg.title)}</h3><p style="margin:0 0 12px">${esc(cfg.intro)}</p>
+      <div class="mp-map">${cases.map((c,k)=>`<div class="mp-zone">${cfg.caseHead?cfg.caseHead(c):""}<p>${esc(c.s)}</p><button type="button" class="dd-target kf-slot mp-slot" data-i="${k}" data-clear><small>${esc(cfg.slotLabel)}</small><span class="kf-fill">Drop here</span></button></div>`).join("")}</div>
+      <div class="kf-tray" style="margin-top:12px">${tiles.map(v=>`<button type="button" class="dd-tile srt-t" data-v="${v}">${esc(cfg.cats[v][0])}</button>`).join("")}</div>
+      <div class="q-actions" style="margin-top:12px"><button class="btn" id="pincheck">Check</button><button class="btn ghost" id="pinnext" hidden>${esc(cfg.again)}</button></div>
+      <div class="fb" id="pinfb" hidden></div></div>`;
+    const root=$("#pin");
+    const paint=()=>root.querySelectorAll(".mp-slot").forEach(el=>{ const v=fill[el.dataset.i]; el.classList.toggle("filled",!!v); el.classList.remove("ok","bad"); el.querySelector(".kf-fill").innerHTML=v?`<span class="srt-t" style="display:inline-block">${esc(cfg.cats[v][0])}</span>`:"Drop here"; });
+    ddWire(root,(tgt,v)=>{ if(checked) return; fill[tgt.dataset.i]=v; paint(); });
+    $("#pincheck").addEventListener("click",()=>{
+      if(cases.some((c,k)=>!fill[k])){ $("#pinfb").hidden=false; $("#pinfb").innerHTML=`<div class="v bad">Put a tile on every case first.</div>`; return; }
+      let wrong=0; root.querySelectorAll(".mp-slot").forEach(el=>{ const ok=fill[el.dataset.i]===cases[+el.dataset.i].cat; el.classList.add(ok?"ok":"bad"); if(!ok) wrong++; });
+      $("#pinfb").hidden=false;
+      if(wrong){ firstTry=false; $("#pinfb").innerHTML=`<div class="v bad">${wrong} wrong. Fix the red ones and check again.</div>`; return; }
+      checked=true; $("#pincheck").hidden=true; $("#pinnext").hidden=false;
+      $("#pinfb").innerHTML=`<div class="v ok">${firstTry?"All right on the first try.":"All right."}</div><ol class="steps">${cases.map(c=>`<li><b>${esc(cfg.cats[c.cat][0])}:</b> ${esc(c.x||cfg.cats[c.cat][1])}</li>`).join("")}</ol>`;
+      if(firstTry&&mode==="student"){ done.rounds=(done.rounds||0)+1; labCredit(mod,[...new Set(cases.map(c=>c.id).filter(Boolean))]); }
+    });
+    $("#pinnext").addEventListener("click",render); $("#labback").addEventListener("click",back);
+  }
+  render();
+}
+
+/* Vulnerability Hunt (2.3): penetration-test findings dropped onto the kind of vulnerability. */
+const VULN_CATS={
+ app:["Application","A flaw in how a program handles memory, timing, or its own updates."],
+ web:["Web-based","A flaw in a web application, usually in how it handles user input."],
+ os:["Operating system","A flaw in the operating system itself, fixed by OS patches."],
+ hw:["Hardware and firmware","A flaw in physical devices or their firmware, including end-of-life and legacy equipment."],
+ virt:["Virtualization","A flaw in the hypervisor or in how virtual machines share resources."],
+ cloud:["Cloud-specific","A flaw in cloud services, such as their APIs, that customers depend on."],
+ supply:["Supply chain","A weakness that arrives through a vendor, service provider, or component you rely on."],
+ crypto:["Cryptographic","Weak or outdated algorithms, protocols, or key handling."],
+ misconfig:["Misconfiguration","Insecure settings someone chose or never changed."],
+ mobile:["Mobile device","Phones and tablets with their built-in protections bypassed."],
+ zeroday:["Zero-day","A flaw unknown to the vendor, so no patch exists yet."]
+};
+const VULN_CASES=[
+ {cat:"app",id:"a3",s:"A program copies whatever the user types into a fixed-size block of memory without checking the length.",x:"Buffer overflow: input runs past the end of its memory buffer and can overwrite code."},
+ {cat:"app",id:"a13",s:"Malware writes its own code into the memory of a trusted program that is already running.",x:"Memory injection: the malware hides inside a legitimate process."},
+ {cat:"app",id:"a18",s:"A program checks that a file is safe, then opens it a moment later. An attacker can swap the file in between.",x:"Race condition (time-of-check to time-of-use): the file changes between the check and the use."},
+ {cat:"app",id:"a17",s:"An app's auto-updater installs whatever the update server sends, without checking a digital signature.",x:"Malicious update risk: anyone who controls the update server controls every install."},
+ {cat:"web",id:"a1",s:"The login form builds its database query by pasting in exactly what the user types.",x:"SQL injection: user input becomes part of the database command."},
+ {cat:"web",id:"a2",s:"A comment box shows other visitors whatever people post, including <script> tags.",x:"Cross-site scripting (XSS): the attacker's script runs in other users' browsers."},
+ {cat:"web",id:"a14",s:"A download page returns any file named in the address, including ../../etc/passwd.",x:"Directory traversal: ../ climbs out of the folder the app meant to share."},
+ {cat:"os",id:"a15",s:"A flaw in the operating system's print service lets any logged-in user run code with full system rights.",x:"An OS-based vulnerability that allows privilege escalation. The fix is an OS patch."},
+ {cat:"os",s:"The file servers are missing last month's critical Windows security update.",x:"An unpatched operating system vulnerability. Patch management closes it."},
+ {cat:"hw",s:"The core switches reached end of life, and the vendor no longer releases firmware fixes for them.",x:"End-of-life hardware: known flaws will never be fixed."},
+ {cat:"hw",s:"A flaw in the laptops' firmware lets malware survive even a complete reinstall of the operating system.",x:"A firmware vulnerability lives below the operating system."},
+ {cat:"hw",s:"Twenty-year-old controllers on the factory floor cannot be updated at all.",x:"Legacy hardware: it cannot take security updates, so it needs compensating controls such as segmentation."},
+ {cat:"virt",id:"a22",s:"Code running in one guest virtual machine can break out and run commands on the host's hypervisor.",x:"Virtual machine escape: the boundary between VMs fails."},
+ {cat:"virt",id:"a23",s:"A newly created virtual machine is given memory that still holds the previous tenant's data.",x:"Resource reuse: leftover data was not wiped before the resource was handed out again."},
+ {cat:"cloud",s:"The cloud provider's management API accepts requests that carry no authentication token.",x:"An insecure cloud API: anyone who finds it can manage resources."},
+ {cat:"cloud",s:"A flaw in a cloud provider's shared database service lets one customer read another customer's records.",x:"A cloud-specific multitenancy flaw: customers share the provider's infrastructure."},
+ {cat:"supply",s:"The managed service provider that has remote access to every company server was breached.",x:"A service-provider supply chain weakness: their breach becomes yours."},
+ {cat:"supply",s:"An open-source library the company's app depends on was taken over, and a backdoor was added to it.",x:"A software supply chain weakness: a component you trust was compromised."},
+ {cat:"supply",s:"Network cards from a parts supplier arrived with tampered firmware already installed.",x:"A hardware supply chain weakness: the device was compromised before it reached you."},
+ {cat:"crypto",s:"The VPN still allows DES encryption and MD5 hashing.",x:"Weak, outdated algorithms: DES can be brute-forced and MD5 has collisions."},
+ {cat:"crypto",s:"User passwords are stored as plain MD5 hashes with no salt.",x:"Weak password storage: unsalted fast hashes are cracked quickly with precomputed tables."},
+ {cat:"crypto",s:"The web server still accepts SSL 3.0 and TLS 1.0 connections.",x:"Outdated protocols that allow downgrade attacks."},
+ {cat:"misconfig",id:"a21",s:"A file share of customer records lets every user read it, because its permissions were left at Everyone: Full Control.",x:"Misconfiguration: the permissions were never tightened."},
+ {cat:"misconfig",s:"A new firewall was put into service still using the factory admin password.",x:"Misconfiguration: default credentials were never changed."},
+ {cat:"misconfig",s:"The web server shows a full list of the files in every folder that has no index page.",x:"Misconfiguration: directory listing should be turned off."},
+ {cat:"mobile",id:"a19",s:"Employees install apps on company phones from websites instead of the official app store.",x:"Sideloading skips the app store's security review."},
+ {cat:"mobile",id:"a20",s:"A user removed the phone's built-in restrictions to install unapproved tweaks.",x:"Jailbreaking turns off the operating system's protections."},
+ {cat:"zeroday",id:"a4",s:"Attackers are exploiting a flaw that the vendor did not know about until today. No patch exists.",x:"A zero-day: defenders have had zero days to fix it."}
+];
+/* Malware Lineup (2.4): behavior clues dropped onto the malware that fits. */
+const MAL_CATS={virus:["Virus","Attaches to files and spreads when users run or share them."],worm:["Worm","Spreads across networks by itself."],trojan:["Trojan","Hides inside software that looks legitimate."],
+ ransom:["Ransomware","Encrypts data and demands payment."],spy:["Spyware","Secretly gathers information about the user."],keylog:["Keylogger","Records keystrokes."],
+ rootkit:["Rootkit","Hides deep in the system, often with admin rights, and hides other malware."],bomb:["Logic bomb","Waits for a trigger, then runs."],bloat:["Bloatware","Unneeded preinstalled software."]};
+const MAL_CASES=[
+ {cat:"virus",id:"a26",s:"It attaches its code to program files, and it spreads only when someone runs or shares an infected file."},
+ {cat:"worm",id:"a25",s:"It spread to 400 servers overnight through an unpatched network service. Nobody clicked or opened anything."},
+ {cat:"trojan",id:"a24",s:"A free PDF converter worked as promised, but it also quietly opened a backdoor for the attacker."},
+ {cat:"ransom",id:"a6",s:"Every file on the share now ends in .locked, and a note demands 2 bitcoin for the key."},
+ {cat:"spy",id:"a27",s:"Hidden software records which sites the user visits and sends the list to an ad network."},
+ {cat:"keylog",id:"a9",s:"The attacker received every password the user typed, character by character."},
+ {cat:"rootkit",id:"a8",s:"Antivirus finds nothing, yet the compromised server hides a process and a network connection from its own tools."},
+ {cat:"bomb",id:"a7",s:"A script a fired developer left behind deleted the payroll database the day his account was removed."},
+ {cat:"bloat",id:"a28",s:"New laptops arrived with trial games and a manufacturer toolbar nobody asked for, and one had a known flaw."},
+ {cat:"worm",id:"a25",s:"It scans the network for other machines with the same unpatched flaw and copies itself to each one."},
+ {cat:"trojan",id:"a24",s:"A pirated copy of a popular game came with a hidden remote access tool."},
+ {cat:"ransom",id:"a6",s:"Hospital systems went dark, and the attackers threatened to leak patient data unless they were paid."},
+ {cat:"bomb",id:"a7",s:"Nothing happened for months, then on April 1 a hidden routine wiped the backup server."},
+ {cat:"rootkit",id:"a8",s:"It replaced core operating system files so that it loads before the security software starts."},
+ {cat:"keylog",id:"a9",s:"A small device between the keyboard and the PC captured everything typed for a week."}
+];
+
+/* Kill Chain Builder: put an attack's events into the stages of the Cyber Kill Chain, then see the defense for each stage. */
+const KC_STAGES=[["recon","Reconnaissance","Limit public information; watch for scanning."],["weapon","Weaponization","Threat intelligence on new exploits and malware."],["deliver","Delivery","Email filtering, web filtering, and user training."],
+ ["exploit","Exploitation","Patching and secure configuration."],["install","Installation","Application allow lists and EDR."],["c2","Command and control","Egress filtering, DNS filtering, and network monitoring."],["act","Actions on objectives","DLP, least privilege, and backups."]];
+const KC_STORIES=[
+ {title:"The invoice that wasn't",ev:{recon:"The attacker studies the company's LinkedIn page to find who works in accounts payable.",weapon:"The attacker builds a spreadsheet with a malicious macro that exploits an unpatched Office flaw.",deliver:"The spreadsheet is emailed to the accounts payable team as an overdue invoice.",exploit:"A clerk opens it and enables content, and the macro runs.",install:"The macro installs a remote access Trojan that starts with Windows.",c2:"The Trojan checks in with the attacker's server over HTTPS every five minutes.",act:"The attacker copies the customer database and sends it out."}},
+ {title:"The unpatched VPN",ev:{recon:"The attacker scans the internet for VPN appliances running an old firmware version.",weapon:"The attacker pairs a public exploit for that firmware with a custom backdoor.",deliver:"The exploit is sent to the company's VPN login page.",exploit:"The VPN's firmware flaw lets the attacker run code on the appliance.",install:"A web shell is left on the appliance so the attacker can return.",c2:"The web shell takes commands hidden inside normal-looking web requests.",act:"The attacker deploys ransomware across the internal network."}},
+ {title:"The watering hole",ev:{recon:"The attacker learns that the company's engineers all read one industry forum.",weapon:"The attacker prepares a browser exploit kit to plant on that forum.",deliver:"The forum is compromised, and engineers who visit are served the exploit.",exploit:"An engineer's out-of-date browser is exploited.",install:"A keylogger is installed on the engineer's workstation.",c2:"The keylogger sends captured keystrokes to a domain registered last week.",act:"With the stolen VPN password, the attacker downloads product designs."}}
+];
+function labKillChain(mod,back){
+  const done=labDone(mod,"kill"); let si=Math.floor(Math.random()*KC_STORIES.length);
+  function render(){
+    const S=KC_STORIES[si]; const fill={}; let checked=false, firstTry=true;
+    app.innerHTML=modHead(M(mod))+`<div class="examtop"><button class="chipbtn" id="labback" type="button">← ${esc(M(mod).name)} menu</button><span>Kill Chain Builder · ${esc(S.title)}</span></div>
+    <div class="card" id="kc"><h3 style="font-size:1.3rem;margin:0 0 4px">${esc(S.title)}</h3><p style="margin:0 0 12px">Seven events from one attack, out of order. Drop each event onto its stage of the Cyber Kill Chain. Each event is used once.</p>
+      <div class="kc-chain">${KC_STAGES.map(([k,n],j)=>`<div class="kc-stage"><div class="kc-n">${j+1}</div><div style="flex:1;min-width:0"><b>${esc(n)}</b><button type="button" class="dd-target kf-slot kc-slot" data-k="${k}" data-clear><span class="kf-fill">Drop an event here</span></button></div></div>`).join("")}</div>
+      <div class="kc-pool">${shuffle(KC_STAGES.map(s=>s[0])).map(k=>`<button type="button" class="dd-tile kc-ev" data-v="${k}">${esc(S.ev[k])}</button>`).join("")}</div>
+      <div class="q-actions" style="margin-top:12px"><button class="btn" id="kccheck">Check</button><button class="btn ghost" id="kcnext" hidden>Another attack</button></div>
+      <div class="fb" id="kcfb" hidden></div></div>`;
+    const root=$("#kc");
+    const paint=()=>{ root.querySelectorAll(".kc-slot").forEach(el=>{ const v=fill[el.dataset.k]; el.classList.toggle("filled",!!v); el.classList.remove("ok","bad"); el.querySelector(".kf-fill").textContent=v?S.ev[v]:"Drop an event here"; });
+      const used=new Set(Object.values(fill)); root.querySelectorAll(".kc-pool .kc-ev").forEach(b=>b.hidden=used.has(b.dataset.v)); };
+    ddWire(root,(tgt,v)=>{ if(checked) return; const k=tgt.dataset.k; Object.keys(fill).forEach(x=>{ if(fill[x]===v) delete fill[x]; }); if(v) fill[k]=v; else delete fill[k]; paint(); });
+    $("#kccheck").addEventListener("click",()=>{
+      if(Object.keys(fill).length<KC_STAGES.length){ $("#kcfb").hidden=false; $("#kcfb").innerHTML=`<div class="v bad">Place all seven events first.</div>`; return; }
+      let wrong=0; root.querySelectorAll(".kc-slot").forEach(el=>{ const ok=fill[el.dataset.k]===el.dataset.k; el.classList.add(ok?"ok":"bad"); if(!ok) wrong++; });
+      $("#kcfb").hidden=false;
+      if(wrong){ firstTry=false; $("#kcfb").innerHTML=`<div class="v bad">${wrong} event${wrong>1?"s are":" is"} in the wrong stage. Fix the red ones and check again.</div>`; return; }
+      checked=true; $("#kccheck").hidden=true; $("#kcnext").hidden=false;
+      $("#kcfb").innerHTML=`<div class="v ok">${firstTry?"The whole chain is right on the first try.":"The whole chain is right."}</div><p style="margin:.4em 0">Break any one link and the attack fails. Where defenders can step in:</p><ol class="steps">${KC_STAGES.map(([k,n,d])=>`<li><b>${esc(n)}:</b> ${esc(d)}</li>`).join("")}</ol>`;
+      if(firstTry&&mode==="student"){ done.rounds=(done.rounds||0)+1; labCredit(mod,["a51","a50","a48"]); }
+    });
+    $("#kcnext").addEventListener("click",()=>{ si=(si+1)%KC_STORIES.length; render(); }); $("#labback").addEventListener("click",back);
+  }
+  render();
+}
+Object.assign(LABS,{
+  vulnhunt:{name:"Vulnerability Hunt",run:(mod,back)=>labPins(mod,back,{key:"vulnhunt",label:"Vulnerability Hunt",title:"Penetration test findings",intro:"A penetration test found six weaknesses. Drag the kind of vulnerability onto each finding, or tap a tile and then a finding. Two tiles are extras.",cases:VULN_CASES,cats:VULN_CATS,pick:6,extras:2,slotLabel:"Kind of vulnerability",again:"New findings"}),
+    desc:"Six findings from a penetration test: an unchecked memory buffer, an end-of-life switch, a VM that leaks the last tenant's data, a breached service provider. Drag the kind of vulnerability onto each one."},
+  malware:{name:"Malware Lineup",run:(mod,back)=>labPins(mod,back,{key:"malware",label:"Malware Lineup",title:"Name the suspect",intro:"Each case describes what a piece of malware did. Drag the malware type onto each case, or tap a tile and then a case. Two tiles are extras.",cases:MAL_CASES,cats:MAL_CATS,pick:6,extras:2,slotLabel:"Malware type",again:"New lineup"}),
+    desc:"Six cases, each describing what a piece of malware did. Drag in the suspect: virus, worm, Trojan, ransomware, rootkit, logic bomb, and more."},
+  kill:{name:"Kill Chain Builder",run:labKillChain,desc:"One attack in seven events, out of order. Drop each event onto its stage of the Cyber Kill Chain, then see where defenders could have stopped it. Three different attacks."}
 });
 /* ---- Term modules ----
    One engine runs every term module (TERMSETS). Each term is asked several ways: name it from a description,
