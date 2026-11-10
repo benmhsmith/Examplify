@@ -391,6 +391,30 @@ html.mobile .dg::after{content:"Swipe sideways to see the whole diagram.";displa
 .srt-in{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 @media (max-width:640px){ .kf-row{grid-template-columns:1fr} .kf-wire{flex-direction:row;padding:4px 0} .kf-line{flex:1} .srt-bins{grid-template-columns:1fr} }
 html.mobile .kf-row{grid-template-columns:1fr} html.mobile .kf-wire{flex-direction:row} html.mobile .kf-line{flex:1} html.mobile .srt-bins{grid-template-columns:1fr}
+/* Threat labs */
+.pf-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.pf-card{border:1.5px solid var(--line);border-radius:10px;padding:10px;background:var(--surface);display:flex;flex-direction:column;gap:7px}
+.pf-card h4{margin:0;font-size:1.05rem}
+.pf-slot{min-height:54px}
+.pf-tray{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.pf-trow small{display:block;font-weight:700;color:var(--muted);margin-bottom:4px}
+.pf-where{border-color:var(--pv1)} .pf-res{border-color:var(--pv3)} .pf-why{border-color:var(--pv4)}
+.mp-map{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.mp-zone{border:1.5px solid var(--line);border-radius:10px;padding:10px;background:var(--surface);display:flex;flex-direction:column;gap:6px}
+.mp-zone p{margin:0;font-size:.92rem;flex:1}
+.mp-head{display:flex;align-items:center;gap:8px;color:var(--logo)} .mp-head b{color:var(--ink)}
+.ph-mail{border:1.5px solid var(--line);border-radius:10px;background:var(--surface);overflow:hidden}
+.ph-hdr{padding:10px 14px;border-bottom:1px solid var(--line);background:var(--sunk);display:flex;flex-direction:column;gap:4px;font-size:.92rem;overflow-wrap:anywhere}
+.ph-k{display:inline-block;min-width:76px;color:var(--muted);font-size:.8rem;text-transform:uppercase;letter-spacing:.04em}
+.ph-body{padding:12px 14px} .ph-body p{margin:0 0 10px}
+.ph-seg{font:inherit;color:inherit;background:none;border:0;border-bottom:1.5px dashed transparent;padding:1px 2px;margin:0;cursor:pointer;text-align:left;border-radius:3px;overflow-wrap:anywhere}
+.ph-seg:hover{border-bottom-color:var(--muted)}
+.ph-seg.flag{background:var(--bad-bg);border-bottom-color:var(--bad);box-shadow:inset 0 0 0 1px var(--bad)}
+.ph-link{color:var(--logo);text-decoration:underline}
+.ph-addr{color:var(--muted)} .ph-subj{font-weight:700}
+.ph-seg.hit{background:var(--ok-bg);box-shadow:inset 0 0 0 1.5px var(--ok)} .ph-seg.miss{background:var(--warn-bg);box-shadow:inset 0 0 0 1.5px var(--warn)} .ph-seg.extra{background:var(--bad-bg);box-shadow:inset 0 0 0 1.5px var(--bad)}
+.ph-status{padding:6px 14px;border-top:1px solid var(--line);font:.8rem var(--font-mono,monospace);color:var(--muted);background:var(--sunk);overflow-wrap:anywhere}
+.ph-missed b{color:var(--warn)}
 </style>
 
 <header class="top">
@@ -877,41 +901,41 @@ const TERMSETS = {
   {id:"k35",g:"level",d:1,t:"Database encryption",def:"Encrypting a whole database so all of its stored data is protected",sc:"A database administrator turns on transparent data encryption so every table is encrypted on disk. What level of encryption is this?"},
   {id:"k36",g:"level",d:1,t:"Record-level encryption",def:"Encrypting only specific records or fields in a database, such as the card number column",sc:"Only the credit card column in the orders table is encrypted; the other columns stay readable. What level of encryption is this?",alt:["record encryption", "column encryption", "field level encryption"]}
  ]},
- threats:{need:2,groups:[["actor","Threat actors","Actors"],["motive","Motivations","Motives"],["social","Social engineering","Social"],["vector","Threat vectors & attack surfaces","Vectors"]],items:[
-  {id:"t1",g:"actor",d:2,t:"Nation-state",def:"A government-backed group with large resources that often seeks espionage or disruption over long periods",sc:"A well-funded group backed by a foreign government stays hidden in a defense contractor's network for months. Which threat actor is this?"},
-  {id:"t2",g:"actor",d:2,t:"Unskilled attacker",def:"An attacker with little skill who relies on tools and exploits written by others",sc:"A teenager downloads a ready-made attack tool and runs it against a school website. Which threat actor is this?"},
+ threats:{need:2,typed:true,labs:["profiler","map","phish"],groups:[["actor","Threat actors","Actors"],["motive","Motivations","Motives"],["social","Social engineering","Social"],["vector","Threat vectors & attack surfaces","Vectors"]],items:[
+  {id:"t1",g:"actor",d:2,t:"Nation-state",def:"A government-backed group with large resources that often seeks espionage or disruption over long periods",sc:"A well-funded group backed by a foreign government stays hidden in a defense contractor's network for months. Which threat actor is this?",alt:["nation state", "apt", "advanced persistent threat"]},
+  {id:"t2",g:"actor",d:2,t:"Unskilled attacker",def:"An attacker with little skill who relies on tools and exploits written by others",sc:"A teenager downloads a ready-made attack tool and runs it against a school website. Which threat actor is this?",alt:["script kiddie", "unskilled"]},
   {id:"t3",g:"actor",d:2,t:"Hacktivist",def:"An attacker motivated by a political or social cause",sc:"A group defaces a company's website to protest its environmental record. Which threat actor is this?"},
-  {id:"t4",g:"actor",d:2,t:"Insider threat",def:"A current or former employee, contractor, or partner who misuses authorized access",sc:"An employee who was passed over for promotion copies customer data before resigning. Which threat actor is this?"},
-  {id:"t5",g:"actor",d:2,t:"Organized crime",def:"A criminal group motivated mainly by financial gain, such as through ransomware",sc:"A professional criminal group runs ransomware campaigns to extort payments. Which threat actor is this?"},
+  {id:"t4",g:"actor",d:2,t:"Insider threat",def:"A current or former employee, contractor, or partner who misuses authorized access",sc:"An employee who was passed over for promotion copies customer data before resigning. Which threat actor is this?",alt:["insider"]},
+  {id:"t5",g:"actor",d:2,t:"Organized crime",def:"A criminal group motivated mainly by financial gain, such as through ransomware",sc:"A professional criminal group runs ransomware campaigns to extort payments. Which threat actor is this?",alt:["organized criminals", "crime syndicate", "organized criminal"]},
   {id:"t6",g:"actor",d:2,t:"Shadow IT",def:"Hardware or software used without the IT department's knowledge or approval",sc:"A team stores project files in a personal cloud account that IT never approved. What is this called?"},
   {id:"t13",g:"motive",d:2,t:"Espionage",def:"Secretly gathering information, such as trade secrets or government plans",sc:"A foreign intelligence agency breaks into a defense contractor to copy weapons designs. What is the main motivation?"},
-  {id:"t14",g:"motive",d:2,t:"Financial gain",def:"Attacking to make money, such as through ransom, fraud, or selling stolen data",sc:"A gang encrypts a hospital's files and demands $2 million in cryptocurrency. What is the main motivation?",avoid:["t16"]},
+  {id:"t14",g:"motive",d:2,t:"Financial gain",def:"Attacking to make money, such as through ransom, fraud, or selling stolen data",sc:"A gang encrypts a hospital's files and demands $2 million in cryptocurrency. What is the main motivation?",avoid:["t16"],alt:["money", "financial"]},
   {id:"t15",g:"motive",d:2,t:"Revenge",def:"Attacking to get back at an organization or person for a wrong the attacker feels they suffered",sc:"An administrator who was just fired deletes the company's backups out of anger. What is the motivation?"},
   {id:"t16",g:"motive",d:2,t:"Blackmail",def:"Threatening to release damaging information unless demands are met",sc:"An attacker threatens to publish an executive's private emails unless she pays him. What is the motivation?"},
-  {id:"t17",g:"motive",d:2,t:"Philosophical or political beliefs",def:"Attacking to promote a cause or an ideology",sc:"A group leaks a company's internal documents to protest its labor practices. What motivation drives this?"},
-  {id:"t18",g:"motive",d:2,t:"Service disruption",def:"Attacking to take systems offline and stop an organization from operating",sc:"Attackers flood a stock exchange's website during trading hours so that trades cannot go through. What is the goal?"},
+  {id:"t17",g:"motive",d:2,t:"Philosophical or political beliefs",def:"Attacking to promote a cause or an ideology",sc:"A group leaks a company's internal documents to protest its labor practices. What motivation drives this?",alt:["political beliefs", "philosophical beliefs", "hacktivism", "ideology"]},
+  {id:"t18",g:"motive",d:2,t:"Service disruption",def:"Attacking to take systems offline and stop an organization from operating",sc:"Attackers flood a stock exchange's website during trading hours so that trades cannot go through. What is the goal?",alt:["disruption", "denial of service"]},
   {id:"t19",g:"motive",d:2,t:"War",def:"Cyberattacks a nation uses as part of a military conflict, such as against power grids",sc:"During an armed conflict, one country's military hackers shut down the other country's power grid. What motivation is this?",avoid:["t18"]},
-  {id:"t20",g:"motive",d:2,t:"Ethical",def:"Hacking with permission or good intent, such as finding flaws and reporting them",sc:"A researcher finds a flaw in a website and reports it privately to the company so it can be fixed. What motivates this?"},
+  {id:"t20",g:"motive",d:2,t:"Ethical",def:"Hacking with permission or good intent, such as finding flaws and reporting them",sc:"A researcher finds a flaw in a website and reports it privately to the company so it can be fixed. What motivates this?",alt:["ethical hacking"]},
   {id:"t7",g:"social",d:2,t:"Phishing",def:"Fraudulent email that tricks people into revealing information or opening malicious links",sc:"Staff receive an email that looks like it is from IT and asks them to log in through a link to keep their account. What attack is this?",fix:"Security awareness training and email filtering",avoid:["t8","t9"]},
   {id:"t8",g:"social",d:2,t:"Smishing",def:"Phishing carried out by SMS text message",sc:"A text message claims a package is held and asks the user to pay a fee through a link. What attack is this?",avoid:["t7","t9"]},
   {id:"t9",g:"social",d:2,t:"Vishing",def:"Phishing carried out by voice call",sc:"A caller pretends to be from the bank's fraud team and asks for a one-time code. What attack is this?",avoid:["t7","t8"]},
-  {id:"t10",g:"social",d:2,t:"Watering hole attack",def:"Compromising a website that the target group is known to visit",sc:"Attackers infect an industry forum that engineers at the target company use every day. What attack is this?"},
+  {id:"t10",g:"social",d:2,t:"Watering hole attack",def:"Compromising a website that the target group is known to visit",sc:"Attackers infect an industry forum that engineers at the target company use every day. What attack is this?",alt:["watering hole"]},
   {id:"t11",g:"social",d:2,t:"Typosquatting",def:"Registering a domain name that is a common misspelling of a legitimate one",sc:"An attacker registers gooogle.com to catch users who mistype the address. What is this called?"},
   {id:"t21",g:"social",d:2,t:"Impersonation",def:"Pretending to be someone else, such as a technician or an executive, to gain trust",sc:"A person in a copier company's uniform walks into the office and says he is there to service the printers. What technique is this?",avoid:["t23"]},
-  {id:"t22",g:"social",d:2,t:"Business email compromise (BEC)",def:"Using a hacked or spoofed business email account to trick staff into sending money or data",sc:"Using the CFO's hacked mailbox, an attacker emails accounts payable to change a supplier's bank details. What attack is this?",avoid:["t7"]},
+  {id:"t22",g:"social",d:2,t:"Business email compromise (BEC)",def:"Using a hacked or spoofed business email account to trick staff into sending money or data",sc:"Using the CFO's hacked mailbox, an attacker emails accounts payable to change a supplier's bank details. What attack is this?",avoid:["t7"],alt:["bec"]},
   {id:"t23",g:"social",d:2,t:"Pretexting",def:"Making up a believable story, the pretext, to get someone to give information or access",sc:"An attacker tells a receptionist he is an auditor who must confirm staff names for a surprise review. What technique is he relying on?"},
   {id:"t24",g:"social",d:2,t:"Disinformation",def:"False information spread on purpose to deceive people",sc:"A group knowingly posts fake news that a company's product is unsafe, to drive its stock price down. What is this?"},
   {id:"t25",g:"social",d:2,t:"Misinformation",def:"False information spread without the intent to deceive, often by people who believe it",sc:"Employees share an inaccurate rumor about a data breach that they genuinely believe is true. What is this?"},
-  {id:"t26",g:"social",d:2,t:"Brand impersonation",def:"Copying a trusted brand's logos and look in emails or websites to trick victims",sc:"An email uses a bank's exact logo, colors, and fonts so that its fake login page looks real. What technique is this?",avoid:["t7"]},
-  {id:"t12",g:"vector",d:2,t:"Supply chain attack",def:"Compromising a vendor, supplier, or software update to reach the real target",sc:"Attackers insert malware into a vendor's software update, which then installs at thousands of customers. What attack is this?"},
-  {id:"t27",g:"vector",d:2,t:"Removable device",def:"Malware delivered on USB drives or other media that someone plugs in",sc:"USB drives labeled Payroll 2026 are left in the company parking lot. Which threat vector is this?"},
-  {id:"t28",g:"vector",d:2,t:"Default credentials",def:"Factory-set usernames and passwords that were never changed",sc:"An attacker logs in to a new security camera with the username admin and the password admin. Which threat vector did the attacker use?"},
-  {id:"t29",g:"vector",d:2,t:"Open service ports",def:"Network ports left listening for services that are not needed",sc:"A scan finds Telnet listening on a server that nobody uses for remote access. Which attack surface is this?"},
-  {id:"t30",g:"vector",d:2,t:"Unsupported systems",def:"Systems past their end of life that no longer receive security patches",sc:"A clinic still runs Windows 7 on a reception PC that gets no security updates. Which threat vector does this create?"},
-  {id:"t31",g:"vector",d:2,t:"Unsecure wireless network",def:"Wi-Fi with weak or no encryption, or with open access",sc:"An office access point still uses WEP, which an attacker cracks from the parking lot. Which threat vector did the attacker use?"},
-  {id:"t32",g:"vector",d:2,t:"Message-based vector",def:"Attacks delivered through email, SMS, or instant messages",sc:"Malicious links are sent to staff through the company's chat app. Which type of threat vector is this?"},
-  {id:"t33",g:"vector",d:2,t:"Image-based vector",def:"Malicious code or links hidden inside image files",sc:"A malicious SVG image runs embedded script when a user opens it. Which type of threat vector is this?"},
-  {id:"t34",g:"vector",d:2,t:"File-based vector",def:"Malicious code hidden in documents or other files, such as Office macros or PDFs",sc:"A spreadsheet on a shared drive contains a macro that downloads malware when someone enables it. Which type of threat vector is this?"}
+  {id:"t26",g:"social",d:2,t:"Brand impersonation",def:"Copying a trusted brand's logos and look in emails or websites to trick victims",sc:"An email uses a bank's exact logo, colors, and fonts so that its fake login page looks real. What technique is this?",avoid:["t7"],alt:["brand impersonation"]},
+  {id:"t12",g:"vector",d:2,t:"Supply chain attack",def:"Compromising a vendor, supplier, or software update to reach the real target",sc:"Attackers insert malware into a vendor's software update, which then installs at thousands of customers. What attack is this?",alt:["supply chain"]},
+  {id:"t27",g:"vector",d:2,t:"Removable device",def:"Malware delivered on USB drives or other media that someone plugs in",sc:"USB drives labeled Payroll 2026 are left in the company parking lot. Which threat vector is this?",alt:["usb", "usb drive", "removable media", "baiting"]},
+  {id:"t28",g:"vector",d:2,t:"Default credentials",def:"Factory-set usernames and passwords that were never changed",sc:"An attacker logs in to a new security camera with the username admin and the password admin. Which threat vector did the attacker use?",alt:["default passwords", "default password"]},
+  {id:"t29",g:"vector",d:2,t:"Open service ports",def:"Network ports left listening for services that are not needed",sc:"A scan finds Telnet listening on a server that nobody uses for remote access. Which attack surface is this?",alt:["open ports", "open port"]},
+  {id:"t30",g:"vector",d:2,t:"Unsupported systems",def:"Systems past their end of life that no longer receive security patches",sc:"A clinic still runs Windows 7 on a reception PC that gets no security updates. Which threat vector does this create?",alt:["unsupported system", "end of life", "eol", "legacy system"]},
+  {id:"t31",g:"vector",d:2,t:"Unsecure wireless network",def:"Wi-Fi with weak or no encryption, or with open access",sc:"An office access point still uses WEP, which an attacker cracks from the parking lot. Which threat vector did the attacker use?",alt:["unsecure wifi", "open wifi", "insecure wireless", "insecure wifi"]},
+  {id:"t32",g:"vector",d:2,t:"Message-based vector",def:"Attacks delivered through email, SMS, or instant messages",sc:"Malicious links are sent to staff through the company's chat app. Which type of threat vector is this?",alt:["message based"]},
+  {id:"t33",g:"vector",d:2,t:"Image-based vector",def:"Malicious code or links hidden inside image files",sc:"A malicious SVG image runs embedded script when a user opens it. Which type of threat vector is this?",alt:["image based"]},
+  {id:"t34",g:"vector",d:2,t:"File-based vector",def:"Malicious code hidden in documents or other files, such as Office macros or PDFs",sc:"A spreadsheet on a shared drive contains a macro that downloads malware when someone enables it. Which type of threat vector is this?",alt:["file based", "malicious attachment"]}
  ]},
  attacks:{need:2,groups:[["app","Application flaws","Application"],["plat","Platform, mobile & cloud flaws","Platform"],["mal","Malware","Malware"],["net","Network & password attacks","Network"],["phys","Physical, wireless & crypto attacks","Other"],["ind","Indicators of malicious activity","Indicators"],["mit","Mitigation techniques","Mitigation"]],items:[
   {id:"a1",g:"app",d:2,t:"SQL injection",def:"Inserting database commands into application input so the database runs them",sc:"A login form accepts ' OR 1=1 -- as a username and lets the attacker in. What attack is this?",fix:"Input validation and parameterized queries",fixAvoid:["a2","a3"]},
@@ -1235,7 +1259,7 @@ const RANKS=[{name:"Beginner",min:0},{name:"Intermediate",min:.5},{name:"Advance
 const RANK_TIP="Module rank, set by your progress: Beginner under 50%, Intermediate 50–69%, Advanced 70–79%, Expert 80–99%, Pro 100%.";
 /* Security+ Mastery Badge and prestige. P.prestige (0-20) and P.everMastered survive a prestige; P.mastered is this cycle. */
 const PRESTIGE_MAX=20;
-const PRESTIGE_NAMES=["Strong Password","Padlock","Key Pair","Hash","Digital Signature","Firewall","Honeypot","Sandbox","Multifactor","Zero Trust","SIEM","Threat Hunter","Incident Responder","Forensic Analyst","Red Team","Security Architect","Risk Manager","Auditor","CISO","Defense in Depth"];
+const PRESTIGE_NAMES=["Strong Password","Padlock","Key Pair","Hash","Digital Signature","Firewall","Honeypot","Sandbox","Multifactor","Zero Trust","SIEM","Threat Hunter","Incident Responder","Forensic Analyst","Red Team","Security Architect","Risk Manager","Auditor","Defense in Depth","Chief Information Security Officer"];
 const BADGE_METALS=[{n:"Bronze",a:"#E3A36B",b:"#9C5B2E",ink:"#3A1E08"},{n:"Silver",a:"#E6EBF0",b:"#8C98A6",ink:"#1E2731"},{n:"Gold",a:"#F7D56A",b:"#C0901A",ink:"#3D2A00"},{n:"Platinum",a:"#C9F1F7",b:"#4BA7BD",ink:"#0B3640"}];
 function modulesForMastery(){ return MODULES.filter(m=>!m.menu&&!m.soon); }
 const MASTER_MIN=.8;
@@ -1267,8 +1291,8 @@ const BADGE_ICONS=[
  /* 16 Security Architect: a shield drawn on a blueprint */ `<path d="M27 28 H73 V66 H27 Z" stroke-width="2.2"/><path d="M27 40 H73 M27 53 H73 M39 28 V66 M50 28 V66 M61 28 V66" stroke-width="1.3" opacity=".55"/><path d="M50 33 L62 38 V47 C62 55 57 59 50 61 C43 59 38 55 38 47 V38 Z" class="fi"/>`,
  /* 17 Risk Manager: balance scales */ `<path d="M50 26 V64 M38 66 H62 M28 33 H72"/><path d="M28 33 L21 51 M28 33 L35 51 M72 33 L65 51 M72 33 L79 51" stroke-width="2"/><path d="M20 51 a8 5 0 0 0 16 0 Z M64 51 a8 5 0 0 0 16 0 Z" class="fi"/><circle cx="50" cy="27" r="3.5" class="fi"/>`,
  /* 18 Auditor: a clipboard of checked items */ `<rect x="33" y="28" width="34" height="40" rx="3"/><rect x="43" y="24" width="14" height="8" rx="2" class="fi"/><path d="M38 42 L41 45 L46 39 M51 42 H62 M38 55 L41 58 L46 52 M51 55 H62" stroke-width="2.4"/>`,
- /* 19 CISO: a crown over a shield */ `<path d="M36 33 L40 21 L46 29 L50 19 L54 29 L60 21 L64 33 Z" class="fi"/><path d="M50 38 L64 43 V52 C64 60 58 65 50 68 C42 65 36 60 36 52 V43 Z"/><path d="M44 52 L48 56 L56 48" stroke-width="2.8"/>`,
- /* 20 Defense in Depth: three nested shields */ `<path d="M50 18.5L72.5 27.2V46C72.5 61 62.5 69.8 50 74.8C37.5 69.8 27.5 61 27.5 46V27.2Z" stroke-width="2.4"/><path d="M50 27.3L65.3 33.2V46C65.3 56.2 58.5 62.1 50 65.5C41.5 62.1 34.7 56.2 34.7 46V33.2Z" stroke-width="2.4"/><path d="M50 36.1L58.1 39.2V46C58.1 51.4 54.5 54.5 50 56.4C45.5 54.5 41.9 51.4 41.9 46V39.2Z" class="fi"/>`
+ /* 19 Defense in Depth: three nested shields */ `<path d="M50 18.5L72.5 27.2V46C72.5 61 62.5 69.8 50 74.8C37.5 69.8 27.5 61 27.5 46V27.2Z" stroke-width="2.4"/><path d="M50 27.3L65.3 33.2V46C65.3 56.2 58.5 62.1 50 65.5C41.5 62.1 34.7 56.2 34.7 46V33.2Z" stroke-width="2.4"/><path d="M50 36.1L58.1 39.2V46C58.1 51.4 54.5 54.5 50 56.4C45.5 54.5 41.9 51.4 41.9 46V39.2Z" class="fi"/>`,
+ /* 20 CISO (Chief Information Security Officer): a crown over a shield */ `<path d="M36 33 L40 21 L46 29 L50 19 L54 29 L60 21 L64 33 Z" class="fi"/><path d="M50 38 L64 43 V52 C64 60 58 65 50 68 C42 65 36 60 36 52 V43 Z"/><path d="M44 52 L48 56 L56 48" stroke-width="2.8"/>`
 ];
 const SECRET_ICONS=[
  /* Root of Trust: an anchor (a root certificate is the "trust anchor") */ `<circle cx="50" cy="27" r="5"/><path d="M50 32 V67 M40 40 H60"/><path d="M29 52 C29 62 39 68 50 68 C61 68 71 62 71 52"/><path d="M25 57 L29 50 L34 56 M75 57 L71 50 L66 56" stroke-width="2.8"/>`,
@@ -1822,6 +1846,174 @@ const LABS={
   keyflow:{name:"Key Flow",run:labKeyFlow,desc:"A sender, a recipient, a certificate authority, and Mallory listening on the wire. Drag the right key onto each step to keep a message secret, sign it, share a session key, get a certificate trusted, or revoke one. 8 tasks."},
   sort:{name:"Sort the cipher",run:labSort,desc:"Drag algorithms and their traits into Symmetric, Asymmetric, or Hashing. A new mix each round."}
 };
+/* Threat Actor Profiler: drag attribute tiles onto each actor's profile card. Some slots accept more than one
+   answer where CompTIA's descriptions allow it (an insider's motive can be revenge or money). */
+const PROF_TILES={ext:"External",int:"Internal",low:"Low",med:"Medium",high:"High",esp:"Espionage or war",money:"Financial gain",cause:"Political or philosophical beliefs",rev:"Revenge",thrill:"Thrills, disruption, or bragging rights",none:"No malicious intent"};
+const PROF_ACTORS=[
+ {id:"t1",n:"Nation-state",d:"Government-backed teams; often run advanced persistent threats (APTs).",a:{where:["ext"],res:["high"],why:["esp"]},x:"Nation-states have huge budgets and skill, and attack for espionage or as part of war."},
+ {id:"t5",n:"Organized crime",d:"Criminal groups that run attacks like a business.",a:{where:["ext"],res:["high"],why:["money"]},x:"Organized crime is well funded and skilled, and wants money: ransomware, fraud, stolen data."},
+ {id:"t3",n:"Hacktivist",d:"Attackers pushing a cause, often by defacing sites or leaking data.",a:{where:["ext"],res:["low","med"],why:["cause"]},x:"Hacktivists act for a political or social cause. Their skill and funding vary, usually low to medium."},
+ {id:"t2",n:"Unskilled attacker",d:"Uses tools and scripts other people wrote.",a:{where:["ext"],res:["low"],why:["thrill"]},x:"Unskilled attackers have little skill or money and attack for thrills, disruption, or bragging rights."},
+ {id:"t4",n:"Insider threat",d:"A current or former employee, contractor, or partner.",a:{where:["int"],res:["low","med"],why:["rev","money"]},x:"Insiders are already inside with real access. Their resources are usually modest; revenge and money are the common motives."},
+ {id:"t6",n:"Shadow IT",d:"Staff using apps, devices, or cloud services IT never approved.",a:{where:["int"],res:["low"],why:["none"]},x:"Shadow IT is internal and usually well-meaning: people trying to get work done, with no malicious intent, but it still creates risk."}
+];
+const PROF_SLOTS=[["where","Internal or external?",["ext","int"]],["res","Resources and skill",["low","med","high"]],["why","Typical motive",["esp","money","cause","rev","thrill","none"]]];
+function labProfiler(mod,back){
+  const done=labDone(mod,"profiler");
+  function render(){
+    const actors=shuffle(PROF_ACTORS.slice()).slice(0,4); const fill={}; let checked=false, firstTry=true;
+    const tray=PROF_SLOTS.map(([k,label,tiles])=>`<div class="pf-trow"><small>${esc(label)}</small><div class="kf-tray">${tiles.map(v=>`<button type="button" class="dd-tile srt-t pf-${k}" data-v="${v}">${esc(PROF_TILES[v])}</button>`).join("")}</div></div>`).join("");
+    app.innerHTML=modHead(M(mod))+`<div class="examtop"><button class="chipbtn" id="labback" type="button">← ${esc(M(mod).name)} menu</button><span>Threat Actor Profiler${done.rounds?` · ${done.rounds} perfect round${done.rounds>1?"s":""}`:""}</span></div>
+    <div class="card" id="pf"><h3 style="font-size:1.3rem;margin:0 0 4px">Build each threat actor's profile</h3>
+      <p style="margin:0 0 12px">Fill all three lines on each card: where the actor comes from, how much money and skill it usually has, and why it attacks. Drag a tile onto a line, or tap a tile and then a line. Tiles can be used more than once.</p>
+      <div class="pf-grid">${actors.map(A=>`<div class="pf-card"><h4>${esc(A.n)}</h4><p class="note" style="margin:0 0 8px">${esc(A.d)}</p>${PROF_SLOTS.map(([k,label])=>`<button type="button" class="dd-target kf-slot pf-slot" data-a="${A.id}" data-k="${k}" data-clear><small>${esc(label)}</small><span class="kf-fill">Drop here</span></button>`).join("")}</div>`).join("")}</div>
+      <div class="pf-tray">${tray}</div>
+      <div class="q-actions" style="margin-top:12px"><button class="btn" id="pfcheck">Check</button><button class="btn ghost" id="pfnext" hidden>New round</button></div>
+      <div class="fb" id="pffb" hidden></div></div>`;
+    const root=$("#pf");
+    const paint=()=>root.querySelectorAll(".pf-slot").forEach(el=>{ const v=fill[el.dataset.a+el.dataset.k]; el.classList.toggle("filled",!!v); el.classList.remove("ok","bad"); el.querySelector(".kf-fill").innerHTML=v?`<span class="srt-t" style="display:inline-block">${esc(PROF_TILES[v])}</span>`:"Drop here"; });
+    ddWire(root,(tgt,v)=>{ if(checked) return;
+      if(v){ const ok=PROF_SLOTS.find(s=>s[0]===tgt.dataset.k)[2].includes(v); if(!ok){ const fb=$("#pffb"); fb.hidden=false; fb.innerHTML=`<div class="v bad">That tile belongs on a "${esc(PROF_SLOTS.find(s=>s[2].includes(v))[1])}" line.</div>`; return; } }
+      fill[tgt.dataset.a+tgt.dataset.k]=v; paint(); });
+    $("#pfcheck").addEventListener("click",()=>{
+      const empty=root.querySelectorAll(".pf-slot:not(.filled)").length;
+      if(empty){ $("#pffb").hidden=false; $("#pffb").innerHTML=`<div class="v bad">Fill all ${empty} empty line${empty>1?"s":""} first.</div>`; return; }
+      let wrong=0; root.querySelectorAll(".pf-slot").forEach(el=>{ const A=PROF_ACTORS.find(x=>x.id===el.dataset.a); const ok=A.a[el.dataset.k].includes(fill[el.dataset.a+el.dataset.k]); el.classList.add(ok?"ok":"bad"); if(!ok) wrong++; });
+      $("#pffb").hidden=false;
+      if(wrong){ firstTry=false; $("#pffb").innerHTML=`<div class="v bad">${wrong} line${wrong>1?"s":""} wrong. Fix the red lines and check again.</div>`; return; }
+      checked=true; $("#pfcheck").hidden=true; $("#pfnext").hidden=false;
+      $("#pffb").innerHTML=`<div class="v ok">${firstTry?"Every profile right on the first try.":"Every profile is right."}</div><ol class="steps">${actors.map(A=>`<li><b>${esc(A.n)}:</b> ${esc(A.x)}</li>`).join("")}</ol>`;
+      if(firstTry&&mode==="student"){ done.rounds=(done.rounds||0)+1; labCredit(mod,actors.map(A=>A.id)); }
+    });
+    $("#pfnext").addEventListener("click",render); $("#labback").addEventListener("click",back);
+  }
+  render();
+}
+
+/* Attack Surface Map: an office with incidents pinned to places. Drag the threat vector onto each incident. */
+const MAP_SPOTS=[
+ {z:"lot",id:"t27",v:"Removable device",s:"USB drives labeled Payroll 2026 are found in the parking lot. One was plugged into a reception PC."},
+ {z:"desk",id:"t21",v:"Impersonation",s:"A man in a copier-company shirt walks past reception saying he is here to fix the printers."},
+ {z:"inbox",id:"t7",v:"Phishing",s:"Fifty employees get an email asking them to sign in to a look-alike benefits page."},
+ {z:"phone",id:"t8",v:"Smishing",s:"Staff get a text claiming a package is held and asking them to tap a link to pay a fee."},
+ {z:"phone",id:"t9",v:"Vishing",s:"A caller claiming to be the bank's fraud team asks the CFO to read out a one-time code."},
+ {z:"cam",id:"t28",v:"Default credentials",s:"The lobby security camera still accepts the username admin and the password admin."},
+ {z:"server",id:"t29",v:"Open service ports",s:"A scan shows Telnet (port 23) listening on the file server, though nobody uses it."},
+ {z:"server",id:"t30",v:"Unsupported systems",s:"The billing server still runs an operating system that stopped getting security updates two years ago."},
+ {z:"wifi",id:"t31",v:"Unsecure wireless network",s:"The warehouse access point uses WEP, and someone in a car outside is capturing its traffic."},
+ {z:"vendor",id:"t12",v:"Supply chain attack",s:"The HVAC contractor's laptop, which has VPN access, was compromised and used to get in."},
+ {z:"inbox",id:"t34",v:"File-based vector",s:"An invoice spreadsheet asks the reader to click Enable Content, which runs a macro."},
+ {z:"web",id:"t10",v:"Watering hole attack",s:"A trade association website that every employee visits was compromised to serve malware."},
+ {z:"web",id:"t11",v:"Typosquatting",s:"Staff who mistype the payroll portal's address land on a copy of it that steals logins."}
+];
+const MAP_ZONES={lot:["Parking lot","M3 17h18M5 17V9l2-4h10l2 4v8M7 13h2M15 13h2"],desk:["Front desk","M3 20h18M5 20V11h14v9M9 11V7h6v4"],inbox:["Email","M3 6h18v12H3zM3 6l9 7 9-7"],phone:["Phones","M8 2h8v20H8zM11 18h2"],cam:["Lobby camera","M3 8h12v8H3zM15 11l6-3v8l-6-3"],server:["Server room","M5 3h14v6H5zM5 9h14v6H5zM5 15h14v6H5zM8 6h1M8 12h1M8 18h1"],wifi:["Warehouse Wi-Fi","M2 9a15 15 0 0 1 20 0M5 13a10 10 0 0 1 14 0M8.5 16.5a5 5 0 0 1 7 0M12 20h.01"],vendor:["Vendor access","M4 4h16v11H4zM2 19h20M12 15v4"],web:["Websites staff visit","M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"]};
+function labMap(mod,back){
+  const done=labDone(mod,"map");
+  function render(){
+    const zones=shuffle(Object.keys(MAP_ZONES)); const spots=[]; zones.forEach(z=>{ if(spots.length<6){ const c=shuffle(MAP_SPOTS.filter(s=>s.z===z)); if(c.length) spots.push(c[0]); } });
+    const fill={}; let checked=false, firstTry=true;
+    /* extras never come from the same family as a pin (an extra "Phishing" would also seem to fit a smishing pin) */
+    const FAM=[["Phishing","Smishing","Vishing","File-based vector"],["Watering hole attack","Typosquatting"]];
+    const fam=v=>FAM.find(f=>f.includes(v))||[v]; const taken=new Set([].concat(...spots.map(s=>fam(s.v))));
+    const extras=shuffle([...new Set(MAP_SPOTS.map(s=>s.v))].filter(v=>!taken.has(v))).slice(0,3);
+    const tiles=shuffle(spots.map(s=>s.v).concat(extras));
+    const icon=z=>`<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="${MAP_ZONES[z][1]}" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    app.innerHTML=modHead(M(mod))+`<div class="examtop"><button class="chipbtn" id="labback" type="button">← ${esc(M(mod).name)} menu</button><span>Attack Surface Map${done.rounds?` · ${done.rounds} perfect round${done.rounds>1?"s":""}`:""}</span></div>
+    <div class="card" id="mp"><h3 style="font-size:1.3rem;margin:0 0 4px">Pinecrest Logistics: six incidents this week</h3>
+      <p style="margin:0 0 12px">Each pin is something that happened at a fictional company. Drag the threat vector that names it onto the pin, or tap a tile and then a pin. Three tiles are extras.</p>
+      <div class="mp-map">${spots.map((s,k)=>`<div class="mp-zone"><div class="mp-head">${icon(s.z)}<b>${esc(MAP_ZONES[s.z][0])}</b></div><p>${esc(s.s)}</p><button type="button" class="dd-target kf-slot mp-slot" data-i="${k}" data-clear><small>Threat vector</small><span class="kf-fill">Drop here</span></button></div>`).join("")}</div>
+      <div class="kf-tray" style="margin-top:12px">${tiles.map(v=>`<button type="button" class="dd-tile srt-t" data-v="${esc(v)}">${esc(v)}</button>`).join("")}</div>
+      <div class="q-actions" style="margin-top:12px"><button class="btn" id="mpcheck">Check</button><button class="btn ghost" id="mpnext" hidden>New week</button></div>
+      <div class="fb" id="mpfb" hidden></div></div>`;
+    const root=$("#mp");
+    const paint=()=>root.querySelectorAll(".mp-slot").forEach(el=>{ const v=fill[el.dataset.i]; el.classList.toggle("filled",!!v); el.classList.remove("ok","bad"); el.querySelector(".kf-fill").innerHTML=v?`<span class="srt-t" style="display:inline-block">${esc(v)}</span>`:"Drop here"; });
+    ddWire(root,(tgt,v)=>{ if(checked) return; fill[tgt.dataset.i]=v; paint(); });
+    $("#mpcheck").addEventListener("click",()=>{
+      if(spots.some((s,k)=>!fill[k])){ $("#mpfb").hidden=false; $("#mpfb").innerHTML=`<div class="v bad">Put a tile on every pin first.</div>`; return; }
+      let wrong=0; root.querySelectorAll(".mp-slot").forEach(el=>{ const ok=fill[el.dataset.i]===spots[+el.dataset.i].v; el.classList.add(ok?"ok":"bad"); if(!ok) wrong++; });
+      $("#mpfb").hidden=false;
+      if(wrong){ firstTry=false; $("#mpfb").innerHTML=`<div class="v bad">${wrong} pin${wrong>1?"s":""} wrong. Fix the red ones and check again.</div>`; return; }
+      checked=true; $("#mpcheck").hidden=true; $("#mpnext").hidden=false;
+      const T=TERMSETS[mod].items;
+      $("#mpfb").innerHTML=`<div class="v ok">${firstTry?"Every pin right on the first try.":"Every pin is right."}</div><ol class="steps">${spots.map(s=>{ const it=T.find(x=>x.id===s.id); return `<li><b>${esc(s.v)}:</b> ${esc(it?it.def:"")}.</li>`; }).join("")}</ol>`;
+      if(firstTry&&mode==="student"){ done.rounds=(done.rounds||0)+1; labCredit(mod,spots.map(s=>s.id)); }
+    });
+    $("#mpnext").addEventListener("click",render); $("#labback").addEventListener("click",back);
+  }
+  render();
+}
+
+/* Spot the Phish: an inbox of fictional emails. Tap every part that is a red flag, then decide: report it or keep it.
+   Each part of an email is a segment; a segment with a flag reason is a red flag. Legitimate emails have none. */
+const PHISH=[
+ {id:"bec",kind:"phish",terms:["t22","t11"],from:["Dana Whitfield, CEO",null],addr:["dana.whitfield@pinecrest-logistlcs.com","The domain swaps an i for an l: pinecrest-logistlcs.com is not the company's domain (typosquatting)."],to:"accounts.payable@pinecrest-logistics.com",
+  subject:["Urgent: wire needed before 3 PM","Pressure to act fast is the most common phishing trick."],
+  body:[["Hi,",null],["I'm in a board meeting and can't take calls, so please handle this by email only.","Steering you away from a phone call stops you from verifying the request."],["Process a $48,500 wire to our new logistics vendor today. Their bank details are in the attachment.","A new payee with new bank details is the classic business email compromise request."],["Keep this between us until the deal is announced.","Asking for secrecy is a red flag: it keeps you from checking with anyone."],["Thanks, Dana",null]],
+  attach:["Vendor_Bank_Details.pdf.exe","A double extension hides an executable: this is a program, not a PDF."]},
+ {id:"bank",kind:"phish",terms:["t7","t26"],from:["Larkspur Bank Security",null],addr:["alerts@larkspurbank-secure.co","A look-alike domain: the bank's real domain would not be larkspurbank-secure.co."],to:"you@pinecrest-logistics.com",
+  subject:["Your account has been locked",null],
+  body:[["Dear Customer,","A generic greeting: your real bank knows your name."],["We detected unusual sign-in activity on your account.",null],["Verify your identity within 24 hours or your account will be permanently closed.","A threat with a deadline is meant to rush you."],["Sign in here: ",null,{text:"https://www.larkspurbank.com/verify",href:"http://larkspur-verify.co/login",why:"The link text shows the bank's site, but the real address goes to larkspur-verify.co over plain http."}],["Larkspur Bank · Member FDIC",null]],
+  attach:null},
+ {id:"maint",kind:"legit",terms:["t7"],from:["IT Help Desk",null],addr:["helpdesk@pinecrest-logistics.com",null],to:"all-staff@pinecrest-logistics.com",
+  subject:["Planned email maintenance Saturday 10 PM",null],
+  body:[["Hello everyone,",null],["Email will be unavailable from 10 PM to midnight this Saturday while we apply updates.",null],["No action is needed on your part.",null],["Questions? Call the help desk at extension 4400.",null]],attach:null,
+  why:"It comes from the company's real domain, asks for nothing, has no links or attachments, and points you to a phone number you already know."},
+ {id:"inv",kind:"phish",terms:["t34","t7"],from:["Accounts Receivable",null],addr:["billing@shipfast-invoices.net","An outside sender the company has never dealt with."],to:"accounts.payable@pinecrest-logistics.com",
+  subject:["Invoice #88213 is OVERDUE","Overdue warnings in capitals add pressure."],
+  body:[["Hello,",null],["Please see the attached invoice for services rendered.",null],["If the document looks blank, click Enable Editing and then Enable Content to view it.","Asking you to enable content means turning on macros, which is how this file runs its malware."],["Late fees apply after Friday.","Another pressure tactic."]],
+  attach:["Invoice_88213.xlsm","The .xlsm extension means the spreadsheet contains macros."]},
+ {id:"hr",kind:"legit",terms:["t7"],from:["Pinecrest HR",null],addr:["hr@pinecrest-logistics.com",null],to:"all-staff@pinecrest-logistics.com",
+  subject:["Open enrollment starts Monday",null],
+  body:[["Hi team,",null],["Benefits open enrollment runs from Monday to the 30th.",null],["You can review your options on ",null,{text:"the benefits portal",href:"https://benefits.pinecrest-logistics.com",why:null}],["HR office hours are Tuesdays from 1 to 3 PM if you have questions.",null]],attach:null,
+  why:"The sender and the link both use the company's own domain over https, nothing is urgent, and it asks for nothing sensitive."},
+ {id:"ship",kind:"phish",terms:["t7","t26"],from:["ParcelPoint Delivery",null],addr:["notice@parcelpoint-delivery-help.com","A long, odd domain is a common sign of a fake sender."],to:"you@pinecrest-logistics.com",
+  subject:["Delivery failed: action required",null],
+  body:[["Dear recipient,","A generic greeting."],["We could not deliver your package because of an unpaid $1.99 customs fee.","A tiny fee makes you less suspicious, but the real goal is your card number."],["Pay now to reschedule: ",null,{text:"Pay fee",href:"http://pp-redeliver.top/pay",why:"The button hides an address on an unrelated .top domain."}],["Packages not claimed within 48 hours will be returned.","A deadline to rush you."]],attach:null}
+];
+function labPhish(mod,back){
+  const done=labDone(mod,"phish"); let order=shuffle(PHISH.slice()), i=0;
+  function render(){
+    const E=order[i]; const segs=[]; let checked=false, firstTry=true, verdict=null;
+    const seg=(text,why,cls="")=>{ segs.push(why); return `<button type="button" class="ph-seg ${cls}" data-s="${segs.length-1}">${esc(text)}</button>`; };
+    const body=E.body.map(([t,why,link])=>`<p>${seg(t,why)}${link?`<button type="button" class="ph-seg ph-link" data-s="${(segs.push(link.why),segs.length-1)}" data-href="${esc(link.href)}">${esc(link.text)}</button>`:""}</p>`).join("");
+    app.innerHTML=modHead(M(mod))+`<div class="examtop"><button class="chipbtn" id="labback" type="button">← ${esc(M(mod).name)} menu</button><span>Spot the Phish · email ${i+1} of ${order.length}</span></div>
+    <div class="card" id="ph"><p style="margin:0 0 10px">Tap every part of this email that is a red flag. Hover over or tap a link to see where it really goes. Then report it or keep it. Some emails are legitimate.</p>
+      <div class="ph-mail">
+        <div class="ph-hdr"><div><span class="ph-k">From</span>${seg(E.from[0],E.from[1],"ph-name")} ${seg("<"+E.addr[0]+">",E.addr[1],"ph-addr")}</div>
+          <div><span class="ph-k">To</span><span class="note">${esc(E.to)}</span></div>
+          <div><span class="ph-k">Subject</span>${seg(E.subject[0],E.subject[1],"ph-subj")}</div></div>
+        <div class="ph-body">${body}${E.attach?`<p>${seg("Attachment: "+E.attach[0],E.attach[1],"ph-att")}</p>`:""}</div>
+        <div class="ph-status" id="phstatus">Point at a link to see its real address.</div>
+      </div>
+      <div class="q-actions" style="margin-top:12px"><button class="btn" id="phreport">Report as phishing</button><button class="btn ghost" id="phkeep">Looks legitimate</button><button class="btn ghost" id="phnext" hidden>Next email</button></div>
+      <div class="fb" id="phfb" hidden></div></div>`;
+    const root=$("#ph");
+    root.querySelectorAll(".ph-seg").forEach(b=>{
+      b.addEventListener("click",()=>{ if(checked) return; b.classList.toggle("flag"); if(b.dataset.href) $("#phstatus").textContent=b.dataset.href; });
+      if(b.dataset.href){ const show=()=>$("#phstatus").textContent=b.dataset.href; b.addEventListener("pointerenter",show); b.addEventListener("focus",show); }
+    });
+    const grade=v=>{
+      const flagged=[...root.querySelectorAll(".ph-seg.flag")].map(b=>+b.dataset.s); const red=segs.map((w,k)=>w?k:-1).filter(k=>k>=0);
+      const found=red.filter(k=>flagged.includes(k)), missed=red.filter(k=>!flagged.includes(k)), extra=flagged.filter(k=>!segs[k]);
+      const vOk=(v==="phish")===(E.kind==="phish"); const all=vOk&&!missed.length&&!extra.length;
+      root.querySelectorAll(".ph-seg").forEach(b=>{ const k=+b.dataset.s; b.classList.remove("hit","miss","extra"); if(segs[k]&&flagged.includes(k)) b.classList.add("hit"); else if(segs[k]) b.classList.add("miss"); else if(flagged.includes(k)) b.classList.add("extra"); });
+      $("#phfb").hidden=false;
+      const lines=red.map(k=>`<li class="${flagged.includes(k)?"":"ph-missed"}"><b>${flagged.includes(k)?"Found":"Missed"}:</b> ${esc(segs[k])}</li>`).join("")+extra.map(k=>`<li><b>Not a red flag:</b> "${esc(root.querySelector(`[data-s="${k}"]`).textContent)}" is normal here.</li>`).join("");
+      $("#phfb").innerHTML=`<div class="v ${all?"ok":"bad"}">${vOk?(E.kind==="phish"?"Right: this is phishing.":"Right: this one is legitimate."):(E.kind==="phish"?"This one is phishing.":"This one is actually legitimate.")} ${E.kind==="phish"?`You found ${found.length} of ${red.length} red flags${extra.length?`, and flagged ${extra.length} part${extra.length>1?"s":""} that ${extra.length>1?"are":"is"} fine`:""}.`:extra.length?`Nothing in it was a red flag.`:""}</div>`+(lines?`<ul class="steps">${lines}</ul>`:"")+(E.why?`<p style="margin:.4em 0 0">${esc(E.why)}</p>`:"");
+      checked=true; ["phreport","phkeep"].forEach(id=>$("#"+id).hidden=true); $("#phnext").hidden=false; $("#phnext").textContent=i+1<order.length?"Next email":"Start over";
+      if(all&&mode==="student"){ done[E.id]=true; labCredit(mod,E.terms); }
+    };
+    $("#phreport").addEventListener("click",()=>grade("phish")); $("#phkeep").addEventListener("click",()=>grade("legit"));
+    $("#phnext").addEventListener("click",()=>{ i++; if(i>=order.length){ order=shuffle(PHISH.slice()); i=0; } render(); });
+    $("#labback").addEventListener("click",back);
+  }
+  render();
+}
+Object.assign(LABS,{
+  profiler:{name:"Threat Actor Profiler",run:labProfiler,desc:"Four threat actors, three blank lines each. Drag in where each comes from, how much money and skill it has, and why it attacks."},
+  map:{name:"Attack Surface Map",run:labMap,desc:"Six incidents pinned around a fictional company: the parking lot, the front desk, the inbox, the server room. Drag the threat vector that names each one."},
+  phish:{name:"Spot the Phish",run:labPhish,desc:"Read fictional emails like a security analyst. Tap every red flag, check where links really go, then report it or keep it. Some are legitimate."}
+});
 /* ---- Term modules ----
    One engine runs every term module (TERMSETS). Each term is asked several ways: name it from a description,
    define it, spot it in a scenario, and, where the term has one, pick its best defense. A term is mastered once
