@@ -174,34 +174,15 @@ ${[notes, folders].filter(Boolean).join(',\n')} { border-radius: 6px; animation:
         await joplin.views.dialogs.showMessageBox('Could not add the note automatically. Create a note and type ```sec+ on one line and ``` on the next line instead.');
       }
     }
-    /* Open the tool in its own Joplin window (no notebook or note list beside it). Reuses the newest
-       Provo note, or adds one first. Needs Joplin desktop 3.2 or later; otherwise it opens in the main window. */
-    async function openOwnWindow() {
-      let id = '';
-      try {
-        const list = await studyList();
-        for (const x of list.slice().reverse()) {
-          try { const n = await joplin.data.get(['notes', x.note], { fields: ['id', 'body', 'deleted_time'] }); if (n && !n.deleted_time && FENCE.test(n.body || '')) { id = n.id; break; } } catch (e) {}
-        }
-        if (!id) id = await addStudyNote(true);
-        if (!id) return;
-        await joplin.commands.execute('openNoteInNewWindow', id);
-      } catch (e) {
-        note(DIAG.errors, 'own window: ' + (e && e.message || e));
-        if (id) { try { await joplin.commands.execute('openNote', id); } catch (e2) {} }
-        try { await joplin.views.dialogs.showToast({ message: 'This version of Joplin cannot open a separate window, so Provo Security+ opened here instead.', type: 'info', duration: 5000 }); } catch (e3) {}
-      }
-    }
-    await joplin.commands.register({ name: 'secplus.ownWindow', label: 'Open Provo Security+ in its own window', iconName: 'fas fa-external-link-alt', execute: openOwnWindow });
     await joplin.commands.register({ name: 'secplus.addNote', label: 'Add Provo Security+ note', iconName: 'fas fa-plus-circle', execute: addStudyNote });
     const dialog = await joplin.views.dialogs.create('secplus_howto');
+    try { await joplin.views.dialogs.setFitToContent(dialog, false); } catch (e) {} /* fixed size: content scrolls, buttons stay visible on small screens */
     await joplin.views.dialogs.setHtml(dialog, `
-      <div style="font-family:var(--joplin-font-family, system-ui, sans-serif);color:var(--joplin-color, #222);max-width:520px;padding:4px 6px;line-height:1.5">
+      <div style="font-family:var(--joplin-font-family, system-ui, sans-serif);color:var(--joplin-color, #222);max-width:560px;margin:0 auto;padding:4px 6px 16px;line-height:1.5">
         <h2 style="margin:0 0 6px;font-size:1.4em">Provo Security+</h2>
         <p style="margin:0 0 12px">A study tool for the CompTIA Security+ (SY0-701) exam, by MyComputerCareer. It covers every exam domain: security controls, cryptography, threats and attacks, architecture, operations, identity and access, incident response, and governance, plus timed mini-exams and a one-page cram sheet. Your progress saves automatically.</p>
         <h3 style="margin:0 0 6px;font-size:1.1em">Add it to Joplin</h3>
         <p style="margin:0 0 12px">Click <b>Add Provo Security+ note</b> below, or choose <b>Tools → Provo Security+ → Add Provo Security+ note</b>. A note named <b>Provo Security+</b> is created in the notebook you have open, and it opens straight into the full-width tool. You can delete the note at any time: your progress is saved in Joplin, not in the note, so adding the note again picks up where you left off.</p>
-        <p style="margin:0 0 12px">For a distraction-free view, choose <b>Tools → Provo Security+ → Open Provo Security+ in its own window</b>. The tool opens in a separate window with nothing else around it.</p>
         <h3 style="margin:0 0 6px;font-size:1.1em">Or add it to a note yourself</h3>
         <ol style="margin:0 0 12px;padding-left:1.3em">
           <li>Create a new note, or open the note you want to use.</li>
@@ -239,11 +220,12 @@ ${[notes, folders].filter(Boolean).join(',\n')} { border-radius: 6px; animation:
     /* Changelog window. CHANGELOG_HTML is filled in from CHANGELOG.md by release.py */
     const CHANGELOG_HTML = /*CHANGELOG*/"<h3 style=\"margin:14px 0 4px;font-size:1.1em\">v0.1.0</h3><p style=\"margin:0 0 12px\">First release of Provo Security+ for CompTIA Security+ SY0-701. This is a preview: every module works, and each is being expanded to cover its full objectives.</p><ul style=\"margin:0 0 12px;padding-left:1.2em\"><li style=\"margin:.2em 0\">13 modules in 5 stages covering all five SY0-701 domains, weighted 12 / 22 / 18 / 28 / 20 like the exam.</li><li style=\"margin:.2em 0\">Modules 02\u201310 ask each term several ways: name it, define it, spot it in a scenario, and, for attacks, pick the best defense.</li><li style=\"margin:.2em 0\">Acronyms, Question Qualifiers, a one-page Cram Sheet, and a Progress page.</li><li style=\"margin:.2em 0\">Mini-Exams: 10, 20, or 40 multiple-choice questions, timed at one minute per question and weighted by domain.</li><li style=\"margin:.2em 0\">Performance-Based Questions are coming soon. Until then they do not count toward the Security+ Mastery Badge.</li><li style=\"margin:.2em 0\">Five ranks per module, from Beginner to Pro. Reach Expert in every module for the Security+ Mastery Badge.</li><li style=\"margin:.2em 0\">Progress is saved separately from Network+, and the Joplin plugin installs beside Provo Network+ (use a ```sec+ block).</li><li style=\"margin:.2em 0\">Starter content: 113 terms, 36 acronyms, 5 qualifier questions, and 15 exam questions so far.</li></ul>"/*END*/;
     const changelog = await joplin.views.dialogs.create('secplus_changelog');
+    try { await joplin.views.dialogs.setFitToContent(changelog, false); } catch (e) {} /* fixed size: content scrolls, buttons stay visible on small screens */
     await joplin.views.dialogs.setHtml(changelog, `
-      <div style="font-family:var(--joplin-font-family, system-ui, sans-serif);color:var(--joplin-color, #222);width:560px;max-width:100%;padding:4px 6px;line-height:1.5">
+      <div style="font-family:var(--joplin-font-family, system-ui, sans-serif);color:var(--joplin-color, #222);max-width:600px;margin:0 auto;padding:4px 6px 16px;line-height:1.5">
         <h2 style="margin:0 0 2px;font-size:1.4em">Provo Security+ changelog</h2>
         <p style="margin:0 0 10px;opacity:.75">You are on version ${DIAG.version}.</p>
-        <div style="max-height:60vh;overflow-y:auto;padding-right:8px">${CHANGELOG_HTML}</div>
+        <div>${CHANGELOG_HTML}</div>
       </div>`);
     await joplin.views.dialogs.setButtons(changelog, [{ id: 'close', title: 'Close' }]);
     async function showChangelog() { await joplin.views.dialogs.open(changelog); }
@@ -252,7 +234,6 @@ ${[notes, folders].filter(Boolean).join(',\n')} { border-radius: 6px; animation:
     /* Tools (and Help) > Provo Security+ > How to use / Changelog */
     const SUB = [
       { commandName: 'secplus.addNote', label: 'Add Provo Security+ note' },
-      { commandName: 'secplus.ownWindow', label: 'Open Provo Security+ in its own window' },
       { commandName: 'secplus.howTo', label: 'How to use' },
       { commandName: 'secplus.changelog', label: 'Changelog' }
     ];
@@ -267,7 +248,6 @@ ${[notes, folders].filter(Boolean).join(',\n')} { border-radius: 6px; animation:
           await joplin.views.menus.create('secplus_help_menu', 'Provo Security+', SUB, 'help');
         } else {
           await joplin.views.menuItems.create('secplus_addnote_tools', 'secplus.addNote', 'tools');
-          await joplin.views.menuItems.create('secplus_ownwindow_tools', 'secplus.ownWindow', 'tools');
           await joplin.views.menuItems.create('secplus_howto_tools', 'secplus.howTo', 'tools');
           await joplin.views.menuItems.create('secplus_changelog_tools', 'secplus.changelog', 'tools');
         }
