@@ -9,6 +9,8 @@ body:
       label: Which exam tool?
       options:
         - Provo Network+
+        - Provo Security+
+        - Provo CySA+ (planned)
         - A new exam
         - All of Provo
     validations:

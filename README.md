@@ -31,6 +31,7 @@ Provo was built by a MyCC instructor to support that training. It gives students
 |---|---|---|---|
 | CompTIA Network+ | N10-009 | **Available** | [Provo Network+](certs/network-plus/) |
 | CompTIA Security+ | SY0-701 | **Available** | [Provo Security+](certs/security-plus/) |
+| CompTIA CySA+ | CS0-004 | Planned | — |
 | CompTIA A+ | Current version when built | Planned | — |
 
 ## See it in action
@@ -61,7 +62,8 @@ Provo runs three ways. Each exam's page has step-by-step setup for all three.
 ```
 Provo/
 ├── certs/               ← one folder per exam
-│   └── network-plus/    ← Provo Network+: source, Joplin plugin, changelog
+│   ├── network-plus/    ← Provo Network+: source, Joplin plugin, changelog
+│   └── security-plus/   ← Provo Security+: source, Joplin plugin, changelog
 ├── core/                ← shared engine (planned)
 └── docs/                ← the website served by GitHub Pages
 ```

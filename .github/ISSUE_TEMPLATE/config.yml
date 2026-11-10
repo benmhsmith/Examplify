@@ -3,3 +3,6 @@ contact_links:
   - name: How to install and use Provo Network+
     url: https://github.com/benmhsmith/Provo/tree/main/certs/network-plus#how-to-use-it
     about: Setup steps for the browser, the offline file, Joplin, and iPhone.
+  - name: How to install and use Provo Security+
+    url: https://github.com/benmhsmith/Provo/tree/main/certs/security-plus#how-to-use-it
+    about: Setup steps for the browser, the offline file, Joplin, and iPhone.
