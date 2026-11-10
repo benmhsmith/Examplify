@@ -353,6 +353,44 @@ html.mobile input.ans{font-size:1.15rem;width:100%}
 html.mobile .dg svg{min-width:760px}
 html.mobile .dg::after{content:"Swipe sideways to see the whole diagram.";display:block;font-size:.8rem;color:var(--muted);padding:2px 0 6px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+/* Labs: drag and drop */
+.dd-tile{touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab}
+.dd-tile.sel{outline:3px solid var(--pick);outline-offset:1px}
+.dd-tile.dd-src{opacity:.4}
+.dd-ghost{position:fixed;z-index:1000;pointer-events:none;opacity:.92;box-shadow:0 6px 18px rgba(0,0,0,.2);transform:rotate(-2deg)}
+.dd-armed .dd-target{outline:2px dashed var(--pick);outline-offset:2px}
+.dd-target.over{background:var(--pick-bg)!important;outline:2px solid var(--pick)}
+.kf-t{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:7px 10px;font:600 .88rem var(--font-body)}
+.kf-t.own-s{border-color:var(--pv1);color:var(--pv1)} .kf-t.own-r{border-color:var(--pv2);color:var(--pv2)} .kf-t.own-c{border-color:var(--pv5);color:var(--pv5)} .kf-t.own-k{border-color:var(--pv3);color:var(--pv3)}
+.kf-t span{color:var(--ink)}
+.kf-tray,.srt-tray{display:flex;flex-wrap:wrap;gap:8px;padding:10px;border:1px dashed var(--line);border-radius:10px;min-height:52px;background:var(--sunk)}
+.kf-row{display:grid;grid-template-columns:1fr 130px 1fr;gap:10px;align-items:stretch}
+.kf-party{border:1.5px solid var(--line);border-radius:10px;padding:10px;background:var(--surface);display:flex;flex-direction:column;gap:8px}
+.kf-party h5{margin:0;font-size:.95rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.kf-ca{margin:0 auto 10px;max-width:420px;border-color:var(--pv5)}
+.kf-slot{display:flex;flex-direction:column;align-items:flex-start;gap:5px;text-align:left;border:1.5px dashed var(--line);border-radius:8px;padding:8px;background:var(--bg);color:var(--ink);font:inherit;cursor:pointer;min-height:64px}
+.kf-slot small{font-size:.8rem;color:var(--muted);font-weight:600}
+.kf-n{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--ink);color:var(--surface);font-size:.7rem;margin-right:3px}
+.kf-slot .kf-fill{color:var(--muted);font-size:.85rem}
+.kf-slot.filled{border-style:solid}
+.kf-slot.ok{border-color:var(--ok);background:var(--ok-bg)} .kf-slot.bad{border-color:var(--bad);background:var(--bad-bg)}
+.kf-wire{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.kf-line{width:100%;height:0;border-top:2px dashed var(--muted);position:relative}
+.kf-line::after{content:"";position:absolute;right:-2px;top:-7px;border:6px solid transparent;border-left:9px solid var(--muted)}
+.kf-line span{position:absolute;left:50%;top:-20px;transform:translateX(-50%);font-size:.72rem;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.kf-mal{display:flex;flex-direction:column;align-items:center;color:var(--bad);text-align:center;line-height:1.1}
+.kf-mal small{color:var(--muted);font-size:.72rem}
+.kf-steps{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.kf-step.on{border-color:var(--pick);background:var(--pick-bg);font-weight:700} .kf-step.ok{color:var(--ok)}
+.srt-t{border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:7px 11px;font:600 .88rem var(--font-body)}
+.srt-t.ok{border-color:var(--ok);background:var(--ok-bg)} .srt-t.bad{border-color:var(--bad);background:var(--bad-bg)}
+.srt-bins{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.srt-bin{border:1.5px solid var(--line);border-radius:10px;padding:10px;background:var(--surface);min-height:150px}
+.srt-bin h5{margin:0;font-size:1rem;display:flex;align-items:center;gap:5px} .srt-bin small{color:var(--muted)}
+.srt-bin[data-bin=sym]{border-top:4px solid var(--pv3)} .srt-bin[data-bin=asym]{border-top:4px solid var(--pv1)} .srt-bin[data-bin=hash]{border-top:4px solid var(--pv2)}
+.srt-in{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+@media (max-width:640px){ .kf-row{grid-template-columns:1fr} .kf-wire{flex-direction:row;padding:4px 0} .kf-line{flex:1} .srt-bins{grid-template-columns:1fr} }
+html.mobile .kf-row{grid-template-columns:1fr} html.mobile .kf-wire{flex-direction:row} html.mobile .kf-line{flex:1} html.mobile .srt-bins{grid-template-columns:1fr}
 </style>
 
 <header class="top">
@@ -801,43 +839,43 @@ const TERMSETS = {
   {id:"c54",g:"change",d:1,t:"Version control",def:"Tracking every change to code or configuration files so any earlier version can be restored",sc:"Every edit to the router configurations is saved with who made it, and any older version can be restored. What is this?",alt:["versioning"]},
   {id:"c55",g:"change",d:1,t:"Legacy application",def:"Old software still in use that may be unsupported and poorly understood, so changes to it are risky",sc:"A 20-year-old billing program has no vendor support, and nobody knows how it will react to an operating system update. What is it?",alt:["legacy app", "legacy software", "legacy system"]}
  ]},
- crypto:{need:2,groups:[["enc","Encryption & hashing","Encryption"],["keys","Keys & key storage","Keys"],["pki","Certificates & PKI","PKI"],["obf","Obfuscation & ledgers","Obfuscation"],["level","Encryption levels","Levels"]],items:[
-  {id:"k1",g:"enc",d:1,t:"Symmetric encryption",def:"One shared key both encrypts and decrypts the data",sc:"A backup file is encrypted with AES using one secret key that is also used to decrypt it. What kind of encryption is this?",avoid:["k2"]},
-  {id:"k2",g:"enc",d:1,t:"Asymmetric encryption",def:"A public and private key pair; data encrypted with one key can be decrypted only with the other",sc:"A sender encrypts a message with the recipient's public key so only the recipient's private key can decrypt it. What kind of encryption is this?",avoid:["k1"]},
-  {id:"k3",g:"enc",d:1,t:"Hashing",def:"A one-way function that turns data into a fixed-length value used to check integrity",sc:"A technician compares a downloaded file's SHA-256 value with the value on the vendor's site. What technique is this?"},
+ crypto:{need:2,typed:true,labs:["keyflow","sort"],groups:[["enc","Encryption & hashing","Encryption"],["keys","Keys & key storage","Keys"],["pki","Certificates & PKI","PKI"],["obf","Obfuscation & ledgers","Obfuscation"],["level","Encryption levels","Levels"]],items:[
+  {id:"k1",g:"enc",d:1,t:"Symmetric encryption",def:"One shared key both encrypts and decrypts the data",sc:"A backup file is encrypted with AES using one secret key that is also used to decrypt it. What kind of encryption is this?",avoid:["k2"],alt:["symmetric", "symmetric key", "secret key encryption"]},
+  {id:"k2",g:"enc",d:1,t:"Asymmetric encryption",def:"A public and private key pair; data encrypted with one key can be decrypted only with the other",sc:"A sender encrypts a message with the recipient's public key so only the recipient's private key can decrypt it. What kind of encryption is this?",avoid:["k1"],alt:["asymmetric", "public key encryption", "public key cryptography"]},
+  {id:"k3",g:"enc",d:1,t:"Hashing",def:"A one-way function that turns data into a fixed-length value used to check integrity",sc:"A technician compares a downloaded file's SHA-256 value with the value on the vendor's site. What technique is this?",alt:["hash", "hash function"]},
   {id:"k4",g:"enc",d:1,t:"Salting",def:"Adding random data to a password before hashing so identical passwords produce different hashes",sc:"Two users choose the same password, but their stored hashes are different. Which technique causes this?",avoid:["k5"]},
-  {id:"k5",g:"enc",d:1,t:"Key stretching",def:"Running a hash many times to make each password guess slower for an attacker",sc:"A system uses PBKDF2 with many iterations so brute-forcing stolen hashes takes far longer. Which technique is this?",avoid:["k4"]},
-  {id:"k6",g:"enc",d:1,t:"Digital signature",def:"A hash encrypted with the sender's private key, proving integrity, authenticity, and non-repudiation",sc:"A software publisher signs its installer so users can verify who made it and that it was not changed. What does the publisher use?"},
+  {id:"k5",g:"enc",d:1,t:"Key stretching",def:"Running a hash many times to make each password guess slower for an attacker",sc:"A system uses PBKDF2 with many iterations so brute-forcing stolen hashes takes far longer. Which technique is this?",avoid:["k4"],alt:["key stretch"]},
+  {id:"k6",g:"enc",d:1,t:"Digital signature",def:"A hash encrypted with the sender's private key, proving integrity, authenticity, and non-repudiation",sc:"A software publisher signs its installer so users can verify who made it and that it was not changed. What does the publisher use?",alt:["signature", "digital signatures"]},
   {id:"k14",g:"enc",d:1,t:"Key exchange",def:"Securely sharing or agreeing on encryption keys over an untrusted network, such as with Diffie-Hellman",sc:"Two systems use Diffie-Hellman to agree on a shared session key without ever sending the key itself. What is this process called?"},
-  {id:"k15",g:"enc",d:1,t:"Key length",def:"The size of a key in bits; longer keys take far longer to brute-force",sc:"A company moves from 128-bit to 256-bit AES keys to make brute-force attacks impractical. Which property did it change?"},
-  {id:"k16",g:"enc",d:1,t:"Transport encryption",def:"Encrypting data while it moves across a network, such as with TLS or IPsec",sc:"A web server uses TLS so that data between browsers and the server cannot be read on the way. What kind of encryption is this?"},
-  {id:"k17",g:"enc",d:1,t:"Perfect forward secrecy",def:"Using a new key for every session, so one stolen key cannot decrypt past sessions",sc:"Even after a server's private key is stolen, recorded past TLS sessions cannot be decrypted because each used its own temporary key. What property is this?"},
-  {id:"k18",g:"keys",d:1,t:"Public key",def:"The half of a key pair that is shared openly, used to encrypt data for its owner or to check the owner's signatures",sc:"Ana wants anyone to be able to send her encrypted messages that only she can read. Which key does she share with everyone?"},
-  {id:"k19",g:"keys",d:1,t:"Private key",def:"The half of a key pair that only its owner keeps, used to decrypt data and to create digital signatures",sc:"A software publisher signs its installers with a key that must never leave its secure signing system. Which key is this?"},
-  {id:"k11",g:"keys",d:1,t:"Key escrow",def:"A trusted third party holds a copy of encryption keys so they can be recovered",sc:"A company stores copies of its encryption keys with a trusted third party in case they are lost. What is this called?"},
+  {id:"k15",g:"enc",d:1,t:"Key length",def:"The size of a key in bits; longer keys take far longer to brute-force",sc:"A company moves from 128-bit to 256-bit AES keys to make brute-force attacks impractical. Which property did it change?",alt:["key size"]},
+  {id:"k16",g:"enc",d:1,t:"Transport encryption",def:"Encrypting data while it moves across a network, such as with TLS or IPsec",sc:"A web server uses TLS so that data between browsers and the server cannot be read on the way. What kind of encryption is this?",alt:["encryption in transit", "in transit encryption"]},
+  {id:"k17",g:"enc",d:1,t:"Perfect forward secrecy",def:"Using a new key for every session, so one stolen key cannot decrypt past sessions",sc:"Even after a server's private key is stolen, recorded past TLS sessions cannot be decrypted because each used its own temporary key. What property is this?",alt:["pfs", "forward secrecy"]},
+  {id:"k18",g:"keys",d:1,t:"Public key",def:"The half of a key pair that is shared openly, used to encrypt data for its owner or to check the owner's signatures",sc:"Ana wants anyone to be able to send her encrypted messages that only she can read. Which key does she share with everyone?",alt:["public"]},
+  {id:"k19",g:"keys",d:1,t:"Private key",def:"The half of a key pair that only its owner keeps, used to decrypt data and to create digital signatures",sc:"A software publisher signs its installers with a key that must never leave its secure signing system. Which key is this?",alt:["private"]},
+  {id:"k11",g:"keys",d:1,t:"Key escrow",def:"A trusted third party holds a copy of encryption keys so they can be recovered",sc:"A company stores copies of its encryption keys with a trusted third party in case they are lost. What is this called?",alt:["escrow"]},
   {id:"k12",g:"keys",d:1,t:"Trusted Platform Module (TPM)",def:"A chip on a device's motherboard that securely stores keys and supports secure boot and disk encryption",sc:"Full-disk encryption on a laptop stores its key in a chip built into the motherboard. What is the chip?",avoid:["k13"]},
   {id:"k13",g:"keys",d:1,t:"Hardware security module (HSM)",def:"A dedicated, tamper-resistant appliance that generates, stores, and manages keys for many systems",sc:"A bank uses a dedicated appliance to protect the signing keys for all of its servers. What is the appliance?",avoid:["k12"]},
-  {id:"k20",g:"keys",d:1,t:"Key management system",def:"Software or a service that creates, stores, rotates, and retires keys through their whole life",sc:"A cloud service centrally creates, rotates, and expires the encryption keys for every database the company runs. What is it?",avoid:["k13"]},
+  {id:"k20",g:"keys",d:1,t:"Key management system",def:"Software or a service that creates, stores, rotates, and retires keys through their whole life",sc:"A cloud service centrally creates, rotates, and expires the encryption keys for every database the company runs. What is it?",avoid:["k13"],alt:["kms"]},
   {id:"k21",g:"keys",d:1,t:"Secure enclave",def:"A protected area of a processor that keeps sensitive data, such as fingerprint data, isolated from the main operating system",sc:"A phone stores fingerprint data in an isolated part of its processor that even the operating system cannot read. What is this?"},
   {id:"k7",g:"pki",d:1,t:"Certificate authority (CA)",def:"A trusted entity that issues and signs digital certificates",sc:"Which entity signs a website's certificate so browsers will trust it?"},
   {id:"k8",g:"pki",d:1,t:"Certificate revocation list (CRL)",def:"A list a certificate authority publishes of certificates revoked before they expire",sc:"A browser downloads a list from the CA to check whether a certificate has been revoked. What is the list?",avoid:["k9"]},
-  {id:"k9",g:"pki",d:1,t:"OCSP",def:"A protocol that checks the revocation status of a single certificate in real time",sc:"A browser asks the CA's responder whether one specific certificate is still valid. Which protocol is this?",avoid:["k8"]},
-  {id:"k10",g:"pki",d:1,t:"Wildcard certificate",def:"One certificate that covers every subdomain at one level, such as *.example.com",sc:"A single certificate secures shop.example.com, mail.example.com, and www.example.com. What type of certificate is it?"},
-  {id:"k22",g:"pki",d:1,t:"Self-signed certificate",def:"A certificate signed by its own creator instead of a trusted CA, so browsers do not trust it by default",sc:"An internal test server's certificate was signed by the server itself, and browsers show a warning. What type of certificate is it?"},
-  {id:"k23",g:"pki",d:1,t:"Third-party certificate",def:"A certificate signed by a public CA that browsers and operating systems already trust",sc:"A company gets its website certificate from a well-known public CA so that every browser trusts it. What type of certificate is this?"},
-  {id:"k24",g:"pki",d:1,t:"Root of trust",def:"The trusted starting point, such as a root CA certificate, that all other trust is built on",sc:"A browser trusts a website because its certificate chains back to a CA certificate already stored in the browser. What is that stored certificate?"},
+  {id:"k9",g:"pki",d:1,t:"OCSP",def:"A protocol that checks the revocation status of a single certificate in real time",sc:"A browser asks the CA's responder whether one specific certificate is still valid. Which protocol is this?",avoid:["k8"],alt:["online certificate status protocol"]},
+  {id:"k10",g:"pki",d:1,t:"Wildcard certificate",def:"One certificate that covers every subdomain at one level, such as *.example.com",sc:"A single certificate secures shop.example.com, mail.example.com, and www.example.com. What type of certificate is it?",alt:["wildcard"]},
+  {id:"k22",g:"pki",d:1,t:"Self-signed certificate",def:"A certificate signed by its own creator instead of a trusted CA, so browsers do not trust it by default",sc:"An internal test server's certificate was signed by the server itself, and browsers show a warning. What type of certificate is it?",alt:["self signed"]},
+  {id:"k23",g:"pki",d:1,t:"Third-party certificate",def:"A certificate signed by a public CA that browsers and operating systems already trust",sc:"A company gets its website certificate from a well-known public CA so that every browser trusts it. What type of certificate is this?",alt:["third party", "public ca certificate"]},
+  {id:"k24",g:"pki",d:1,t:"Root of trust",def:"The trusted starting point, such as a root CA certificate, that all other trust is built on",sc:"A browser trusts a website because its certificate chains back to a CA certificate already stored in the browser. What is that stored certificate?",alt:["root ca", "root certificate", "trust anchor"]},
   {id:"k25",g:"pki",d:1,t:"Certificate signing request (CSR)",def:"A request containing a public key and identity details that is sent to a CA to get a certificate",sc:"An admin generates a key pair on a web server, then sends the CA a file holding the public key and the domain name. What is the file?"},
   {id:"k26",g:"pki",d:1,t:"Subject alternative name (SAN)",def:"A certificate field that lists the additional names a certificate covers",sc:"One certificate covers example.com, example.net, and shop.example.org because each name is listed in it. Which certificate field lists them?",avoid:["k10"]},
   {id:"k27",g:"obf",d:1,t:"Steganography",def:"Hiding data inside another file, such as an image, so nobody knows the data is there",sc:"An attacker hides stolen data inside the pixels of a vacation photo. What technique is this?"},
   {id:"k28",g:"obf",d:1,t:"Tokenization",def:"Replacing sensitive data with a random token that maps back to the original in a secured vault",sc:"A payment app stores a random stand-in value instead of the real card number, and only the processor can map it back. What is this?"},
-  {id:"k29",g:"obf",d:1,t:"Data masking",def:"Hiding part of a value when it is shown, such as displaying only the last four digits",sc:"A call center screen shows Social Security numbers as ***-**-6789. What technique is this?"},
+  {id:"k29",g:"obf",d:1,t:"Data masking",def:"Hiding part of a value when it is shown, such as displaying only the last four digits",sc:"A call center screen shows Social Security numbers as ***-**-6789. What technique is this?",alt:["masking"]},
   {id:"k30",g:"obf",d:1,t:"Blockchain",def:"A distributed ledger of records linked by hashes, so past entries cannot be changed without detection",sc:"Transactions are recorded in blocks that each contain the hash of the block before, and many participants hold copies. What technology is this?",avoid:["k31"]},
-  {id:"k31",g:"obf",d:1,t:"Open public ledger",def:"A shared record of blockchain transactions that anyone can view and verify",sc:"Anyone can download and verify the complete history of a cryptocurrency's transactions. What is this record called?"},
-  {id:"k32",g:"level",d:1,t:"Full-disk encryption (FDE)",def:"Encrypting an entire drive, including the operating system",sc:"A stolen laptop's whole drive, operating system included, cannot be read without the startup PIN. What is protecting it?"},
+  {id:"k31",g:"obf",d:1,t:"Open public ledger",def:"A shared record of blockchain transactions that anyone can view and verify",sc:"Anyone can download and verify the complete history of a cryptocurrency's transactions. What is this record called?",alt:["public ledger", "ledger"]},
+  {id:"k32",g:"level",d:1,t:"Full-disk encryption (FDE)",def:"Encrypting an entire drive, including the operating system",sc:"A stolen laptop's whole drive, operating system included, cannot be read without the startup PIN. What is protecting it?",alt:["full disk encryption"]},
   {id:"k33",g:"level",d:1,t:"Partition encryption",def:"Encrypting one partition of a drive while the others stay unencrypted",sc:"Only the data partition of a server's disk is encrypted; the system partition is not. What level of encryption is this?"},
   {id:"k34",g:"level",d:1,t:"File encryption",def:"Encrypting individual files, such as with Windows EFS",sc:"A user encrypts one spreadsheet from its file properties, leaving the rest of the folder as it was. What level of encryption is this?"},
   {id:"k35",g:"level",d:1,t:"Database encryption",def:"Encrypting a whole database so all of its stored data is protected",sc:"A database administrator turns on transparent data encryption so every table is encrypted on disk. What level of encryption is this?"},
-  {id:"k36",g:"level",d:1,t:"Record-level encryption",def:"Encrypting only specific records or fields in a database, such as the card number column",sc:"Only the credit card column in the orders table is encrypted; the other columns stay readable. What level of encryption is this?"}
+  {id:"k36",g:"level",d:1,t:"Record-level encryption",def:"Encrypting only specific records or fields in a database, such as the card number column",sc:"Only the credit card column in the orders table is encrypted; the other columns stay readable. What level of encryption is this?",alt:["record encryption", "column encryption", "field level encryption"]}
  ]},
  threats:{need:2,groups:[["actor","Threat actors","Actors"],["motive","Motivations","Motives"],["social","Social engineering","Social"],["vector","Threat vectors & attack surfaces","Vectors"]],items:[
   {id:"t1",g:"actor",d:2,t:"Nation-state",def:"A government-backed group with large resources that often seeks espionage or disruption over long periods",sc:"A well-funded group backed by a foreign government stays hidden in a defense contractor's network for months. Which threat actor is this?"},
@@ -1575,6 +1613,214 @@ function tyDist(a,b){ const d=[...Array(b.length+1).keys()]; for(let i=1;i<=a.le
 function tyMatch(v,it){ const n=tyNorm(v); if(!n) return 0; if(tyForms(it).includes(n)) return 2;
   const raw=tyRaw(v), forms=[it.t, it.t.replace(/\s*\([^)]*\)/g,"")].concat(it.alt||[]).map(tyRaw);
   return forms.some(f=>{ const tol=f.length>=10?2:f.length>=6?1:0; return tol&&Math.abs(f.length-raw.length)<=tol&&tyDist(f,raw)<=tol; })?1:0; }
+/* ---- Hands-on labs inside term modules ----
+   A module lists its labs in TERMSETS[mod].labs. Getting a whole lab task right on the first check gives each
+   linked term one kind of credit ("lab"), the same as answering one question about it. */
+function labCredit(mod,ids){
+  if(mode!=="student") return;
+  P.termM=P.termM||{}; const b=(P.termM[mod]=P.termM[mod]||{});
+  ids.forEach(id=>{ (b[id]=b[id]||{}).lab=1; if(termMastered(mod,id)){ P.termDone=P.termDone||{}; (P.termDone[mod]=P.termDone[mod]||{})[id]=true; } });
+  save();
+}
+function labDone(mod,lab){ P.labs=P.labs||{}; const m=(P.labs[mod]=P.labs[mod]||{}); return (m[lab]=m[lab]||{}); }
+
+/* Drag and drop that also works by tapping: tap (or press Enter on) a tile, then tap a target.
+   Tiles: .dd-tile[data-v]. Targets: .dd-target. onDrop(target, value, tileEl). */
+function ddWire(root,onDrop){
+  let sel=null, drag=null;
+  const clearSel=()=>{ root.querySelectorAll(".dd-tile.sel").forEach(x=>x.classList.remove("sel")); sel=null; root.classList.remove("dd-armed"); };
+  const choose=el=>{ const was=sel===el; clearSel(); if(!was){ sel=el; el.classList.add("sel"); root.classList.add("dd-armed"); } };
+  root.addEventListener("click",e=>{
+    const tile=e.target.closest(".dd-tile"); const tgt=e.target.closest(".dd-target");
+    if(drag&&drag.moved) return;
+    if(tile&&root.contains(tile)){ choose(tile); return; }
+    if(tgt&&sel){ const v=sel.dataset.v, el=sel; clearSel(); onDrop(tgt,v,el); return; }
+    if(tgt&&!sel&&tgt.dataset.clear!==undefined){ onDrop(tgt,null,null); }
+  });
+  root.addEventListener("pointerdown",e=>{
+    const tile=e.target.closest(".dd-tile"); if(!tile||e.button>0) return;
+    drag={tile,x:e.clientX,y:e.clientY,moved:false,ghost:null,id:e.pointerId};
+    try{ tile.setPointerCapture(e.pointerId); }catch(err){}
+  });
+  root.addEventListener("pointermove",e=>{
+    if(!drag||e.pointerId!==drag.id) return;
+    if(!drag.moved&&Math.hypot(e.clientX-drag.x,e.clientY-drag.y)<6) return;
+    if(!drag.moved){ drag.moved=true; clearSel(); const g=drag.tile.cloneNode(true); g.classList.add("dd-ghost"); document.body.appendChild(g); drag.ghost=g; drag.tile.classList.add("dd-src"); }
+    drag.ghost.style.left=(e.clientX+8)+"px"; drag.ghost.style.top=(e.clientY+8)+"px";
+    root.querySelectorAll(".dd-target.over").forEach(x=>x.classList.remove("over"));
+    const under=document.elementFromPoint(e.clientX,e.clientY); const t=under&&under.closest(".dd-target"); if(t&&root.contains(t)) t.classList.add("over");
+  });
+  root.addEventListener("pointercancel",()=>{ if(drag&&drag.ghost){ drag.ghost.remove(); drag.tile.classList.remove("dd-src"); } drag=null; });
+  root.addEventListener("pointerup",e=>{
+    if(!drag||e.pointerId!==drag.id) return;
+    const d=drag; setTimeout(()=>{ if(drag===d) drag=null; },0);
+    if(!d.moved) return;
+    d.ghost.remove(); d.tile.classList.remove("dd-src"); root.querySelectorAll(".dd-target.over").forEach(x=>x.classList.remove("over"));
+    const under=document.elementFromPoint(e.clientX,e.clientY); const t=under&&under.closest(".dd-target");
+    if(t&&root.contains(t)) onDrop(t,d.tile.dataset.v,d.tile);
+  });
+}
+
+/* Key Flow: who uses which key. Each task puts slots on the sender, the recipient, and sometimes the CA.
+   Mallory sits on the network path between them. Tiles are reusable; tap a filled slot to clear it. */
+const KF_TILES={
+  spub:["Sender's public key","s"], spriv:["Sender's private key","s"], rpub:["Recipient's public key","r"], rpriv:["Recipient's private key","r"],
+  shared:["Shared secret key","k"], session:["Session key (symmetric)","k"], hash:["Hash function","n"],
+  capub:["CA's public key","c"], capriv:["CA's private key","c"], csr:["Certificate signing request","n"], ra:["Registration authority","n"],
+  cert:["Recipient's certificate","r"], crl:["Certificate revocation list","n"], ocsp:["OCSP responder","n"]
+};
+const KF_TASKS=[
+ {id:"conf",title:"Keep it confidential",goal:"The sender wants a message that only the recipient can read.",terms:["k2","k18","k19"],
+  tiles:["spub","spriv","rpub","rpriv","shared","hash"],
+  slots:[["s","Encrypts the message with","rpub","Anyone may use the recipient's public key to encrypt, but only the matching private key can decrypt."],
+         ["r","Decrypts the message with","rpriv","Only the recipient holds the private key, so only the recipient can read it."]],
+  mallory:"Mallory copies the ciphertext off the wire, but without the recipient's private key it stays unreadable."},
+ {id:"sign",title:"Prove who sent it",goal:"The sender wants the recipient to know the message really came from the sender and was not changed. Confidentiality is not needed.",terms:["k6","k3","k18","k19"],
+  tiles:["spub","spriv","rpub","rpriv","hash","shared"],
+  slots:[["s","Creates a digest of the message with","hash","A hash makes a short, fixed-length digest. Any change to the message changes the digest."],
+         ["s","Signs (encrypts) the digest with","spriv","Only the sender has the sender's private key, so only the sender could have made this signature. That gives non-repudiation."],
+         ["r","Checks the signature with","spub","Anyone can verify with the sender's public key. If it opens the signature, the sender's private key made it."],
+         ["r","Recomputes the digest with","hash","The recipient hashes the message again. If the digests match, nothing changed in transit: integrity."]],
+  mallory:"If Mallory changes even one character, the recipient's new digest will not match the signed one. She cannot re-sign it without the sender's private key."},
+ {id:"both",title:"Signed and sealed",goal:"The message must be confidential and must prove who sent it.",terms:["k2","k6","k18","k19"],
+  tiles:["spub","spriv","rpub","rpriv","shared","session"],
+  slots:[["s","Signs with","spriv","Signing always uses the signer's own private key."],
+         ["s","Encrypts with","rpub","Encrypting for someone always uses the recipient's public key."],
+         ["r","Decrypts with","rpriv","The recipient's private key undoes encryption with the recipient's public key."],
+         ["r","Verifies the signature with","spub","The sender's public key confirms the sender's private key made the signature."]],
+  mallory:"Mallory can neither read the message nor forge the signature. Each needs a private key she does not have."},
+ {id:"hybrid",title:"Hybrid encryption (how TLS works)",goal:"Asymmetric encryption is slow for large data. Encrypt a 2 GB file quickly but still share the key safely.",terms:["k1","k2","k14"],
+  tiles:["spub","rpub","rpriv","session","hash","spriv"],
+  slots:[["s","Encrypts the file with","session","Symmetric encryption, such as AES, is fast enough for bulk data."],
+         ["s","Encrypts the session key with","rpub","Only the small session key is encrypted asymmetrically, so it can cross the network safely."],
+         ["r","Recovers the session key with","rpriv","The recipient's private key unlocks the session key."],
+         ["r","Decrypts the file with","session","Now both sides hold the same symmetric key."]],
+  mallory:"Mallory sees an encrypted file and an encrypted session key. Without the recipient's private key she cannot get the session key."},
+ {id:"hmac",title:"Tamper check with a shared secret",goal:"Both sides already share a secret key. The recipient needs to detect any change to the message.",terms:["k3","k1"],
+  tiles:["shared","session","spub","rpriv","hash","capub"],
+  slots:[["s","Computes the HMAC from the message and the","shared","An HMAC mixes a hash with a secret key, so only someone with the key can make a valid one."],
+         ["r","Recomputes the HMAC with the","shared","If the recipient's HMAC matches, the message is unchanged and came from someone holding the key."]],
+  mallory:"Mallory can change the message, but she cannot compute a matching HMAC without the shared secret."},
+ {id:"issue",title:"Get a trusted certificate",goal:"The recipient runs a web server and needs a certificate that every browser (the sender) trusts.",terms:["k7","k25","k24"],ca:true,
+  tiles:["csr","ra","capriv","capub","rpriv","spub","crl"],
+  slots:[["r","Sends the CA a","csr","A CSR holds the server's public key and identity details. The private key never leaves the server."],
+         ["c","Confirms the recipient's identity using a","ra","The registration authority checks who is asking before the CA issues anything."],
+         ["c","Signs the new certificate with the","capriv","The CA's signature, made with its private key, is what makes the certificate trusted."],
+         ["s","Checks the certificate's signature with the","capub","The browser already holds the CA's public key in its trusted root store. That is the root of trust."]],
+  mallory:"Mallory can create a key pair, but no trusted CA will sign a certificate for a name she does not control, so browsers reject her certificate."},
+ {id:"swap",title:"Stop the key swap",goal:"Mallory intercepts the first message and hands the sender her own public key, pretending it is the recipient's.",terms:["k7","k24","k18"],ca:true,
+  tiles:["cert","rpub","capub","shared","spriv","hash"],
+  slots:[["r","Proves its public key by sending its","cert","A certificate binds the recipient's public key to its name, signed by a CA."],
+         ["s","Checks that certificate with the","capub","If the CA's signature checks out, the key really belongs to the recipient, not Mallory."]],
+  mallory:"Without certificates, Mallory's swapped key would look just as real. A CA-signed certificate exposes the swap: hers will not verify."},
+ {id:"revoke",title:"The private key was stolen",goal:"The recipient's private key was stolen, so its certificate must stop being trusted before it expires.",terms:["k8","k9"],ca:true,
+  tiles:["crl","ocsp","csr","capriv","rpub","hash"],
+  slots:[["c","Lists the certificate's serial number on its","crl","A CRL is a signed list of revoked certificates that clients download."],
+         ["s","Asks about this one certificate in real time with an","ocsp","OCSP checks one certificate's status on demand instead of downloading the whole list."]],
+  mallory:"Until the certificate is revoked, Mallory could use the stolen key to pose as the recipient. Revocation shuts that down."}
+];
+const KEY_SVG=`<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><circle cx="7" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M11 12h10M17 12v3M20 12v2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>`;
+function kfTile(v,flat){ const [label,own]=KF_TILES[v]; const key=/key|session/i.test(label); const inner=`${key?KEY_SVG:""}<span>${esc(label)}</span>`;
+  return flat?`<span class="kf-t own-${own}">${inner}</span>`:`<button type="button" class="dd-tile kf-t own-${own}" data-v="${v}">${inner}</button>`; }
+function labKeyFlow(mod,back){
+  const done=labDone(mod,"keyflow"); let i=Math.max(0,KF_TASKS.findIndex(t=>!done[t.id]));
+  function render(){
+    const T=KF_TASKS[i]; const fill=T.slots.map(()=>null); let checked=false, firstTry=true;
+    const slot=(k,idx)=>`<button type="button" class="dd-target kf-slot" data-i="${idx}" data-clear><small><b class="kf-n">${idx+1}</b> ${esc(T.slots[idx][1])}</small><span class="kf-fill">Drop here</span></button>`;
+    const side=s=>T.slots.map((x,idx)=>x[0]===s?slot(s,idx):"").join("");
+    app.innerHTML=modHead(M(mod))+`<div class="examtop"><button class="chipbtn" id="labback" type="button">← ${esc(M(mod).name)} menu</button><span>Key Flow · task ${i+1} of ${KF_TASKS.length}</span></div>
+    <div class="kf-steps">${KF_TASKS.map((t,j)=>`<button type="button" class="chipbtn kf-step ${j===i?"on":""} ${done[t.id]?"ok":""}" data-j="${j}" title="${esc(t.title)}">${done[t.id]?"✓ ":""}${j+1}</button>`).join("")}</div>
+    <div class="card kf-card" id="kf">
+      <h3 style="font-size:1.3rem;margin:0 0 4px">${esc(T.title)}</h3><p style="margin:0 0 12px">${esc(T.goal)}</p>
+      ${T.ca?`<div class="kf-party kf-ca"><h5>Certificate authority</h5>${side("c")}</div>`:""}
+      <div class="kf-row">
+        <div class="kf-party"><h5>Sender</h5>${side("s")}</div>
+        <div class="kf-wire"><div class="kf-line"><span>network</span></div><div class="kf-mal" title="Mallory: an on-path attacker who can read, copy, and change anything that crosses the network"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="8" r="4" fill="currentColor"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" fill="currentColor"/><path d="M7 7.5h10" stroke="var(--surface)" stroke-width="2"/></svg><b>Mallory</b><small>on the path</small></div></div>
+        <div class="kf-party"><h5>Recipient</h5>${side("r")}</div>
+      </div>
+      <p class="note" style="margin:12px 0 6px">Drag a tile onto each step, or tap a tile and then a step. Tap a filled step to clear it. Tiles can be used more than once.</p>
+      <div class="kf-tray">${shuffle(T.tiles.slice()).map(v=>kfTile(v)).join("")}</div>
+      <div class="q-actions" style="margin-top:12px"><button class="btn" id="kfcheck">Check</button><button class="btn ghost" id="kfnext" hidden>Next task</button><button class="btn ghost" id="kfreset">Clear</button></div>
+      <div class="fb" id="kffb" hidden></div>
+    </div>`;
+    const root=$("#kf");
+    const paint=()=>root.querySelectorAll(".kf-slot").forEach(el=>{ const v=fill[+el.dataset.i]; el.classList.toggle("filled",!!v); el.classList.remove("ok","bad"); el.querySelector(".kf-fill").innerHTML=v?kfTile(v,true):"Drop here"; });
+    ddWire(root,(tgt,v)=>{ if(checked) return; fill[+tgt.dataset.i]=v; paint(); });
+    $("#kfreset").addEventListener("click",()=>{ if(checked) return render(); fill.fill(null); paint(); });
+    $("#kfcheck").addEventListener("click",()=>{
+      if(fill.some(v=>!v)){ $("#kffb").hidden=false; $("#kffb").innerHTML=`<div class="v bad">Fill every step first.</div>`; return; }
+      const res=T.slots.map((s,k)=>fill[k]===s[2]); const all=res.every(Boolean);
+      root.querySelectorAll(".kf-slot").forEach(el=>el.classList.add(res[+el.dataset.i]?"ok":"bad"));
+      $("#kffb").hidden=false;
+      $("#kffb").innerHTML=`<div class="v ${all?"ok":"bad"}">${all?(firstTry?"All correct on the first try.":"All correct."):`${res.filter(Boolean).length} of ${res.length} correct. Fix the red steps and check again.`}</div>`+
+        (all?`<ol class="steps">${T.slots.map(s=>`<li><b>${esc(s[1])} ${esc(KF_TILES[s[2]][0].replace(/^[A-Z](?=[a-z])/,c=>c.toLowerCase()))}.</b> ${esc(s[3])}</li>`).join("")}</ol><p style="margin:.5em 0 0"><b>Mallory:</b> ${esc(T.mallory)}</p>`:"");
+      if(all){ checked=true; $("#kfcheck").hidden=true; $("#kfnext").hidden=false; $("#kfnext").textContent=i+1<KF_TASKS.length?"Next task":"Back to the menu";
+        if(firstTry&&mode==="student"){ done[T.id]=true; labCredit(mod,T.terms); } }
+      else firstTry=false;
+    });
+    $("#kfnext").addEventListener("click",()=>{ if(i+1<KF_TASKS.length){ i++; render(); } else back(); });
+    $("#labback").addEventListener("click",back);
+    document.querySelectorAll(".kf-step").forEach(b=>b.addEventListener("click",()=>{ i=+b.dataset.j; render(); }));
+  }
+  render();
+}
+
+/* Sort the cipher: drop each tile into Symmetric, Asymmetric, or Hashing. Tiles mix algorithms with properties. */
+const SORT_ITEMS=[
+ ["AES","sym","Symmetric block cipher, 128-, 192-, or 256-bit keys. The standard for bulk encryption."],
+ ["3DES","sym","Symmetric. Runs DES three times; now deprecated."],["DES","sym","Symmetric, 56-bit key. Insecure."],
+ ["ChaCha20","sym","Symmetric stream cipher, fast on phones without AES hardware."],["RC4","sym","Symmetric stream cipher with known weaknesses."],
+ ["Blowfish","sym","Symmetric block cipher; bcrypt is built on it."],
+ ["RSA","asym","Asymmetric. Used for key exchange and digital signatures."],["ECC","asym","Asymmetric, strong security with small keys. Good for mobile and IoT."],
+ ["Diffie-Hellman","asym","Asymmetric key agreement: two sides agree on a shared secret without sending it."],["ECDHE","asym","Elliptic-curve Diffie-Hellman with temporary keys, giving perfect forward secrecy."],
+ ["DSA","asym","Asymmetric digital signature algorithm."],["ECDSA","asym","Asymmetric signatures using elliptic curves."],
+ ["SHA-256","hash","Hashing: 256-bit digest. Used for integrity checks and signatures."],["MD5","hash","Hashing: 128-bit digest with known collisions. Integrity only, not security."],
+ ["SHA-1","hash","Hashing: 160-bit digest, now deprecated because of collisions."],
+ ["One key both encrypts and decrypts","sym","Symmetric: both sides must already share the same secret key."],
+ ["Fast enough for bulk data","sym","Symmetric ciphers are far faster than asymmetric ones."],
+ ["Key distribution is the hard part","sym","With one shared key, getting it to the other side safely is the challenge. Asymmetric key exchange solves it."],
+ ["Uses a public and private key pair","asym","Asymmetric: what one key does, only the other key in the pair can undo."],
+ ["Makes digital signatures possible","asym","Signing uses the signer's private key; anyone verifies with the public key."],
+ ["Much slower, so used for small data like keys","asym","That is why TLS uses asymmetric crypto only to set up a symmetric session key."],
+ ["One-way: cannot be reversed","hash","A hash is not encryption: nothing can turn the digest back into the input."],
+ ["Same input always gives the same fixed-length output","hash","That is how a hash proves integrity: any change gives a different digest."],
+ ["No key at all","hash","Plain hashing uses no key. (HMAC adds a key to a hash.)"]
+];
+const SORT_BINS=[["sym","Symmetric","One shared key"],["asym","Asymmetric","Public and private key pair"],["hash","Hashing","One-way, no key"]];
+function labSort(mod,back){
+  const done=labDone(mod,"sort");
+  function render(){
+    const algos=shuffle(SORT_ITEMS.filter(x=>x[0].length<16)), props=shuffle(SORT_ITEMS.filter(x=>x[0].length>=16));
+    const pickBy=(arr,b,n)=>arr.filter(x=>x[1]===b).slice(0,n);
+    const round=shuffle([].concat(...SORT_BINS.map(([b])=>pickBy(algos,b,b==="hash"?2:3).concat(pickBy(props,b,b==="hash"?2:1)))));
+    let checked=false, firstTry=true;
+    app.innerHTML=modHead(M(mod))+`<div class="examtop"><button class="chipbtn" id="labback" type="button">← ${esc(M(mod).name)} menu</button><span>Sort the cipher${done.rounds?` · ${done.rounds} perfect round${done.rounds>1?"s":""}`:""}</span></div>
+    <div class="card" id="srt"><h3 style="font-size:1.3rem;margin:0 0 4px">Symmetric, asymmetric, or hashing?</h3>
+      <p style="margin:0 0 12px">Sort every algorithm and every description into the right group. Drag a tile into a box, or tap a tile and then a box.</p>
+      <div class="srt-tray dd-target" data-bin="">${round.map((x,k)=>`<button type="button" class="dd-tile srt-t" data-v="${k}">${esc(x[0])}</button>`).join("")}</div>
+      <div class="srt-bins">${SORT_BINS.map(([b,n,s])=>`<div class="dd-target srt-bin" data-bin="${b}"><h5>${b==="sym"?KEY_SVG:b==="asym"?KEY_SVG+KEY_SVG:`<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M4 12h12M12 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M20 5v14" stroke="currentColor" stroke-width="2.4"/></svg>`} ${n}</h5><small>${s}</small><div class="srt-in"></div></div>`).join("")}</div>
+      <div class="q-actions" style="margin-top:12px"><button class="btn" id="srtcheck">Check</button><button class="btn ghost" id="srtnext" hidden>New round</button></div>
+      <div class="fb" id="srtfb" hidden></div></div>`;
+    const root=$("#srt");
+    ddWire(root,(tgt,v,el)=>{ if(checked||!el) return; const box=tgt.classList.contains("srt-bin")?tgt.querySelector(".srt-in"):tgt; el.classList.remove("ok","bad"); box.appendChild(el); });
+    $("#srtcheck").addEventListener("click",()=>{
+      const left=root.querySelectorAll(".srt-tray .dd-tile").length;
+      if(left){ $("#srtfb").hidden=false; $("#srtfb").innerHTML=`<div class="v bad">Sort all ${left} remaining tile${left>1?"s":""} first.</div>`; return; }
+      let wrong=0; root.querySelectorAll(".srt-bin .dd-tile").forEach(el=>{ const it=round[+el.dataset.v]; const ok=el.closest(".srt-bin").dataset.bin===it[1]; el.classList.toggle("ok",ok); el.classList.toggle("bad",!ok); if(!ok) wrong++; });
+      $("#srtfb").hidden=false;
+      if(wrong){ firstTry=false; $("#srtfb").innerHTML=`<div class="v bad">${wrong} in the wrong group. Move the red tiles and check again.</div>`; return; }
+      checked=true; $("#srtcheck").hidden=true; $("#srtnext").hidden=false;
+      $("#srtfb").innerHTML=`<div class="v ok">${firstTry?"All sorted correctly on the first try.":"All sorted correctly."}</div><ol class="steps">${round.map(x=>`<li><b>${esc(x[0])}:</b> ${esc(x[2])}</li>`).join("")}</ol>`;
+      if(firstTry&&mode==="student"){ done.rounds=(done.rounds||0)+1; labCredit(mod,["k1","k2","k3"]); }
+    });
+    $("#srtnext").addEventListener("click",render); $("#labback").addEventListener("click",back);
+  }
+  render();
+}
+const LABS={
+  keyflow:{name:"Key Flow",run:labKeyFlow,desc:"A sender, a recipient, a certificate authority, and Mallory listening on the wire. Drag the right key onto each step to keep a message secret, sign it, share a session key, get a certificate trusted, or revoke one. 8 tasks."},
+  sort:{name:"Sort the cipher",run:labSort,desc:"Drag algorithms and their traits into Symmetric, Asymmetric, or Hashing. A new mix each round."}
+};
 /* ---- Term modules ----
    One engine runs every term module (TERMSETS). Each term is asked several ways: name it from a description,
    define it, spot it in a scenario, and, where the term has one, pick its best defense. A term is mastered once
@@ -1603,11 +1849,14 @@ function viewTerms(mod){
       ${S.typed?`<div class="acro-mode"><h4>Type the answer</h4><p>Read a scenario and type the term yourself, with no options to choose from. Harder, so it counts for more: a correct answer with no hint masters the term in one go. With a hint, it counts as one question. Small typos are fine.</p>
         <div class="cfg"><label for="tylen">Scenarios</label><select id="tylen" class="ans" style="width:auto"><option selected>10</option><option>20</option></select></div>
         <div class="q-actions"><button class="btn" id="tystart">Start typing</button></div></div>`:""}
+      ${(S.labs||[]).map(k=>`<div class="acro-mode"><h4>${esc(LABS[k].name)} <span class="tag">Lab</span></h4><p>${esc(LABS[k].desc)} Getting a task right on the first check counts as one question for each term it uses.</p>
+        <div class="q-actions"><button class="btn" data-lab="${k}">Open ${esc(LABS[k].name)}</button></div></div>`).join("")}
       <div class="acro-mode"><h4>Glossary</h4><p>Every term by topic, with its definition${hasFix?" and, for attacks, the defense that best stops it":""}.</p>
         <div class="q-actions"><button class="btn ghost" id="tmref">View the glossary</button></div></div>
     </div></div>`;
     $("#tmstart").addEventListener("click",()=>drill(+$("#tmlen").value));
     if(S.typed) $("#tystart").addEventListener("click",()=>typed(+$("#tylen").value));
+    app.querySelectorAll("[data-lab]").forEach(b=>b.addEventListener("click",()=>LABS[b.dataset.lab].run(mod,menu)));
     $("#tmref").addEventListener("click",ref);
   }
   function ref(){
@@ -1754,9 +2003,16 @@ function acroFakes(it,n){
   }
   return out;
 }
+/* Typed expansions: ignores case, punctuation, and small words (and, of, the...), and accepts small typos
+   (about 1 letter in 8). Also accepts the wording of any acronym that means the same thing. 2 exact, 1 close, 0 no. */
+function acroWords(s){ return String(s).toLowerCase().replace(/[^a-z0-9]+/g," ").split(" ").filter(w=>w&&!["and","of","the","for","to","a","an","on","in","with","as"].includes(w)).join(""); }
+function acroSpell(v,it){ const n=acroWords(v); if(!n) return 0;
+  const forms=[it.x].concat(ACRO.filter(x=>x.id!==it.id&&x.a===it.a&&x.x===it.x).map(x=>x.x)).map(acroWords);
+  if(forms.includes(n)) return 2;
+  return forms.some(f=>{ const tol=Math.max(1,Math.floor(f.length/8)); return Math.abs(f.length-n.length)<=tol&&tyDist(f,n)<=tol; })?1:0; }
 function viewAcro(){
   const m=M("acro");
-  const head=()=>modHead(m)+`<p class="note" style="margin:-8px 0 14px;max-width:75ch">Question types change at random: what an acronym stands for, which acronym matches a meaning, which acronym matches a description, and what an acronym does. Each correct answer in a row adds a strength dot. Reach strength 4 to master an acronym. A mastered acronym stays mastered even if you miss it later; only Reset or Prestige clears it.</p>`;
+  const head=()=>modHead(m)+`<p class="note" style="margin:-8px 0 14px;max-width:75ch">Question types change at random: what an acronym stands for, which acronym matches a meaning, which acronym matches a description, and what an acronym does. Each correct answer in a row adds a strength dot (two in Type it mode). Reach strength 4 to master an acronym. A mastered acronym stays mastered even if you miss it later; only Reset or Prestige clears it.</p>`;
   let last=null;
   function menu(){
     curKeys=null;
@@ -1767,11 +2023,15 @@ function viewAcro(){
       <div class="acro-mode"><h4>Drill</h4><p>A set of questions with no glossary access. Test what you really know and build lasting acronym recall, one set at a time.</p>
         <div class="cfg"><label for="acrolen">Questions</label><select id="acrolen" class="ans" style="width:auto"><option>10</option><option selected>20</option><option>40</option></select></div>
         <div class="q-actions"><button class="btn" id="acrostart">Start drill</button></div></div>
+      <div class="acro-mode"><h4>Type it</h4><p>No options to choose from: type the acronym from its meaning or description, or type out what an acronym stands for. Harder, so each correct answer adds two strength dots instead of one. Small typos are fine.</p>
+        <div class="cfg"><label for="acrotylen">Questions</label><select id="acrotylen" class="ans" style="width:auto"><option selected>10</option><option>20</option></select></div>
+        <div class="q-actions"><button class="btn" id="acrotystart">Start typing</button></div></div>
       <div class="acro-mode"><h4>Glossary</h4><p>Every acronym with what it stands for and what it does. Search it, study it, then drill.</p>
         <div class="q-actions"><button class="btn ghost" id="acroglos">Open glossary</button></div></div>
     </div>
     </div>`;
     $("#acrostart").addEventListener("click",()=>drill(+$("#acrolen").value));
+    $("#acrotystart").addEventListener("click",()=>drill(+$("#acrotylen").value,true));
     $("#acroglos").addEventListener("click",glossary);
   }
   function pickItem(){
@@ -1791,21 +2051,22 @@ function viewAcro(){
     return out;
   }
   function explain(it){ return `<b>${esc(it.a)}</b> = ${esc(it.x)}.<br>${esc(it.d)}${it.note?`<br><span class="note"><b>Exam trap:</b> ${esc(it.note)}</span>`:""}`; }
-  function drill(N){
+  function drill(N,typeOnly){
     const S={r:0,t:0,missed:[],newly:0}; last=null;
     const before=new Set(acroActive().filter(x=>acroIsMastered(x.id)).map(x=>x.id));
     app.innerHTML=head()+`<div class="examtop"><button class="chipbtn" id="acroquit" type="button">Quit drill</button><span id="acroprog"></span></div><div id="area"></div>`;
     const area=$("#area");
     $("#acroquit").addEventListener("click",()=>{ S.quit=true; finish(); });
-    function grade(it,ok){ S.t++; if(ok) S.r++; else if(!S.missed.includes(it)) S.missed.push(it); scoreUpd(S.r,S.t);
-      P.acro[it.id]=ok?Math.min(4,(P.acro[it.id]||0)+1):0; if(P.acro[it.id]>=4){ P.acroM=P.acroM||{}; P.acroM[it.id]=true; } save(); }
+    function grade(it,ok,pts){ S.t++; if(ok) S.r++; else if(!S.missed.includes(it)) S.missed.push(it); scoreUpd(S.r,S.t);
+      P.acro[it.id]=ok?Math.min(4,(P.acro[it.id]||0)+(pts||1)):0; if(P.acro[it.id]>=4){ P.acroM=P.acroM||{}; P.acroM[it.id]=true; } save(); }
     function next(){
       if(S.t>=N) return finish();
       $("#acroprog").textContent=`Question ${S.t+1} of ${N}`;
       const it=pickItem(); const box=P.acro[it.id]||0;
-      const type=wpick([["stands",3],["which",2],["does",3],["what",2]]);
-      const typed=(type==="which"||type==="does") && Math.random()<0.4;
-      const labels={stands:"Spell it out",which:"Name the acronym",does:"Match the description",what:"What it does"};
+      const type=typeOnly?wpick([["which",2],["does",2],["spell",2]]):wpick([["stands",3],["which",2],["does",3],["what",2]]);
+      const typed=typeOnly || ((type==="which"||type==="does") && Math.random()<0.4);
+      const pts=typeOnly?2:1;
+      const labels={stands:"Spell it out",which:"Name the acronym",does:"Match the description",what:"What it does",spell:"Type what it stands for"};
       const meta=domTag(it.dom)+`<span class="tag">${esc(it.g)}</span>${it.t===2?`<span class="tag" title="On CompTIA's acronym list but rarely tested. Does not count toward the module rank.">Also listed</span>`:""}<span class="tag">${labels[type]}</span><span class="tag" title="One dot per correct answer in a row. Strength 4 masters the acronym. A miss resets the dots, but a mastered acronym stays mastered.">Strength <span class="strength">${"●".repeat(box)}${"○".repeat(4-box)}</span></span>${acroIsMastered(it.id)?`<span class="tag" style="color:var(--green);border-color:var(--green)">Mastered</span>`:""}`;
       const cfgBase={meta,explain:explain(it),onResult:ok=>grade(it,ok),onNext:next,nextLabel:S.t+1>=N?"Finish":"Next"};
       if(type==="stands"){
@@ -1820,8 +2081,13 @@ function viewAcro(){
       const prompt = type==="which"
         ? `Which acronym stands for <b>${esc(it.x)}</b>?`
         : `<span style="display:block;font-size:1.05em;margin-bottom:.3em">${esc(it.d)}</span>Which acronym is this?`;
+      if(type==="spell"){
+        return textQ(area,{meta,prompt:`What does <span class="big">${esc(acroLabel(it))}</span> stand for? Type it out.`,answer:it.x,placeholder:"Type what it stands for",
+          check:v=>{ const r=acroSpell(v,it); return r===2?{ok:true}:r===1?{ok:true,note:`Accepted. The exact wording is <b>${esc(it.x)}</b>.`}:{ok:false}; },
+          steps:[explain(it)],onResult:ok=>grade(it,ok,pts),onNext:next});
+      }
       if(typed){
-        return textQ(area,{meta,prompt,answer:it.a,placeholder:"Type the acronym",check:v=>normAcro(v)===normAcro(it.a) || ACRO.some(x=>x.id!==it.id && acroSame(x,it) && normAcro(v)===normAcro(x.a)),steps:[explain(it)],onResult:ok=>grade(it,ok),onNext:next});
+        return textQ(area,{meta,prompt,answer:it.a,placeholder:"Type the acronym",check:v=>normAcro(v)===normAcro(it.a) || ACRO.some(x=>x.id!==it.id && acroSame(x,it) && normAcro(v)===normAcro(x.a)),steps:[explain(it)],onResult:ok=>grade(it,ok,pts),onNext:next});
       }
       const d=distractors(it,3,"a");
       choiceQ(area,{...cfgBase,prompt,options:[it.a,...d.map(x=>x.a)],answer:0,mono:true});
