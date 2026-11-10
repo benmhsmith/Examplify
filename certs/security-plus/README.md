@@ -4,7 +4,7 @@ MyComputerCareer's study lab for the **CompTIA Security+ SY0-701** exam. It dril
 
 **Current version:** see the [Security+ releases](https://github.com/benmhsmith/Provo/releases?q=security-plus) · [What changed](CHANGELOG.md)
 
-> **Preview.** Every module covers its full objectives: 178 exam-focused acronyms, 394 terms, and 167 exam-style questions. Performance-based questions are coming soon.
+Every module covers its full objectives: 178 exam-focused acronyms, 394 terms, 167 exam-style questions, and 24 hands-on labs. Performance-based questions are coming soon.
 
 ## What's inside
 
@@ -13,18 +13,20 @@ MyComputerCareer's study lab for the **CompTIA Security+ SY0-701** exam. It dril
 | Stage | Module | What you practice | Objectives |
 |---|---|---|---|
 | 1 · Foundations | 01 Acronyms | The 178 acronyms most likely on the exam, asked four ways | Acronym list |
-| | 02 Security Controls & Concepts | Control categories and types, CIA, zero trust, deception, change management. Includes **Type the answer** scenarios | 1.1–1.3 |
-| | 03 Cryptography & PKI | Encryption, hashing, signatures, certificates, key storage | 1.4 |
-| 2 · Threats & architecture | 04 Threat Actors & Vectors | Who attacks, why, and the ways in | 2.1–2.2 |
-| | 05 Vulnerabilities & Attacks | Application flaws, malware, attacks, and their best defenses | 2.3–2.5 |
-| | 06 Security Architecture | Architecture models, data protection, resilience | 3.1–3.4 |
-| 3 · Operations & governance | 07 Security Operations | Hardening, vulnerability management, monitoring, automation | 4.1–4.5, 4.7 |
-| | 08 Identity & Access Management | Authentication, federation, access control models | 4.6 |
-| | 09 Incident Response & Forensics | The response process in order, evidence, investigation | 4.8–4.9 |
-| | 10 Governance, Risk & Compliance | Policies, roles, risk responses, vendors, audits | 5.1–5.6 |
+| | 02 Security Controls & Concepts | Control categories and types, CIA, zero trust, deception, change management | 1.1–1.3 |
+| | 03 Cryptography & PKI | Encryption, hashing, signatures, certificates, key storage. Labs: Key Flow, Sort the cipher | 1.4 |
+| 2 · Threats & architecture | 04 Threat Actors & Vectors | Who attacks, why, and the ways in. Labs: Threat Actor Profiler, Attack Surface Map, Spot the Phish | 2.1–2.2 |
+| | 05 Vulnerabilities & Attacks | Vulnerabilities, malware, attacks, and their best defenses. Labs: Vulnerability Hunt, Malware Lineup, Kill Chain Builder | 2.3–2.5 |
+| | 06 Security Architecture | Architecture models, data protection, resilience. Labs: Shared Responsibility, Network Zones, Recovery Planner | 3.1–3.4 |
+| 3 · Operations & governance | 07 Security Operations | Hardening, vulnerability management, monitoring, automation. Labs: Tool Match, Vulnerability Management, Disposal Decisions | 4.1–4.5, 4.7 |
+| | 08 Identity & Access Management | Authentication, federation, access control models. Labs: Factor Sort, Access Model Match, Sign-in Flows | 4.6 |
+| | 09 Incident Response & Forensics | The response process in order, evidence, investigation. Labs: Incident Timeline, Order of Volatility, Which Log? | 4.8–4.9 |
+| | 10 Governance, Risk & Compliance | Policies, roles, risk responses, vendors, audits. Labs: Risk Calculator, Risk Responses, Policy or Procedure?, Agreement Match | 5.1–5.6 |
 | 4 · Exam skills | 11 Question Qualifiers | FIRST, NEXT, BEST, MOST likely, and MINIMUM questions | All |
 | | 12 Performance-Based Questions | **Coming soon** | Given-a-scenario objectives |
 | 5 · Test | 13 Mini-Exams | 10, 20, or 40 multiple-choice questions, timed and weighted | All |
+
+Modules 02–10 each offer three ways to study: **Questions** (multiple choice and typed), **Type the answer** (read a scenario and type the term; a clean answer masters the term in one go), and **hands-on labs** (drag-and-drop, sorting, ordering, and inspection tasks that work with a mouse or a finger). Module 01 has a **Type it** mode as well.
 
 There is also a one-page **Cram Sheet** and a **Progress** page.
 
