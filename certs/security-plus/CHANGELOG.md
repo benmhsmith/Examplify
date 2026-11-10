@@ -1,5 +1,21 @@
 # Provo Security+ changelog
 
+## v1.0.0
+- Out of preview: every module from 02 to 10 now has hands-on labs alongside its questions, and every module covers its full SY0-701 objectives. Performance-based questions are still coming soon.
+- New labs, 24 in all. Drag-and-drop works with a mouse, a finger, or by tapping a tile and then a target. Getting a lab task right on the first check counts as one question for each term it uses.
+- 02 Security Controls & Concepts and every term module after it: Type the answer. Read a scenario and type the term, with no options to choose from. A correct answer with no hint masters the term in one go; with a hint, it counts as one question. Small typos and common alternative names (such as mantrap, whitelist, or SOP) are accepted.
+- 01 Acronyms: new Type it mode. Type the acronym from its meaning, or type out what an acronym stands for. Each correct answer adds two strength dots.
+- 01 Acronyms: trimmed to the 178 most likely to matter on the exam. General IT terms (such as LAN, URL, and HDD) and rarely tested acronyms are left out so students can focus. Progress on the acronyms that remain is kept.
+- 03 Cryptography & PKI: Key Flow (a sender, a recipient, a certificate authority, and Mallory on the wire: drag the right key onto each step, 8 tasks) and Sort the cipher (symmetric, asymmetric, or hashing).
+- 04 Threat Actors & Vectors: Threat Actor Profiler, Attack Surface Map, and Spot the Phish (fictional emails, text messages, and look-alike web addresses to inspect and report).
+- 05 Vulnerabilities & Attacks: Vulnerability Hunt (penetration test findings by kind of vulnerability), Malware Lineup, and Kill Chain Builder.
+- 06 Security Architecture: Shared Responsibility (on-premises, IaaS, PaaS, SaaS), Network Zones, and Recovery Planner (RTO and RPO).
+- 07 Security Operations: Tool Match, Vulnerability Management cycle, and Disposal Decisions.
+- 08 Identity & Access Management: Factor Sort, Access Model Match, and Sign-in Flows (SAML, OAuth, and the account lifecycle).
+- 09 Incident Response & Forensics: Incident Timeline, Order of Volatility, and Which Log?
+- 10 Governance, Risk & Compliance: Risk Calculator (SLE, ARO, ALE, and whether a control is worth it), Risk Responses, Policy or Procedure?, and Agreement Match.
+- New Security+ badges: a Security+ Mastery badge, 20 prestige badges from Strong Password to Chief Information Security Officer, and 5 secret badges ending with The Vault.
+
 ## v0.2.0
 - Full content: the Acronyms module now has CompTIA's complete SY0-701 acronym list (328 acronyms). The 247 core acronyms set your rank; the rest, which CompTIA lists but rarely tests, are marked Also listed and come up less often.
 - Full content: the nine term modules now cover every SY0-701 objective, 394 terms in all (up from 113), each asked as a definition, a name, and a scenario. Existing progress carries over.
