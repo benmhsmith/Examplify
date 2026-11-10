@@ -1,0 +1,1 @@
+- Joplin: new "Add Provo Security+ note" command (Tools → Provo Security+, and a button in the How to use window). It creates a note named Provo Security+ in the notebook you have open and opens it straight into the full-width tool, so there is nothing to copy and paste. Delete the note any time; your progress is kept and comes back when you add the note again.
