@@ -70,7 +70,7 @@ Works on Windows, Mac, Linux, Chromebooks, Android, iPhone, and iPad. Progress i
 2. In Joplin, open the **Configuration** screen (**Tools → Options** on Windows and Linux, **Joplin → Settings** on Mac) and go to **Plugins**.
 3. Click the **Plugin tools** gear button and choose **Install from file**. Pick the `.jpl` file.
 4. Restart Joplin when asked. If Joplin keeps running in the system tray, quit it fully first.
-5. Open **Tools → Provo Security+ → How to use** and click **Copy command**. Paste it into any note.
+5. Choose **Tools → Provo Security+ → Add Provo Security+ note**. A note named **Provo Security+** is created in the notebook you have open and opens in the full-width tool. Delete it any time; your progress is saved in Joplin and comes back when you add the note again.
 
 **On Android:**
 

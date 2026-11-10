@@ -149,12 +149,41 @@ ${[notes, folders].filter(Boolean).join(',\n')} { border-radius: 6px; animation:
       [WELCOME_KEY]: { value: false, type: 3 /* Bool */, public: false, label: 'Provo Security+ welcome shown' }
     });
     const COMMAND_TEXT = '```sec+\n```\n';
+    const NOTE_TITLE = 'Provo Security+';
+    const NOTE_BODY = COMMAND_TEXT + '\n<!-- This note opens Provo Security+. If you see this text, click Toggle editor (top right) to go back to the tool. Keep the two lines above. -->\n';
+    /* Add a ready-made study note: creates "Provo Security+" in the notebook that is open (or in a "Provo" notebook
+       if none is open) and opens it, which shows the full-width tool. Progress lives in Joplin's settings,
+       not in the note, so notes can be deleted and added again without losing anything. */
+    async function addStudyNote(quiet) {
+      try {
+        let folderId = '';
+        try { const f = await joplin.workspace.selectedFolder(); folderId = (f && f.id) || ''; } catch (e) {}
+        if (!folderId) { try { const cur = await joplin.workspace.selectedNote(); folderId = (cur && cur.parent_id) || ''; } catch (e) {} }
+        if (!folderId) {
+          const res = await joplin.data.get(['folders'], { fields: ['id', 'title'], limit: 100 });
+          const existing = (res.items || []).find(function (f) { return f.title === 'Provo'; });
+          folderId = existing ? existing.id : (await joplin.data.post(['folders'], null, { title: 'Provo' })).id;
+        }
+        const created = await joplin.data.post(['notes'], null, { title: NOTE_TITLE, body: NOTE_BODY, parent_id: folderId });
+        if (!quiet) await joplin.commands.execute('openNote', created.id);
+        return created.id;
+        if (!quiet) { try { await joplin.views.dialogs.showToast({ message: NOTE_TITLE + ' note added.', type: 'success', duration: 3000 }); } catch (e) {} }
+      } catch (e) {
+        note(DIAG.errors, 'add note: ' + (e && e.message || e));
+        if (quiet) return '';
+        await joplin.views.dialogs.showMessageBox('Could not add the note automatically. Create a note and type ```sec+ on one line and ``` on the next line instead.');
+      }
+    }
+    await joplin.commands.register({ name: 'secplus.addNote', label: 'Add Provo Security+ note', iconName: 'fas fa-plus-circle', execute: addStudyNote });
     const dialog = await joplin.views.dialogs.create('secplus_howto');
+    try { await joplin.views.dialogs.setFitToContent(dialog, false); } catch (e) {} /* fixed size: content scrolls, buttons stay visible on small screens */
     await joplin.views.dialogs.setHtml(dialog, `
-      <div style="font-family:var(--joplin-font-family, system-ui, sans-serif);color:var(--joplin-color, #222);max-width:520px;padding:4px 6px;line-height:1.5">
+      <div style="font-family:var(--joplin-font-family, system-ui, sans-serif);color:var(--joplin-color, #222);max-width:560px;margin:0 auto;padding:4px 6px 16px;line-height:1.5">
         <h2 style="margin:0 0 6px;font-size:1.4em">Provo Security+</h2>
         <p style="margin:0 0 12px">A study tool for the CompTIA Security+ (SY0-701) exam, by MyComputerCareer. It covers every exam domain: security controls, cryptography, threats and attacks, architecture, operations, identity and access, incident response, and governance, plus timed mini-exams and a one-page cram sheet. Your progress saves automatically.</p>
-        <h3 style="margin:0 0 6px;font-size:1.1em">Add it to a note</h3>
+        <h3 style="margin:0 0 6px;font-size:1.1em">Add it to Joplin</h3>
+        <p style="margin:0 0 12px">Click <b>Add Provo Security+ note</b> below, or choose <b>Tools → Provo Security+ → Add Provo Security+ note</b>. A note named <b>Provo Security+</b> is created in the notebook you have open, and it opens straight into the full-width tool. You can delete the note at any time: your progress is saved in Joplin, not in the note, so adding the note again picks up where you left off.</p>
+        <h3 style="margin:0 0 6px;font-size:1.1em">Or add it to a note yourself</h3>
         <ol style="margin:0 0 12px;padding-left:1.3em">
           <li>Create a new note, or open the note you want to use.</li>
           <li>Use the <b>Markdown editor</b> (plain text). If you see a Word-style formatting toolbar instead, click <b>Toggle editor</b> at the top right of the note.</li>
@@ -168,12 +197,14 @@ ${[notes, folders].filter(Boolean).join(',\n')} { border-radius: 6px; animation:
         <p style="margin:0;font-size:.9em;opacity:.8">To remove the tool from a note, delete those two lines. You can reopen this window any time from <b>Tools → Provo Security+ → How to use</b> (on Android, the <b>?</b> button on the editor toolbar).</p>
       </div>`);
     await joplin.views.dialogs.setButtons(dialog, [
+      { id: 'add', title: 'Add Provo Security+ note' },
       { id: 'copy', title: 'Copy command' },
       { id: 'changelog', title: 'Changelog' },
       { id: 'close', title: 'Close' }
     ]);
     async function showHowTo() {
       const result = await joplin.views.dialogs.open(dialog);
+      if (result && result.id === 'add') { await addStudyNote(); return; }
       if (result && result.id === 'changelog') { await showChangelog(); return; }
       if (result && result.id === 'copy') {
         try {
@@ -189,11 +220,12 @@ ${[notes, folders].filter(Boolean).join(',\n')} { border-radius: 6px; animation:
     /* Changelog window. CHANGELOG_HTML is filled in from CHANGELOG.md by release.py */
     const CHANGELOG_HTML = /*CHANGELOG*/"<h3 style=\"margin:14px 0 4px;font-size:1.1em\">v0.1.0</h3><p style=\"margin:0 0 12px\">First release of Provo Security+ for CompTIA Security+ SY0-701. This is a preview: every module works, and each is being expanded to cover its full objectives.</p><ul style=\"margin:0 0 12px;padding-left:1.2em\"><li style=\"margin:.2em 0\">13 modules in 5 stages covering all five SY0-701 domains, weighted 12 / 22 / 18 / 28 / 20 like the exam.</li><li style=\"margin:.2em 0\">Modules 02\u201310 ask each term several ways: name it, define it, spot it in a scenario, and, for attacks, pick the best defense.</li><li style=\"margin:.2em 0\">Acronyms, Question Qualifiers, a one-page Cram Sheet, and a Progress page.</li><li style=\"margin:.2em 0\">Mini-Exams: 10, 20, or 40 multiple-choice questions, timed at one minute per question and weighted by domain.</li><li style=\"margin:.2em 0\">Performance-Based Questions are coming soon. Until then they do not count toward the Security+ Mastery Badge.</li><li style=\"margin:.2em 0\">Five ranks per module, from Beginner to Pro. Reach Expert in every module for the Security+ Mastery Badge.</li><li style=\"margin:.2em 0\">Progress is saved separately from Network+, and the Joplin plugin installs beside Provo Network+ (use a ```sec+ block).</li><li style=\"margin:.2em 0\">Starter content: 113 terms, 36 acronyms, 5 qualifier questions, and 15 exam questions so far.</li></ul>"/*END*/;
     const changelog = await joplin.views.dialogs.create('secplus_changelog');
+    try { await joplin.views.dialogs.setFitToContent(changelog, false); } catch (e) {} /* fixed size: content scrolls, buttons stay visible on small screens */
     await joplin.views.dialogs.setHtml(changelog, `
-      <div style="font-family:var(--joplin-font-family, system-ui, sans-serif);color:var(--joplin-color, #222);width:560px;max-width:100%;padding:4px 6px;line-height:1.5">
+      <div style="font-family:var(--joplin-font-family, system-ui, sans-serif);color:var(--joplin-color, #222);max-width:600px;margin:0 auto;padding:4px 6px 16px;line-height:1.5">
         <h2 style="margin:0 0 2px;font-size:1.4em">Provo Security+ changelog</h2>
         <p style="margin:0 0 10px;opacity:.75">You are on version ${DIAG.version}.</p>
-        <div style="max-height:60vh;overflow-y:auto;padding-right:8px">${CHANGELOG_HTML}</div>
+        <div>${CHANGELOG_HTML}</div>
       </div>`);
     await joplin.views.dialogs.setButtons(changelog, [{ id: 'close', title: 'Close' }]);
     async function showChangelog() { await joplin.views.dialogs.open(changelog); }
@@ -201,11 +233,13 @@ ${[notes, folders].filter(Boolean).join(',\n')} { border-radius: 6px; animation:
 
     /* Tools (and Help) > Provo Security+ > How to use / Changelog */
     const SUB = [
+      { commandName: 'secplus.addNote', label: 'Add Provo Security+ note' },
       { commandName: 'secplus.howTo', label: 'How to use' },
       { commandName: 'secplus.changelog', label: 'Changelog' }
     ];
     if (PLATFORM !== 'desktop') {
       /* Joplin Mobile has no menu bar: put How to use on the editor toolbar instead */
+      try { await joplin.views.toolbarButtons.create('secplus_addnote_btn', 'secplus.addNote', 'editorToolbar'); } catch (e) { note(DIAG.errors, 'toolbar add: ' + (e && e.message || e)); }
       try { await joplin.views.toolbarButtons.create('secplus_howto_btn', 'secplus.howTo', 'editorToolbar'); } catch (e) { note(DIAG.errors, 'toolbar: ' + (e && e.message || e)); }
     } else {
       try {
@@ -213,6 +247,7 @@ ${[notes, folders].filter(Boolean).join(',\n')} { border-radius: 6px; animation:
           await joplin.views.menus.create('secplus_tools_menu', 'Provo Security+', SUB, 'tools');
           await joplin.views.menus.create('secplus_help_menu', 'Provo Security+', SUB, 'help');
         } else {
+          await joplin.views.menuItems.create('secplus_addnote_tools', 'secplus.addNote', 'tools');
           await joplin.views.menuItems.create('secplus_howto_tools', 'secplus.howTo', 'tools');
           await joplin.views.menuItems.create('secplus_changelog_tools', 'secplus.changelog', 'tools');
         }
