@@ -178,6 +178,7 @@ ${[notes, folders].filter(Boolean).join(',\n')} { border-radius: 6px; animation:
     const dialog = await joplin.views.dialogs.create('netplusft_howto');
     try { await joplin.views.dialogs.setFitToContent(dialog, false); } catch (e) {} /* fixed size: content scrolls, buttons stay visible on small screens */
     await joplin.views.dialogs.setHtml(dialog, `
+      <style>html,body{height:100%}body{overflow-y:auto!important}</style>
       <div style="font-family:var(--joplin-font-family, system-ui, sans-serif);color:var(--joplin-color, #222);max-width:560px;margin:0 auto;padding:4px 6px 16px;line-height:1.5">
         <h2 style="margin:0 0 6px;font-size:1.4em">Provo Network+</h2>
         <p style="margin:0 0 12px">A study tool for the CompTIA Network+ (N10-009) exam. It focuses on what the exam weighs most: port drills, subnetting practice, exam acronyms, PBQ practice, the troubleshooting steps, mini-exams, and a one-page cram sheet. Your progress saves automatically.</p>
@@ -222,6 +223,7 @@ ${[notes, folders].filter(Boolean).join(',\n')} { border-radius: 6px; animation:
     const changelog = await joplin.views.dialogs.create('netplusft_changelog');
     try { await joplin.views.dialogs.setFitToContent(changelog, false); } catch (e) {} /* fixed size: content scrolls, buttons stay visible on small screens */
     await joplin.views.dialogs.setHtml(changelog, `
+      <style>html,body{height:100%}body{overflow-y:auto!important}</style>
       <div style="font-family:var(--joplin-font-family, system-ui, sans-serif);color:var(--joplin-color, #222);max-width:600px;margin:0 auto;padding:4px 6px 16px;line-height:1.5">
         <h2 style="margin:0 0 2px;font-size:1.4em">Provo Network+ changelog</h2>
         <p style="margin:0 0 10px;opacity:.75">You are on version ${DIAG.version}.</p>
