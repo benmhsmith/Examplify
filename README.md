@@ -28,7 +28,7 @@ Provo was built by a MyCC instructor to support that training. It gives students
 | Exam | Exam code | Status | Start here |
 |---|---|---|---|
 | CompTIA Network+ | N10-009 | **Available** | [Provo Network+](certs/network-plus/) |
-| CompTIA Security+ | SY0-701 | **In development** | Coming soon |
+| CompTIA Security+ | SY0-701 | **Available** (preview) | [Provo Security+](certs/security-plus/) |
 | CompTIA A+ | Current version when built | Planned | — |
 
 ## See it in action

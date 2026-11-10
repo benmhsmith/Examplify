@@ -11,7 +11,7 @@ joplin.plugins.register({
     const EDITOR_ID = 'secplus_editor';
     const KEY = 'secplus.progress';
     const FENCE = /^\s*```\s*(sec\+|sec-plus)\s*$/im;
-    const DIAG = { version: '5.0.0', editorsApi: 'unknown', method: 'none', setupCalls: 0, handle: null, checks: [], shows: [], errors: [] };
+    const DIAG = { version: '0.1.0', editorsApi: 'unknown', method: 'none', setupCalls: 0, handle: null, checks: [], shows: [], errors: [] };
     const note = function (arr, v) { arr.push(v); if (arr.length > 8) arr.shift(); };
 
     /* desktop or mobile (Joplin Android). Menus and the full-width editor are desktop-only. */
@@ -187,7 +187,7 @@ ${[notes, folders].filter(Boolean).join(',\n')} { border-radius: 6px; animation:
     await joplin.commands.register({ name: 'secplus.howTo', label: 'How to use', iconName: 'fas fa-question-circle', execute: showHowTo });
 
     /* Changelog window. CHANGELOG_HTML is filled in from CHANGELOG.md by release.py */
-    const CHANGELOG_HTML = /*CHANGELOG*/"<p style=\"margin:0 0 12px\">Provo Security+ is in development.</p>"/*END*/;
+    const CHANGELOG_HTML = /*CHANGELOG*/"<h3 style=\"margin:14px 0 4px;font-size:1.1em\">v0.1.0</h3><p style=\"margin:0 0 12px\">First release of Provo Security+ for CompTIA Security+ SY0-701. This is a preview: every module works, and each is being expanded to cover its full objectives.</p><ul style=\"margin:0 0 12px;padding-left:1.2em\"><li style=\"margin:.2em 0\">13 modules in 5 stages covering all five SY0-701 domains, weighted 12 / 22 / 18 / 28 / 20 like the exam.</li><li style=\"margin:.2em 0\">Modules 02\u201310 ask each term several ways: name it, define it, spot it in a scenario, and, for attacks, pick the best defense.</li><li style=\"margin:.2em 0\">Acronyms, Question Qualifiers, a one-page Cram Sheet, and a Progress page.</li><li style=\"margin:.2em 0\">Mini-Exams: 10, 20, or 40 multiple-choice questions, timed at one minute per question and weighted by domain.</li><li style=\"margin:.2em 0\">Performance-Based Questions are coming soon. Until then they do not count toward the Security+ Mastery Badge.</li><li style=\"margin:.2em 0\">Five ranks per module, from Beginner to Pro. Reach Expert in every module for the Security+ Mastery Badge.</li><li style=\"margin:.2em 0\">Progress is saved separately from Network+, and the Joplin plugin installs beside Provo Network+ (use a ```sec+ block).</li><li style=\"margin:.2em 0\">Starter content: 113 terms, 36 acronyms, 5 qualifier questions, and 15 exam questions so far.</li></ul>"/*END*/;
     const changelog = await joplin.views.dialogs.create('secplus_changelog');
     await joplin.views.dialogs.setHtml(changelog, `
       <div style="font-family:var(--joplin-font-family, system-ui, sans-serif);color:var(--joplin-color, #222);width:560px;max-width:100%;padding:4px 6px;line-height:1.5">
