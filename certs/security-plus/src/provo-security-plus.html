@@ -433,6 +433,21 @@ html.mobile .kf-row{grid-template-columns:1fr} html.mobile .kf-wire{flex-directi
 .kc-slot:not(.filled) .kf-fill{color:var(--muted)}
 .kc-pool{display:flex;flex-direction:column;gap:6px;margin-top:12px;padding:10px;border:1px dashed var(--line);border-radius:10px;background:var(--sunk)}
 .kc-ev{text-align:left;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:8px 10px;font:.9rem var(--font-body)}
+/* Shared responsibility, zones, recovery */
+.sr-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.sr-col{display:flex;flex-direction:column;gap:4px}
+.sr-col h5{margin:0 0 4px;text-align:center;font-size:1rem;padding:4px;border-radius:6px}
+.sr-col h5.ok{background:var(--ok-bg);color:var(--ok)} .sr-col h5.bad{background:var(--bad-bg);color:var(--bad)}
+.sr-cell{font:600 .82rem var(--font-body);padding:8px 6px;border:1.5px dashed var(--line);border-radius:6px;background:var(--bg);color:var(--ink);cursor:pointer;min-height:40px}
+.sr-cell.you{background:var(--pv1);border-color:var(--pv1);border-style:solid;color:#fff}
+.sr-cell.prov{background:var(--sunk);border-style:solid;color:var(--muted)}
+.sr-key{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:.85rem;color:var(--muted)}
+.sr-sw{display:inline-block;width:14px;height:14px;border-radius:3px} .sr-sw.you{background:var(--pv1)} .sr-sw.prov{background:var(--sunk);border:1px solid var(--line);margin-left:10px}
+.bn-bins{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:12px}
+.bn-bin{min-height:120px}
+.rp-tags{display:flex;gap:6px;flex-wrap:wrap}
+@media (max-width:640px){ .sr-grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+html.mobile .sr-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 </style>
 
 <header class="top">
@@ -1011,55 +1026,55 @@ const TERMSETS = {
   {id:"a55",g:"mit",d:2,t:"Disabling ports and protocols",def:"Turning off network ports and protocols that are not needed",sc:"An admin turns off Telnet and FTP on a switch and shuts down its unused ports. Which hardening technique is this?",alt:["disable unused ports", "disabling unused ports"]},
   {id:"a56",g:"mit",d:2,t:"Removing unnecessary software",def:"Uninstalling software that is not needed, which shrinks the attack surface",sc:"Before deployment, a technician uninstalls games and trial apps from a new laptop. Which hardening technique is this?",alt:["uninstall unnecessary software"]}
  ]},
- arch:{need:2,groups:[["model","Architecture models","Models"],["infra","Securing infrastructure","Infrastructure"],["data","Protecting data","Data"],["res","Sites & high availability","Resilience"],["backup","Backups, power & testing","Recovery"]],items:[
-  {id:"r1",g:"model",d:3,t:"Infrastructure as code (IaC)",def:"Defining servers and networks in configuration files so they deploy the same way every time",sc:"Every server is built from version-controlled template files, so all deployments are identical. What practice is this?"},
-  {id:"r2",g:"model",d:3,t:"Microservices",def:"An application built as small, independent services that communicate through APIs",sc:"An online store is split into separate services for search, cart, and payment that talk over APIs. What architecture is this?"},
-  {id:"r3",g:"model",d:3,t:"Serverless",def:"Running code in the cloud without managing servers; the provider runs it on demand",sc:"A developer uploads a function that runs only when an image is uploaded, without managing any server. What model is this?"},
-  {id:"r4",g:"model",d:3,t:"Air gap",def:"Physically isolating a system from every other network",sc:"A control system for a power plant has no physical connection to any other network. What is this called?"},
-  {id:"r13",g:"model",d:3,t:"Responsibility matrix",def:"A chart showing which security tasks the cloud provider handles and which the customer handles",sc:"A cloud contract includes a chart showing that the provider patches the hypervisor and the customer patches its own VMs. What is this chart?"},
-  {id:"r14",g:"model",d:3,t:"Hybrid cloud",def:"A mix of on-premises or private cloud and public cloud that work together",sc:"A company keeps its database in its own data center but runs its website in a public cloud. Which cloud model is this?"},
-  {id:"r15",g:"model",d:3,t:"Containerization",def:"Packaging an app with everything it needs to run in an isolated container that shares the host's operating system kernel",sc:"Developers package an app with its libraries so it runs the same on any host, sharing the host's kernel. What is this?"},
-  {id:"r16",g:"model",d:3,t:"Virtualization",def:"Running several virtual machines, each with its own operating system, on one physical host through a hypervisor",sc:"One physical server runs ten separate operating systems, each in its own VM. What technology is this?"},
-  {id:"r17",g:"model",d:3,t:"Software-defined networking (SDN)",def:"Separating network control from the forwarding hardware so the network is managed centrally in software",sc:"Paths across every switch are configured from one central controller instead of device by device. What is this?"},
-  {id:"r18",g:"model",d:3,t:"Industrial control system (ICS/SCADA)",def:"Systems that monitor and control industrial processes such as power plants, pipelines, and water treatment",sc:"A water utility uses one system to monitor and control pumps at many remote stations. What type of system is this?"},
-  {id:"r19",g:"model",d:3,t:"Real-time operating system (RTOS)",def:"An operating system that must respond to events within strict time limits, used in embedded devices",sc:"A car's braking controller runs an operating system that must respond within milliseconds every time. What type of operating system is this?"},
-  {id:"r20",g:"model",d:3,t:"Internet of Things (IoT)",def:"Everyday network-connected devices such as cameras, thermostats, and sensors",sc:"Smart thermostats and lights in an office connect to the network and are controlled from a phone app. What category of device are they?"},
-  {id:"r21",g:"infra",d:3,t:"Jump server",def:"A hardened server that admins connect to first and then use to manage systems in a secure zone",sc:"Admins must log in to one hardened server before they can reach any server in the secure network. What is that server?"},
-  {id:"r22",g:"infra",d:3,t:"Proxy server",def:"A server that makes requests on behalf of clients, often filtering web traffic",sc:"All employee web traffic goes through a server that fetches pages on their behalf and blocks banned sites. What is it?"},
-  {id:"r23",g:"infra",d:3,t:"Load balancer",def:"A device that spreads traffic across several servers for performance and availability",sc:"Incoming web requests are shared across six web servers so that none is overloaded. Which device does this?"},
-  {id:"r24",g:"infra",d:3,t:"Web application firewall (WAF)",def:"A firewall that inspects HTTP traffic to block web attacks such as SQL injection and cross-site scripting",sc:"A device in front of a web app blocks requests that contain SQL injection patterns. What is it?"},
-  {id:"r25",g:"infra",d:3,t:"Unified threat management (UTM)",def:"One appliance that combines a firewall, intrusion prevention, antivirus, and content filtering",sc:"A small office buys one device that provides a firewall, intrusion prevention, antivirus, and web filtering. What is it?"},
-  {id:"r26",g:"infra",d:3,t:"Fail-closed",def:"When a security device fails, it blocks all traffic, putting security ahead of availability",sc:"When the firewall crashes, no traffic passes at all until it is restored. What failure mode is this?"},
-  {id:"r27",g:"infra",d:3,t:"Fail-open",def:"When a device fails, traffic keeps passing without inspection, putting availability ahead of security",sc:"When the intrusion prevention system crashes, traffic keeps flowing without being inspected. What failure mode is this?"},
-  {id:"r28",g:"infra",d:3,t:"Screened subnet",def:"A network zone between the internet and the internal network that holds public-facing servers; formerly called a DMZ",sc:"The company's public web and mail servers sit in a separate zone between two firewalls. What is this zone?"},
-  {id:"r29",g:"infra",d:3,t:"802.1X",def:"Port-based network access control: a device must authenticate before the switch port or access point passes its traffic",sc:"A switch port stays blocked until the connected laptop authenticates through a RADIUS server. Which standard is this?"},
-  {id:"r30",g:"infra",d:3,t:"Secure access service edge (SASE)",def:"A cloud service that combines networking and security, such as SD-WAN and a secure web gateway, for users anywhere",sc:"A company replaces its branch firewalls and VPN with one cloud service that secures users wherever they work. What is this approach?"},
-  {id:"r5",g:"data",d:3,t:"Data masking",def:"Hiding part of a value when it is displayed, such as showing only the last four digits of a card",sc:"A support screen shows a customer's card number as XXXX-XXXX-XXXX-4421. What technique is this?",avoid:["r6"]},
+ arch:{need:2,typed:true,labs:["shared","zones","recovery"],groups:[["model","Architecture models","Models"],["infra","Securing infrastructure","Infrastructure"],["data","Protecting data","Data"],["res","Sites & high availability","Resilience"],["backup","Backups, power & testing","Recovery"]],items:[
+  {id:"r1",g:"model",d:3,t:"Infrastructure as code (IaC)",def:"Defining servers and networks in configuration files so they deploy the same way every time",sc:"Every server is built from version-controlled template files, so all deployments are identical. What practice is this?",alt:["iac"]},
+  {id:"r2",g:"model",d:3,t:"Microservices",def:"An application built as small, independent services that communicate through APIs",sc:"An online store is split into separate services for search, cart, and payment that talk over APIs. What architecture is this?",alt:["microservice", "microservices architecture"]},
+  {id:"r3",g:"model",d:3,t:"Serverless",def:"Running code in the cloud without managing servers; the provider runs it on demand",sc:"A developer uploads a function that runs only when an image is uploaded, without managing any server. What model is this?",alt:["serverless computing", "function as a service", "faas"]},
+  {id:"r4",g:"model",d:3,t:"Air gap",def:"Physically isolating a system from every other network",sc:"A control system for a power plant has no physical connection to any other network. What is this called?",alt:["airgap", "air gapped"]},
+  {id:"r13",g:"model",d:3,t:"Responsibility matrix",def:"A chart showing which security tasks the cloud provider handles and which the customer handles",sc:"A cloud contract includes a chart showing that the provider patches the hypervisor and the customer patches its own VMs. What is this chart?",alt:["shared responsibility matrix", "shared responsibility model"]},
+  {id:"r14",g:"model",d:3,t:"Hybrid cloud",def:"A mix of on-premises or private cloud and public cloud that work together",sc:"A company keeps its database in its own data center but runs its website in a public cloud. Which cloud model is this?",alt:["hybrid"]},
+  {id:"r15",g:"model",d:3,t:"Containerization",def:"Packaging an app with everything it needs to run in an isolated container that shares the host's operating system kernel",sc:"Developers package an app with its libraries so it runs the same on any host, sharing the host's kernel. What is this?",alt:["containers", "container"]},
+  {id:"r16",g:"model",d:3,t:"Virtualization",def:"Running several virtual machines, each with its own operating system, on one physical host through a hypervisor",sc:"One physical server runs ten separate operating systems, each in its own VM. What technology is this?",alt:["virtual machines", "vm"]},
+  {id:"r17",g:"model",d:3,t:"Software-defined networking (SDN)",def:"Separating network control from the forwarding hardware so the network is managed centrally in software",sc:"Paths across every switch are configured from one central controller instead of device by device. What is this?",alt:["sdn", "software defined networking"]},
+  {id:"r18",g:"model",d:3,t:"Industrial control system (ICS/SCADA)",def:"Systems that monitor and control industrial processes such as power plants, pipelines, and water treatment",sc:"A water utility uses one system to monitor and control pumps at many remote stations. What type of system is this?",alt:["ics", "scada", "industrial control systems"]},
+  {id:"r19",g:"model",d:3,t:"Real-time operating system (RTOS)",def:"An operating system that must respond to events within strict time limits, used in embedded devices",sc:"A car's braking controller runs an operating system that must respond within milliseconds every time. What type of operating system is this?",alt:["rtos"]},
+  {id:"r20",g:"model",d:3,t:"Internet of Things (IoT)",def:"Everyday network-connected devices such as cameras, thermostats, and sensors",sc:"Smart thermostats and lights in an office connect to the network and are controlled from a phone app. What category of device are they?",alt:["iot"]},
+  {id:"r21",g:"infra",d:3,t:"Jump server",def:"A hardened server that admins connect to first and then use to manage systems in a secure zone",sc:"Admins must log in to one hardened server before they can reach any server in the secure network. What is that server?",alt:["jump box", "jumpbox", "bastion host"]},
+  {id:"r22",g:"infra",d:3,t:"Proxy server",def:"A server that makes requests on behalf of clients, often filtering web traffic",sc:"All employee web traffic goes through a server that fetches pages on their behalf and blocks banned sites. What is it?",alt:["proxy", "forward proxy"]},
+  {id:"r23",g:"infra",d:3,t:"Load balancer",def:"A device that spreads traffic across several servers for performance and availability",sc:"Incoming web requests are shared across six web servers so that none is overloaded. Which device does this?",alt:["load balancing"]},
+  {id:"r24",g:"infra",d:3,t:"Web application firewall (WAF)",def:"A firewall that inspects HTTP traffic to block web attacks such as SQL injection and cross-site scripting",sc:"A device in front of a web app blocks requests that contain SQL injection patterns. What is it?",alt:["waf"]},
+  {id:"r25",g:"infra",d:3,t:"Unified threat management (UTM)",def:"One appliance that combines a firewall, intrusion prevention, antivirus, and content filtering",sc:"A small office buys one device that provides a firewall, intrusion prevention, antivirus, and web filtering. What is it?",alt:["utm"]},
+  {id:"r26",g:"infra",d:3,t:"Fail-closed",def:"When a security device fails, it blocks all traffic, putting security ahead of availability",sc:"When the firewall crashes, no traffic passes at all until it is restored. What failure mode is this?",alt:["fail closed", "fail secure"]},
+  {id:"r27",g:"infra",d:3,t:"Fail-open",def:"When a device fails, traffic keeps passing without inspection, putting availability ahead of security",sc:"When the intrusion prevention system crashes, traffic keeps flowing without being inspected. What failure mode is this?",alt:["fail open"]},
+  {id:"r28",g:"infra",d:3,t:"Screened subnet",def:"A network zone between the internet and the internal network that holds public-facing servers; formerly called a DMZ",sc:"The company's public web and mail servers sit in a separate zone between two firewalls. What is this zone?",alt:["dmz", "demilitarized zone", "screened subnet"]},
+  {id:"r29",g:"infra",d:3,t:"802.1X",def:"Port-based network access control: a device must authenticate before the switch port or access point passes its traffic",sc:"A switch port stays blocked until the connected laptop authenticates through a RADIUS server. Which standard is this?",alt:["8021x", "port based authentication", "port-based nac"]},
+  {id:"r30",g:"infra",d:3,t:"Secure access service edge (SASE)",def:"A cloud service that combines networking and security, such as SD-WAN and a secure web gateway, for users anywhere",sc:"A company replaces its branch firewalls and VPN with one cloud service that secures users wherever they work. What is this approach?",alt:["sase"]},
+  {id:"r5",g:"data",d:3,t:"Data masking",def:"Hiding part of a value when it is displayed, such as showing only the last four digits of a card",sc:"A support screen shows a customer's card number as XXXX-XXXX-XXXX-4421. What technique is this?",avoid:["r6"],alt:["masking"]},
   {id:"r6",g:"data",d:3,t:"Tokenization",def:"Replacing sensitive data with a random token that maps back to the original in a secured vault",sc:"Card numbers in the order database are replaced with random values, and the real numbers live in a separate vault. What technique is this?",avoid:["r5"]},
-  {id:"r7",g:"data",d:3,t:"Data sovereignty",def:"Data is subject to the laws of the country where it is stored",sc:"A company must keep EU customer data in EU data centers because of the laws that apply there. Which concept is this?"},
+  {id:"r7",g:"data",d:3,t:"Data sovereignty",def:"Data is subject to the laws of the country where it is stored",sc:"A company must keep EU customer data in EU data centers because of the laws that apply there. Which concept is this?",alt:["sovereignty"]},
   {id:"r8",g:"data",d:3,t:"Data at rest",def:"Data stored on a disk, database, or backup and not currently moving or in use",sc:"Full-disk encryption on a laptop protects which state of data?",avoid:["r31","r32"]},
   {id:"r31",g:"data",d:3,t:"Data in transit",def:"Data moving across a network",sc:"TLS protects which state of data?"},
   {id:"r32",g:"data",d:3,t:"Data in use",def:"Data being processed in memory or by the CPU",sc:"A secure enclave protects data while an application is actively processing it in memory. Which state of data is this?"},
   {id:"r33",g:"data",d:3,t:"Geographic restrictions",def:"Limiting access to data or systems based on location",sc:"Logins to the HR system are blocked when they come from outside the country. Which data protection method is this?"},
   {id:"r34",g:"data",d:3,t:"Trade secret",def:"Confidential business information that gives a competitive edge, such as a formula or process",sc:"A soft-drink maker guards its secret recipe. What type of data is the recipe?"},
   {id:"r35",g:"data",d:3,t:"Regulated data",def:"Data whose handling is controlled by law or regulation, such as health records or payment card data",sc:"Patient records must be protected under HIPAA. What type of data are they?"},
-  {id:"r9",g:"res",d:3,t:"Hot site",def:"A fully equipped, running recovery site that can take over almost immediately",sc:"A recovery site runs with current data and can take over within minutes. What type of site is it?",avoid:["r10","r11"]},
-  {id:"r10",g:"res",d:3,t:"Warm site",def:"A recovery site with some equipment ready that needs time to become fully operational",sc:"A recovery site has servers installed but needs the latest data restored before use. What type of site is it?",avoid:["r9","r11"]},
-  {id:"r11",g:"res",d:3,t:"Cold site",def:"A recovery location with space and power but little or no equipment ready",sc:"A recovery location has power and empty racks, so equipment must be brought in after a disaster. What type of site is it?",avoid:["r9","r10"]},
-  {id:"r12",g:"res",d:3,t:"Geographic dispersion",def:"Placing sites far enough apart that a single disaster cannot affect all of them",sc:"A company puts its backup data center 600 miles from headquarters so one hurricane cannot take out both. What is this called?"},
+  {id:"r9",g:"res",d:3,t:"Hot site",def:"A fully equipped, running recovery site that can take over almost immediately",sc:"A recovery site runs with current data and can take over within minutes. What type of site is it?",avoid:["r10","r11"],alt:["hot"]},
+  {id:"r10",g:"res",d:3,t:"Warm site",def:"A recovery site with some equipment ready that needs time to become fully operational",sc:"A recovery site has servers installed but needs the latest data restored before use. What type of site is it?",avoid:["r9","r11"],alt:["warm"]},
+  {id:"r11",g:"res",d:3,t:"Cold site",def:"A recovery location with space and power but little or no equipment ready",sc:"A recovery location has power and empty racks, so equipment must be brought in after a disaster. What type of site is it?",avoid:["r9","r10"],alt:["cold"]},
+  {id:"r12",g:"res",d:3,t:"Geographic dispersion",def:"Placing sites far enough apart that a single disaster cannot affect all of them",sc:"A company puts its backup data center 600 miles from headquarters so one hurricane cannot take out both. What is this called?",alt:["geographic redundancy"]},
   {id:"r36",g:"res",d:3,t:"Clustering",def:"Several servers working together as one system, so another takes over if one fails",sc:"Two database servers share storage, and if one fails the other takes over its work automatically. What is this?"},
   {id:"r37",g:"res",d:3,t:"Platform diversity",def:"Using different operating systems or vendors so one flaw cannot take down everything",sc:"A company runs its DNS on both Linux and Windows servers so one operating system flaw cannot stop all name resolution. What is this?"},
-  {id:"r38",g:"res",d:3,t:"Multi-cloud",def:"Using more than one cloud provider so the business does not depend on any single one",sc:"A company runs the same application on two different cloud providers so an outage at one does not stop it. What is this?"},
+  {id:"r38",g:"res",d:3,t:"Multi-cloud",def:"Using more than one cloud provider so the business does not depend on any single one",sc:"A company runs the same application on two different cloud providers so an outage at one does not stop it. What is this?",alt:["multicloud"]},
   {id:"r39",g:"res",d:3,t:"Capacity planning",def:"Making sure there are enough people, technology, and infrastructure to meet demand and survive disruptions",sc:"Before a holiday sale, IT confirms there are enough servers and staff to handle triple the normal traffic. What is this?"},
   {id:"r40",g:"backup",d:3,t:"Snapshot",def:"A point-in-time copy of a virtual machine or volume that can be rolled back to quickly",sc:"Before patching, an admin captures a point-in-time copy of the VM so it can be rolled back in seconds. What is this?"},
   {id:"r41",g:"backup",d:3,t:"Replication",def:"Copying data continuously or nearly continuously to another system or site",sc:"Every change to the main database is copied within seconds to a server at the recovery site. What is this?"},
   {id:"r42",g:"backup",d:3,t:"Journaling",def:"Writing every change to a log first, so data can be rebuilt after a crash",sc:"A database writes every change to a log before applying it, so after a crash it can replay the log. What is this?"},
-  {id:"r43",g:"backup",d:3,t:"Offsite backup",def:"Backup copies kept at a different location from the original data",sc:"Weekly backup tapes are taken to a vault across town so one fire cannot destroy both copies. What is this?"},
-  {id:"r44",g:"backup",d:3,t:"Uninterruptible power supply (UPS)",def:"Battery power that keeps equipment running through short outages and lets it shut down cleanly",sc:"When the power flickers, the servers keep running for 15 minutes on batteries. What provides this?"},
-  {id:"r45",g:"backup",d:3,t:"Generator",def:"Fuel-powered equipment that supplies power during long outages",sc:"A data center can keep running for days on its own fuel-powered equipment during a regional power outage. What provides this?"},
-  {id:"r46",g:"backup",d:3,t:"Tabletop exercise",def:"Talking through a disaster scenario around a table without touching any systems",sc:"Department heads meet in a conference room and talk through how they would respond to a flood, step by step. What type of test is this?"},
-  {id:"r47",g:"backup",d:3,t:"Failover test",def:"Deliberately switching to the backup system to prove it can take over",sc:"IT shuts down the main data center's links on purpose to confirm the recovery site takes over. What type of test is this?"},
-  {id:"r48",g:"backup",d:3,t:"Parallel processing",def:"Running the recovery system alongside production on the same work to confirm it produces the same results",sc:"The recovery site processes the same transactions as production for a week so results can be compared. What type of test is this?"}
+  {id:"r43",g:"backup",d:3,t:"Offsite backup",def:"Backup copies kept at a different location from the original data",sc:"Weekly backup tapes are taken to a vault across town so one fire cannot destroy both copies. What is this?",alt:["off site backup", "offsite backups"]},
+  {id:"r44",g:"backup",d:3,t:"Uninterruptible power supply (UPS)",def:"Battery power that keeps equipment running through short outages and lets it shut down cleanly",sc:"When the power flickers, the servers keep running for 15 minutes on batteries. What provides this?",alt:["ups"]},
+  {id:"r45",g:"backup",d:3,t:"Generator",def:"Fuel-powered equipment that supplies power during long outages",sc:"A data center can keep running for days on its own fuel-powered equipment during a regional power outage. What provides this?",alt:["backup generator", "generators"]},
+  {id:"r46",g:"backup",d:3,t:"Tabletop exercise",def:"Talking through a disaster scenario around a table without touching any systems",sc:"Department heads meet in a conference room and talk through how they would respond to a flood, step by step. What type of test is this?",alt:["tabletop"]},
+  {id:"r47",g:"backup",d:3,t:"Failover test",def:"Deliberately switching to the backup system to prove it can take over",sc:"IT shuts down the main data center's links on purpose to confirm the recovery site takes over. What type of test is this?",alt:["failover", "fail over test"]},
+  {id:"r48",g:"backup",d:3,t:"Parallel processing",def:"Running the recovery system alongside production on the same work to confirm it produces the same results",sc:"The recovery site processes the same transactions as production for a week so results can be compared. What type of test is this?",alt:["parallel test", "parallel testing"]}
  ]},
  ops:{need:2,groups:[["harden","Hardening & secure coding","Hardening"],["mobile","Mobile devices","Mobile"],["asset","Asset management","Assets"],["vm","Vulnerability management","Vulns"],["mon","Monitoring & alerting","Monitoring"],["ent","Enterprise security tools","Tools"],["auto","Automation & orchestration","Automation"]],items:[
   {id:"o1",g:"harden",d:4,t:"Hardening",def:"Reducing the attack surface by removing unneeded services, closing ports, and changing defaults",sc:"Before deployment, an admin disables unused services and changes all default passwords. What is this process called?"},
@@ -2199,6 +2214,141 @@ Object.assign(LABS,{
   malware:{name:"Malware Lineup",run:(mod,back)=>labPins(mod,back,{key:"malware",label:"Malware Lineup",title:"Name the suspect",intro:"Each case describes what a piece of malware did. Drag the malware type onto each case, or tap a tile and then a case. Two tiles are extras.",cases:MAL_CASES,cats:MAL_CATS,pick:6,extras:2,slotLabel:"Malware type",again:"New lineup"}),
     desc:"Six cases, each describing what a piece of malware did. Drag in the suspect: virus, worm, Trojan, ransomware, rootkit, logic bomb, and more."},
   kill:{name:"Kill Chain Builder",run:labKillChain,desc:"One attack in seven events, out of order. Drop each event onto its stage of the Cyber Kill Chain, then see where defenders could have stopped it. Three different attacks."}
+});
+/* Shared Responsibility Stack (3.1): for each service model, tap the lowest layer the customer manages.
+   Everything at and above it turns into "You"; everything below is the provider's. */
+const SR_LAYERS=["Data and who can access it","Applications","Runtime and middleware","Operating system","Virtualization","Servers and storage","Networking","Physical data center"];
+const SR_MODELS=[
+ ["onprem","On-premises",7,"You own all of it, from the building to the data."],
+ ["iaas","IaaS",3,"The provider runs the hardware and the hypervisor. You manage the operating system and everything above it, including patching it."],
+ ["paas","PaaS",1,"The provider also runs the operating system and the runtime. You manage your own applications and data."],
+ ["saas","SaaS",0,"The provider runs the whole application. You still own your data and who can access it. That never moves to the provider."]
+];
+function labShared(mod,back){
+  const done=labDone(mod,"shared");
+  function render(){
+    const pick={}; let checked=false, firstTry=true;
+    app.innerHTML=modHead(M(mod))+`<div class="examtop"><button class="chipbtn" id="labback" type="button">← ${esc(M(mod).name)} menu</button><span>Shared Responsibility${done.rounds?` · solved ${done.rounds}×`:""}</span></div>
+    <div class="card" id="sr"><h3 style="font-size:1.3rem;margin:0 0 4px">Who secures what?</h3>
+      <p style="margin:0 0 12px">In each column, tap the <b>lowest layer you, the customer, are responsible for</b>. That layer and everything above it turns blue (you); the rest stays gray (the cloud provider).</p>
+      <div class="sr-grid">${SR_MODELS.map(([k,n])=>`<div class="sr-col" data-m="${k}"><h5>${esc(n)}</h5>${SR_LAYERS.map((l,j)=>`<button type="button" class="sr-cell" data-j="${j}">${esc(l)}</button>`).join("")}</div>`).join("")}</div>
+      <div class="sr-key"><span class="sr-sw you"></span>You (customer) <span class="sr-sw prov"></span>Cloud provider</div>
+      <div class="q-actions" style="margin-top:12px"><button class="btn" id="srcheck">Check</button><button class="btn ghost" id="srnext" hidden>Back to the menu</button></div>
+      <div class="fb" id="srfb" hidden></div></div>`;
+    const root=$("#sr");
+    const paint=()=>root.querySelectorAll(".sr-col").forEach(col=>{ const p=pick[col.dataset.m]; col.querySelectorAll(".sr-cell").forEach(c=>{ const j=+c.dataset.j; c.classList.toggle("you",p!==undefined&&j<=p); c.classList.toggle("prov",p!==undefined&&j>p); c.classList.remove("ok","bad"); }); });
+    root.querySelectorAll(".sr-cell").forEach(c=>c.addEventListener("click",()=>{ if(checked) return; pick[c.closest(".sr-col").dataset.m]=+c.dataset.j; paint(); }));
+    $("#srcheck").addEventListener("click",()=>{
+      if(SR_MODELS.some(([k])=>pick[k]===undefined)){ $("#srfb").hidden=false; $("#srfb").innerHTML=`<div class="v bad">Set a line in all four columns first.</div>`; return; }
+      let wrong=0; SR_MODELS.forEach(([k,,ans])=>{ const ok=pick[k]===ans; if(!ok) wrong++; root.querySelector(`.sr-col[data-m="${k}"] h5`).className=ok?"ok":"bad"; });
+      $("#srfb").hidden=false;
+      if(wrong){ firstTry=false; $("#srfb").innerHTML=`<div class="v bad">${wrong} column${wrong>1?"s are":" is"} off. Columns with a red title need another look.</div>`; return; }
+      checked=true; $("#srcheck").hidden=true; $("#srnext").hidden=false;
+      $("#srfb").innerHTML=`<div class="v ok">${firstTry?"Every column right on the first try.":"Every column is right."}</div><ul class="steps">${SR_MODELS.map(([,n,,x])=>`<li><b>${esc(n)}:</b> ${esc(x)}</li>`).join("")}</ul><p style="margin:.4em 0 0">A <b>responsibility matrix</b> in the cloud contract spells this out for each service.</p>`;
+      if(firstTry&&mode==="student"){ done.rounds=(done.rounds||0)+1; labCredit(mod,["r13","r3","r16"]); }
+    });
+    $("#srnext").addEventListener("click",back); $("#labback").addEventListener("click",back);
+  }
+  render();
+}
+
+/* Bins: a shared engine for "sort each tile into the right box" labs. Tiles are used once.
+   cfg: {key,label,title,intro,bins:[[key,name,blurb]],items:[[text,bin,explanation,termId?]],pick,again,credit} */
+function labBins(mod,back,cfg){
+  const done=labDone(mod,cfg.key);
+  function render(){
+    let round=[]; cfg.bins.forEach(([b])=>{ const one=shuffle(cfg.items.filter(x=>x[1]===b))[0]; if(one) round.push(one); });
+    round=round.concat(shuffle(cfg.items.filter(x=>!round.includes(x))).slice(0,Math.max(0,cfg.pick-round.length))); round=shuffle(round);
+    let checked=false, firstTry=true;
+    app.innerHTML=modHead(M(mod))+`<div class="examtop"><button class="chipbtn" id="labback" type="button">← ${esc(M(mod).name)} menu</button><span>${esc(cfg.label)}${done.rounds?` · ${done.rounds} perfect round${done.rounds>1?"s":""}`:""}</span></div>
+    <div class="card" id="bn"><h3 style="font-size:1.3rem;margin:0 0 4px">${esc(cfg.title)}</h3><p style="margin:0 0 12px">${esc(cfg.intro)}</p>
+      <div class="srt-tray dd-target" data-bin="">${round.map((x,k)=>`<button type="button" class="dd-tile srt-t" data-v="${k}">${esc(x[0])}</button>`).join("")}</div>
+      <div class="bn-bins">${cfg.bins.map(([b,n,s])=>`<div class="dd-target srt-bin bn-bin" data-bin="${b}"><h5>${esc(n)}</h5><small>${esc(s)}</small><div class="srt-in"></div></div>`).join("")}</div>
+      <div class="q-actions" style="margin-top:12px"><button class="btn" id="bncheck">Check</button><button class="btn ghost" id="bnnext" hidden>${esc(cfg.again)}</button></div>
+      <div class="fb" id="bnfb" hidden></div></div>`;
+    const root=$("#bn");
+    ddWire(root,(tgt,v,el)=>{ if(checked||!el) return; const box=tgt.classList.contains("srt-bin")?tgt.querySelector(".srt-in"):tgt; el.classList.remove("ok","bad"); box.appendChild(el); });
+    $("#bncheck").addEventListener("click",()=>{
+      const left=root.querySelectorAll(".srt-tray .dd-tile").length;
+      if(left){ $("#bnfb").hidden=false; $("#bnfb").innerHTML=`<div class="v bad">Place all ${left} remaining tile${left>1?"s":""} first.</div>`; return; }
+      let wrong=0; root.querySelectorAll(".srt-bin .dd-tile").forEach(el=>{ const it=round[+el.dataset.v]; const ok=el.closest(".srt-bin").dataset.bin===it[1]; el.classList.toggle("ok",ok); el.classList.toggle("bad",!ok); if(!ok) wrong++; });
+      $("#bnfb").hidden=false;
+      if(wrong){ firstTry=false; $("#bnfb").innerHTML=`<div class="v bad">${wrong} in the wrong place. Move the red tiles and check again.</div>`; return; }
+      checked=true; $("#bncheck").hidden=true; $("#bnnext").hidden=false;
+      $("#bnfb").innerHTML=`<div class="v ok">${firstTry?"Everything placed correctly on the first try.":"Everything is placed correctly."}</div><ol class="steps">${round.map(x=>`<li><b>${esc(x[0])}:</b> ${esc(x[2])}</li>`).join("")}</ol>`;
+      if(firstTry&&mode==="student"){ done.rounds=(done.rounds||0)+1; labCredit(mod,cfg.credit); }
+    });
+    $("#bnnext").addEventListener("click",render); $("#labback").addEventListener("click",back);
+  }
+  render();
+}
+const ZONE_BINS=[["dmz","Screened subnet","Public-facing servers, between two firewalls"],["lan","Internal network","Everyday staff systems"],["restricted","Restricted zone","The most sensitive data, tightly controlled"],["guest","Guest network","Visitors and untrusted devices; internet only"],["ot","Isolated OT network","Industrial controls, cut off from IT"]];
+const ZONE_ITEMS=[
+ ["Public website server","dmz","Internet users must reach it, so it sits in the screened subnet where a breach cannot reach the internal network directly."],
+ ["Inbound mail gateway","dmz","It accepts email from the whole internet, so it belongs in the screened subnet and passes clean mail inward."],
+ ["Public DNS server","dmz","It answers lookups from the internet for the company's public names, so it is public-facing."],
+ ["Customer portal reverse proxy","dmz","A reverse proxy takes internet requests and forwards them to internal servers, so it faces the internet."],
+ ["Employee laptops and desktops","lan","Everyday staff devices belong on the internal network."],
+ ["Office printers","lan","Staff print from the internal network; printers never need to face the internet."],
+ ["Internal file server","lan","Shared staff files live on the internal network."],
+ ["Help desk ticketing server","lan","An internal business application for staff only."],
+ ["Database of customer card numbers","restricted","Regulated payment data (PCI DSS) goes in its own tightly controlled zone."],
+ ["HR records database","restricted","Sensitive personal data belongs in the restricted zone with strict access."],
+ ["Hardware security module","restricted","The device that holds the company's keys sits with the most sensitive systems."],
+ ["Visitor laptops","guest","Untrusted visitor devices get internet access only, kept apart from company systems."],
+ ["Contractors' personal phones","guest","Devices the company does not manage stay on the guest network."],
+ ["Lobby smart TV","guest","A consumer IoT device with weak security should never share a network with business systems."],
+ ["SCADA server for the pumps","ot","Industrial control systems belong on an isolated OT network, often air-gapped."],
+ ["Assembly line PLCs","ot","Programmable logic controllers run physical equipment, so they are isolated from IT."],
+ ["Factory floor HMI touchscreen","ot","The operator's screen for the machinery is part of the OT network."]
+];
+
+/* Recovery Planner (3.4): match each system's RTO and RPO with a recovery site and a way of keeping data current. */
+const RP_SITE={hot:"Hot site",warm:"Warm site",cold:"Cold site"};
+const RP_DATA={repl:"Continuous replication",hourly:"Hourly backups sent offsite",nightly:"Nightly backups sent offsite",weekly:"Weekly backup tapes stored offsite"};
+const RP_CASES=[
+ {n:"Online checkout",rto:"15 minutes",rpo:"Near zero",site:"hot",data:"repl",x:"Every minute down loses sales and no order can be lost: only a hot site with continuous replication meets that."},
+ {n:"HR records archive",rto:"2 weeks",rpo:"1 week",site:"cold",data:"weekly",x:"Rarely used and slow to change, so the cheapest options are enough: a cold site and weekly offsite tapes."},
+ {n:"Internal ticketing system",rto:"1 day",rpo:"24 hours",site:"warm",data:"nightly",x:"A day of data and a day of downtime are acceptable: a warm site and nightly backups fit without overspending."},
+ {n:"Payroll system",rto:"12 hours",rpo:"1 hour",site:"warm",data:"hourly",x:"Payroll can wait half a day but cannot lose more than an hour of changes: warm site, hourly backups."},
+ {n:"Hospital patient records",rto:"30 minutes",rpo:"Near zero",site:"hot",data:"repl",x:"Clinicians need records almost immediately and none can be lost: hot site with continuous replication."},
+ {n:"Marketing website",rto:"1 day",rpo:"1 week",site:"warm",data:"weekly",x:"It changes rarely, so weekly backups are enough, but a day back online needs at least a warm site."},
+ {n:"Call center phone system",rto:"1 hour",rpo:"1 hour",site:"hot",data:"hourly",x:"Back within an hour needs a hot site; losing up to an hour of call records allows hourly backups."}
+];
+function labRecovery(mod,back){
+  const done=labDone(mod,"recovery");
+  function render(){
+    const cases=shuffle(RP_CASES.slice()).slice(0,3); const fill={}; let checked=false, firstTry=true;
+    const slot=(k,f,label)=>`<button type="button" class="dd-target kf-slot rp-slot" data-c="${k}" data-f="${f}" data-clear><small>${label}</small><span class="kf-fill">Drop here</span></button>`;
+    app.innerHTML=modHead(M(mod))+`<div class="examtop"><button class="chipbtn" id="labback" type="button">← ${esc(M(mod).name)} menu</button><span>Recovery Planner${done.rounds?` · ${done.rounds} perfect round${done.rounds>1?"s":""}`:""}</span></div>
+    <div class="card" id="rp"><h3 style="font-size:1.3rem;margin:0 0 4px">Plan the recovery</h3>
+      <p style="margin:0 0 12px">Each system has a recovery time objective (RTO: how long it can be down) and a recovery point objective (RPO: how much data it can lose). Pick the cheapest recovery site and backup method that still meet both. Tiles can be used more than once.</p>
+      <div class="mp-map">${cases.map((c,k)=>`<div class="mp-zone"><b style="font-size:1.05rem">${esc(c.n)}</b><div class="rp-tags"><span class="tag">RTO ${esc(c.rto)}</span><span class="tag">RPO ${esc(c.rpo)}</span></div>${slot(k,"site","Recovery site")}${slot(k,"data","Keeping data current")}</div>`).join("")}</div>
+      <div class="pf-tray"><div class="pf-trow"><small>Recovery site</small><div class="kf-tray">${Object.entries(RP_SITE).map(([v,n])=>`<button type="button" class="dd-tile srt-t pf-where" data-v="site:${v}">${esc(n)}</button>`).join("")}</div></div>
+        <div class="pf-trow"><small>Keeping data current</small><div class="kf-tray">${Object.entries(RP_DATA).map(([v,n])=>`<button type="button" class="dd-tile srt-t pf-res" data-v="data:${v}">${esc(n)}</button>`).join("")}</div></div></div>
+      <div class="q-actions" style="margin-top:12px"><button class="btn" id="rpcheck">Check</button><button class="btn ghost" id="rpnext" hidden>New systems</button></div>
+      <div class="fb" id="rpfb" hidden></div></div>`;
+    const root=$("#rp");
+    const paint=()=>root.querySelectorAll(".rp-slot").forEach(el=>{ const v=fill[el.dataset.c+el.dataset.f]; el.classList.toggle("filled",!!v); el.classList.remove("ok","bad"); el.querySelector(".kf-fill").innerHTML=v?`<span class="srt-t" style="display:inline-block">${esc((el.dataset.f==="site"?RP_SITE:RP_DATA)[v])}</span>`:"Drop here"; });
+    ddWire(root,(tgt,v)=>{ if(checked) return; if(v){ const [f,val]=v.split(":"); if(f!==tgt.dataset.f){ $("#rpfb").hidden=false; $("#rpfb").innerHTML=`<div class="v bad">That tile goes on a "${f==="site"?"Recovery site":"Keeping data current"}" line.</div>`; return; } fill[tgt.dataset.c+tgt.dataset.f]=val; } else delete fill[tgt.dataset.c+tgt.dataset.f]; paint(); });
+    $("#rpcheck").addEventListener("click",()=>{
+      if(root.querySelectorAll(".rp-slot:not(.filled)").length){ $("#rpfb").hidden=false; $("#rpfb").innerHTML=`<div class="v bad">Fill every line first.</div>`; return; }
+      let wrong=0; root.querySelectorAll(".rp-slot").forEach(el=>{ const c=cases[+el.dataset.c]; const ok=fill[el.dataset.c+el.dataset.f]===c[el.dataset.f]; el.classList.add(ok?"ok":"bad"); if(!ok) wrong++; });
+      $("#rpfb").hidden=false;
+      if(wrong){ firstTry=false; $("#rpfb").innerHTML=`<div class="v bad">${wrong} line${wrong>1?"s":""} wrong. Too slow misses the objective; too fancy wastes money. Fix the red lines and check again.</div>`; return; }
+      checked=true; $("#rpcheck").hidden=true; $("#rpnext").hidden=false;
+      $("#rpfb").innerHTML=`<div class="v ok">${firstTry?"Every plan right on the first try.":"Every plan is right."}</div><ol class="steps">${cases.map(c=>`<li><b>${esc(c.n)}:</b> ${esc(c.x)}</li>`).join("")}</ol><p style="margin:.4em 0 0">Hot site: running and current, ready in minutes. Warm site: equipment ready, data restored first, hours to days. Cold site: space and power only, days to weeks.</p>`;
+      if(firstTry&&mode==="student"){ done.rounds=(done.rounds||0)+1; labCredit(mod,["r9","r10","r11","r41","r43"]); }
+    });
+    $("#rpnext").addEventListener("click",render); $("#labback").addEventListener("click",back);
+  }
+  render();
+}
+Object.assign(LABS,{
+  shared:{name:"Shared Responsibility",run:labShared,desc:"Four columns: on-premises, IaaS, PaaS, and SaaS. Tap where your job ends and the cloud provider's begins, layer by layer, from the data down to the building."},
+  zones:{name:"Network Zones",run:(mod,back)=>labBins(mod,back,{key:"zones",label:"Network Zones",title:"Where does it go?",intro:"Drag each system into the network zone it belongs in, or tap a system and then a zone.",bins:ZONE_BINS,items:ZONE_ITEMS,pick:9,again:"New systems",credit:["r28","r4","r18"]}),
+    desc:"Place servers, laptops, factory controllers, and visitor devices into the screened subnet, internal network, restricted zone, guest network, or isolated OT network."},
+  recovery:{name:"Recovery Planner",run:labRecovery,desc:"Each system comes with an RTO and an RPO. Drag in the cheapest recovery site (hot, warm, cold) and backup method that still meet both."}
 });
 /* ---- Term modules ----
    One engine runs every term module (TERMSETS). Each term is asked several ways: name it from a description,
