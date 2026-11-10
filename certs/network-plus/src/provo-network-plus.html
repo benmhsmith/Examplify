@@ -3696,7 +3696,7 @@ function viewProgress(){
   <div class="callout"><b>Study next:</b> <a href="#${rec1.m.id}">${rec1.m.n} · ${esc(rec1.m.name)}</a> (${pct(rec1.s.v)}%). It's the module with the lowest progress (${RANKS[rankOf(rec1.s.v)].name}).</div>
   <div class="panel">${list.map(x=>{ const s=mastery(x.id); return `<a class="prow ${s.v+1e-9>=1?"gm":""}" href="#${x.id}"><span class="jack">${x.n}</span><span style="min-width:0"><h3>${esc(x.name)}${rankBadge(s.v)}</h3><p>${esc(s.cap)}</p></span><span class="mcol"><div class="meter"><i style="width:${pct(s.v)}%"></i></div><div class="mcap">${pct(s.v)}%</div></span></a>`; }).join("")}</div>
   ${masteryCard(justEarned)}
-  <div class="q-actions" style="margin-top:16px" id="resetzone"><button class="btn ghost" id="reset">Reset all progress</button></div>`;
+  <div class="q-actions" style="margin-top:16px" id="resetzone"><button class="btn ghost" id="reset">Reset all progress</button><button class="btn ghost" id="resetall">Reset everything, including badges</button></div>`;
   const pb=$("#prestige"); if(pb) pb.addEventListener("click",()=>{
     const n=(P.prestige||0)+1;
     $("#prestigezone").innerHTML=`<span class="confirm">Prestige ${n}: all module progress resets to Beginner. You keep your badge, which becomes <b>${esc(PRESTIGE_NAMES[n-1])}</b>. <button class="btn" id="py">Prestige</button><button class="btn ghost" id="pn">Cancel</button></span>`;
@@ -3714,6 +3714,11 @@ function viewProgress(){
     $("#resetzone").innerHTML=`<span class="confirm">Erase all module progress? Your badges and prestige level are kept. <button class="btn" id="ry">Erase</button><button class="btn ghost" id="rn">Cancel</button></span>`;
     $("#ry").addEventListener("click",()=>{ const kb={prestige:P.prestige||0,everMastered:!!P.everMastered,secret:P.secret||0,secretOpen:!!P.secretOpen}; P=Object.assign({ports:{},items:{},subnet:[],ladderOrder:false,exams:[],acro:{},acroSecond:false,pbq:{}},kb); try{ localStorage.removeItem(KEY); }catch(e){} save(); viewProgress(); });
     $("#rn").addEventListener("click",viewProgress);
+  });
+  $("#resetall").addEventListener("click",()=>{
+    $("#resetzone").innerHTML=`<span class="confirm">Erase everything: all module progress, every badge, prestige, and secret badges? This cannot be undone. <button class="btn" id="ray">Erase everything</button><button class="btn ghost" id="ran">Cancel</button></span>`;
+    $("#ray").addEventListener("click",()=>{ P=Object.assign({ports:{},items:{},subnet:[],ladderOrder:false,exams:[],acro:{},acroSecond:false,pbq:{}},{prestige:0,everMastered:false,secret:0,secretOpen:false,secretBonus:0,mastered:false}); save(); viewProgress(); });
+    $("#ran").addEventListener("click",viewProgress);
   });
 }
 

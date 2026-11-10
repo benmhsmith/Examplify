@@ -1,1 +1,3 @@
 - Progress page: the Mastery Badge hint now says Expert (80%+), matching what the badge actually requires.
+- Progress: new "Reset everything, including badges" button. It clears all module progress plus the Mastery Badge, prestige, and secret badges (for example, after testing). The existing "Reset all progress" still keeps your badges.
+- Joplin: the Grand Architect outline on study notes and notebooks now turns off right away when the secret badges are reset, and leftover outline files from earlier sessions are cleaned up.
