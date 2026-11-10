@@ -4,7 +4,7 @@ MyComputerCareer's study lab for the **CompTIA Security+ SY0-701** exam. It dril
 
 **Current version:** see the [Security+ releases](https://github.com/benmhsmith/Provo/releases?q=security-plus) · [What changed](CHANGELOG.md)
 
-> **Preview.** Every module covers its full objectives: 328 acronyms, 394 terms, and 167 exam-style questions. Performance-based questions are coming soon.
+> **Preview.** Every module covers its full objectives: 178 exam-focused acronyms, 394 terms, and 167 exam-style questions. Performance-based questions are coming soon.
 
 ## What's inside
 
@@ -12,8 +12,8 @@ MyComputerCareer's study lab for the **CompTIA Security+ SY0-701** exam. It dril
 
 | Stage | Module | What you practice | Objectives |
 |---|---|---|---|
-| 1 · Foundations | 01 Acronyms | All 328 acronyms on CompTIA's list, asked four ways | Acronym list |
-| | 02 Security Controls & Concepts | Control categories and types, CIA, zero trust, deception | 1.1–1.3 |
+| 1 · Foundations | 01 Acronyms | The 178 acronyms most likely on the exam, asked four ways | Acronym list |
+| | 02 Security Controls & Concepts | Control categories and types, CIA, zero trust, deception, change management. Includes **Type the answer** scenarios | 1.1–1.3 |
 | | 03 Cryptography & PKI | Encryption, hashing, signatures, certificates, key storage | 1.4 |
 | 2 · Threats & architecture | 04 Threat Actors & Vectors | Who attacks, why, and the ways in | 2.1–2.2 |
 | | 05 Vulnerabilities & Attacks | Application flaws, malware, attacks, and their best defenses | 2.3–2.5 |
@@ -83,7 +83,8 @@ Joplin on iPhone and iPad only allows plugins from its recommended list, so use 
 ## How it works under the hood
 
 - **Term modules (02–10)** all run on one engine. Each term is asked several ways (name it, define it, a scenario, and for attacks, the best defense). A term is mastered after two different kinds of question about it are answered correctly. Content lives in `TERMSETS` in the source file, one entry per module.
-- **Acronyms** use the same engine as Network+, with CompTIA's full Security+ list in `ACRO`. Tier-1 (core) acronyms set the module rank; tier-2 ones are drilled less often and do not count toward it.
+- **Acronyms** use the same engine as Network+. `ACRO` holds the 178 exam-focused acronyms chosen from CompTIA's full list.
+- **Type the answer** is turned on per module with `typed:true` in `TERMSETS`. Answers are matched with `tyMatch` (case, spacing, punctuation, a trailing "control" or "s", small typos, and each term's `alt` names). A clean correct answer gives two kinds of credit (`typed`, `typed2`), which masters the term.
 - **Question Qualifiers** use `QUAL`; **Mini-Exams** draw from `BANK` plus `QUAL`, picked by domain weight.
 - Progress is saved under its own key, so Security+ and Network+ never overwrite each other, even on the same website.
 - The Joplin plugin has its own ID (`io.github.provo.securityplus`) and its own note block, ` ```sec+ `, so it installs beside Provo Network+.

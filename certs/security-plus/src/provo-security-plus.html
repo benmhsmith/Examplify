@@ -420,10 +420,11 @@ const QUAL = [
  {id:"q40",d:5,qual:"MINIMUM",q:"A new service account runs a nightly script that reads one database table. What permissions should the account have, at MINIMUM?",o:["Read access to that one table","Read and write access to the database","Database owner rights","Local administrator on the database server"],a:0,x:"The script only reads one table, so read access to that table is the least privilege that works. Anything more gives an attacker who steals the account more to abuse."}
 ];
 
-/* Acronyms: CompTIA's full SY0-701 acronym list, plus BEC from the objectives.
-   Fields: id, acronym, expansion, what it does, group, tier (1 = counts toward the module rank, 2 = also on CompTIA's list),
-   domain, pair id, pair note, [context for acronyms that have more than one meaning].
-   Expansions follow standard usage; where CompTIA's list words one differently, the pair note says so. */
+/* Acronyms: the 178 SY0-701 acronyms most likely to matter on the exam, chosen from CompTIA's full list
+   (about 330) by keeping the ones tied to an exam objective and dropping general IT terms (LAN, URL, HDD...)
+   and rarely tested ones (cipher modes, legacy protocols, file formats).
+   Fields: id, acronym, expansion, what it does, group, tier (all 1), domain, pair id, pair note, [context for
+   acronyms with more than one meaning]. */
 const ACRO = [
  ["ale", "ALE", "Annualized Loss Expectancy", "The expected yearly cost of a risk: SLE multiplied by ARO.", "Concepts & governance", 1, 5],
  ["aro", "ARO", "Annualized Rate of Occurrence", "How many times a risk is expected to happen in a year.", "Concepts & governance", 1, 5],
@@ -431,82 +432,55 @@ const ACRO = [
  ["bcp", "BCP", "Business Continuity Planning", "Planning to keep critical business functions running during and after a disruption.", "Concepts & governance", 1, 5, "drp", "BCP keeps the business running; DRP restores IT systems after a disaster."],
  ["bia", "BIA", "Business Impact Analysis", "Identifies critical business functions and how an outage would affect them.", "Concepts & governance", 1, 5],
  ["bpa", "BPA", "Business Partners Agreement", "An agreement that sets the terms, responsibilities, and profit sharing between business partners.", "Concepts & governance", 1, 5],
- ["car", "CAR", "Corrective Action Report", "A report that documents a problem, its cause, and the steps taken to fix it.", "Concepts & governance", 1, 5],
  ["cia", "CIA", "Confidentiality, Integrity, and Availability", "The three core goals of information security.", "Concepts & governance", 1, 1],
  ["coop", "COOP", "Continuity of Operations Planning", "Planning to keep essential functions running during an emergency, often used in government.", "Concepts & governance", 1, 5],
- ["cp", "CP", "Contingency Planning", "Planning for how to respond to and recover from disruptions.", "Concepts & governance", 1, 5],
- ["cso", "CSO", "Chief Security Officer", "The executive responsible for an organization's security.", "Concepts & governance", 1, 5],
- ["dpo", "DPO", "Data Protection Officer", "The person responsible for an organization's data privacy compliance, such as under GDPR.", "Concepts & governance", 1, 5],
  ["drp", "DRP", "Disaster Recovery Plan", "The plan for restoring IT systems after a disaster.", "Concepts & governance", 1, 3, "bcp", "BCP keeps the business running; DRP restores IT systems after a disaster."],
  ["gdpr", "GDPR", "General Data Protection Regulation", "The EU law that governs how personal data is collected and protected.", "Concepts & governance", 1, 5],
  ["iso", "ISO", "International Organization for Standardization", "Publishes standards such as ISO 27001 for information security management.", "Concepts & governance", 1, 5],
- ["isso", "ISSO", "Information Systems Security Officer", "The person responsible for the security of a specific information system.", "Concepts & governance", 1, 5],
  ["moa", "MOA", "Memorandum of Agreement", "A formal agreement that sets out each party's responsibilities.", "Concepts & governance", 1, 5, "mou", "An MOU states intent; an MOA defines responsibilities more formally."],
  ["mou", "MOU", "Memorandum of Understanding", "A document that states the parties' shared intent, usually not legally binding.", "Concepts & governance", 1, 5, "moa", "An MOU states intent; an MOA defines responsibilities more formally."],
  ["msa", "MSA", "Master Service Agreement", "Sets the general terms that will apply to future work between two parties.", "Concepts & governance", 1, 5, "sow", "An MSA sets general terms; an SOW defines the specific work."],
  ["msp", "MSP", "Managed Service Provider", "A third party that manages IT services for a customer.", "Concepts & governance", 1, 5],
  ["mssp", "MSSP", "Managed Security Service Provider", "A third party that provides security monitoring and management.", "Concepts & governance", 1, 5],
  ["mtbf", "MTBF", "Mean Time Between Failures", "The average time a repairable system runs between failures.", "Concepts & governance", 1, 5, "mttr", "MTBF measures reliability; MTTR measures how fast you recover."],
- ["mttf", "MTTF", "Mean Time to Failure", "The average time a non-repairable component lasts before it fails.", "Concepts & governance", 1, 5],
  ["mttr", "MTTR", "Mean Time to Recover", "The average time it takes to restore a system after a failure.", "Concepts & governance", 1, 5, "mtbf", "MTBF measures reliability; MTTR measures how fast you recover."],
  ["nda", "NDA", "Non-Disclosure Agreement", "An agreement that legally requires a party to keep shared information confidential.", "Concepts & governance", 1, 5],
  ["nist", "NIST", "National Institute of Standards and Technology", "The U.S. agency that publishes security frameworks such as the NIST CSF and SP 800 series.", "Concepts & governance", 1, 5],
  ["pcidss", "PCI DSS", "Payment Card Industry Data Security Standard", "The security standard every organization that handles payment cards must meet.", "Concepts & governance", 1, 5],
  ["phi", "PHI", "Protected Health Information", "Health data about a person, protected by laws such as HIPAA.", "Concepts & governance", 1, 5],
  ["pii", "PII", "Personally Identifiable Information", "Data that can identify a specific person.", "Concepts & governance", 1, 5],
- ["roi", "ROI", "Return on Investment", "The benefit of an investment compared with its cost.", "Concepts & governance", 1, 5],
  ["rpo", "RPO", "Recovery Point Objective", "The maximum acceptable data loss, measured as time since the last good backup.", "Concepts & governance", 1, 5, "rto", "RTO is how long you can be down; RPO is how much data you can afford to lose."],
  ["rto", "RTO", "Recovery Time Objective", "The maximum acceptable time to restore a system after an outage.", "Concepts & governance", 1, 5, "rpo", "RTO is how long you can be down; RPO is how much data you can afford to lose."],
  ["sla", "SLA", "Service-Level Agreement", "A contract that defines the level of service a provider must deliver, such as uptime.", "Concepts & governance", 1, 5],
  ["sle", "SLE", "Single Loss Expectancy", "The cost of one occurrence of a risk: asset value times exposure factor.", "Concepts & governance", 1, 5],
  ["sow", "SOW", "Statement of Work", "Defines the specific work, deliverables, and timeline for a project.", "Concepts & governance", 1, 5, "msa", "An MSA sets general terms; an SOW defines the specific work."],
  ["aes", "AES", "Advanced Encryption Standard", "The standard symmetric block cipher, with 128-, 192-, or 256-bit keys.", "Cryptography & PKI", 1, 1],
- ["aes256", "AES-256", "Advanced Encryption Standard 256-bit", "AES with a 256-bit key, the strongest AES key size.", "Cryptography & PKI", 1, 1],
  ["ca", "CA", "Certificate Authority", "A trusted entity that issues and signs digital certificates.", "Cryptography & PKI", 1, 1],
- ["cbc", "CBC", "Cipher Block Chaining", "A block cipher mode where each block is XORed with the previous ciphertext block.", "Cryptography & PKI", 1, 1],
- ["cfb", "CFB", "Cipher Feedback", "A block cipher mode that turns a block cipher into a stream cipher.", "Cryptography & PKI", 1, 1],
  ["crl", "CRL", "Certificate Revocation List", "A list published by a CA of certificates revoked before they expire.", "Cryptography & PKI", 1, 1, "ocsp", "A CRL is a downloaded list; OCSP checks one certificate's status in real time."],
  ["csr", "CSR", "Certificate Signing Request", "A request sent to a CA, containing the public key, to get a certificate issued.", "Cryptography & PKI", 1, 1],
- ["ctm", "CTM", "Counter Mode", "A block cipher mode that encrypts a counter to produce a keystream.", "Cryptography & PKI", 1, 1],
  ["des", "DES", "Data Encryption Standard", "An old 56-bit symmetric cipher, now considered insecure.", "Cryptography & PKI", 1, 1],
  ["dhe", "DHE", "Diffie-Hellman Ephemeral", "Key exchange that uses a new key pair for each session, giving perfect forward secrecy.", "Cryptography & PKI", 1, 1],
- ["dsa", "DSA", "Digital Signature Algorithm", "A standard algorithm for creating digital signatures.", "Cryptography & PKI", 1, 1],
- ["ecb", "ECB", "Electronic Codebook", "The simplest block cipher mode; identical blocks give identical ciphertext, so it leaks patterns.", "Cryptography & PKI", 1, 1],
  ["ecc", "ECC", "Elliptic Curve Cryptography", "Asymmetric cryptography that gives strong security with small keys, good for mobile and IoT.", "Cryptography & PKI", 1, 1],
  ["ecdhe", "ECDHE", "Elliptic Curve Diffie-Hellman Ephemeral", "Elliptic-curve key exchange with a new key per session, giving perfect forward secrecy.", "Cryptography & PKI", 1, 1],
  ["ecdsa", "ECDSA", "Elliptic Curve Digital Signature Algorithm", "Digital signatures based on elliptic curve cryptography.", "Cryptography & PKI", 1, 1],
- ["efs", "EFS", "Encrypting File System", "Windows feature that encrypts individual files and folders.", "Cryptography & PKI", 1, 3],
  ["fde", "FDE", "Full Disk Encryption", "Encrypts an entire drive so data is unreadable without the key.", "Cryptography & PKI", 1, 1],
- ["gcm", "GCM", "Galois/Counter Mode", "A block cipher mode that provides both encryption and authentication.", "Cryptography & PKI", 1, 1],
- ["gpg", "GPG", "GNU Privacy Guard", "Free software that implements PGP-style encryption and signing.", "Cryptography & PKI", 1, 1],
  ["hmac", "HMAC", "Hash-based Message Authentication Code", "A hash combined with a secret key to prove integrity and authenticity.", "Cryptography & PKI", 1, 1],
  ["hsm", "HSM", "Hardware Security Module", "A dedicated, tamper-resistant device that manages cryptographic keys.", "Cryptography & PKI", 1, 1, "tpm", "A TPM is built into one device; an HSM is a dedicated appliance for many systems."],
- ["idea", "IDEA", "International Data Encryption Algorithm", "A symmetric block cipher used in early versions of PGP.", "Cryptography & PKI", 2, 1],
  ["iv", "IV", "Initialization Vector", "A random value that makes the same plaintext encrypt differently each time.", "Cryptography & PKI", 1, 1],
- ["kek", "KEK", "Key Encryption Key", "A key used only to encrypt other keys.", "Cryptography & PKI", 1, 1],
  ["mac-crypto", "MAC", "Message Authentication Code", "A value that proves a message's integrity and authenticity using a shared key.", "Cryptography & PKI", 1, 1, null, null, ["cryptography"]],
  ["md5", "MD5", "Message Digest 5", "An old hashing algorithm with known collisions; do not use for security.", "Cryptography & PKI", 1, 1],
  ["ocsp", "OCSP", "Online Certificate Status Protocol", "Checks whether a single certificate has been revoked, in real time.", "Cryptography & PKI", 1, 1, "crl", "A CRL is a downloaded list; OCSP checks one certificate's status in real time."],
- ["oid", "OID", "Object Identifier", "A unique ID that labels fields and extensions inside a certificate.", "Cryptography & PKI", 2, 1],
- ["p12", "P12", "PKCS #12", "A file format that stores a certificate together with its private key, protected by a password.", "Cryptography & PKI", 1, 1],
  ["pbkdf2", "PBKDF2", "Password-Based Key Derivation Function 2", "Key stretching that hashes a password many times with a salt.", "Cryptography & PKI", 1, 1],
- ["pem", "PEM", "Privacy Enhanced Mail", "A text-based (Base64) certificate file format.", "Cryptography & PKI", 1, 1],
  ["pfs", "PFS", "Perfect Forward Secrecy", "Each session uses a unique key, so one stolen key cannot decrypt past sessions.", "Cryptography & PKI", 1, 1],
  ["pgp", "PGP", "Pretty Good Privacy", "Encrypts and signs email and files using public keys.", "Cryptography & PKI", 1, 1],
- ["pkcs", "PKCS", "Public Key Cryptography Standards", "A family of standards for public key cryptography formats.", "Cryptography & PKI", 1, 1],
  ["pki", "PKI", "Public Key Infrastructure", "The CAs, certificates, and policies that bind public keys to identities.", "Cryptography & PKI", 1, 1],
- ["ra", "RA", "Registration Authority", "Verifies identities before the CA issues certificates.", "Cryptography & PKI", 1, 1, null, null, ["PKI"]],
- ["ra-recovery", "RA", "Recovery Agent", "An account that can recover encrypted data if a user's key is lost.", "Cryptography & PKI", 2, 1, null, null, ["key recovery"]],
- ["rc4", "RC4", "Rivest Cipher 4", "An old stream cipher with known weaknesses.", "Cryptography & PKI", 2, 1],
- ["ripemd", "RIPEMD", "RACE Integrity Primitives Evaluation Message Digest", "A family of hashing algorithms.", "Cryptography & PKI", 2, 1],
+ ["ra", "RA", "Registration Authority", "Verifies identities before the CA issues certificates.", "Cryptography & PKI", 1, 1],
  ["rsa", "RSA", "Rivest, Shamir, and Adleman", "An asymmetric algorithm used for key exchange and digital signatures.", "Cryptography & PKI", 1, 1],
  ["smime", "S/MIME", "Secure/Multipurpose Internet Mail Extensions", "Encrypts and signs email using certificates.", "Cryptography & PKI", 1, 1],
- ["san-cert", "SAN", "Subject Alternative Name", "A certificate field that lists the extra names the certificate covers.", "Cryptography & PKI", 1, 1, null, null, ["certificates"]],
- ["scep", "SCEP", "Simple Certificate Enrollment Protocol", "Automates requesting and issuing certificates for devices.", "Cryptography & PKI", 2, 1],
+ ["san-cert", "SAN", "Subject Alternative Name", "A certificate field that lists the extra names the certificate covers.", "Cryptography & PKI", 1, 1],
  ["sed", "SED", "Self-Encrypting Drive", "A drive that encrypts its own data in hardware.", "Cryptography & PKI", 1, 1],
  ["sha", "SHA", "Secure Hash Algorithm", "A family of hashing algorithms; SHA-256 is widely used.", "Cryptography & PKI", 1, 1],
  ["tpm", "TPM", "Trusted Platform Module", "A chip on the motherboard that stores keys and supports secure boot and disk encryption.", "Cryptography & PKI", 1, 1, "hsm", "A TPM is built into one device; an HSM is a dedicated appliance for many systems."],
- ["xor", "XOR", "Exclusive OR", "A bitwise operation at the heart of many ciphers.", "Cryptography & PKI", 2, 1],
  ["apt", "APT", "Advanced Persistent Threat", "A skilled, well-funded attacker, often a nation-state, that stays hidden in a network for a long time.", "Threats & attacks", 1, 2],
  ["bec", "BEC", "Business Email Compromise", "Fraud that uses a hacked or spoofed business email account to trick staff into sending money or data.", "Threats & attacks", 1, 2],
  ["csrf", "CSRF", "Cross-Site Request Forgery", "An attack that tricks a logged-in user's browser into sending an unwanted request to a site.", "Threats & attacks", 1, 2, "xss", "CSRF abuses the site's trust in the user's browser; XSS injects script into a page."],
@@ -517,63 +491,38 @@ const ACRO = [
  ["osint", "OSINT", "Open-Source Intelligence", "Information gathered from public sources, by attackers or defenders.", "Threats & attacks", 1, 4],
  ["pup", "PUP", "Potentially Unwanted Program", "Software that is not clearly malware but is unwanted, such as adware.", "Threats & attacks", 1, 2],
  ["rat", "RAT", "Remote Access Trojan", "Malware that gives an attacker hidden remote control of a system.", "Threats & attacks", 1, 2],
- ["sim", "SIM", "Subscriber Identity Module", "The card that identifies a phone to the carrier; targeted in SIM swapping.", "Threats & attacks", 1, 2],
- ["sms", "SMS", "Short Message Service", "Text messages; abused in smishing, and a weak MFA factor.", "Threats & attacks", 1, 2],
- ["spim", "SPIM", "Spam over Instant Messaging", "Unsolicited messages sent through instant messaging.", "Threats & attacks", 2, 2],
  ["sqli", "SQLi", "SQL Injection", "Inserting database commands into application input so the database runs them.", "Threats & attacks", 1, 2],
- ["toc", "TOC", "Time-of-Check", "The moment a value is checked in a race condition; see time-of-check to time-of-use.", "Threats & attacks", 1, 2, "tou", "A TOCTOU race happens when a value changes between the time of check and the time of use."],
- ["tou", "TOU", "Time-of-Use", "The moment a checked value is used in a race condition.", "Threats & attacks", 1, 2, "toc", "A TOCTOU race happens when a value changes between the time of check and the time of use."],
  ["ttp", "TTP", "Tactics, Techniques, and Procedures", "How a threat actor operates, from goals down to specific methods.", "Threats & attacks", 1, 4],
- ["vba", "VBA", "Visual Basic for Applications", "The macro language in Microsoft Office; abused in malicious documents.", "Threats & attacks", 1, 2],
- ["xsrf", "XSRF", "Cross-Site Request Forgery", "Another name for CSRF.", "Threats & attacks", 2, 2],
  ["xss", "XSS", "Cross-Site Scripting", "Injecting malicious script into a web page so it runs in other users' browsers.", "Threats & attacks", 1, 2, "csrf", "CSRF abuses the site's trust in the user's browser; XSS injects script into a page."],
  ["ah", "AH", "Authentication Header", "The IPsec protocol that provides integrity and authentication but no encryption.", "Networks & protocols", 1, 3, "esp", "AH authenticates but does not encrypt; ESP encrypts and can also authenticate."],
- ["ap", "AP", "Access Point", "A device that connects wireless clients to a wired network.", "Networks & protocols", 1, 3],
  ["arp", "ARP", "Address Resolution Protocol", "Maps IP addresses to MAC addresses on a local network; abused in ARP poisoning attacks.", "Networks & protocols", 1, 2],
- ["bgp", "BGP", "Border Gateway Protocol", "The routing protocol that connects networks across the internet; can be hijacked to reroute traffic.", "Networks & protocols", 1, 3],
- ["bpdu", "BPDU", "Bridge Protocol Data Unit", "Spanning Tree messages between switches; BPDU guard blocks them on user ports to stop rogue switches.", "Networks & protocols", 1, 3],
- ["ccmp", "CCMP", "Counter Mode/CBC-MAC Protocol", "The AES-based encryption protocol used by WPA2.", "Networks & protocols", 1, 4],
  ["dhcp", "DHCP", "Dynamic Host Configuration Protocol", "Automatically assigns IP addresses and network settings to devices.", "Networks & protocols", 1, 3],
  ["dkim", "DKIM", "DomainKeys Identified Mail", "Signs outgoing email so receivers can verify it came from the domain and was not changed.", "Networks & protocols", 1, 4, "spf", "SPF lists allowed sending servers; DKIM signs the message; DMARC sets the policy using both."],
  ["dmarc", "DMARC", "Domain-based Message Authentication, Reporting, and Conformance", "An email policy that tells receivers what to do when SPF or DKIM checks fail.", "Networks & protocols", 1, 4, "dkim", "SPF lists allowed sending servers; DKIM signs the message; DMARC sets the policy using both."],
- ["dnat", "DNAT", "Destination Network Address Translation", "Rewrites the destination address of incoming traffic, such as to reach an internal server.", "Networks & protocols", 1, 3],
  ["dns", "DNS", "Domain Name System", "Translates domain names into IP addresses.", "Networks & protocols", 1, 3],
  ["esp", "ESP", "Encapsulating Security Payload", "The IPsec protocol that encrypts data and can also authenticate it.", "Networks & protocols", 1, 3, "ah", "AH authenticates but does not encrypt; ESP encrypts and can also authenticate."],
  ["ftp", "FTP", "File Transfer Protocol", "Transfers files in clear text; replace with SFTP or FTPS.", "Networks & protocols", 1, 4],
  ["ftps", "FTPS", "File Transfer Protocol Secure", "FTP protected with TLS.", "Networks & protocols", 1, 4, "sftp", "FTPS is FTP over TLS; SFTP runs over SSH."],
- ["gre", "GRE", "Generic Routing Encapsulation", "A tunneling protocol that wraps packets inside other packets, with no encryption.", "Networks & protocols", 1, 3],
  ["http", "HTTP", "Hypertext Transfer Protocol", "Web traffic in clear text.", "Networks & protocols", 1, 3],
  ["https", "HTTPS", "Hypertext Transfer Protocol Secure", "Web traffic protected with TLS.", "Networks & protocols", 1, 3],
- ["icmp", "ICMP", "Internet Control Message Protocol", "Carries network error and diagnostic messages, such as ping.", "Networks & protocols", 1, 3],
- ["ike", "IKE", "Internet Key Exchange", "Negotiates the keys and security associations for an IPsec VPN.", "Networks & protocols", 1, 3],
- ["imap", "IMAP", "Internet Message Access Protocol", "Retrieves email while keeping it on the server.", "Networks & protocols", 1, 3],
- ["ip", "IP", "Internet Protocol", "The protocol that addresses and routes packets between networks.", "Networks & protocols", 1, 3],
  ["ipsec", "IPsec", "Internet Protocol Security", "A suite that secures IP traffic, commonly used for site-to-site VPNs.", "Networks & protocols", 1, 3],
- ["l2tp", "L2TP", "Layer 2 Tunneling Protocol", "A VPN tunneling protocol, usually paired with IPsec for encryption.", "Networks & protocols", 1, 3],
  ["mac-addr", "MAC", "Media Access Control", "The hardware address of a network interface; can be spoofed.", "Networks & protocols", 1, 3, null, null, ["networking"]],
- ["mpls", "MPLS", "Multiprotocol Label Switching", "A carrier technology that routes traffic using labels, used for private WANs.", "Networks & protocols", 1, 3],
  ["nac", "NAC", "Network Access Control", "Checks devices against policy before they are allowed onto the network.", "Networks & protocols", 1, 4],
  ["nat", "NAT", "Network Address Translation", "Translates private IP addresses to public ones.", "Networks & protocols", 1, 3],
  ["nfc", "NFC", "Near-Field Communication", "Very short-range wireless used for contactless payment and badges.", "Networks & protocols", 1, 2],
  ["ngfw", "NGFW", "Next-Generation Firewall", "A firewall that also inspects applications and content, often with IPS built in.", "Networks & protocols", 1, 3],
  ["ntp", "NTP", "Network Time Protocol", "Synchronizes clocks so logs and authentication timestamps line up.", "Networks & protocols", 1, 4],
- ["pptp", "PPTP", "Point-to-Point Tunneling Protocol", "An old VPN protocol with known weaknesses.", "Networks & protocols", 2, 3],
  ["psk", "PSK", "Pre-Shared Key", "A shared password used for authentication, as in WPA2-Personal.", "Networks & protocols", 1, 4],
  ["rdp", "RDP", "Remote Desktop Protocol", "Windows remote desktop access; a common attack target when exposed.", "Networks & protocols", 1, 3],
  ["rfid", "RFID", "Radio Frequency Identification", "Wireless tags used in badges and inventory; can be cloned.", "Networks & protocols", 1, 2],
- ["rtbh", "RTBH", "Remotely Triggered Black Hole", "A routing technique that drops attack traffic, used against DDoS.", "Networks & protocols", 1, 4],
  ["sae", "SAE", "Simultaneous Authentication of Equals", "The WPA3 key exchange that replaces the pre-shared key handshake and resists offline cracking.", "Networks & protocols", 1, 4],
  ["sftp", "SFTP", "SSH File Transfer Protocol", "Secure file transfer over SSH.", "Networks & protocols", 1, 4, "ftps", "FTPS is FTP over TLS; SFTP runs over SSH."],
- ["smtp", "SMTP", "Simple Mail Transfer Protocol", "Sends email between servers.", "Networks & protocols", 1, 3],
- ["smtps", "SMTPS", "Simple Mail Transfer Protocol Secure", "SMTP protected with TLS.", "Networks & protocols", 1, 3],
  ["snmp", "SNMP", "Simple Network Management Protocol", "Monitors and manages network devices; use SNMPv3 for security.", "Networks & protocols", 1, 4],
  ["spf", "SPF", "Sender Policy Framework", "A DNS record that lists which servers may send email for a domain.", "Networks & protocols", 1, 4, "dkim", "SPF lists allowed sending servers; DKIM signs the message; DMARC sets the policy using both."],
  ["srtp", "SRTP", "Secure Real-time Transport Protocol", "Encrypted voice and video streaming.", "Networks & protocols", 1, 3],
  ["ssh", "SSH", "Secure Shell", "Encrypted remote command-line access.", "Networks & protocols", 1, 3],
  ["ssl", "SSL", "Secure Sockets Layer", "The insecure predecessor to TLS; should be disabled.", "Networks & protocols", 1, 1],
- ["tkip", "TKIP", "Temporal Key Integrity Protocol", "The encryption used by the original WPA; now deprecated.", "Networks & protocols", 2, 4],
  ["tls", "TLS", "Transport Layer Security", "Encrypts data in transit, such as in HTTPS.", "Networks & protocols", 1, 1],
- ["tsig", "TSIG", "Transaction Signature", "Authenticates DNS updates and zone transfers with a shared key.", "Networks & protocols", 2, 3],
  ["vlan", "VLAN", "Virtual Local Area Network", "Logically separates devices on the same switch into different networks.", "Networks & protocols", 1, 3],
  ["voip", "VoIP", "Voice over IP", "Phone calls carried over IP networks.", "Networks & protocols", 1, 3],
  ["vpn", "VPN", "Virtual Private Network", "An encrypted tunnel across an untrusted network.", "Networks & protocols", 1, 3],
@@ -585,28 +534,19 @@ const ACRO = [
  ["wps", "WPS", "Wi-Fi Protected Setup", "Easy Wi-Fi pairing with a PIN or button; the PIN can be brute-forced.", "Networks & protocols", 1, 2],
  ["aaa", "AAA", "Authentication, Authorization, and Accounting", "Verifying who a user is, deciding what they may do, and logging what they did.", "Identity & access", 1, 1],
  ["acl", "ACL", "Access Control List", "A list of rules that permits or denies traffic or access to a resource.", "Identity & access", 1, 3],
- ["captcha", "CAPTCHA", "Completely Automated Public Turing Test to Tell Computers and Humans Apart", "A challenge that blocks automated bots from submitting forms.", "Identity & access", 1, 4],
  ["chap", "CHAP", "Challenge Handshake Authentication Protocol", "An authentication protocol that uses a challenge and a hash instead of sending the password.", "Identity & access", 1, 4, "pap", "PAP sends the password in clear text; CHAP uses a challenge and hash."],
  ["dac", "DAC", "Discretionary Access Control", "The data owner decides who can access a resource.", "Identity & access", 1, 4, "mac-access", "DAC: the owner decides. MAC: labels and clearances decide."],
  ["eap", "EAP", "Extensible Authentication Protocol", "A framework for authentication methods, used with 802.1X.", "Identity & access", 1, 4],
- ["facl", "FACL", "File System Access Control List", "Permissions on files and folders that say who can read, write, or run them.", "Identity & access", 1, 4],
- ["frr", "FRR", "False Rejection Rate", "How often a biometric system wrongly rejects an authorized user.", "Identity & access", 1, 4],
  ["hotp", "HOTP", "HMAC-based One-Time Password", "A one-time password generated from a counter.", "Identity & access", 1, 4, "totp", "HOTP is counter-based; TOTP changes every 30 seconds or so."],
  ["iam", "IAM", "Identity and Access Management", "The processes and tools that manage identities and their access.", "Identity & access", 1, 4],
  ["idp", "IdP", "Identity Provider", "The system that authenticates users and vouches for them to other services.", "Identity & access", 1, 4],
- ["kdc", "KDC", "Key Distribution Center", "The Kerberos service that authenticates users and issues tickets.", "Identity & access", 1, 4],
  ["ldap", "LDAP", "Lightweight Directory Access Protocol", "Queries and manages directory services such as Active Directory; LDAPS adds TLS.", "Identity & access", 1, 4],
- ["leap", "LEAP", "Lightweight Extensible Authentication Protocol", "An old Cisco EAP method with known weaknesses.", "Identity & access", 2, 4],
  ["mac-access", "MAC", "Mandatory Access Control", "Access is decided by labels and clearances set by the system, not the owner.", "Identity & access", 1, 4, "dac", "DAC: the owner decides. MAC: labels and clearances decide.", ["access control"]],
  ["mfa", "MFA", "Multifactor Authentication", "Requiring two or more different types of authentication factor.", "Identity & access", 1, 4],
- ["mschap", "MSCHAP", "Microsoft Challenge Handshake Authentication Protocol", "Microsoft's version of CHAP; MS-CHAPv2 has known weaknesses.", "Identity & access", 1, 4],
- ["ntlm", "NTLM", "New Technology LAN Manager", "An older Windows authentication protocol, vulnerable to pass-the-hash.", "Identity & access", 1, 2],
  ["oauth", "OAuth", "Open Authorization", "Lets an app access resources on a user's behalf without sharing the password.", "Identity & access", 1, 4, "saml", "SAML passes authentication assertions; OAuth grants authorization to an app."],
- ["pam", "PAM", "Privileged Access Management", "Controls, monitors, and audits the use of administrator accounts.", "Identity & access", 1, 4, null, null, ["identity management"]],
- ["pam-linux", "PAM", "Pluggable Authentication Modules", "A Linux framework that lets administrators choose how users authenticate.", "Identity & access", 2, 4, null, null, ["Linux"]],
+ ["pam", "PAM", "Privileged Access Management", "Controls, monitors, and audits the use of administrator accounts.", "Identity & access", 1, 4],
  ["pap", "PAP", "Password Authentication Protocol", "Sends the username and password in clear text; insecure.", "Identity & access", 1, 4, "chap", "PAP sends the password in clear text; CHAP uses a challenge and hash."],
  ["peap", "PEAP", "Protected Extensible Authentication Protocol", "Wraps EAP inside a TLS tunnel to protect credentials.", "Identity & access", 1, 4],
- ["piv", "PIV", "Personal Identity Verification", "A U.S. government smart card used for authentication.", "Identity & access", 1, 4],
  ["radius", "RADIUS", "Remote Authentication Dial-In User Service", "Centralized AAA, commonly used for network access and 802.1X.", "Identity & access", 1, 4, "tacacs", "RADIUS combines authentication and authorization and encrypts only the password; TACACS+ separates them and encrypts the whole payload."],
  ["rbac", "RBAC", "Role-Based Access Control", "Access is assigned according to a user's job role.", "Identity & access", 1, 4, null, null, ["roles"]],
  ["rbac-rule", "RBAC", "Rule-Based Access Control", "Access is decided by rules set by an administrator, such as firewall rules or time-of-day limits.", "Identity & access", 1, 4, null, null, ["rules"]],
@@ -614,17 +554,10 @@ const ACRO = [
  ["selinux", "SE Linux", "Security-Enhanced Linux", "Adds mandatory access control to Linux.", "Identity & access", 1, 4],
  ["sso", "SSO", "Single Sign-On", "One login gives a user access to many systems.", "Identity & access", 1, 4],
  ["tacacs", "TACACS+", "Terminal Access Controller Access-Control System Plus", "Cisco AAA protocol that separates authentication, authorization, and accounting and encrypts the whole payload.", "Identity & access", 1, 4, "radius", "RADIUS combines authentication and authorization and encrypts only the password; TACACS+ separates them and encrypts the whole payload."],
- ["tgt", "TGT", "Ticket-Granting Ticket", "The Kerberos ticket a user receives at login, used to request service tickets.", "Identity & access", 1, 4],
  ["totp", "TOTP", "Time-based One-Time Password", "A one-time code that changes every 30 seconds or so.", "Identity & access", 1, 4, "hotp", "HOTP is counter-based; TOTP changes every 30 seconds or so."],
- ["ais", "AIS", "Automated Indicator Sharing", "A CISA service that shares threat indicators between government and industry in real time, using STIX and TAXII.", "Operations & tools", 1, 2],
- ["aslr", "ASLR", "Address Space Layout Randomization", "Randomizes where code and data load in memory, making memory exploits harder.", "Operations & tools", 1, 2],
  ["attck", "ATT&CK", "Adversarial Tactics, Techniques, and Common Knowledge", "MITRE's public knowledge base of attacker tactics and techniques.", "Operations & tools", 1, 4],
- ["av", "AV", "Antivirus", "Software that detects and removes known malware.", "Operations & tools", 1, 4],
- ["cert", "CERT", "Computer Emergency Response Team", "A team that responds to security incidents.", "Operations & tools", 1, 4],
- ["cirt", "CIRT", "Computer Incident Response Team", "A team that responds to security incidents.", "Operations & tools", 1, 4],
  ["cve", "CVE", "Common Vulnerabilities and Exposures", "A public list that gives each known vulnerability a unique identifier.", "Operations & tools", 1, 4, "cvss", "CVE names a vulnerability; CVSS scores how severe it is. CompTIA's acronym list expands CVE as Common Vulnerability Enumeration."],
  ["cvss", "CVSS", "Common Vulnerability Scoring System", "A standard that scores vulnerability severity from 0 to 10.", "Operations & tools", 1, 4, "cve", "CVE names a vulnerability; CVSS scores how severe it is."],
- ["dep", "DEP", "Data Execution Prevention", "Marks memory areas as non-executable to block some memory exploits.", "Operations & tools", 1, 2],
  ["dlp", "DLP", "Data Loss Prevention", "Detects and blocks sensitive data from leaving the organization.", "Operations & tools", 1, 4],
  ["edr", "EDR", "Endpoint Detection and Response", "Monitors endpoints for suspicious behavior and can respond automatically.", "Operations & tools", 1, 4, "xdr", "EDR covers endpoints; XDR correlates endpoints, network, cloud, and email."],
  ["fim", "FIM", "File Integrity Monitoring", "Alerts when critical system or application files change.", "Operations & tools", 1, 4],
@@ -634,125 +567,43 @@ const ACRO = [
  ["ids", "IDS", "Intrusion Detection System", "Monitors for suspicious activity and alerts, but does not block.", "Operations & tools", 1, 3, "ips", "IDS detects and alerts; IPS can also block."],
  ["ips", "IPS", "Intrusion Prevention System", "Monitors traffic and can block suspicious activity inline.", "Operations & tools", 1, 3, "ids", "IDS detects and alerts; IPS can also block."],
  ["ir", "IR", "Incident Response", "The process of handling a security incident from preparation to lessons learned.", "Operations & tools", 1, 4],
- ["irp", "IRP", "Incident Response Plan", "The documented plan for how to handle security incidents.", "Operations & tools", 1, 4],
- ["maas", "MaaS", "Monitoring as a Service", "Security monitoring delivered as a cloud service.", "Operations & tools", 1, 4],
  ["mdm", "MDM", "Mobile Device Management", "Centrally enforces security policies on phones and tablets.", "Operations & tools", 1, 4],
  ["nids", "NIDS", "Network-based Intrusion Detection System", "Monitors network traffic for suspicious activity and alerts.", "Operations & tools", 1, 3],
  ["nips", "NIPS", "Network-based Intrusion Prevention System", "Monitors network traffic inline and can block suspicious activity.", "Operations & tools", 1, 3],
- ["oval", "OVAL", "Open Vulnerability and Assessment Language", "A standard language for describing system state and vulnerabilities, part of SCAP.", "Operations & tools", 1, 4],
  ["pcap", "PCAP", "Packet Capture", "A file of captured network traffic, used in investigations.", "Operations & tools", 1, 4],
  ["scap", "SCAP", "Security Content Automation Protocol", "Standards for automating vulnerability scanning and compliance checks.", "Operations & tools", 1, 4],
  ["siem", "SIEM", "Security Information and Event Management", "Collects and correlates logs to detect and alert on security events.", "Operations & tools", 1, 4, "soar", "SIEM collects and correlates; SOAR automates the response."],
  ["soar", "SOAR", "Security Orchestration, Automation, and Response", "Automates the response to security events using playbooks.", "Operations & tools", 1, 4, "siem", "SIEM collects and correlates; SOAR automates the response."],
- ["soc", "SOC", "Security Operations Center", "The team and facility that monitor and respond to security events.", "Operations & tools", 1, 4, "soc-chip", "SoC (lowercase o) is hardware; SOC is the security team."],
+ ["soc", "SOC", "Security Operations Center", "The team and facility that monitor and respond to security events.", "Operations & tools", 1, 4],
  ["stix", "STIX", "Structured Threat Information eXpression", "A standard format for describing threat intelligence.", "Operations & tools", 1, 2, "taxii", "STIX is the format; TAXII is how it is shared."],
  ["taxii", "TAXII", "Trusted Automated eXchange of Indicator Information", "The protocol for sharing STIX threat intelligence.", "Operations & tools", 1, 2, "stix", "STIX is the format; TAXII is how it is shared."],
- ["uem", "UEM", "Unified Endpoint Management", "Manages all endpoint types, from PCs to phones, in one tool.", "Operations & tools", 1, 4],
  ["xdr", "XDR", "Extended Detection and Response", "Correlates detection across endpoints, network, cloud, and email.", "Operations & tools", 1, 4, "edr", "EDR covers endpoints; XDR correlates endpoints, network, cloud, and email."],
  ["api", "API", "Application Programming Interface", "A defined way for programs to request data or actions from another program.", "Architecture, cloud & devices", 1, 3],
- ["bios", "BIOS", "Basic Input/Output System", "Legacy firmware that starts a computer's hardware before the operating system loads.", "Architecture, cloud & devices", 1, 4],
  ["byod", "BYOD", "Bring Your Own Device", "Employees use personal devices for work.", "Architecture, cloud & devices", 1, 3],
  ["casb", "CASB", "Cloud Access Security Broker", "Sits between users and cloud services to enforce security policy and visibility.", "Architecture, cloud & devices", 1, 3],
- ["cctv", "CCTV", "Closed-Circuit Television", "Video surveillance cameras, a detective and deterrent physical control.", "Architecture, cloud & devices", 1, 1],
  ["cope", "COPE", "Corporate Owned, Personally Enabled", "The company owns the device but allows some personal use.", "Architecture, cloud & devices", 1, 3, "cyod", "COPE: company owns it and allows personal use. CYOD: the user picks from approved devices."],
  ["csp", "CSP", "Cloud Service Provider", "A company that provides cloud computing services.", "Architecture, cloud & devices", 1, 3],
  ["cyod", "CYOD", "Choose Your Own Device", "Employees choose a device from a list the company approves.", "Architecture, cloud & devices", 1, 3, "cope", "COPE: company owns it and allows personal use. CYOD: the user picks from approved devices."],
- ["ha", "HA", "High Availability", "Designing systems to stay up through failures, often with redundancy.", "Architecture, cloud & devices", 1, 3],
  ["iaas", "IaaS", "Infrastructure as a Service", "The cloud provider supplies virtual servers, storage, and networks; the customer manages the OS and up.", "Architecture, cloud & devices", 1, 3, "paas", "IaaS: you manage the OS. PaaS: you manage the app. SaaS: you just use the app."],
  ["iac", "IaC", "Infrastructure as Code", "Defining servers and networks in configuration files so they deploy the same way every time.", "Architecture, cloud & devices", 1, 3],
  ["ics", "ICS", "Industrial Control Systems", "Systems that control physical industrial processes.", "Architecture, cloud & devices", 1, 3],
  ["iot", "IoT", "Internet of Things", "Network-connected everyday devices such as cameras and sensors, often with weak security.", "Architecture, cloud & devices", 1, 3],
- ["mbr", "MBR", "Master Boot Record", "The first sector of a disk that starts the boot process; targeted by bootkits.", "Architecture, cloud & devices", 1, 2],
- ["ot", "OT", "Operational Technology", "Hardware and software that controls physical equipment, such as ICS and SCADA.", "Architecture, cloud & devices", 1, 3],
- ["ota", "OTA", "Over the Air", "Wireless delivery of firmware or software updates.", "Architecture, cloud & devices", 1, 4],
  ["paas", "PaaS", "Platform as a Service", "The cloud provider supplies the platform; the customer builds and manages applications.", "Architecture, cloud & devices", 1, 3, "iaas", "IaaS: you manage the OS. PaaS: you manage the app. SaaS: you just use the app."],
- ["pdu", "PDU", "Power Distribution Unit", "A rack device that distributes power to equipment.", "Architecture, cloud & devices", 1, 3],
  ["raid", "RAID", "Redundant Array of Independent Disks", "Combines disks for redundancy, performance, or both.", "Architecture, cloud & devices", 1, 3],
  ["rtos", "RTOS", "Real-Time Operating System", "An operating system for embedded devices that must respond within strict time limits.", "Architecture, cloud & devices", 1, 3],
  ["saas", "SaaS", "Software as a Service", "The provider runs the whole application; the customer just uses it.", "Architecture, cloud & devices", 1, 3],
- ["san", "SAN", "Storage Area Network", "A dedicated network that provides block-level storage.", "Architecture, cloud & devices", 1, 3, null, null, ["storage"]],
  ["sase", "SASE", "Secure Access Service Edge", "Combines network and security services, such as SD-WAN and cloud security, in one cloud service.", "Architecture, cloud & devices", 1, 3],
  ["scada", "SCADA", "Supervisory Control and Data Acquisition", "Systems that monitor and control industrial processes across sites.", "Architecture, cloud & devices", 1, 3],
  ["sdwan", "SD-WAN", "Software-Defined Wide Area Network", "Manages WAN links centrally in software and picks the best path for traffic.", "Architecture, cloud & devices", 1, 3],
- ["sdlc", "SDLC", "Software Development Life Cycle", "The stages of building software, from planning to retirement.", "Architecture, cloud & devices", 1, 4],
  ["sdn", "SDN", "Software-Defined Networking", "Separates network control from hardware so the network is managed centrally in software.", "Architecture, cloud & devices", 1, 3],
- ["soc-chip", "SoC", "System on a Chip", "A single chip that contains a whole computer, common in phones and IoT.", "Architecture, cloud & devices", 1, 3, "soc", "SoC (lowercase o) is hardware; SOC is the security team."],
  ["swg", "SWG", "Secure Web Gateway", "Filters users' web traffic to block malicious sites and enforce policy.", "Architecture, cloud & devices", 1, 3],
- ["uat", "UAT", "User Acceptance Testing", "Final testing by users to confirm software meets their needs.", "Architecture, cloud & devices", 1, 4],
  ["uefi", "UEFI", "Unified Extensible Firmware Interface", "Modern firmware that replaced BIOS and supports Secure Boot.", "Architecture, cloud & devices", 1, 4],
  ["ups", "UPS", "Uninterruptible Power Supply", "Battery backup that keeps equipment running through short power loss.", "Architecture, cloud & devices", 1, 3],
  ["utm", "UTM", "Unified Threat Management", "One appliance that combines firewall, IPS, antivirus, and content filtering.", "Architecture, cloud & devices", 1, 3],
  ["vdi", "VDI", "Virtual Desktop Infrastructure", "Hosts user desktops centrally so data stays in the data center.", "Architecture, cloud & devices", 1, 3],
  ["vm", "VM", "Virtual Machine", "A software computer that runs on a hypervisor.", "Architecture, cloud & devices", 1, 2],
  ["vpc", "VPC", "Virtual Private Cloud", "An isolated private network within a public cloud.", "Architecture, cloud & devices", 1, 3],
- ["waf", "WAF", "Web Application Firewall", "Inspects HTTP traffic to block web attacks such as SQL injection and XSS.", "Architecture, cloud & devices", 1, 3],
- ["ai", "AI", "Artificial Intelligence", "Systems that perform tasks that normally need human judgment, used in security for detection and automation.", "Also on CompTIA's list", 2, 4],
- ["bash", "BASH", "Bourne Again Shell", "A common Linux and macOS command shell, often used in scripts.", "Also on CompTIA's list", 2, 4],
- ["cio", "CIO", "Chief Information Officer", "The executive responsible for an organization's information technology.", "Also on CompTIA's list", 2, 5],
- ["cms", "CMS", "Content Management System", "Software used to build and manage website content.", "Also on CompTIA's list", 2, 3],
- ["crc", "CRC", "Cyclical Redundancy Check", "A checksum that detects accidental data corruption; not secure against tampering.", "Also on CompTIA's list", 2, 1],
- ["csu", "CSU", "Channel Service Unit", "A device that connects customer equipment to a digital telecom line.", "Also on CompTIA's list", 2, 3],
- ["cto", "CTO", "Chief Technology Officer", "The executive responsible for technology strategy.", "Also on CompTIA's list", 2, 5],
- ["dba", "DBA", "Database Administrator", "The person who maintains and secures databases.", "Also on CompTIA's list", 2, 5],
- ["dsl", "DSL", "Digital Subscriber Line", "Internet access over telephone lines.", "Also on CompTIA's list", 2, 3],
- ["erp", "ERP", "Enterprise Resource Planning", "Software that runs core business processes such as finance and inventory.", "Also on CompTIA's list", 2, 3],
- ["esn", "ESN", "Electronic Serial Number", "A unique identifier for a mobile device.", "Also on CompTIA's list", 2, 4],
- ["fpga", "FPGA", "Field-Programmable Gate Array", "A chip that can be reprogrammed after manufacture.", "Also on CompTIA's list", 2, 3],
- ["gps", "GPS", "Global Positioning System", "Satellite location; used for geolocation and geofencing.", "Also on CompTIA's list", 2, 4],
- ["gpu", "GPU", "Graphics Processing Unit", "A processor that can also speed up password cracking.", "Also on CompTIA's list", 2, 4],
- ["hdd", "HDD", "Hard Disk Drive", "A storage drive with spinning platters.", "Also on CompTIA's list", 2, 4],
- ["html", "HTML", "Hypertext Markup Language", "The language web pages are written in.", "Also on CompTIA's list", 2, 3],
- ["hvac", "HVAC", "Heating, Ventilation, and Air Conditioning", "Environmental systems that keep equipment rooms within safe temperatures.", "Also on CompTIA's list", 2, 3],
- ["idf", "IDF", "Intermediate Distribution Frame", "A wiring closet that connects a floor's cabling to the main distribution frame.", "Also on CompTIA's list", 2, 3],
- ["ieee", "IEEE", "Institute of Electrical and Electronics Engineers", "The standards body behind 802.1X, 802.11, and other networking standards.", "Also on CompTIA's list", 2, 3],
- ["im", "IM", "Instant Messaging", "Real-time text chat applications.", "Also on CompTIA's list", 2, 2],
- ["irc", "IRC", "Internet Relay Chat", "An old chat protocol, historically used for botnet command and control.", "Also on CompTIA's list", 2, 2],
- ["isp", "ISP", "Internet Service Provider", "A company that provides internet access.", "Also on CompTIA's list", 2, 3],
- ["lan", "LAN", "Local Area Network", "A network covering a small area such as an office.", "Also on CompTIA's list", 2, 3],
- ["man", "MAN", "Metropolitan Area Network", "A network spanning a city.", "Also on CompTIA's list", 2, 3],
- ["mdf", "MDF", "Main Distribution Frame", "The main wiring room where outside lines connect to the internal network.", "Also on CompTIA's list", 2, 3],
- ["mfd", "MFD", "Multifunction Device", "A device that prints, scans, copies, and faxes; often overlooked in hardening.", "Also on CompTIA's list", 2, 4],
- ["mfp", "MFP", "Multifunction Printer", "A printer that also scans, copies, and faxes; often overlooked in hardening.", "Also on CompTIA's list", 2, 4],
- ["ml", "ML", "Machine Learning", "Systems that learn patterns from data, used in anomaly detection.", "Also on CompTIA's list", 2, 4],
- ["mms", "MMS", "Multimedia Messaging Service", "Picture and video messages over cellular networks.", "Also on CompTIA's list", 2, 2],
- ["mtu", "MTU", "Maximum Transmission Unit", "The largest packet size a network link carries without fragmenting.", "Also on CompTIA's list", 2, 3],
- ["ntfs", "NTFS", "New Technology File System", "The Windows file system, which supports permissions and encryption.", "Also on CompTIA's list", 2, 4],
- ["os", "OS", "Operating System", "The core software that runs a computer.", "Also on CompTIA's list", 2, 4],
- ["ospf", "OSPF", "Open Shortest Path First", "A link-state routing protocol used inside organizations.", "Also on CompTIA's list", 2, 3],
- ["p2p", "P2P", "Peer-to-Peer", "Devices share directly without a central server.", "Also on CompTIA's list", 2, 3],
- ["pac", "PAC", "Proxy Auto-Configuration", "A file that tells browsers which proxy to use for which sites.", "Also on CompTIA's list", 2, 3],
- ["pat", "PAT", "Port Address Translation", "Many internal hosts share one public IP, told apart by port number.", "Also on CompTIA's list", 2, 3],
- ["pbx", "PBX", "Private Branch Exchange", "A private telephone switch inside an organization.", "Also on CompTIA's list", 2, 3],
- ["ped", "PED", "Personal Electronic Device", "A personal device such as a phone or tablet.", "Also on CompTIA's list", 2, 4],
- ["pop", "POP", "Post Office Protocol", "Downloads email from a server, usually removing it.", "Also on CompTIA's list", 2, 3],
- ["pots", "POTS", "Plain Old Telephone Service", "Traditional analog phone lines.", "Also on CompTIA's list", 2, 3],
- ["ppp", "PPP", "Point-to-Point Protocol", "A protocol for direct connections between two nodes.", "Also on CompTIA's list", 2, 3],
- ["ptz", "PTZ", "Pan-Tilt-Zoom", "A camera that can be moved and zoomed remotely.", "Also on CompTIA's list", 2, 1],
- ["race", "RACE", "Research and Development in Advanced Communications Technologies in Europe", "The European project behind the RIPEMD hash family.", "Also on CompTIA's list", 2, 1],
- ["rad", "RAD", "Rapid Application Development", "A software development approach built on quick prototypes.", "Also on CompTIA's list", 2, 4],
- ["ras", "RAS", "Remote Access Server", "A server that lets remote users connect to a network.", "Also on CompTIA's list", 2, 3],
- ["rtp", "RTP", "Real-time Transport Protocol", "Carries voice and video streams; SRTP adds encryption.", "Also on CompTIA's list", 2, 3],
- ["sdk", "SDK", "Software Development Kit", "Tools and libraries for building software for a platform.", "Also on CompTIA's list", 2, 4],
- ["sdlm", "SDLM", "Software Development Life Cycle Methodology", "The method used to run the software development life cycle, such as Agile or Waterfall.", "Also on CompTIA's list", 2, 4],
- ["seh", "SEH", "Structured Exception Handler", "Windows error-handling code; overwriting it is a memory exploit technique.", "Also on CompTIA's list", 2, 2],
- ["shttp", "SHTTP", "Secure Hypertext Transfer Protocol", "An old alternative to HTTPS that never caught on.", "Also on CompTIA's list", 2, 3],
- ["soap", "SOAP", "Simple Object Access Protocol", "An XML-based protocol for web services.", "Also on CompTIA's list", 2, 3],
- ["sql", "SQL", "Structured Query Language", "The language used to query databases.", "Also on CompTIA's list", 2, 2],
- ["ssd", "SSD", "Solid-State Drive", "Flash-based storage; needs special methods for secure erasure.", "Also on CompTIA's list", 2, 4],
- ["tcpip", "TCP/IP", "Transmission Control Protocol/Internet Protocol", "The core protocol suite of the internet.", "Also on CompTIA's list", 2, 3],
- ["uav", "UAV", "Unmanned Aerial Vehicle", "A drone; can carry cameras or wireless attack tools.", "Also on CompTIA's list", 2, 2],
- ["udp", "UDP", "User Datagram Protocol", "Connectionless, fast transport with no delivery guarantee.", "Also on CompTIA's list", 2, 3],
- ["uri", "URI", "Uniform Resource Identifier", "A string that identifies a resource, such as a URL.", "Also on CompTIA's list", 2, 3],
- ["url", "URL", "Uniform Resource Locator", "A web address.", "Also on CompTIA's list", 2, 3],
- ["usb", "USB", "Universal Serial Bus", "A common port for devices; a vector for malware and data theft.", "Also on CompTIA's list", 2, 2],
- ["usbotg", "USB OTG", "USB On-The-Go", "Lets a phone act as a USB host for drives and other devices.", "Also on CompTIA's list", 2, 4],
- ["utp", "UTP", "Unshielded Twisted Pair", "The common copper network cable.", "Also on CompTIA's list", 2, 3],
- ["vde", "VDE", "Virtual Desktop Environment", "A desktop that runs on a central server and is accessed remotely.", "Also on CompTIA's list", 2, 3],
- ["vlsm", "VLSM", "Variable Length Subnet Masking", "Using different subnet sizes within one network.", "Also on CompTIA's list", 2, 3],
- ["vtc", "VTC", "Video Teleconferencing", "Video meeting systems.", "Also on CompTIA's list", 2, 3],
- ["wo", "WO", "Work Order", "A documented request to perform a specific task.", "Also on CompTIA's list", 2, 5],
- ["wtls", "WTLS", "Wireless Transport Layer Security", "An old security layer for early mobile web protocols.", "Also on CompTIA's list", 2, 3],
- ["xml", "XML", "Extensible Markup Language", "A text format for structured data.", "Also on CompTIA's list", 2, 3]
+ ["waf", "WAF", "Web Application Firewall", "Inspects HTTP traffic to block web attacks such as SQL injection and XSS.", "Architecture, cloud & devices", 1, 3]
 ].map(r=>({id:r[0],a:r[1],x:r[2],d:r[3],g:r[4],t:r[5],dom:r[6],pair:r[7]||null,note:r[8]||null,ctx:(r[9]||[])[0]||null}));
 /* Acronyms that mean the same thing (or nearly), so they are never offered as each other's wrong answers */
 const ACRO_SAME=[["ap","wap"],["mfd","mfp"],["cert","cirt"],["csrf","xsrf"],["ids","nids"],["ids","hids"],["ips","nips"],["ips","hips"],["vde","vdi"],["aes","aes256"],["ssl","tls"]];
@@ -893,7 +744,7 @@ const BANK = [
    where a term has one, the best defense). A term is mastered after `need` different kinds of question
    about it are answered correctly. They cover every term in the SY0-701 objectives that suits this format. */
 const TERMSETS = {
- controls:{need:2,groups:[["cat","Control categories","Categories"],["type","Control types","Types"],["cia","CIA, AAA & core concepts","Concepts"],["zt","Zero trust","Zero trust"],["phys","Physical security","Physical"],["decep","Deception & disruption","Deception"],["change","Change management","Change"]],items:[
+ controls:{need:2,typed:true,groups:[["cat","Control categories","Categories"],["type","Control types","Types"],["cia","CIA, AAA & core concepts","Concepts"],["zt","Zero trust","Zero trust"],["phys","Physical security","Physical"],["decep","Deception & disruption","Deception"],["change","Change management","Change"]],items:[
   {id:"c1",g:"cat",d:1,t:"Technical control",def:"A control carried out by a system, such as a firewall rule, encryption, or antivirus",sc:"A firewall rule that blocks inbound traffic on unused ports belongs to which control category?"},
   {id:"c2",g:"cat",d:1,t:"Managerial control",def:"A control that sets direction and oversight, such as a security policy or a risk assessment",sc:"Leadership approves a written information security policy. Which control category is the policy?"},
   {id:"c3",g:"cat",d:1,t:"Operational control",def:"A control carried out by people day to day, such as security guards or awareness training",sc:"Staff attend monthly security awareness sessions run by the security team. Which control category is this?"},
@@ -902,53 +753,53 @@ const TERMSETS = {
   {id:"c6",g:"type",d:1,t:"Deterrent control",def:"Discourages an attacker from trying, without physically stopping them",sc:"A sign warns that the premises are under video surveillance. Which control type is the sign?"},
   {id:"c7",g:"type",d:1,t:"Detective control",def:"Identifies and records an incident while or after it happens",sc:"An analyst reviews login logs each morning to find unauthorized access. Which control type is this?"},
   {id:"c8",g:"type",d:1,t:"Corrective control",def:"Fixes damage or restores normal operation after an incident",sc:"After a ransomware attack, a server is restored from backup. Which control type is the restore?"},
-  {id:"c9",g:"type",d:1,t:"Compensating control",def:"An alternative control used when the primary control cannot be put in place",sc:"A legacy system cannot be patched, so it is moved onto an isolated network segment. Which control type is the isolation?"},
+  {id:"c9",g:"type",d:1,t:"Compensating control",def:"An alternative control used when the primary control cannot be put in place",sc:"A legacy system cannot be patched, so it is moved onto an isolated network segment. Which control type is the isolation?",alt:["compensation"]},
   {id:"c14",g:"type",d:1,t:"Directive control",def:"Tells people what they should or should not do, such as a policy or an instruction",sc:"An instruction in the employee handbook tells staff to store sensitive files only on the encrypted share. Which control type is this?"},
   {id:"c15",g:"cia",d:1,t:"Confidentiality",def:"Keeping information secret from anyone who is not authorized to see it",sc:"Customer records are encrypted so that only authorized staff can read them. Which part of the CIA triad does this protect?"},
   {id:"c16",g:"cia",d:1,t:"Integrity",def:"Making sure data is not changed without authorization, and that any change can be detected",sc:"A file's hash is checked after download to confirm that nobody altered it. Which part of the CIA triad does this protect?"},
   {id:"c17",g:"cia",d:1,t:"Availability",def:"Making sure systems and data can be reached by authorized users when they need them",sc:"A company adds redundant power supplies and a second internet link so its website stays online. Which part of the CIA triad does this support?"},
-  {id:"c18",g:"cia",d:1,t:"Authentication",def:"Proving that a user or device is who or what it claims to be",sc:"A user enters a password and a code from a phone app before the system lets her in. Which part of AAA is this?"},
+  {id:"c18",g:"cia",d:1,t:"Authentication",def:"Proving that a user or device is who or what it claims to be",sc:"A user enters a password and a code from a phone app before the system lets her in. Which part of AAA is this?",alt:["authenticating"]},
   {id:"c19",g:"cia",d:1,t:"Authorization",def:"Deciding what an authenticated user is allowed to access or do",sc:"After logging in, an employee can open HR files but not finance files because of her group membership. Which part of AAA decides this?"},
-  {id:"c20",g:"cia",d:1,t:"Accounting",def:"Recording what users do, such as when they logged in, what they accessed, and for how long",sc:"A VPN server logs each user's connection time and how much data they transferred. Which part of AAA is this?"},
-  {id:"c10",g:"cia",d:1,t:"Non-repudiation",def:"Proof that a specific person performed an action, so they cannot later deny it",sc:"A signed contract carries the sender's digital signature, so the sender cannot claim they never sent it. Which concept is this?"},
-  {id:"c12",g:"cia",d:1,t:"Gap analysis",def:"Comparing the current security posture with a target standard to find what is missing",sc:"A company compares its current controls with a security framework to list what still needs to be done. What is this called?"},
-  {id:"c11",g:"zt",d:1,t:"Zero trust",def:"No user or device is trusted by default; every access request is verified",sc:"Every request to an internal app is authenticated and authorized, even from inside the office network. Which model is this?"},
+  {id:"c20",g:"cia",d:1,t:"Accounting",def:"Recording what users do, such as when they logged in, what they accessed, and for how long",sc:"A VPN server logs each user's connection time and how much data they transferred. Which part of AAA is this?",alt:["auditing"]},
+  {id:"c10",g:"cia",d:1,t:"Non-repudiation",def:"Proof that a specific person performed an action, so they cannot later deny it",sc:"A signed contract carries the sender's digital signature, so the sender cannot claim they never sent it. Which concept is this?",alt:["nonrepudiation"]},
+  {id:"c12",g:"cia",d:1,t:"Gap analysis",def:"Comparing the current security posture with a target standard to find what is missing",sc:"A company compares its current controls with a security framework to list what still needs to be done. What is this called?",alt:["gap assessment"]},
+  {id:"c11",g:"zt",d:1,t:"Zero trust",def:"No user or device is trusted by default; every access request is verified",sc:"Every request to an internal app is authenticated and authorized, even from inside the office network. Which model is this?",alt:["zero trust architecture", "zta", "zero trust model"]},
   {id:"c21",g:"zt",d:1,t:"Control plane",def:"The zero trust layer that decides whether access is allowed; it holds the policy engine and policy administrator",sc:"In a zero trust design, which plane contains the policy engine and decides whether a request is allowed?"},
   {id:"c22",g:"zt",d:1,t:"Data plane",def:"The zero trust layer where traffic actually flows, through a policy enforcement point that allows or blocks it",sc:"In a zero trust design, which plane carries the user's traffic to the resource once access is granted?"},
-  {id:"c23",g:"zt",d:1,t:"Policy engine",def:"The zero trust component that checks each request against policy and decides to grant or deny it",sc:"Which zero trust component makes the actual decision to grant or deny an access request?"},
-  {id:"c24",g:"zt",d:1,t:"Policy administrator",def:"The zero trust component that carries out the policy engine's decision by setting up or closing the session, such as by issuing a token",sc:"Which zero trust component takes the engine's grant decision and tells the enforcement point to open the session?"},
-  {id:"c25",g:"zt",d:1,t:"Policy enforcement point",def:"The gatekeeper in the data plane that allows, monitors, and ends connections between a user and a resource",sc:"Which zero trust component sits in the path of the traffic and lets a connection through or blocks it?"},
-  {id:"c26",g:"zt",d:1,t:"Adaptive identity",def:"Checking identity using context such as location, device, and behavior, and asking for more proof when the risk is higher",sc:"A login from a new country triggers an extra verification step that a login from the office does not. Which zero trust concept is this?"},
+  {id:"c23",g:"zt",d:1,t:"Policy engine",def:"The zero trust component that checks each request against policy and decides to grant or deny it",sc:"Which zero trust component makes the actual decision to grant or deny an access request?",alt:["pe"]},
+  {id:"c24",g:"zt",d:1,t:"Policy administrator",def:"The zero trust component that carries out the policy engine's decision by setting up or closing the session, such as by issuing a token",sc:"Which zero trust component takes the engine's grant decision and tells the enforcement point to open the session?",alt:["pa"]},
+  {id:"c25",g:"zt",d:1,t:"Policy enforcement point",def:"The gatekeeper in the data plane that allows, monitors, and ends connections between a user and a resource",sc:"Which zero trust component sits in the path of the traffic and lets a connection through or blocks it?",alt:["pep"]},
+  {id:"c26",g:"zt",d:1,t:"Adaptive identity",def:"Checking identity using context such as location, device, and behavior, and asking for more proof when the risk is higher",sc:"A login from a new country triggers an extra verification step that a login from the office does not. Which zero trust concept is this?",alt:["adaptive authentication"]},
   {id:"c27",g:"zt",d:1,t:"Threat scope reduction",def:"Limiting the number of entry points and the amount of access, so an attacker who gets in can reach less",sc:"A zero trust project removes unneeded network paths and gives each user only the access a task requires, so a compromise reaches less. Which zero trust goal is this?"},
-  {id:"c28",g:"zt",d:1,t:"Implicit trust zone",def:"A network area where devices are trusted simply because of where they are, which zero trust removes",sc:"In a traditional network, any device plugged into the internal LAN is trusted automatically. What does zero trust call such an area?"},
-  {id:"c29",g:"phys",d:1,t:"Bollards",def:"Short, sturdy posts that stop vehicles from reaching a building or entrance",sc:"Steel posts are installed outside a lobby's glass front so a car cannot drive through it. What are they?"},
-  {id:"c30",g:"phys",d:1,t:"Access control vestibule",def:"A small space between two doors where only one door can open at a time, which stops tailgating",sc:"Visitors enter a small room where the outer door must close before the inner door will open. What is this?"},
-  {id:"c31",g:"phys",d:1,t:"Fencing",def:"A barrier that marks a boundary and keeps people out; tall fencing also discourages climbing",sc:"An 8-foot barrier topped with barbed wire surrounds a data center's grounds. What physical control is this?"},
-  {id:"c32",g:"phys",d:1,t:"Video surveillance",def:"Cameras that record and monitor an area, which both deter and detect",sc:"Cameras with motion detection record the loading dock around the clock. What physical control is this?"},
-  {id:"c33",g:"phys",d:1,t:"Security guard",def:"A person who checks identities, watches entrances, and responds to events",sc:"A person at the front desk checks every visitor's ID and escorts them inside. What physical control is this?"},
-  {id:"c34",g:"phys",d:1,t:"Access badge",def:"An ID card, often with an RFID or smart chip, that opens doors and identifies the wearer",sc:"Employees tap a card on a reader to unlock each office door. What are they using?"},
-  {id:"c35",g:"phys",d:1,t:"Lighting",def:"Bright lights around a site that discourage intruders and help cameras record",sc:"Floodlights are added to a dark parking lot so guards and cameras can see anyone there at night. What physical control is this?"},
-  {id:"c36",g:"phys",d:1,t:"Infrared sensor",def:"A sensor that detects body heat moving through an area",sc:"A motion sensor in a closed office detects the heat of a person moving after hours. Which sensor type is this?"},
-  {id:"c37",g:"phys",d:1,t:"Pressure sensor",def:"A sensor that detects weight or force, such as someone stepping on a mat",sc:"A mat in front of the vault door triggers an alarm when someone stands on it. Which sensor type is this?"},
-  {id:"c38",g:"phys",d:1,t:"Microwave sensor",def:"A sensor that sends out microwave signals and detects movement from changes in their reflection; it covers large areas",sc:"A sensor fills a warehouse with radio signals and raises an alarm when their reflection changes. Which sensor type is this?"},
-  {id:"c39",g:"phys",d:1,t:"Ultrasonic sensor",def:"A sensor that sends out high-frequency sound and detects movement from changes in the echo",sc:"A sensor emits sound above human hearing and raises an alarm when its echo changes. Which sensor type is this?"},
-  {id:"c13",g:"decep",d:1,t:"Honeypot",def:"A decoy system that lures attackers so their activity can be observed",sc:"A fake, unprotected-looking server is placed on the network to attract and study attackers. What is it?"},
-  {id:"c40",g:"decep",d:1,t:"Honeynet",def:"A network of decoy systems built to attract and study attackers",sc:"Researchers build a whole fake network of servers and workstations to watch how attackers move between them. What is this?"},
-  {id:"c41",g:"decep",d:1,t:"Honeyfile",def:"A decoy file with a tempting name that raises an alert when someone opens it",sc:"A file named passwords.xlsx with no real data sits on a file share and raises an alert whenever it is opened. What is it?"},
-  {id:"c42",g:"decep",d:1,t:"Honeytoken",def:"Fake data, such as a fake API key or account, that raises an alert when someone tries to use it",sc:"A fake cloud access key is planted in a code repository, and any attempt to use it triggers an alert. What is it?"},
-  {id:"c43",g:"decep",d:1,t:"DNS sinkhole",def:"A DNS server that answers requests for malicious domains with a safe address, cutting malware off from its controller",sc:"Infected hosts that look up a known command-and-control domain are given an internal address that goes nowhere. What is this?"},
-  {id:"c44",g:"change",d:1,t:"Approval process",def:"The formal review and sign-off a change needs before it can be made",sc:"A firewall rule change waits until the change advisory board reviews and signs off on it. Which part of change management is this?"},
-  {id:"c45",g:"change",d:1,t:"Change owner",def:"The person or team responsible for carrying out a change and answering for its results",sc:"The network team lead is named as responsible for a router upgrade and must report how it went. What change management role is this?"},
-  {id:"c46",g:"change",d:1,t:"Stakeholders",def:"The people and groups a change affects, who should be consulted or kept informed",sc:"Before a payroll system upgrade, IT meets with HR and finance because the change will affect their work. What are HR and finance in this change?"},
-  {id:"c47",g:"change",d:1,t:"Impact analysis",def:"Working out what a change could affect, and the risk of making it or not making it",sc:"Before patching a database server, the team lists every application that depends on it and what could break. What is this?"},
-  {id:"c48",g:"change",d:1,t:"Backout plan",def:"A plan to undo a change and return to the previous state if it fails",sc:"A change request explains exactly how to reinstall the old firmware if the upgrade causes problems. What is this part of the request?"},
-  {id:"c49",g:"change",d:1,t:"Maintenance window",def:"An agreed time, usually outside business hours, when changes can be made with the least impact",sc:"Changes to the online store's servers may only be made between 1 a.m. and 4 a.m. on Sundays. What is this period called?"},
+  {id:"c28",g:"zt",d:1,t:"Implicit trust zone",def:"A network area where devices are trusted simply because of where they are, which zero trust removes",sc:"In a traditional network, any device plugged into the internal LAN is trusted automatically. What does zero trust call such an area?",alt:["implicit trust", "implicit trust zones"]},
+  {id:"c29",g:"phys",d:1,t:"Bollards",def:"Short, sturdy posts that stop vehicles from reaching a building or entrance",sc:"Steel posts are installed outside a lobby's glass front so a car cannot drive through it. What are they?",alt:["bollard"]},
+  {id:"c30",g:"phys",d:1,t:"Access control vestibule",def:"A small space between two doors where only one door can open at a time, which stops tailgating",sc:"Visitors enter a small room where the outer door must close before the inner door will open. What is this?",alt:["vestibule", "mantrap"]},
+  {id:"c31",g:"phys",d:1,t:"Fencing",def:"A barrier that marks a boundary and keeps people out; tall fencing also discourages climbing",sc:"An 8-foot barrier topped with barbed wire surrounds a data center's grounds. What physical control is this?",alt:["fence"]},
+  {id:"c32",g:"phys",d:1,t:"Video surveillance",def:"Cameras that record and monitor an area, which both deter and detect",sc:"Cameras with motion detection record the loading dock around the clock. What physical control is this?",alt:["cctv", "cameras", "camera", "video cameras", "surveillance cameras"]},
+  {id:"c33",g:"phys",d:1,t:"Security guard",def:"A person who checks identities, watches entrances, and responds to events",sc:"A person at the front desk checks every visitor's ID and escorts them inside. What physical control is this?",alt:["guard", "security guards", "guards"]},
+  {id:"c34",g:"phys",d:1,t:"Access badge",def:"An ID card, often with an RFID or smart chip, that opens doors and identifies the wearer",sc:"Employees tap a card on a reader to unlock each office door. What are they using?",alt:["badge", "access card", "id badge", "badge reader", "smart card", "rfid badge", "key card"]},
+  {id:"c35",g:"phys",d:1,t:"Lighting",def:"Bright lights around a site that discourage intruders and help cameras record",sc:"Floodlights are added to a dark parking lot so guards and cameras can see anyone there at night. What physical control is this?",alt:["lights", "floodlights", "security lighting"]},
+  {id:"c36",g:"phys",d:1,t:"Infrared sensor",def:"A sensor that detects body heat moving through an area",sc:"A motion sensor in a closed office detects the heat of a person moving after hours. Which sensor type is this?",alt:["infrared", "ir sensor", "pir sensor"]},
+  {id:"c37",g:"phys",d:1,t:"Pressure sensor",def:"A sensor that detects weight or force, such as someone stepping on a mat",sc:"A mat in front of the vault door triggers an alarm when someone stands on it. Which sensor type is this?",alt:["pressure"]},
+  {id:"c38",g:"phys",d:1,t:"Microwave sensor",def:"A sensor that sends out microwave signals and detects movement from changes in their reflection; it covers large areas",sc:"A sensor fills a warehouse with radio signals and raises an alarm when their reflection changes. Which sensor type is this?",alt:["microwave"]},
+  {id:"c39",g:"phys",d:1,t:"Ultrasonic sensor",def:"A sensor that sends out high-frequency sound and detects movement from changes in the echo",sc:"A sensor emits sound above human hearing and raises an alarm when its echo changes. Which sensor type is this?",alt:["ultrasonic"]},
+  {id:"c13",g:"decep",d:1,t:"Honeypot",def:"A decoy system that lures attackers so their activity can be observed",sc:"A fake, unprotected-looking server is placed on the network to attract and study attackers. What is it?",alt:["honey pot"]},
+  {id:"c40",g:"decep",d:1,t:"Honeynet",def:"A network of decoy systems built to attract and study attackers",sc:"Researchers build a whole fake network of servers and workstations to watch how attackers move between them. What is this?",alt:["honey net"]},
+  {id:"c41",g:"decep",d:1,t:"Honeyfile",def:"A decoy file with a tempting name that raises an alert when someone opens it",sc:"A file named passwords.xlsx with no real data sits on a file share and raises an alert whenever it is opened. What is it?",alt:["honey file"]},
+  {id:"c42",g:"decep",d:1,t:"Honeytoken",def:"Fake data, such as a fake API key or account, that raises an alert when someone tries to use it",sc:"A fake cloud access key is planted in a code repository, and any attempt to use it triggers an alert. What is it?",alt:["honey token", "canary token"]},
+  {id:"c43",g:"decep",d:1,t:"DNS sinkhole",def:"A DNS server that answers requests for malicious domains with a safe address, cutting malware off from its controller",sc:"Infected hosts that look up a known command-and-control domain are given an internal address that goes nowhere. What is this?",alt:["sinkhole"]},
+  {id:"c44",g:"change",d:1,t:"Approval process",def:"The formal review and sign-off a change needs before it can be made",sc:"A firewall rule change waits until the change advisory board reviews and signs off on it. Which part of change management is this?",alt:["approval", "change approval"]},
+  {id:"c45",g:"change",d:1,t:"Change owner",def:"The person or team responsible for carrying out a change and answering for its results",sc:"The network team lead is named as responsible for a router upgrade and must report how it went. What change management role is this?",alt:["owner", "ownership"]},
+  {id:"c46",g:"change",d:1,t:"Stakeholders",def:"The people and groups a change affects, who should be consulted or kept informed",sc:"Before a payroll system upgrade, IT meets with HR and finance because the change will affect their work. What are HR and finance in this change?",alt:["stakeholder"]},
+  {id:"c47",g:"change",d:1,t:"Impact analysis",def:"Working out what a change could affect, and the risk of making it or not making it",sc:"Before patching a database server, the team lists every application that depends on it and what could break. What is this?",alt:["impact assessment"]},
+  {id:"c48",g:"change",d:1,t:"Backout plan",def:"A plan to undo a change and return to the previous state if it fails",sc:"A change request explains exactly how to reinstall the old firmware if the upgrade causes problems. What is this part of the request?",alt:["backout", "back out plan", "rollback plan"]},
+  {id:"c49",g:"change",d:1,t:"Maintenance window",def:"An agreed time, usually outside business hours, when changes can be made with the least impact",sc:"Changes to the online store's servers may only be made between 1 a.m. and 4 a.m. on Sundays. What is this period called?",alt:["change window"]},
   {id:"c50",g:"change",d:1,t:"Standard operating procedure (SOP)",def:"Written step-by-step instructions for doing a routine task the same way every time",sc:"Technicians follow a documented step-by-step guide every time they set up a new server. What is the guide?"},
-  {id:"c51",g:"change",d:1,t:"Allow list",def:"Only the items on an approved list may run or connect; everything else is blocked",sc:"Only applications on an approved list can run on the kiosks; everything else is blocked. What is this?"},
-  {id:"c52",g:"change",d:1,t:"Deny list",def:"The items on the list are blocked; everything else is allowed",sc:"A firewall blocks a list of known malicious IP addresses and allows all other traffic. What is this?"},
-  {id:"c53",g:"change",d:1,t:"Dependencies",def:"Other systems or services that a component relies on, which a change to it can break",sc:"Restarting the authentication server will also interrupt the VPN, because the VPN relies on it. What technical consideration does this show?"},
-  {id:"c54",g:"change",d:1,t:"Version control",def:"Tracking every change to code or configuration files so any earlier version can be restored",sc:"Every edit to the router configurations is saved with who made it, and any older version can be restored. What is this?"},
-  {id:"c55",g:"change",d:1,t:"Legacy application",def:"Old software still in use that may be unsupported and poorly understood, so changes to it are risky",sc:"A 20-year-old billing program has no vendor support, and nobody knows how it will react to an operating system update. What is it?"}
+  {id:"c51",g:"change",d:1,t:"Allow list",def:"Only the items on an approved list may run or connect; everything else is blocked",sc:"Only applications on an approved list can run on the kiosks; everything else is blocked. What is this?",alt:["allowlist", "whitelist", "application allow list"]},
+  {id:"c52",g:"change",d:1,t:"Deny list",def:"The items on the list are blocked; everything else is allowed",sc:"A firewall blocks a list of known malicious IP addresses and allows all other traffic. What is this?",alt:["denylist", "blacklist", "block list", "blocklist"]},
+  {id:"c53",g:"change",d:1,t:"Dependencies",def:"Other systems or services that a component relies on, which a change to it can break",sc:"Restarting the authentication server will also interrupt the VPN, because the VPN relies on it. What technical consideration does this show?",alt:["dependency"]},
+  {id:"c54",g:"change",d:1,t:"Version control",def:"Tracking every change to code or configuration files so any earlier version can be restored",sc:"Every edit to the router configurations is saved with who made it, and any older version can be restored. What is this?",alt:["versioning"]},
+  {id:"c55",g:"change",d:1,t:"Legacy application",def:"Old software still in use that may be unsupported and poorly understood, so changes to it are risky",sc:"A 20-year-old billing program has no vendor support, and nobody knows how it will react to an operating system update. What is it?",alt:["legacy app", "legacy software", "legacy system"]}
  ]},
  crypto:{need:2,groups:[["enc","Encryption & hashing","Encryption"],["keys","Keys & key storage","Keys"],["pki","Certificates & PKI","PKI"],["obf","Obfuscation & ledgers","Obfuscation"],["level","Encryption levels","Levels"]],items:[
   {id:"k1",g:"enc",d:1,t:"Symmetric encryption",def:"One shared key both encrypts and decrypts the data",sc:"A backup file is encrypted with AES using one secret key that is also used to decrypt it. What kind of encryption is this?",avoid:["k2"]},
@@ -1308,7 +1159,7 @@ const TERMSETS = {
 };
 
 const MODULES = [
- {id:"acro",n:"01",stage:1,name:"Acronyms",desc:"Exam acronyms, asked four different ways.",covers:"CompTIA's full SY0-701 acronym list. The core acronyms set your rank; the rest, which CompTIA lists but rarely tests, are drilled less often."},
+ {id:"acro",n:"01",stage:1,name:"Acronyms",desc:"Exam acronyms, asked four different ways.",covers:"The 178 SY0-701 acronyms most likely to matter on the exam, grouped by topic. General IT terms and rarely tested acronyms from CompTIA's full list are left out."},
  {id:"controls",n:"02",stage:1,name:"Security Controls & Concepts",desc:"Control categories and types, CIA, zero trust, and deception.",covers:"Domain 1.0: security controls (1.1), fundamental security concepts (1.2), and change management (1.3)."},
  {id:"crypto",n:"03",stage:1,name:"Cryptography & PKI",desc:"Encryption, hashing, signatures, certificates, and key storage.",covers:"Domain 1.0: appropriate cryptographic solutions (1.4)."},
  {id:"threats",n:"04",stage:2,name:"Threat Actors & Vectors",desc:"Who attacks, why, and the ways in.",covers:"Domain 2.0: threat actors and motivations (2.1) and threat vectors and attack surfaces (2.2)."},
@@ -1502,22 +1353,23 @@ function textQ(area,cfg){
     <div class="q-prompt">${cfg.prompt}</div>
     ${inst?"":`<input class="ans" id="ansbox" autocomplete="off" spellcheck="false" placeholder="${esc(cfg.placeholder||'Your answer')}" aria-label="Your answer">`}
     <div class="q-actions">
-      ${inst?`<button class="btn" data-act="reveal">Reveal answer</button>`:`<button class="btn" data-act="check">Check</button><button class="btn ghost" data-act="skip">Show me</button>`}
+      ${inst?`<button class="btn" data-act="reveal">Reveal answer</button>`:`<button class="btn" data-act="check">Check</button>${cfg.hint?`<button class="btn ghost" data-act="hint">Hint</button>`:""}<button class="btn ghost" data-act="skip">Show me</button>`}
       <button class="btn ghost" data-act="next" hidden>Next problem</button>
       <span class="kbd">Enter to check · Enter again for next</span>
-    </div><div class="fb" hidden></div></div>`;
+    </div><div class="hintbox note" hidden style="margin-top:8px"></div><div class="fb" hidden></div></div>`;
   const inp=area.querySelector("#ansbox"), fb=area.querySelector(".fb"), nextB=area.querySelector('[data-act="next"]');
-  let done=false;
+  let done=false, hinted=false, note="";
+  area.querySelector('[data-act="hint"]')?.addEventListener("click",e=>{ hinted=true; const h=area.querySelector(".hintbox"); h.innerHTML=cfg.hint; h.hidden=false; e.currentTarget.hidden=true; inp.focus(); });
   function finish(ok,gaveUp){
     done=true;
-    area.querySelectorAll('[data-act="check"],[data-act="skip"],[data-act="reveal"]').forEach(b=>b.hidden=true);
+    area.querySelectorAll('[data-act="check"],[data-act="skip"],[data-act="reveal"],[data-act="hint"]').forEach(b=>b.hidden=true);
     if(inp){ inp.disabled=true; inp.classList.add(ok?"okb":"badb"); }
     const head = inst||gaveUp ? `<div class="v ok">Answer: <span class="mono">${esc(cfg.answer)}</span></div>` : `<div class="v ${ok?'ok':'bad'}">${ok?'Correct.':'Not quite. Answer: <span class="mono">'+esc(cfg.answer)+'</span>'}</div>`;
-    fb.innerHTML = head + `<ol class="steps">${cfg.steps.map(s=>`<li>${s}</li>`).join("")}</ol>`;
+    fb.innerHTML = head + (note?`<p style="margin:.4em 0">${note}</p>`:"") + `<ol class="steps">${cfg.steps.map(s=>`<li>${s}</li>`).join("")}</ol>`;
     fb.hidden=false; nextB.hidden=false; nextB.focus({preventScroll:true});
-    if(!inst && cfg.onResult) cfg.onResult(ok);
+    if(!inst && cfg.onResult) cfg.onResult(ok,hinted);
   }
-  const chk=()=>{ if(done||!inp.value.trim()) return; finish(cfg.check(inp.value.trim()),false); };
+  const chk=()=>{ if(done||!inp.value.trim()) return; const r=cfg.check(inp.value.trim()); if(r&&typeof r==="object"){ note=r.note||""; finish(!!r.ok,false); } else finish(!!r,false); };
   area.querySelector('[data-act="check"]')?.addEventListener("click",chk);
   area.querySelector('[data-act="skip"]')?.addEventListener("click",()=>finish(false,true));
   area.querySelector('[data-act="reveal"]')?.addEventListener("click",()=>finish(true,true));
@@ -1546,7 +1398,7 @@ function pbqProgress(id){ const h=P.pbq[id]||[]; const c=pbqClears(id); if(c>=PB
 function mastery(id){
   if(TERMSETS[id]) return termMastery(id);
   switch(id){
-    case "acro":{ const l=acroCore(); const n=acroMastered(l); return {v:n/l.length,cap:`${n} of ${l.length} core acronyms mastered`}; }
+    case "acro":{ const l=acroCore(); const n=acroMastered(l); return {v:n/l.length,cap:`${n} of ${l.length} acronyms mastered`}; }
     case "qualifier":{ const Q=qualState(); const done=Q.filter(x=>x.mastered).length; const v=Q.reduce((a,x)=>a+Math.min(x.c,QUAL_NEED)/QUAL_NEED,0)/Q.length; return {v,cap:`${done} of ${Q.length} qualifiers mastered`}; }
     case "exam":{ const full=P.exams.filter(e=>e.total>=EXAM_FULL_MIN).slice(-EXAM_NEED); if(!full.length) return {v:0,cap:P.exams.length?"Take a 20- or 40-question exam to count":"No exams yet"}; const v=full.reduce((a,e)=>a+e.score/e.total,0)/EXAM_NEED; return {v,cap:`Last ${full.length} of ${EXAM_NEED} full exams · avg ${pct(full.reduce((a,e)=>a+e.score/e.total,0)/full.length)}%`}; }
     default: return null;
@@ -1710,6 +1562,19 @@ const TOOL_INFO={
  "show power":{cli:1,does:"Shows PoE power use and the remaining budget",sc2:"Newly added PoE cameras won't power on. Check whether the switch has power left to give.",out:"Module   Available     Used     Remaining\n          (Watts)     (Watts)    (Watts)\n------   ---------   --------   ---------\n1           370.0      362.5         7.5"}
 };
 const TOOL_NEED=3;
+/* ---- Typed answers ----
+   For "Type the answer" activities. A reply matches a term when, after normalizing, it equals the term, the
+   term without its bracketed acronym, the acronym, or one of the term's alternatives (alt). Normalizing ignores
+   case, spaces, punctuation, a/an/the, a final word "control", and a trailing s. Small typos are
+   accepted (1 letter in 6+, 2 in 10+) and the correct spelling is shown. */
+function tyRaw(s){ return String(s).toLowerCase().replace(/\b(a|an|the)\s+/g," ").trim().replace(/\s+controls?$/,"").replace(/[^a-z0-9]+/g,""); }
+function tyNorm(s){ return tyRaw(s).replace(/s$/,""); }
+function tyForms(it){ const f=[it.t, it.t.replace(/\s*\([^)]*\)/g,"")]; const m=it.t.match(/\(([^)]+)\)/); if(m) f.push(m[1]); return [...new Set(f.concat(it.alt||[]).map(tyNorm).filter(Boolean))]; }
+function tyDist(a,b){ const d=[...Array(b.length+1).keys()]; for(let i=1;i<=a.length;i++){ let prev=d[0]; d[0]=i; for(let j=1;j<=b.length;j++){ const tmp=d[j]; d[j]=Math.min(d[j]+1,d[j-1]+1,prev+(a[i-1]===b[j-1]?0:1)); prev=tmp; } } return d[b.length]; }
+/* 2 = exact, 1 = close typo, 0 = no match */
+function tyMatch(v,it){ const n=tyNorm(v); if(!n) return 0; if(tyForms(it).includes(n)) return 2;
+  const raw=tyRaw(v), forms=[it.t, it.t.replace(/\s*\([^)]*\)/g,"")].concat(it.alt||[]).map(tyRaw);
+  return forms.some(f=>{ const tol=f.length>=10?2:f.length>=6?1:0; return tol&&Math.abs(f.length-raw.length)<=tol&&tyDist(f,raw)<=tol; })?1:0; }
 /* ---- Term modules ----
    One engine runs every term module (TERMSETS). Each term is asked several ways: name it from a description,
    define it, spot it in a scenario, and, where the term has one, pick its best defense. A term is mastered once
@@ -1724,7 +1589,7 @@ function termMastery(mod){ const S=TERMSETS[mod]; const done=S.items.filter(x=>t
 function viewTerms(mod){
   const m=M(mod), S=TERMSETS[mod], ITEMS=S.items, NEED=S.need;
   const hasFix=ITEMS.filter(x=>x.fix).length>=4;
-  const head=()=>modHead(m)+`<p class="note" style="margin:-8px 0 14px;max-width:75ch">Each term is asked several ways. A term is mastered once you answer ${NEED} different kinds of question about it correctly. A miss clears that term's progress until it is mastered. Mastery stays until Reset or Prestige.</p>`;
+  const head=()=>modHead(m)+`<p class="note" style="margin:-8px 0 14px;max-width:75ch">Each term is asked several ways. A term is mastered once you answer ${NEED} different kinds of question about it correctly. A miss clears that term's progress until it is mastered.${S.typed?" Typing the answer to a scenario with no hint masters a term in one go.":""} Mastery stays until Reset or Prestige.</p>`;
   const strip=()=>`<div class="osi-strip words" style="margin-bottom:14px">${termGroupState(mod).map(x=>`<div class="osi-chip ${x.mastered?"on":""}" title="${esc(x.name)}: ${x.c} of ${x.n} terms mastered."><b>${esc(x.short)}</b><span>${esc(x.name)}</span><small>${x.mastered?"Mastered":x.c+"/"+x.n}</small></div>`).join("")}</div>`;
   function menu(){
     curKeys=null;
@@ -1735,10 +1600,14 @@ function viewTerms(mod){
       <div class="acro-mode"><h4>Questions</h4><p>Name the term from a description, define it, and spot it in a scenario${hasFix?", and pick the best defense against each attack":""}. The glossary stays closed until you finish or quit.</p>
         <div class="cfg"><label for="tmlen">Questions</label><select id="tmlen" class="ans" style="width:auto"><option>10</option><option selected>20</option><option>40</option></select></div>
         <div class="q-actions"><button class="btn" id="tmstart">Start questions</button></div></div>
+      ${S.typed?`<div class="acro-mode"><h4>Type the answer</h4><p>Read a scenario and type the term yourself, with no options to choose from. Harder, so it counts for more: a correct answer with no hint masters the term in one go. With a hint, it counts as one question. Small typos are fine.</p>
+        <div class="cfg"><label for="tylen">Scenarios</label><select id="tylen" class="ans" style="width:auto"><option selected>10</option><option>20</option></select></div>
+        <div class="q-actions"><button class="btn" id="tystart">Start typing</button></div></div>`:""}
       <div class="acro-mode"><h4>Glossary</h4><p>Every term by topic, with its definition${hasFix?" and, for attacks, the defense that best stops it":""}.</p>
         <div class="q-actions"><button class="btn ghost" id="tmref">View the glossary</button></div></div>
     </div></div>`;
     $("#tmstart").addEventListener("click",()=>drill(+$("#tmlen").value));
+    if(S.typed) $("#tystart").addEventListener("click",()=>typed(+$("#tylen").value));
     $("#tmref").addEventListener("click",ref);
   }
   function ref(){
@@ -1766,14 +1635,57 @@ function viewTerms(mod){
     const bad=new Set([it.id,...(it.avoid||[]),...(it.fixAvoid||[])]); const d=shuffle(ITEMS.filter(x=>x.fix&&x.fix!==it.fix&&!bad.has(x.id)&&!(x.avoid||[]).includes(it.id)&&!(x.fixAvoid||[]).includes(it.id))).slice(0,3);
     return {it,kind,cfg:{prompt:`Which defense BEST mitigates <b>${esc(it.t)}</b>?`,options:[it.fix,...d.map(x=>x.fix)],answer:0,explain:`<b>${esc(it.fix)}</b> is the targeted defense against ${esc(it.t)}. ${esc(it.t)}: ${esc(it.def)}.`}};
   }
+  function finish(R,before,N,again){
+    curKeys=null;
+    const nowM=ITEMS.filter(x=>termMastered(mod,x.id)&&!before.has(x.id));
+    app.innerHTML=head()+strip()+`<div class="card"><h3 style="font-size:1.4rem">${R.quit?"Stopped":"Set complete"}: ${R.r} of ${R.t} correct${R.t?` (${pct(R.r/R.t)}%)`:""}</h3>
+    <p style="margin:.4em 0">${nowM.length?`Newly mastered: <b>${nowM.map(x=>esc(x.t)).join(", ")}</b>.`:"No new terms mastered this set."} ${ITEMS.filter(x=>termMastered(mod,x.id)).length} of ${ITEMS.length} mastered overall.</p>
+    ${R.missed.length?`<h4 style="margin:14px 0 6px">Review these terms</h4><div class="tw"><table><tbody>${R.missed.map(id=>{ const x=ITEMS.find(y=>y.id===id); return `<tr><td style="width:30%"><b>${esc(x.t)}</b></td><td>${esc(x.def)}${x.fix?`<br><span class="note">Best defense: ${esc(x.fix)}</span>`:""}</td></tr>`; }).join("")}</tbody></table></div>`:""}
+    <div class="q-actions" style="margin-top:14px"><button class="btn" id="tmagain">Another set of ${N}</button><button class="btn ghost" id="tmref2">View the glossary</button><button class="btn ghost" id="tmmenu">${esc(m.name)} menu</button></div></div>`;
+    $("#tmagain").addEventListener("click",()=>again(N)); $("#tmref2").addEventListener("click",ref); $("#tmmenu").addEventListener("click",menu);
+  }
+  /* Type the answer: the student reads a term's scenario and types the term. A clean correct answer (no hint)
+     masters the term; with a hint it counts as one kind ("typed"); a miss clears the term's credit like any miss.
+     Typing a different term from this module explains that term, so the miss teaches something. */
+  function typed(N){
+    const R={r:0,t:0,missed:[]}; const before=new Set(ITEMS.filter(x=>termMastered(mod,x.id)).map(x=>x.id));
+    app.innerHTML=head()+`<div id="tmstrip"></div><div class="examtop"><button class="chipbtn" id="tmquit" type="button">Quit</button><span id="tmprog"></span></div><div id="area"></div>`;
+    const area=$("#area"); $("#tmstrip").innerHTML=strip();
+    $("#tmquit").addEventListener("click",()=>{ R.quit=true; finish(R,before,N,typed); });
+    function next(){
+      if(R.t>=N) return finish(R,before,N,typed);
+      $("#tmprog").textContent=`Scenario ${R.t+1} of ${N}`;
+      const open=ITEMS.filter(x=>!termMastered(mod,x.id)&&x.id!==lastId); const it=(open.length&&Math.random()<0.8)?pick(open):pick(ITEMS.filter(x=>x.id!==lastId)); lastId=it.id;
+      const c=termMastered(mod,it.id)?NEED:Math.min(Object.keys(termKeys(mod,it.id)).length,NEED);
+      const grp=S.groups.find(g=>g[0]===it.g)[1]; const words=it.t.replace(/\s*\([^)]*\)/g,"").split(/\s+/);
+      const meta=`${domTag(it.d)}<span class="tag">Type the answer</span><span class="tag" title="Different kinds of question answered correctly for this term.">Strength <span class="strength">${"●".repeat(c)}${"○".repeat(NEED-c)}</span></span>`;
+      const ex=`<b>${esc(it.t)}:</b> ${esc(it.def)}.`;
+      textQ(area,{meta,prompt:esc(it.sc),answer:it.t,placeholder:"Type the term",
+        hint:`Topic: <b>${esc(grp)}</b>. ${words.length>1?`${words.length} words, starting`:"It starts"} with <b>${esc(it.t[0])}</b>.`,
+        check:v=>{ const m=tyMatch(v,it); if(m===2) return {ok:true}; if(m===1&&!ITEMS.some(x=>x.id!==it.id&&tyMatch(v,x)===2)) return {ok:true,note:`Accepted. The exact spelling is <b>${esc(it.t)}</b>.`};
+          const other=ITEMS.find(x=>x.id!==it.id&&tyMatch(v,x)===2);
+          if(other&&((it.avoid||[]).includes(other.id)||(other.avoid||[]).includes(it.id))) return {ok:true,note:`Accepted: <b>${esc(other.t)}</b> also fits. The best fit is <b>${esc(it.t)}</b>.`};
+          if(other) return {ok:false,note:`You typed <b>${esc(other.t)}</b>: ${esc(other.def)}. That is not what this scenario describes.`};
+          return {ok:false}; },
+        steps:[ex],nextLabel:R.t+1>=N?"Finish":"Next",
+        onResult:(ok,hinted)=>{ R.t++; if(ok) R.r++; else if(!R.missed.includes(it.id)) R.missed.push(it.id); scoreUpd(R.r,R.t);
+          if(mode==="student"){ P.termM=P.termM||{}; const was=termMastered(mod,it.id); const bucket=(P.termM[mod]=P.termM[mod]||{});
+            if(ok){ const k=(bucket[it.id]=bucket[it.id]||{}); k.typed=1; if(!hinted) k.typed2=1;
+              if(termMastered(mod,it.id)){ P.termDone=P.termDone||{}; (P.termDone[mod]=P.termDone[mod]||{})[it.id]=true; } }
+            else if(!was) delete bucket[it.id];
+            save(); }
+          $("#tmstrip").innerHTML=strip(); },onNext:next});
+    }
+    next();
+  }
   function drill(N){
     const R={r:0,t:0,missed:[]}; const before=new Set(ITEMS.filter(x=>termMastered(mod,x.id)).map(x=>x.id));
     app.innerHTML=head()+`<div id="tmstrip"></div><div class="examtop"><button class="chipbtn" id="tmquit" type="button">Quit</button><span id="tmprog"></span></div><div id="area"></div>`;
     const area=$("#area"); $("#tmstrip").innerHTML=strip();
-    $("#tmquit").addEventListener("click",()=>{ R.quit=true; finish(); });
+    $("#tmquit").addEventListener("click",()=>{ R.quit=true; finish(R,before,N,drill); });
     const KN={name:"Name it",def:"Define it",scen:"Scenario",fix:"Best defense"};
     function next(){
-      if(R.t>=N) return finish();
+      if(R.t>=N) return finish(R,before,N,drill);
       $("#tmprog").textContent=`Question ${R.t+1} of ${N}`;
       const q=build(); lastId=q.it.id; const c=termMastered(mod,q.it.id)?NEED:Math.min(Object.keys(termKeys(mod,q.it.id)).length,NEED);
       const meta=`${domTag(q.it.d)}<span class="tag">${KN[q.kind]}</span><span class="tag" title="Different kinds of question answered correctly for this term.">Strength <span class="strength">${"●".repeat(c)}${"○".repeat(NEED-c)}</span></span>${c>=NEED?`<span class="tag" style="color:var(--green);border-color:var(--green)">Mastered</span>`:""}`;
@@ -1784,15 +1696,7 @@ function viewTerms(mod){
           save(); }
         $("#tmstrip").innerHTML=strip(); },onNext:next});
     }
-    function finish(){
-      curKeys=null;
-      const nowM=ITEMS.filter(x=>termMastered(mod,x.id)&&!before.has(x.id));
-      app.innerHTML=head()+strip()+`<div class="card"><h3 style="font-size:1.4rem">${R.quit?"Stopped":"Set complete"}: ${R.r} of ${R.t} correct${R.t?` (${pct(R.r/R.t)}%)`:""}</h3>
-      <p style="margin:.4em 0">${nowM.length?`Newly mastered: <b>${nowM.map(x=>esc(x.t)).join(", ")}</b>.`:"No new terms mastered this set."} ${ITEMS.filter(x=>termMastered(mod,x.id)).length} of ${ITEMS.length} mastered overall.</p>
-      ${R.missed.length?`<h4 style="margin:14px 0 6px">Review these terms</h4><div class="tw"><table><tbody>${R.missed.map(id=>{ const x=ITEMS.find(y=>y.id===id); return `<tr><td style="width:30%"><b>${esc(x.t)}</b></td><td>${esc(x.def)}${x.fix?`<br><span class="note">Best defense: ${esc(x.fix)}</span>`:""}</td></tr>`; }).join("")}</tbody></table></div>`:""}
-      <div class="q-actions" style="margin-top:14px"><button class="btn" id="tmagain">Another set of ${N}</button><button class="btn ghost" id="tmref2">View the glossary</button><button class="btn ghost" id="tmmenu">${esc(m.name)} menu</button></div></div>`;
-      $("#tmagain").addEventListener("click",()=>drill(N)); $("#tmref2").addEventListener("click",ref); $("#tmmenu").addEventListener("click",menu);
-    }
+
     next();
   }
   menu();
@@ -1858,7 +1762,7 @@ function viewAcro(){
     curKeys=null;
     const list=acroActive();
     app.innerHTML=head()+`<div class="card"><h3 style="font-size:1.4rem">Choose a mode</h3>
-    <p class="note" style="margin:.3em 0 12px">${acroMastered(acroCore())} of ${acroCore().length} core acronyms mastered (these set your rank). The other ${list.length-acroCore().length}, which CompTIA lists but rarely tests, come up less often and are marked <i>Also listed</i>.</p>
+    <p class="note" style="margin:.3em 0 12px">${acroMastered(acroCore())} of ${acroCore().length} acronyms mastered.${list.length>acroCore().length?` The other ${list.length-acroCore().length}, which CompTIA lists but rarely tests, come up less often and are marked <i>Also listed</i>.`:""}</p>
     <div class="acro-modes">
       <div class="acro-mode"><h4>Drill</h4><p>A set of questions with no glossary access. Test what you really know and build lasting acronym recall, one set at a time.</p>
         <div class="cfg"><label for="acrolen">Questions</label><select id="acrolen" class="ans" style="width:auto"><option>10</option><option selected>20</option><option>40</option></select></div>
@@ -1927,7 +1831,7 @@ function viewAcro(){
       const nowM=acroActive().filter(x=>acroIsMastered(x.id)&&!before.has(x.id));
       const p=S.t?S.r/S.t:0;
       app.innerHTML=head()+`<div class="card"><h3 style="font-size:1.4rem">${S.quit?"Drill stopped":"Set complete"}: ${S.r} of ${S.t} correct${S.t?` (${pct(p)}%)`:""}</h3>
-      <p style="margin:.4em 0">${nowM.length?`Newly mastered this set: <b>${nowM.map(x=>esc(x.a)).join(", ")}</b>.`:"No new acronyms mastered this set."} ${acroMastered(acroCore())} of ${acroCore().length} core acronyms mastered overall.</p>
+      <p style="margin:.4em 0">${nowM.length?`Newly mastered this set: <b>${nowM.map(x=>esc(x.a)).join(", ")}</b>.`:"No new acronyms mastered this set."} ${acroMastered(acroCore())} of ${acroCore().length} acronyms mastered overall.</p>
       ${S.missed.length?`<h4 style="margin:14px 0 6px">Review what you missed</h4><div class="tw"><table><tbody>${S.missed.map(x=>`<tr><td class="mono"><b>${esc(x.a)}</b></td><td>${esc(x.x)}</td><td class="note">${esc(x.d)}</td></tr>`).join("")}</tbody></table></div>`:""}
       <div class="q-actions" style="margin-top:14px"><button class="btn" id="acroagain">Another set of ${N}</button><button class="btn ghost" id="acroglos2">Open glossary</button><button class="btn ghost" id="acromenu">Acronyms menu</button></div></div>`;
       $("#acroagain").addEventListener("click",()=>drill(N));
