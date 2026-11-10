@@ -67,9 +67,9 @@ main{max-width:1080px;margin:0 auto;padding-block:20px 48px;padding-left:max(16p
 .hero-art .links line{stroke:var(--line)}
 .hero-art .flow line{stroke-width:2.5;stroke-dasharray:4 22;stroke-linecap:round;animation:nftflow 2.8s linear infinite}
 .hero-art .sweep{transform-origin:180px 95px;animation:radarsweep 4.5s linear infinite}
-.hero-art .blip{animation:radarblip 4.5s ease-in-out infinite}
+.hero-art .blip{transform-box:fill-box;transform-origin:center;animation:radarblip 4.5s linear infinite}
 @keyframes radarsweep{to{transform:rotate(360deg)}}
-@keyframes radarblip{0%,100%{opacity:.35}50%{opacity:1}}
+@keyframes radarblip{0%{opacity:1;transform:scale(1.7)}10%{opacity:1;transform:scale(1)}80%,100%{opacity:.12;transform:scale(1)}}
 @keyframes nftflow{to{stroke-dashoffset:-104}}
 .hero p{color:var(--muted);margin:.6rem 0 0;max-width:56ch;font-size:1.05rem}
 .weights{margin:0 0 26px}
@@ -1327,11 +1327,13 @@ const MODULES = [
 
 /* Home hero: a threat radar. The outer ring is split into the five domains by exam weight (DOMW), a sweep turns,
    and one blip per domain pulses. The MyCC logo (or the Mastery Badge, once earned) sits in the middle. */
+const RADAR_S=4.5;
 function heroRadar(){
   const cx=180,cy=95,pt=(r,deg)=>{const a=(deg-90)*Math.PI/180;return [(cx+r*Math.cos(a)).toFixed(1),(cy+r*Math.sin(a)).toFixed(1)];};
   let a=0; const ring=[1,2,3,4,5].map(d=>{ const a0=a+2,a1=a+DOMW[d]*3.6-2; a+=DOMW[d]*3.6; const [x0,y0]=pt(82,a0),[x1,y1]=pt(82,a1);
     return `<path d="M${x0} ${y0}A82 82 0 ${a1-a0>180?1:0} 1 ${x1} ${y1}" fill="none" stroke="${DOMC[d]}" stroke-width="7" stroke-linecap="round"><title>${DOM_LONG[d]}: ${DOMW[d]}%</title></path>`; }).join("");
-  const blips=[[1,48,40],[2,105,62],[3,200,50],[4,268,66],[5,320,44]].map(([d,deg,r],i)=>{ const [x,y]=pt(r,deg); return `<circle cx="${x}" cy="${y}" r="4" fill="${DOMC[d]}" class="blip" style="animation-delay:-${(i*0.9).toFixed(1)}s"/>`; }).join("");
+  const blips=[[1,48,40],[2,105,62],[3,200,50],[4,268,66],[5,320,44]].map(([d,deg,r],i)=>{ const [x,y]=pt(r,deg); /* the sweep line starts at 50 degrees and turns once every RADAR_S seconds; each blip lights up the moment the line crosses it */
+    const hit=((deg-50+360)%360)/360*RADAR_S; return `<circle cx="${x}" cy="${y}" r="4" fill="${DOMC[d]}" class="blip" style="animation-delay:${(hit-RADAR_S).toFixed(2)}s"/>`; }).join("");
   const [sx,sy]=pt(70,50);
   return `<defs><linearGradient id="radar-sweep" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--logo)" stop-opacity="0"/><stop offset="1" stop-color="var(--logo)" stop-opacity=".28"/></linearGradient></defs>
   <circle cx="${cx}" cy="${cy}" r="70" fill="none" stroke="var(--line)" stroke-width="1.5"/><circle cx="${cx}" cy="${cy}" r="52" fill="none" stroke="var(--line)" stroke-width="1.5" stroke-dasharray="3 5"/>
