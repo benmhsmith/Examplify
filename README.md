@@ -4,6 +4,8 @@
 
 Provo is MyComputerCareer's exam-readiness lab for IT certifications. It turns each exam's official objectives into short drills, hands-on performance-based questions (PBQs), and timed practice exams, and it shows students exactly which topics they have mastered and which still need work.
 
+The name "Provo" come from the Italian verb provare meaning "to prove". Provo is simply the first-person present form (io provo = I prove)
+
 **[Open Provo →](https://benmhsmith.github.io/Provo/)**
 
 <p align="center"><img src="docs/images/provo-home.png" alt="Provo Network+ home page: the MyComputerCareer logo, the CompTIA Network+ N10-009 title, the official domain weighting bar, and the first study modules with their ranks." width="860"></p>
