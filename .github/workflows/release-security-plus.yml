@@ -6,6 +6,9 @@
 # Otherwise it builds the Joplin plugin (.jpl) and the standalone page (.html),
 # creates the tag security-plus-vX.Y.Z, and publishes the release with notes taken
 # from CHANGELOG.md.
+#
+# Note: if a run fails because the version has no CHANGELOG.md entry, add the entry
+# and merge again; a change to this file or to manifest.json starts a new run.
 name: Release Provo Security+
 
 on:

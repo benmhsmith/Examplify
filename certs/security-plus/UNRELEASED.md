@@ -1,1 +1,0 @@
-- First version of Provo Security+ for CompTIA Security+ SY0-701.

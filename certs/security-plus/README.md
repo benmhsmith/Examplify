@@ -2,7 +2,9 @@
 
 MyComputerCareer's study lab for the **CompTIA Security+ SY0-701** exam. It drills every exam domain, tracks what you have mastered, and finishes with timed mini-exams weighted to the official domains.
 
-> **In development.** The framework is in place with a starter set of questions in every module. Each module's content is being expanded to cover its full objectives, and performance-based questions are coming soon.
+**Current version:** see the [Security+ releases](https://github.com/benmhsmith/Provo/releases?q=security-plus) · [What changed](CHANGELOG.md)
+
+> **Preview.** Every module works, with a starter set of questions. Each module is being expanded to cover its full objectives, and performance-based questions are coming soon.
 
 ## What's inside
 
@@ -39,6 +41,44 @@ There is also a one-page **Cram Sheet** and a **Progress** page.
 ### Ranks
 
 Each module ranks you Beginner (under 50%), Intermediate (50%+), Advanced (70%+), Expert (80%+), or Pro (100%). Reach Expert in every module to earn the Security+ Mastery Badge. The Performance-Based Questions module does not count toward the badge until it is built.
+
+## How to use it
+
+Pick whichever fits you. Your progress is saved on your own device and never leaves it.
+
+### Option 1: In your browser (nothing to install)
+
+Open the web version: **https://benmhsmith.github.io/Provo/security-plus/**
+
+Works on Windows, Mac, Linux, Chromebooks, Android, iPhone, and iPad. Progress is saved in that browser on that device, separately from Network+.
+
+**iPhone or iPad:** open the link in Safari, tap the **Share** button, then **Add to Home Screen**. It opens like an app.
+
+### Option 2: As a single file (works offline)
+
+1. Go to the [Releases page](https://github.com/benmhsmith/Provo/releases?q=security-plus) and open the newest **Provo Security+** release.
+2. Download `Provo-Security-Plus-vX.Y.Z.html`.
+3. Double-click it to open it in your browser. No internet needed after that.
+
+### Option 3: Inside Joplin (desktop and Android)
+
+[Joplin](https://joplinapp.org/) is a free note-taking app. The plugin opens the lab right inside a note, and it installs beside Provo Network+.
+
+**On a computer (Windows, Mac, Linux):**
+
+1. Download `provo-security-plus-vX.Y.Z.jpl` from the newest **Provo Security+** release.
+2. In Joplin, open the **Configuration** screen (**Tools → Options** on Windows and Linux, **Joplin → Settings** on Mac) and go to **Plugins**.
+3. Click the **Plugin tools** gear button and choose **Install from file**. Pick the `.jpl` file.
+4. Restart Joplin when asked. If Joplin keeps running in the system tray, quit it fully first.
+5. Open **Tools → Provo Security+ → How to use** and click **Copy command**. Paste it into any note.
+
+**On Android:**
+
+1. Download the `.jpl` file to your phone.
+2. In Joplin, open **Configuration → Plugins**. Under **Advanced settings**, tap **Install from file** and pick the `.jpl` file.
+3. Restart the app. Then type ` ```sec+ ` on one line of a note and ` ``` ` on the next.
+
+Joplin on iPhone and iPad only allows plugins from its recommended list, so use Option 1 there.
 
 ## How it works under the hood
 
