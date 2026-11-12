@@ -11,7 +11,7 @@ The name "Provo" comes from the Italian verb *provare*, "to prove." *Provo* is i
 
 **[Open Provo →](https://benmhsmith.github.io/Provo/)**
 
-<p align="center"><img src="docs/images/provo-home.png" alt="Provo Network+ home page: the Provo name, the CompTIA Network+ N10-009 title, the official domain weighting bar, and the first study modules with their ranks." width="860"></p>
+<p align="center"><img src="docs/images/provo-security-home.png" alt="Provo Security+ home page in dark mode: the Provo icon and name, the CompTIA Security+ SY0-701 title, the radar header art with the five-color domain ring, the official domain weighting bar, and the first study modules." width="860"></p>
 
 ## Who it's for
 
