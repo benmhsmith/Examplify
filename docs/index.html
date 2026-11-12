@@ -261,7 +261,7 @@ button.btn{font:inherit;font-weight:700;font-size:.95rem;cursor:pointer}
     <label>Name<input name="name" autocomplete="name" required></label>
     <label>Email<input name="email" type="email" autocomplete="email" required><span class="pvhint">So we can reply. Never shared.</span></label>
     <label>Message<textarea name="message" rows="5" required></textarea></label>
-    <label>Exam<select name="exam"><option>Network+ N10-009</option><option>Security+ SY0-701</option><option>Website / general</option></select></label>
+    <label>Exam<select name="exam"><option>Website / general</option><option>Network+ N10-009</option><option>Security+ SY0-701</option></select></label>
     <input type="text" name="_gotcha" class="pvtrap" tabindex="-1" autocomplete="off" aria-hidden="true">
     <p class="pvdlg-msg" role="status" aria-live="polite"></p>
     <div class="pvdlg-f"><button type="button" class="pvbtn-q" data-x>Cancel</button><button type="submit" class="pvbtn">Send message</button></div>
@@ -274,7 +274,7 @@ button.btn{font:inherit;font-weight:700;font-size:.95rem;cursor:pointer}
     <label>What kind of issue?<select name="kind">
       <option>Wrong or unclear answer</option><option>Typo or wording</option><option>Something doesn't work</option><option>Suggestion</option><option>Other</option></select></label>
     <label>What happened?<textarea name="details" rows="5" required placeholder="For a question, paste or describe it, and say which answer you think is right and why."></textarea></label>
-    <label>Exam<select name="exam"><option>Network+ N10-009</option><option>Security+ SY0-701</option><option>Website / general</option></select></label>
+    <label>Exam<select name="exam"><option>Website / general</option><option>Network+ N10-009</option><option>Security+ SY0-701</option></select></label>
     <p class="pvdlg-auto"></p>
     <p class="pvdlg-msg" role="status" aria-live="polite"></p>
     <div class="pvdlg-f"><button type="button" class="pvbtn-q" data-x>Cancel</button><button type="submit" class="pvbtn">Continue on GitHub</button></div>
@@ -285,7 +285,7 @@ button.btn{font:inherit;font-weight:700;font-size:.95rem;cursor:pointer}
 /* ===== Site menu, Contact Us, Report an Issue (web pages only; absent inside Joplin) ===== */
 (function(){
   /* Contact Us goes to Formspree. Paste the form's ID (the part after /f/ in its endpoint) here. */
-  const FORMSPREE_ID = "";
+  const FORMSPREE_ID = "xgakvlyn";
   const REPO = "https://github.com/benmhsmith/Provo";
   const btn = document.getElementById("pvMenuBtn"), panel = document.getElementById("pvMenu");
   if (!btn || !panel) return;
@@ -301,9 +301,10 @@ button.btn{font:inherit;font-weight:700;font-size:.95rem;cursor:pointer}
   });
   panel.querySelectorAll("[data-close]").forEach(a => a.addEventListener("click", () => open(false)));
   const pageName = () => {
-    const h = (location.hash || "#home").slice(1);
-    const t = document.querySelector("#app h1, #app h2, main h1");
-    return (t ? t.textContent.trim().replace(/\s+/g, " ").slice(0, 80) + " " : "") + "(#" + h + ")";
+    const h = (location.hash || "").slice(1);
+    const t = document.querySelector("#app h1, #app h2");
+    const name = t ? t.textContent.trim().replace(/\s+/g, " ").slice(0, 80) : document.title;
+    return name + (h ? " (#" + h + ")" : "");
   };
   const version = () => { const b = document.querySelector("footer .badge, .badge"); return b ? b.textContent.trim() : ""; };
   const browser = () => { const u = navigator.userAgent; const m = u.match(/(Edg|OPR|Chrome|Firefox|Version)\/(\d+)/); const name = m ? ({Edg:"Edge",OPR:"Opera",Version:"Safari"}[m[1]] || m[1]) + " " + m[2] : "Unknown browser";
@@ -346,9 +347,14 @@ button.btn{font:inherit;font-weight:700;font-size:.95rem;cursor:pointer}
     const sb = cf.querySelector('button[type="submit"]'); sb.disabled = true; say(cf, "Sending…", "");
     try {
       const fd = new FormData(cf); fd.append("page", pageName()); fd.append("version", version());
+      fd.append("_subject", "Provo contact: " + (fd.get("exam") || "website") + " from " + fd.get("name"));
       const r = await fetch("https://formspree.io/f/" + FORMSPREE_ID, { method: "POST", body: fd, headers: { Accept: "application/json" } });
-      if (!r.ok) throw new Error(r.status);
-      cf.reset(); say(cf, "Thanks! Your message was sent. We'll reply by email.", "ok");
+      if (r.ok) { cf.reset(); say(cf, "Thanks! Your message was sent. We'll reply by email.", "ok"); return; }
+      /* Formspree answers errors as {errors:[{field, message}]}: flag the field and show its message */
+      const data = await r.json().catch(() => ({}));
+      const errs = Array.isArray(data.errors) ? data.errors : [];
+      errs.forEach(x => { const el = x.field && cf.querySelector('[name="' + x.field + '"]'); el && el.setAttribute("aria-invalid", "true"); });
+      say(cf, errs.length ? errs.map(x => x.message).join(" ") : "Sorry, your message didn't send. Please try again, or use Report an issue.", "bad");
     } catch (err) { say(cf, "Sorry, your message didn't send. Check your connection and try again, or use Report an issue.", "bad"); }
     finally { sb.disabled = false; } });
 })();
