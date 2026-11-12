@@ -1,20 +1,21 @@
-<p align="center"><img src="docs/images/mycc-logo.png" alt="MyComputerCareer: Training for a better life" width="320"></p>
+<p align="center">
+  <img src="docs/images/icons/provo-lockup-light.svg#gh-light-mode-only" alt="Provo" height="96">
+  <img src="docs/images/icons/provo-lockup-dark.svg#gh-dark-mode-only" alt="Provo" height="96">
+</p>
 
-# Provo by MyComputerCareer
+# Provo
 
-Provo is MyComputerCareer's exam-readiness lab for IT certifications. It turns each exam's official objectives into short drills, hands-on performance-based questions (PBQs), and timed practice exams, and it shows students exactly which topics they have mastered and which still need work.
+Provo is an exam-readiness lab for IT certifications. It turns each exam's official objectives into short drills, hands-on performance-based questions (PBQs), and timed practice exams, and it shows students exactly which topics they have mastered and which still need work.
 
-The name "Provo" come from the Italian verb provare meaning "to prove". Provo is simply the first-person present form (io provo = I prove)
+The name "Provo" comes from the Italian verb *provare*, "to prove." *Provo* is its first-person present form: *io provo*, "I prove."
 
 **[Open Provo →](https://benmhsmith.github.io/Provo/)**
 
-<p align="center"><img src="docs/images/provo-home.png" alt="Provo Network+ home page: the MyComputerCareer logo, the CompTIA Network+ N10-009 title, the official domain weighting bar, and the first study modules with their ranks." width="860"></p>
+<p align="center"><img src="docs/images/provo-home.png" alt="Provo Network+ home page: the Provo name, the CompTIA Network+ N10-009 title, the official domain weighting bar, and the first study modules with their ranks." width="860"></p>
 
-## About MyComputerCareer
+## Who it's for
 
-MyComputerCareer (MyCC) trains people for careers in information technology. Its programs take students who are new to IT through industry certifications such as CompTIA A+, Network+, Security+, and CySA+. Its motto is *Training for a better life*.
-
-Provo was built by a MyCC instructor to support that training. It gives students a place to practice between classes and a clear, honest picture of when they are ready to book the exam.
+Provo is built by an IT instructor for students who are new to IT and working through certifications such as CompTIA A+, Network+, Security+, and CySA+. It gives them a place to practice between classes and a clear, honest picture of when they are ready to book the exam.
 
 ## What Provo does
 
@@ -52,7 +53,7 @@ Provo runs three ways. Each exam's page has step-by-step setup for all three.
 - **As a single file:** download the `.html` file from the [Releases page](https://github.com/benmhsmith/Provo/releases) and open it, even with no internet.
 - **Inside Joplin:** install the `.jpl` plugin from the [Releases page](https://github.com/benmhsmith/Provo/releases), and the lab opens inside the student's [Joplin](https://joplinapp.org/) study notes on desktop or Android.
 
-## For MyCC instructors and staff
+## For instructors
 
 - Each exam's folder lists its modules, how ranks are earned, and its [changelog](certs/network-plus/CHANGELOG.md).
 - Every version is published on the [Releases page](https://github.com/benmhsmith/Provo/releases).
@@ -70,7 +71,7 @@ Provo/
 
 ## License
 
-Copyright (c) 2026 MyComputerCareer. All rights reserved. Provo is proprietary software: the source is visible here, but it is not open source. You may use the official website and release files for your own exam study. See [LICENSE](LICENSE) for the full terms.
+Copyright (c) 2026 Benjamin Smith. All rights reserved. Provo is proprietary software: the source is visible here, but it is not open source. You may use the official website and release files for your own exam study. See [LICENSE](LICENSE) for the full terms.
 
 Versions up to and including v4.0.0 were released under the GNU GPL v3.0 under earlier names. Third-party parts, such as the embedded fonts, keep their own licenses; see [NOTICE.md](NOTICE.md).
 

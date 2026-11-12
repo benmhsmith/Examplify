@@ -86,6 +86,8 @@ def build(version):
     with tarfile.open(jpl, 'w', format=tarfile.PAX_FORMAT) as tar:
         for f in ['manifest.json', 'index.js', 'contentScript.js', 'nft.js', 'nft.css', 'editor.js', 'editor.css', 'OFL.txt']:
             tar.add(os.path.join(DIST, f), arcname=f)
+        for n in (16, 32, 48, 128):
+            tar.add(os.path.join(DIST, 'icons', f'icon-{n}.png'), arcname=f'icons/icon-{n}.png')
     page = os.path.join(OUT, f'Provo-Network-Plus-v{version}.html')
     run([sys.executable, '-I', os.path.join(CERT, 'scripts', 'mkstand.py'), SRC, page], CERT)
     return jpl, page

@@ -1,6 +1,6 @@
 # Provo Security+
 
-MyComputerCareer's study lab for the **CompTIA Security+ SY0-701** exam. It drills every exam domain, tracks what you have mastered, and finishes with timed mini-exams weighted to the official domains.
+Provo's study lab for the **CompTIA Security+ SY0-701** exam. It drills every exam domain, tracks what you have mastered, and finishes with timed mini-exams weighted to the official domains.
 
 **Current version:** see the [Security+ releases](https://github.com/benmhsmith/Provo/releases?q=security-plus) · [What changed](CHANGELOG.md)
 
@@ -108,6 +108,6 @@ To build without releasing: `python3 certs/security-plus/scripts/release.py --bu
 
 ---
 
-© 2026 MyComputerCareer. All rights reserved. See [LICENSE](../../LICENSE).
+© 2026 Benjamin Smith. All rights reserved. See [LICENSE](../../LICENSE).
 
 CompTIA and Security+ are trademarks of CompTIA, Inc. Provo contains no CompTIA exam questions.
