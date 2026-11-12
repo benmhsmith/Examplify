@@ -1,0 +1,46 @@
+name: Report from the Provo app
+description: A wrong or unclear answer, a typo, something that doesn't work, or a suggestion.
+title: "[Provo] "
+labels: ["report"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve Provo. If you came from **Report an issue** in the app, the fields below are already filled in. Check them over, then select **Create**.
+  - type: input
+    id: exam
+    attributes:
+      label: Exam
+      description: Network+ N10-009, Security+ SY0-701, or website.
+      placeholder: Security+ SY0-701
+    validations:
+      required: true
+  - type: input
+    id: kind
+    attributes:
+      label: Kind of issue
+      placeholder: Wrong or unclear answer, typo, something doesn't work, suggestion
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: What happened?
+      description: For a question, include the question and which answer you think is right and why.
+    validations:
+      required: true
+  - type: input
+    id: page
+    attributes:
+      label: Page
+      description: Where in Provo this happened. Filled in automatically.
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Filled in automatically.
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and device
+      description: Filled in automatically.

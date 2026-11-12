@@ -1,0 +1,3 @@
+- A menu in the top bar links to the Provo home page (all exams), this exam's home, the other exam, Contact us, and Report an issue. Selecting the Provo icon also returns to the Provo home page.
+- Report an issue opens a pre-filled GitHub report with the exam, page, version and browser filled in.
+- Contact us sends a message by email from inside the page.
