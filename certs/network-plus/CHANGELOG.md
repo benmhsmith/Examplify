@@ -1,5 +1,19 @@
 # Provo Network+ changelog
 
+## v5.1.0
+- Every answer is explained. After any multiple-choice question, Provo now shows why the correct answer is right and why each of the other options is wrong, with your own pick marked. This covers every drill and question type, from acronyms and terms to the question qualifiers.
+- Mini-exams still give no feedback while you take them. Afterwards, the new Review your answers section walks through every question the same way: missed questions first, with a button to see all of them.
+- Fixed: the troubleshooting drill could stop with an error when it picked one of the original methodology questions.
+- Progress page: the Mastery Badge hint now says Expert (80%+), matching what the badge actually requires.
+- Progress: new "Reset everything, including badges" button. It clears all module progress plus the Mastery Badge, prestige, and secret badges (for example, after testing). The existing "Reset all progress" still keeps your badges.
+- Joplin: the Grand Architect outline on study notes and notebooks now turns off right away when the secret badges are reset, and leftover outline files from earlier sessions are cleaned up.
+- Joplin: new "Add Provo Network+ note" command (Tools → Provo Network+, and a button in the How to use window). It creates a note named Provo Network+ in the notebook you have open and opens it straight into the full-width tool, so there is nothing to copy and paste. Delete the note any time; your progress is kept and comes back when you add the note again.
+- Joplin: notes added by the plugin include a short hidden line that tells anyone who switches to the Markdown editor how to get back to the tool.
+- Joplin: the How to use and Changelog windows now have a fixed size and scroll, so long text is no longer cut off and the buttons stay on screen even when Joplin cannot be made larger.
+- Provo branding only: the footer and Joplin plugin details no longer name a company.
+- New Provo icon: a white P on a border in the five domain colors. It appears in the top bar, at the center of the home header art, as the browser-tab icon, as the home-screen icon when the page is added to a phone, and as the Joplin plugin icon.
+- License: Provo is now copyrighted by Benjamin Smith, and MyComputerCareer holds a right of first refusal to acquire it. See LICENSE.
+
 ## v5.0.0
 - Renamed to Provo Network+, by MyComputerCareer. Your saved progress, ranks, and badges carry over; the Joplin plugin keeps the same ID, so installing this version updates the old one in place.
 - New look in MyComputerCareer colors: the MyComputerCareer logo and the Provo name in the top bar, the MyComputerCareer icon at the center of the home page diagram, and Montserrat for all text. Command output keeps its monospaced font. Dark mode keeps the dark grey theme.

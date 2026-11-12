@@ -102,6 +102,7 @@ main{max-width:1080px;margin:0 auto;padding-block:20px 48px;padding-left:max(16p
 .rank.r5 .bars i.on,.rank.r6 .bars i.on{background:linear-gradient(var(--gold),var(--orange))}
 .rank.r6 .bars i.on{box-shadow:0 0 5px var(--gold)}
 .brand{align-items:center}
+.brand .pvicon{width:32px;height:32px;flex:none;display:block}
 .brand .pvwrap{display:inline-flex;flex-direction:column;gap:3px}
 .brand b.pvname{font-weight:300;letter-spacing:.01em;font-size:1.6rem;line-height:1.1;color:var(--logo)}
 .brand .pvpro{font-weight:600}
@@ -460,7 +461,7 @@ html.mobile .sr-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 
 <header class="top">
   <div class="top-in">
-    <a class="brand" href="#home" aria-label="Provo, home"><span class="pvwrap"><b class="pvname"><span class="pvpro">Pro</span>vo</b><span class="pvbar" aria-hidden="true"><i class="pv1" style="flex:23"></i><i class="pv2" style="flex:20"></i><i class="pv3" style="flex:19"></i><i class="pv4" style="flex:14"></i><i class="pv5" style="flex:24"></i></span></span></a>
+    <a class="brand" href="#home" aria-label="Provo, home"><svg class="pvicon" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="13" fill="#0E1013"/><path d="M32 3.5H51A9.5 9.5 0 0 1 60.5 13V51A9.5 9.5 0 0 1 51 60.5H13A9.5 9.5 0 0 1 3.5 51V13A9.5 9.5 0 0 1 13 3.5H32" fill="none" stroke="#6EA4E8" stroke-width="7" pathLength="100" stroke-dasharray="23 77" stroke-dashoffset="0"/><path d="M32 3.5H51A9.5 9.5 0 0 1 60.5 13V51A9.5 9.5 0 0 1 51 60.5H13A9.5 9.5 0 0 1 3.5 51V13A9.5 9.5 0 0 1 13 3.5H32" fill="none" stroke="#4DBA80" stroke-width="7" pathLength="100" stroke-dasharray="20 80" stroke-dashoffset="-23"/><path d="M32 3.5H51A9.5 9.5 0 0 1 60.5 13V51A9.5 9.5 0 0 1 51 60.5H13A9.5 9.5 0 0 1 3.5 51V13A9.5 9.5 0 0 1 13 3.5H32" fill="none" stroke="#E8C25A" stroke-width="7" pathLength="100" stroke-dasharray="19 81" stroke-dashoffset="-43"/><path d="M32 3.5H51A9.5 9.5 0 0 1 60.5 13V51A9.5 9.5 0 0 1 51 60.5H13A9.5 9.5 0 0 1 3.5 51V13A9.5 9.5 0 0 1 13 3.5H32" fill="none" stroke="#F07070" stroke-width="7" pathLength="100" stroke-dasharray="14 86" stroke-dashoffset="-62"/><path d="M32 3.5H51A9.5 9.5 0 0 1 60.5 13V51A9.5 9.5 0 0 1 51 60.5H13A9.5 9.5 0 0 1 3.5 51V13A9.5 9.5 0 0 1 13 3.5H32" fill="none" stroke="#A994E0" stroke-width="7" pathLength="100" stroke-dasharray="24 76" stroke-dashoffset="-76"/><path d="M18.09 48.5V15.5H32.38Q36.81 15.5 40.01 16.94Q43.22 18.38 44.96 21.06Q46.71 23.75 46.71 27.47Q46.71 31.15 44.96 33.84Q43.22 36.53 40.01 37.96Q36.81 39.4 32.38 39.4H22.34L25.73 35.96V48.5ZM25.73 36.81 22.34 33.18H31.95Q35.49 33.18 37.23 31.67Q38.98 30.16 38.98 27.47Q38.98 24.74 37.23 23.23Q35.49 21.72 31.95 21.72H22.34L25.73 18.09Z" fill="#fff" stroke="#fff" stroke-width="1.1" stroke-linejoin="round"/></svg><span class="pvwrap"><b class="pvname"><span class="pvpro">Pro</span>vo</b><span class="pvbar" aria-hidden="true"><i class="pv1" style="flex:23"></i><i class="pv2" style="flex:20"></i><i class="pv3" style="flex:19"></i><i class="pv4" style="flex:14"></i><i class="pv5" style="flex:24"></i></span></span></a>
     <div class="viewsw" id="viewsw"><span class="lbl" data-v="desktop">Desktop</span><button class="sw" id="layoutSw" type="button" role="switch" aria-checked="false" aria-label="Mobile layout"><i></i></button><span class="lbl" data-v="mobile">Mobile</span></div>
     <a class="chipbtn" href="#cram" style="text-decoration:none;padding:6px 12px">Cram Sheet</a>
     <a class="chipbtn" href="#progress" style="text-decoration:none;padding:6px 12px">Progress</a>
@@ -1281,12 +1282,9 @@ const MODULES = [
 
 /* Home hero: a threat radar. The outer ring is split into the five domains by exam weight (DOMW), a sweep turns,
    and one blip per domain pulses. The Provo monogram (or the Mastery Badge, once earned) sits in the middle. */
-/* Provo monogram for the center of the home header art: a P over the five-color domain stripe used in the wordmark. */
-function provoMark(cx,cy){
-  const w=[23,20,19,14,24], W=26; let x=cx-W/2;
-  const bar=w.map((v,i)=>{const bw=W*v/100, r=`<rect x="${x.toFixed(2)}" y="${cy+11}" width="${(bw-0.6).toFixed(2)}" height="3.2" fill="var(--pv${i+1})"/>`; x+=bw; return r;}).join("");
-  return `<text x="${cx}" y="${cy+7}" text-anchor="middle" font-family="var(--font-display)" font-size="29" font-weight="600" fill="var(--logo)">P</text>${bar}`;
-}
+/* Provo icon for the center of the home header art: the P on the five-color domain border. */
+const PROVO_ICON='<rect width="64" height="64" rx="14" fill="#0E1013"/><path d="M32 3H50A11 11 0 0 1 61 14V50A11 11 0 0 1 50 61H14A11 11 0 0 1 3 50V14A11 11 0 0 1 14 3H32" fill="none" stroke="#6EA4E8" stroke-width="6" pathLength="100" stroke-dasharray="23 77" stroke-dashoffset="0"/><path d="M32 3H50A11 11 0 0 1 61 14V50A11 11 0 0 1 50 61H14A11 11 0 0 1 3 50V14A11 11 0 0 1 14 3H32" fill="none" stroke="#4DBA80" stroke-width="6" pathLength="100" stroke-dasharray="20 80" stroke-dashoffset="-23"/><path d="M32 3H50A11 11 0 0 1 61 14V50A11 11 0 0 1 50 61H14A11 11 0 0 1 3 50V14A11 11 0 0 1 14 3H32" fill="none" stroke="#E8C25A" stroke-width="6" pathLength="100" stroke-dasharray="19 81" stroke-dashoffset="-43"/><path d="M32 3H50A11 11 0 0 1 61 14V50A11 11 0 0 1 50 61H14A11 11 0 0 1 3 50V14A11 11 0 0 1 14 3H32" fill="none" stroke="#F07070" stroke-width="6" pathLength="100" stroke-dasharray="14 86" stroke-dashoffset="-62"/><path d="M32 3H50A11 11 0 0 1 61 14V50A11 11 0 0 1 50 61H14A11 11 0 0 1 3 50V14A11 11 0 0 1 14 3H32" fill="none" stroke="#A994E0" stroke-width="6" pathLength="100" stroke-dasharray="24 76" stroke-dashoffset="-76"/><path d="M19.83 46.5V17.5H32.38Q36.27 17.5 39.09 18.76Q41.91 20.03 43.44 22.39Q44.97 24.75 44.97 28.02Q44.97 31.25 43.44 33.62Q41.91 35.98 39.09 37.24Q36.27 38.5 32.38 38.5H23.55L26.54 35.48V46.5ZM26.54 36.23 23.55 33.04H32.01Q35.11 33.04 36.65 31.71Q38.18 30.38 38.18 28.02Q38.18 25.62 36.65 24.29Q35.11 22.97 32.01 22.97H23.55L26.54 19.78Z" fill="#fff"/>';
+function provoMark(cx,cy){ const s=36; return `<svg x="${cx-s/2}" y="${cy-s/2}" width="${s}" height="${s}" viewBox="0 0 64 64">${PROVO_ICON}</svg>`; }
 const RADAR_S=4.5;
 function heroRadar(){
   const cx=180,cy=95,pt=(r,deg)=>{const a=(deg-90)*Math.PI/180;return [(cx+r*Math.cos(a)).toFixed(1),(cy+r*Math.sin(a)).toFixed(1)];};
@@ -1556,7 +1554,7 @@ function viewHome(){
     </a>`;}).join("")}
   </div></section>`).join("")}</div>
   <p class="note" style="margin-top:14px">Progress saves in this browser only. To start over, open Progress and choose Reset all progress.</p>
-  <p class="note">Provo Security+ <span class="badge">v1.0.0</span> · © 2026 Benjamin Smith. All rights reserved.</p>`;
+  <p class="note">Provo Security+ <span class="badge">v1.1.0</span> · © 2026 Benjamin Smith. All rights reserved.</p>`;
 }
 
 /* ---- generic pool runner ---- */

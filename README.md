@@ -1,3 +1,8 @@
+<p align="center">
+  <img src="docs/images/icons/provo-lockup-light.svg#gh-light-mode-only" alt="Provo" height="96">
+  <img src="docs/images/icons/provo-lockup-dark.svg#gh-dark-mode-only" alt="Provo" height="96">
+</p>
+
 # Provo
 
 Provo is an exam-readiness lab for IT certifications. It turns each exam's official objectives into short drills, hands-on performance-based questions (PBQs), and timed practice exams, and it shows students exactly which topics they have mastered and which still need work.

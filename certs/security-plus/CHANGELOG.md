@@ -1,5 +1,12 @@
 # Provo Security+ changelog
 
+## v1.1.0
+- Every answer is explained. After any multiple-choice question, Provo now shows why the correct answer is right and why each of the other options is wrong, with your own pick marked. This covers every drill and question type, from acronyms and terms to the question qualifiers.
+- Mini-exams still give no feedback while you take them. Afterwards, the new Review your answers section walks through every question the same way: missed questions first, with a button to see all of them.
+- Provo branding only: the footer and Joplin plugin details no longer name a company.
+- New Provo icon: a white P on a border in the five domain colors. It appears in the top bar, at the center of the home header art, as the browser-tab icon, as the home-screen icon when the page is added to a phone, and as the Joplin plugin icon.
+- License: Provo is now copyrighted by Benjamin Smith, and MyComputerCareer holds a right of first refusal to acquire it. See LICENSE.
+
 ## v1.0.0
 - Out of preview: every module from 02 to 10 now has hands-on labs alongside its questions, and every module covers its full SY0-701 objectives. Performance-based questions are still coming soon.
 - New labs, 24 in all. Drag-and-drop works with a mouse, a finger, or by tapping a tile and then a target. Getting a lab task right on the first check counts as one question for each term it uses.
