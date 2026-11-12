@@ -1,22 +1,22 @@
 Provo Proprietary License
 
-Copyright (c) 2026 MyComputerCareer. All rights reserved.
+Copyright (c) 2026 Benjamin Smith. All rights reserved.
 
 Provo, including its source code, question and scenario content, graphics,
 and documentation (together, the "Software"), is the proprietary property of
-MyComputerCareer. The source code is visible in this repository, but it is
-not open source. No license is granted except as stated below.
+Benjamin Smith (the "Owner"). The source code is visible in this repository,
+but it is not open source. No license is granted except as stated below.
 
 1. Permitted use
 
    You may use the official hosted version of the Software and the official
-   release files published by MyComputerCareer for your own personal,
-   non-commercial exam study. MyComputerCareer staff and enrolled students may
-   also use the Software in MyComputerCareer courses.
+   release files published by the Owner for your own personal,
+   non-commercial exam study. Instructors and enrolled students may also use
+   the Software in courses that the Owner teaches or has approved in writing.
 
 2. Restrictions
 
-   Unless MyComputerCareer gives you permission in writing, you may not:
+   Unless the Owner gives you permission in writing, you may not:
 
    a. copy, modify, adapt, translate, or create derivative works of the
       Software or any part of it, including its questions and scenarios;
@@ -26,13 +26,24 @@ not open source. No license is granted except as stated below.
       or service; or
    d. remove or change any copyright, trademark, or license notice.
 
-3. Third-party components
+3. Right of first refusal
+
+   MyComputerCareer holds a right of first refusal to acquire ownership of,
+   or an exclusive license to, the Software. Before the Owner sells, assigns,
+   or exclusively licenses the Software to anyone else, the Owner will first
+   offer it to MyComputerCareer, and MyComputerCareer may accept that offer
+   on the same terms. The details of this right, including how long
+   MyComputerCareer has to respond, are set by a separate written agreement
+   between the Owner and MyComputerCareer, which controls if it differs from
+   this section. This section gives no rights to anyone else.
+
+4. Third-party components
 
    Some components, such as embedded fonts, are owned by others and are
    licensed under their own terms. They are listed in NOTICE.md. Nothing in
    this license limits your rights under those terms.
 
-4. Earlier versions
+5. Earlier versions
 
    Versions up to and including v4.0.0 (published as Net+ Fast Track,
    Network+ Readiness Lab, and Examplify) were distributed under the GNU
@@ -40,24 +51,25 @@ not open source. No license is granted except as stated below.
    received under that license remain under it. This license applies to
    v5.0.0 and every later version.
 
-5. Trademarks
+6. Trademarks
 
-   MyComputerCareer and its logo are trademarks of MyComputerCareer. This
-   license does not grant any right to use them. CompTIA, Network+, Security+,
-   A+, and CySA+ are trademarks of CompTIA, Inc.
+   This license does not grant any right to use the Provo name or logo.
+   CompTIA, Network+, Security+, A+, and CySA+ are trademarks of
+   CompTIA, Inc.
 
-6. No warranty
+7. No warranty
 
    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
    FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. USING THE SOFTWARE
    DOES NOT GUARANTEE ANY EXAM RESULT.
 
-7. Limitation of liability
+8. Limitation of liability
 
-   IN NO EVENT SHALL MYCOMPUTERCAREER BE LIABLE FOR ANY CLAIM, DAMAGES, OR
-   OTHER LIABILITY ARISING FROM OR IN CONNECTION WITH THE SOFTWARE OR ITS USE.
+   IN NO EVENT SHALL THE OWNER BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER
+   LIABILITY ARISING FROM OR IN CONNECTION WITH THE SOFTWARE OR ITS USE.
 
-8. Permissions
+9. Permissions
 
-   To ask for any use not permitted above, contact MyComputerCareer.
+   To ask for any use not permitted above, open an issue at
+   https://github.com/benmhsmith/Provo/issues.

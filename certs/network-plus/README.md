@@ -1,6 +1,6 @@
 # Provo Network+
 
-MyComputerCareer's study lab for the **CompTIA Network+ N10-009** exam. It drills the topics the exam weighs most, tracks what you have mastered, and finishes with timed mini-exams that include performance-based questions (PBQs).
+Provo's study lab for the **CompTIA Network+ N10-009** exam. It drills the topics the exam weighs most, tracks what you have mastered, and finishes with timed mini-exams that include performance-based questions (PBQs).
 
 **Current version:** see the [latest release](https://github.com/benmhsmith/Provo/releases/latest) · [What changed](CHANGELOG.md)
 
@@ -109,6 +109,6 @@ This writes the `.jpl` and `.html` into `certs/network-plus/build/` and updates 
 
 ---
 
-© 2026 MyComputerCareer. All rights reserved. See [LICENSE](../../LICENSE).
+© 2026 Benjamin Smith. All rights reserved. See [LICENSE](../../LICENSE).
 
 CompTIA and Network+ are trademarks of CompTIA, Inc. Provo contains no CompTIA exam questions.

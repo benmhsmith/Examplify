@@ -1,13 +1,13 @@
 # Contributing to Provo
 
-Provo is proprietary software owned by MyComputerCareer. It is built for brand-new learners, so accuracy and plain language matter more than anything else.
+Provo is proprietary software owned by Benjamin Smith. It is built for brand-new learners, so accuracy and plain language matter more than anything else.
 
 ## Report a problem or suggest an idea (anyone)
 
 - **Wrong answer or confusing question:** open an [issue](https://github.com/benmhsmith/Provo/issues/new/choose) and choose **Wrong answer or confusing question**. Say which exam, which module, the question text, and why you think it is wrong. A link to an official source helps most.
 - **Topic or feature idea:** open an issue and choose **Idea**.
 
-Reports and ideas are welcome from everyone. Code and content changes are accepted only from MyComputerCareer staff and people MyComputerCareer has approved in writing.
+Reports and ideas are welcome from everyone. Code and content changes are accepted only from people the owner has approved in writing.
 
 ## Content rules
 
@@ -47,4 +47,4 @@ Tags are prefixed with the exam name so each exam's releases stay separate on on
 
 ## Ownership of contributions
 
-By submitting a change, you agree that MyComputerCareer owns it and may use it under the terms in [LICENSE](LICENSE).
+By submitting a change, you agree that the owner of Provo owns it and may use it under the terms in [LICENSE](LICENSE).

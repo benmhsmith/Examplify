@@ -4,8 +4,8 @@
   "app_min_version": "2.12",
   "version": "5.0.0",
   "name": "Provo Network+",
-  "description": "Provo by MyComputerCareer: exam readiness for CompTIA Network+ (N10-009). Acronyms, OSI model, ports, subnetting, media and wireless, security, troubleshooting, tools and commands, question qualifiers, performance-based questions, mini-exams, and a one-page cram sheet. To add it, choose Tools > Provo Network+ > Add Provo Network+ note. It creates a note named Provo Network+ and opens it in the full-width tool.",
-  "author": "MyComputerCareer",
+  "description": "Provo: exam readiness for CompTIA Network+ (N10-009). Acronyms, OSI model, ports, subnetting, media and wireless, security, troubleshooting, tools and commands, question qualifiers, performance-based questions, mini-exams, and a one-page cram sheet. To add it, choose Tools > Provo Network+ > Add Provo Network+ note. It creates a note named Provo Network+ and opens it in the full-width tool.",
+  "author": "Benjamin Smith",
   "keywords": [
     "study",
     "comptia",

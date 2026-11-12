@@ -134,7 +134,7 @@ for a,b in reps:
 js=js.replace('window.scrollTo(0,0);','try{ root.scrollIntoView({block:"start"}); }catch(e){}')
 assert 'location.hash' not in js and 'window.scrollTo' not in js
 
-shell='''<header class="top"><div class="top-in"><a class="brand" href="#home" aria-label="MyComputerCareer Provo, home"><span class="mycc-logo" aria-hidden="true"></span><span class="brand-div" aria-hidden="true"></span><span class="pvwrap"><b class="pvname"><span class="pvpro">Pro</span>vo</b><span class="pvbar" aria-hidden="true"><i class="pv1" style="flex:23"></i><i class="pv2" style="flex:20"></i><i class="pv3" style="flex:19"></i><i class="pv4" style="flex:14"></i><i class="pv5" style="flex:24"></i></span></span></a><a class="chipbtn" href="#cram" style="text-decoration:none;padding:6px 12px">Cram Sheet</a><a class="chipbtn" href="#progress" style="text-decoration:none;padding:6px 12px">Progress</a></div></header><main id="app"></main>'''
+shell='''<header class="top"><div class="top-in"><a class="brand" href="#home" aria-label="Provo, home"><span class="pvwrap"><b class="pvname"><span class="pvpro">Pro</span>vo</b><span class="pvbar" aria-hidden="true"><i class="pv1" style="flex:23"></i><i class="pv2" style="flex:20"></i><i class="pv3" style="flex:19"></i><i class="pv4" style="flex:14"></i><i class="pv5" style="flex:24"></i></span></span></a><a class="chipbtn" href="#cram" style="text-decoration:none;padding:6px 12px">Cram Sheet</a><a class="chipbtn" href="#progress" style="text-decoration:none;padding:6px 12px">Progress</a></div></header><main id="app"></main>'''
 out='''/* Provo Security+ — in-note renderer asset. Mounts the tool into every ```sec-plus block in the note viewer. */
 (function(){
   if(window.__sftLoaded) return; window.__sftLoaded=true;

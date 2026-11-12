@@ -7,3 +7,5 @@
 - Joplin: new "Add Provo Network+ note" command (Tools → Provo Network+, and a button in the How to use window). It creates a note named Provo Network+ in the notebook you have open and opens it straight into the full-width tool, so there is nothing to copy and paste. Delete the note any time; your progress is kept and comes back when you add the note again.
 - Joplin: notes added by the plugin include a short hidden line that tells anyone who switches to the Markdown editor how to get back to the tool.
 - Joplin: the How to use and Changelog windows now have a fixed size and scroll, so long text is no longer cut off and the buttons stay on screen even when Joplin cannot be made larger.
+
+- Provo branding only: the top bar shows the Provo name, the home header art has a Provo "P" monogram at its center, and the footer and plugin details no longer name a company.

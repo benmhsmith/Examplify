@@ -2,7 +2,7 @@
 
 ## Provo
 
-Copyright (c) 2026 MyComputerCareer. All rights reserved. Provo is proprietary software. See [LICENSE](LICENSE) for what you may and may not do with it.
+Copyright (c) 2026 Benjamin Smith. All rights reserved. Provo is proprietary software. See [LICENSE](LICENSE) for what you may and may not do with it.
 
 Versions up to and including v4.0.0 were released under the GNU General Public License v3.0 under the earlier names Net+ Fast Track, Network+ Readiness Lab, and Examplify. Copies of those versions received under the GPL remain under it.
 
@@ -17,4 +17,4 @@ The full font license is in `certs/network-plus/joplin-plugin/dist/OFL.txt`. The
 
 ## Trademarks
 
-MyComputerCareer and its logo are trademarks of MyComputerCareer. CompTIA, Network+, Security+, A+, and CySA+ are trademarks of CompTIA, Inc. Joplin is a trademark of its respective owner. Provo contains no CompTIA exam questions.
+CompTIA, Network+, Security+, A+, and CySA+ are trademarks of CompTIA, Inc. Joplin is a trademark of its respective owner. Provo contains no CompTIA exam questions.
