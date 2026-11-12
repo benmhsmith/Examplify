@@ -1,3 +1,6 @@
+- Every answer is explained. After any multiple-choice question, Provo now shows why the correct answer is right and why each of the other options is wrong, with your own pick marked. This covers every drill and question type, from acronyms and terms to the question qualifiers.
+- Mini-exams still give no feedback while you take them. Afterwards, the new Review your answers section walks through every question the same way: missed questions first, with a button to see all of them.
+- Fixed: the troubleshooting drill could stop with an error when it picked one of the original methodology questions.
 - Progress page: the Mastery Badge hint now says Expert (80%+), matching what the badge actually requires.
 - Progress: new "Reset everything, including badges" button. It clears all module progress plus the Mastery Badge, prestige, and secret badges (for example, after testing). The existing "Reset all progress" still keeps your badges.
 - Joplin: the Grand Architect outline on study notes and notebooks now turns off right away when the secret badges are reset, and leftover outline files from earlier sessions are cleaned up.
