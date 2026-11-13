@@ -32,7 +32,7 @@ Provo is built by an IT instructor for students who are new to IT and working th
 |---|---|---|---|
 | CompTIA Network+ | N10-009 | **Available** | [Provo Network+](certs/network-plus/) |
 | CompTIA Security+ | SY0-701 | **Available** | [Provo Security+](certs/security-plus/) |
-| CompTIA CySA+ | CS0-004 | Planned | — |
+| CompTIA CySA+ | CS0-004 | **Preview** (v0.1.0) | [Provo CySA+](certs/cysa-plus/) |
 | CompTIA A+ | Current version when built | Planned | — |
 
 ## See it in action

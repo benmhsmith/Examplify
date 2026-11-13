@@ -1,0 +1,1 @@
+- Question Qualifiers: 30 new practice questions (65 in all), 6 for each qualifier. Each is built around a trap CompTIA uses, such as a runner-up answer that also works or a detail that rules out the obvious choice, and explains the trap after you answer. These practice questions never appear in the mini-exams.

@@ -1,0 +1,72 @@
+# Publishes the GitHub Release for Provo CySA+.
+#
+# It runs when a change to the plugin version (manifest.json) is merged into main,
+# when this workflow file changes, or when someone clicks "Run workflow" on the
+# Actions tab. If a release for the current version already exists, it does nothing.
+# Otherwise it builds the Joplin plugin (.jpl) and the standalone page (.html),
+# creates the tag cysa-plus-vX.Y.Z, and publishes the release with notes taken
+# from CHANGELOG.md.
+#
+# Note: if a run fails because the version has no CHANGELOG.md entry, add the entry
+# and merge again; a change to this file or to manifest.json starts a new run.
+name: Release Provo CySA+
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'certs/cysa-plus/joplin-plugin/dist/manifest.json'
+      - '.github/workflows/release-cysa-plus.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-cysa-plus
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+
+      - name: Read the version
+        run: |
+          VERSION="$(python3 -c "import json;print(json.load(open('certs/cysa-plus/joplin-plugin/dist/manifest.json'))['version'])")"
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+          echo "TAG=cysa-plus-v$VERSION" >> "$GITHUB_ENV"
+          echo "Version in manifest.json: $VERSION"
+
+      - name: Skip if this version is already released
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Release $TAG already exists. Nothing to do."
+            echo "SKIP=1" >> "$GITHUB_ENV"
+          fi
+
+      - name: Build the plugin and the web page
+        if: env.SKIP != '1'
+        run: python3 certs/cysa-plus/scripts/release.py --build-only
+
+      - name: Write the release notes from CHANGELOG.md
+        if: env.SKIP != '1'
+        run: python3 certs/cysa-plus/scripts/release.py --notes "$VERSION" > release-notes.md
+
+      - name: Tag and publish the GitHub Release
+        if: env.SKIP != '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$TAG" \
+            --target "$GITHUB_SHA" \
+            --title "Provo CySA+ v$VERSION (Preview)" \
+            --prerelease \
+            --notes-file release-notes.md \
+            --latest=false \
+            "certs/cysa-plus/build/provo-cysa-plus-v$VERSION.jpl" \
+            "certs/cysa-plus/build/Provo-CySA-Plus-v$VERSION.html"
