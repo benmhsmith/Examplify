@@ -129,10 +129,10 @@ footer a,.card a:not(.btn){color:var(--brand)}
 :root[data-theme="dark"],:root.dark{--pvm-accent:#6EA4E8;--pvm-accent-strong:#2F6CC4;--pvm-good:#4DBA80;--pvm-bad:#F07070;}
 .about-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px;display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:start}
 @media (max-width:560px){.about-card{grid-template-columns:1fr;padding:20px}}
-.about-mono{width:88px;height:88px;border-radius:20px;background:#0E1013;display:grid;place-items:center;align-content:center;gap:6px;color:#fff}
-.about-mono span{font-family:Montserrat,system-ui,sans-serif;font-weight:700;font-size:1.9rem;line-height:1;letter-spacing:.02em}
-.about-mono .pvs{display:flex;gap:1px;width:52px;height:4px;border-radius:2px;overflow:hidden}
-.about-mono .pvs i{display:block}
+.about-photo{display:grid;gap:6px;width:96px}
+.about-photo img{display:block;width:96px;height:96px;border-radius:20px;object-fit:cover;background:var(--line)}
+.about-photo .pvs{display:flex;gap:1px;height:4px;border-radius:2px;overflow:hidden}
+.about-photo .pvs i{display:block}
 .about-body{display:grid;gap:12px;min-width:0;max-width:68ch}
 .about-body p{margin:0;line-height:1.6}
 .about-name{display:grid;gap:2px}
@@ -235,7 +235,7 @@ button.btn{font:inherit;font-weight:700;font-size:.95rem;cursor:pointer}
   <section aria-labelledby="about" class="about" id="about-sec">
     <h2 id="about">About the creator</h2>
     <div class="about-card">
-      <div class="about-mono" aria-hidden="true"><span>BS</span><i class="pvs"><i style="flex:23;background:var(--d1)"></i><i style="flex:20;background:var(--d2)"></i><i style="flex:19;background:var(--d3)"></i><i style="flex:14;background:var(--d4)"></i><i style="flex:24;background:var(--d5)"></i></i></div>
+      <div class="about-photo"><img src="images/about-ben.jpg" alt="Ben Smith" width="96" height="96" loading="lazy"><i class="pvs" aria-hidden="true"><i style="flex:23;background:var(--d1)"></i><i style="flex:20;background:var(--d2)"></i><i style="flex:19;background:var(--d3)"></i><i style="flex:14;background:var(--d4)"></i><i style="flex:24;background:var(--d5)"></i></i></div>
       <div class="about-body">
         <p class="about-name"><b>Ben Smith</b><span>IT instructor and creator of Provo</span></p>
         <p>I teach IT certification courses to adults who are brand new to IT, taking them from their first A+ lesson through Network+, Security+ and CySA+ in an intensive evening program.</p>
