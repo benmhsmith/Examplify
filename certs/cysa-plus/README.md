@@ -28,7 +28,7 @@ Built from the official CompTIA CySA+ CS0-004 Exam Objectives (v2.0): 100 exam-f
 | 4 · Respond & report | 12 Attack Frameworks | Cyber Kill Chain, Diamond Model, MITRE ATT&CK | 3.1 |
 | | 13 Incident Response | The seven-phase process, plans and exercises, triage, timelines, evidence, isolation, and root cause | 3.2–3.3 |
 | | 14 Reporting & Communication | Scorecards, action plans, inhibitors to remediation, incident communication, and metrics | 4.1–4.2 |
-| 5 · Exam skills & test | 15 Performance-Based Questions | Six exam-style simulations: scan prioritization, phishing headers, compromised hosts, Nmap hardening, IR phases and order of volatility, alert triage | All |
+| 5 · Exam skills & test | 15 Performance-Based Questions | Six exam-style simulations, a new variation every run: scan prioritization, phishing headers, compromised hosts, Nmap hardening, IR phases and order of volatility, alert triage | All |
 | | 16 Question Qualifiers | FIRST, NEXT, BEST, MOST likely, and MINIMUM analyst scenarios | All |
 | | 17 Mini-Exams | 10, 20, or 40 questions, timed and weighted to the domains, with a full review | All |
 
