@@ -120,7 +120,7 @@ main{max-width:1080px;margin:0 auto;padding-block:20px 48px;padding-left:max(16p
 .rank.r5 .bars i.on,.rank.r6 .bars i.on{background:linear-gradient(var(--gold),var(--orange))}
 .rank.r6 .bars i.on{box-shadow:0 0 5px var(--gold)}
 .brand{align-items:center}
-.brand .pvicon{width:32px;height:32px;flex:none;display:block}
+.pvicon{width:32px;height:32px;flex:none;display:block}
 .brand .pvwrap{display:inline-flex;flex-direction:column;gap:3px}
 .brand b.pvname{font-weight:300;letter-spacing:.01em;font-size:1.6rem;line-height:1.1;color:var(--logo)}
 .brand .pvpro{font-weight:600}
@@ -351,7 +351,9 @@ td.mono,td .mono{font-variant-numeric:tabular-nums}
 .sw:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
 .dg{overflow-x:auto;-webkit-overflow-scrolling:touch}
 html.mobile .top-in,html.mobile main{max-width:460px}
-html.mobile .brand{flex-basis:100%}
+html.mobile .brand{flex:1 1 auto}
+.pvbreak{display:none}
+html.mobile .pvbreak{display:block;flex-basis:100%;height:0}
 html.mobile .viewsw{order:3;margin-right:auto}
 html.mobile .top-in > .chipbtn{order:4}
 html.mobile body{font-size:1.05rem}
@@ -377,13 +379,66 @@ html.mobile input.ans{font-size:1.15rem;width:100%}
 html.mobile .dg svg{min-width:760px}
 html.mobile .dg::after{content:"Swipe sideways to see the whole diagram.";display:block;font-size:.8rem;color:var(--muted);padding:2px 0 6px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* ===== Site menu, Contact Us, Report an Issue ===== */
+.pvhome{display:flex;flex:none;border-radius:9px;line-height:0}
+.pvhome:focus-visible{outline:2px solid var(--pvm-accent);outline-offset:2px}
+.pvmenu{position:relative}
+.pvmenu-panel[hidden]{display:none}
+@media (min-width:700px){html:not(.mobile) .pvmenu{order:10}}
+.pvmenu-btn{display:inline-flex;align-items:center;gap:6px;font:inherit;font-size:.9rem;font-weight:600;padding:6px 12px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;min-height:36px}
+.pvmenu-btn svg{width:18px;height:18px}
+.pvmenu-btn[aria-expanded="true"]{border-color:var(--pvm-accent);color:var(--pvm-accent)}
+.pvmenu-panel{position:absolute;right:0;top:calc(100% + 8px);z-index:30;min-width:250px;max-width:calc(100vw - 32px);background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.22);padding:6px;display:grid;gap:2px}
+.pvmenu-panel a,.pvmenu-panel button{display:grid;gap:1px;text-align:left;text-decoration:none;color:var(--ink);font:inherit;padding:9px 12px;border:0;border-radius:8px;background:transparent;cursor:pointer}
+.pvmenu-panel a:hover,.pvmenu-panel button:hover,.pvmenu-panel a:focus-visible,.pvmenu-panel button:focus-visible{background:var(--sunk);outline:none}
+.pvmenu-panel b{font-size:.92rem;font-weight:600}
+.pvmenu-panel small{font-size:.76rem;color:var(--muted)}
+.pvmenu-panel hr{border:0;border-top:1px solid var(--line);margin:4px 6px}
+.pvdlg{border:0;padding:0;border-radius:16px;width:min(520px,calc(100vw - 32px));max-height:calc(100dvh - 32px);background:var(--surface);color:var(--ink);box-shadow:0 24px 64px rgba(0,0,0,.35)}
+.pvdlg::backdrop{background:rgba(8,12,20,.55)}
+.pvdlg-in{display:grid;gap:12px;padding:20px}
+.pvdlg-h{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.pvdlg-h h2{margin:0;font-size:1.25rem}
+.pvdlg-x{font:inherit;font-size:1.5rem;line-height:1;width:36px;height:36px;border-radius:8px;border:0;background:transparent;color:var(--muted);cursor:pointer}
+.pvdlg-x:hover{background:var(--sunk);color:var(--ink)}
+.pvdlg-note,.pvdlg-auto{margin:0;color:var(--muted);font-size:.9rem}
+.pvdlg-auto{font-size:.8rem;background:var(--sunk);border-radius:8px;padding:8px 10px}
+.pvdlg label{display:grid;gap:5px;font-size:.88rem;font-weight:600}
+.pvdlg input,.pvdlg select,.pvdlg textarea{font:inherit;font-weight:400;font-size:.95rem;padding:9px 11px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);width:100%}
+.pvdlg textarea{resize:vertical;min-height:110px}
+.pvdlg input:focus,.pvdlg select:focus,.pvdlg textarea:focus{outline:2px solid var(--pvm-accent);outline-offset:0;border-color:transparent}
+.pvdlg [aria-invalid="true"]{border-color:var(--pvm-bad)}
+.pvhint{font-size:.76rem;font-weight:400;color:var(--muted);margin:0}
+.pvtrap{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.pvdlg-msg{margin:0;font-size:.88rem;font-weight:600}
+.pvdlg-msg:empty{display:none}
+.pvdlg-msg.ok{color:var(--pvm-good)}.pvdlg-msg.bad{color:var(--pvm-bad)}
+.pvdlg-f{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+.pvbtn,.pvbtn-q{font:inherit;font-weight:600;font-size:.92rem;padding:9px 16px;border-radius:8px;cursor:pointer;min-height:40px}
+.pvbtn{border:0;background:var(--pvm-accent-strong);color:#fff}
+.pvbtn[disabled]{opacity:.55;cursor:default}
+.pvbtn-q{border:1px solid var(--line);background:transparent;color:var(--ink)}
+:root{--pvm-accent:#2258A9;--pvm-accent-strong:#2258A9;--pvm-good:#2E8657;--pvm-bad:#C23A3A;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]):not(.light){--pvm-accent:#6EA4E8;--pvm-accent-strong:#2F6CC4;--pvm-good:#4DBA80;--pvm-bad:#F07070;}}
+:root[data-theme="dark"],:root.dark{--pvm-accent:#6EA4E8;--pvm-accent-strong:#2F6CC4;--pvm-good:#4DBA80;--pvm-bad:#F07070;}
 </style>
 
 </head>
 <body>
 <header class="top">
   <div class="top-in">
-    <a class="brand" href="#home" aria-label="Provo, home"><svg class="pvicon" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="13" fill="#0E1013"/><path d="M32 3.5H51A9.5 9.5 0 0 1 60.5 13V51A9.5 9.5 0 0 1 51 60.5H13A9.5 9.5 0 0 1 3.5 51V13A9.5 9.5 0 0 1 13 3.5H32" fill="none" stroke="#6EA4E8" stroke-width="7" pathLength="100" stroke-dasharray="23 77" stroke-dashoffset="0"/><path d="M32 3.5H51A9.5 9.5 0 0 1 60.5 13V51A9.5 9.5 0 0 1 51 60.5H13A9.5 9.5 0 0 1 3.5 51V13A9.5 9.5 0 0 1 13 3.5H32" fill="none" stroke="#4DBA80" stroke-width="7" pathLength="100" stroke-dasharray="20 80" stroke-dashoffset="-23"/><path d="M32 3.5H51A9.5 9.5 0 0 1 60.5 13V51A9.5 9.5 0 0 1 51 60.5H13A9.5 9.5 0 0 1 3.5 51V13A9.5 9.5 0 0 1 13 3.5H32" fill="none" stroke="#E8C25A" stroke-width="7" pathLength="100" stroke-dasharray="19 81" stroke-dashoffset="-43"/><path d="M32 3.5H51A9.5 9.5 0 0 1 60.5 13V51A9.5 9.5 0 0 1 51 60.5H13A9.5 9.5 0 0 1 3.5 51V13A9.5 9.5 0 0 1 13 3.5H32" fill="none" stroke="#F07070" stroke-width="7" pathLength="100" stroke-dasharray="14 86" stroke-dashoffset="-62"/><path d="M32 3.5H51A9.5 9.5 0 0 1 60.5 13V51A9.5 9.5 0 0 1 51 60.5H13A9.5 9.5 0 0 1 3.5 51V13A9.5 9.5 0 0 1 13 3.5H32" fill="none" stroke="#A994E0" stroke-width="7" pathLength="100" stroke-dasharray="24 76" stroke-dashoffset="-76"/><path d="M18.09 48.5V15.5H32.38Q36.81 15.5 40.01 16.94Q43.22 18.38 44.96 21.06Q46.71 23.75 46.71 27.47Q46.71 31.15 44.96 33.84Q43.22 36.53 40.01 37.96Q36.81 39.4 32.38 39.4H22.34L25.73 35.96V48.5ZM25.73 36.81 22.34 33.18H31.95Q35.49 33.18 37.23 31.67Q38.98 30.16 38.98 27.47Q38.98 24.74 37.23 23.23Q35.49 21.72 31.95 21.72H22.34L25.73 18.09Z" fill="#fff" stroke="#fff" stroke-width="1.1" stroke-linejoin="round"/></svg><span class="pvwrap"><b class="pvname"><span class="pvpro">Pro</span>vo</b><span class="pvbar" aria-hidden="true"><i class="pv1" style="flex:23"></i><i class="pv2" style="flex:20"></i><i class="pv3" style="flex:19"></i><i class="pv4" style="flex:14"></i><i class="pv5" style="flex:24"></i></span></span></a>
+    <a class="pvhome" href="https://benmhsmith.github.io/Provo/" aria-label="Provo home: all exams" title="Provo home: all exams"><svg class="pvicon" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="13" fill="#0E1013"/><path d="M32 3.5H51A9.5 9.5 0 0 1 60.5 13V51A9.5 9.5 0 0 1 51 60.5H13A9.5 9.5 0 0 1 3.5 51V13A9.5 9.5 0 0 1 13 3.5H32" fill="none" stroke="#6EA4E8" stroke-width="7" pathLength="100" stroke-dasharray="23 77" stroke-dashoffset="0"/><path d="M32 3.5H51A9.5 9.5 0 0 1 60.5 13V51A9.5 9.5 0 0 1 51 60.5H13A9.5 9.5 0 0 1 3.5 51V13A9.5 9.5 0 0 1 13 3.5H32" fill="none" stroke="#4DBA80" stroke-width="7" pathLength="100" stroke-dasharray="20 80" stroke-dashoffset="-23"/><path d="M32 3.5H51A9.5 9.5 0 0 1 60.5 13V51A9.5 9.5 0 0 1 51 60.5H13A9.5 9.5 0 0 1 3.5 51V13A9.5 9.5 0 0 1 13 3.5H32" fill="none" stroke="#E8C25A" stroke-width="7" pathLength="100" stroke-dasharray="19 81" stroke-dashoffset="-43"/><path d="M32 3.5H51A9.5 9.5 0 0 1 60.5 13V51A9.5 9.5 0 0 1 51 60.5H13A9.5 9.5 0 0 1 3.5 51V13A9.5 9.5 0 0 1 13 3.5H32" fill="none" stroke="#F07070" stroke-width="7" pathLength="100" stroke-dasharray="14 86" stroke-dashoffset="-62"/><path d="M32 3.5H51A9.5 9.5 0 0 1 60.5 13V51A9.5 9.5 0 0 1 51 60.5H13A9.5 9.5 0 0 1 3.5 51V13A9.5 9.5 0 0 1 13 3.5H32" fill="none" stroke="#A994E0" stroke-width="7" pathLength="100" stroke-dasharray="24 76" stroke-dashoffset="-76"/><path d="M18.09 48.5V15.5H32.38Q36.81 15.5 40.01 16.94Q43.22 18.38 44.96 21.06Q46.71 23.75 46.71 27.47Q46.71 31.15 44.96 33.84Q43.22 36.53 40.01 37.96Q36.81 39.4 32.38 39.4H22.34L25.73 35.96V48.5ZM25.73 36.81 22.34 33.18H31.95Q35.49 33.18 37.23 31.67Q38.98 30.16 38.98 27.47Q38.98 24.74 37.23 23.23Q35.49 21.72 31.95 21.72H22.34L25.73 18.09Z" fill="#fff" stroke="#fff" stroke-width="1.1" stroke-linejoin="round"/></svg></a><a class="brand" href="#home" aria-label="Network+ home"><span class="pvwrap"><b class="pvname"><span class="pvpro">Pro</span>vo</b><span class="pvbar" aria-hidden="true"><i class="pv1" style="flex:23"></i><i class="pv2" style="flex:20"></i><i class="pv3" style="flex:19"></i><i class="pv4" style="flex:14"></i><i class="pv5" style="flex:24"></i></span></span></a>
+    <div class="pvmenu">
+      <button class="pvmenu-btn" id="pvMenuBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="pvMenu"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Menu</span></button>
+      <div class="pvmenu-panel" id="pvMenu" role="menu" hidden>
+        <a href="https://benmhsmith.github.io/Provo/" role="menuitem"><b>Provo home</b><small>All exams</small></a>
+        <a href="#home" role="menuitem" data-close><b>Network+ home</b><small>Modules and labs</small></a>
+        <hr>
+        <button type="button" role="menuitem" data-dlg="pvContact"><b>Contact us</b><small>Questions, feedback, requests</small></button>
+        <button type="button" role="menuitem" data-dlg="pvReport"><b>Report an issue</b><small>Wrong answer, typo or bug</small></button>
+      </div>
+    </div><span class="pvbreak" aria-hidden="true"></span>
     <div class="viewsw" id="viewsw"><span class="lbl" data-v="desktop">Desktop</span><button class="sw" id="layoutSw" type="button" role="switch" aria-checked="false" aria-label="Mobile layout"><i></i></button><span class="lbl" data-v="mobile">Mobile</span></div>
     <a class="chipbtn" href="#cram" style="text-decoration:none;padding:6px 12px">Cram Sheet</a>
     <a class="chipbtn" href="#progress" style="text-decoration:none;padding:6px 12px">Progress</a>
@@ -958,6 +1013,7 @@ function pct(x){ return Math.round(x*100); }
 let curKeys=null; // keyboard handler for current question
 document.addEventListener("keydown",e=>{
   if(!curKeys || e.target.tagName==="INPUT" && e.key!=="Enter") return;
+  if(e.target.closest&&e.target.closest(".pvdlg")) return;
   if(e.metaKey||e.ctrlKey||e.altKey) return;
   curKeys(e);
 });
@@ -1127,7 +1183,7 @@ function viewHome(){
     </a>`;}).join("")}
   </div></section>`).join("")}</div>
   <p class="note" style="margin-top:14px">Progress saves in this browser only. To start over, open Progress and choose Reset all progress.</p>
-  <p class="note">Provo Network+ <span class="badge">v5.1.0</span> · © 2026 Benjamin Smith. All rights reserved.</p>`;
+  <p class="note">Provo Network+ <span class="badge">v5.2.0</span> · © 2026 Benjamin Smith. All rights reserved.</p>`;
 }
 
 /* ---- Ports ---- */
@@ -3911,6 +3967,112 @@ window.addEventListener("hashchange",route);
 document.addEventListener("click",e=>{ const l=e.target.closest&&e.target.closest('a[href^="#"]'); if(!l) return; const h=l.getAttribute("href"); if(h===(location.hash||"#home")){ e.preventDefault(); route(); } });
 route();
 </script>
+<dialog class="pvdlg" id="pvContact" aria-labelledby="pvContactH">
+  <form method="dialog" class="pvdlg-in" id="pvContactForm" novalidate>
+    <div class="pvdlg-h"><h2 id="pvContactH">Contact us</h2><button type="button" class="pvdlg-x" data-x aria-label="Close">&times;</button></div>
+    <p class="pvdlg-note">Questions, feedback or a request for your class. We read every message.</p>
+    <label>Name<input name="name" autocomplete="name" required></label>
+    <label>Email<input name="email" type="email" autocomplete="email" required><span class="pvhint">So we can reply. Never shared.</span></label>
+    <label>Message<textarea name="message" rows="5" required></textarea></label>
+    <input type="hidden" name="exam" value="Network+ N10-009">
+    <input type="text" name="_gotcha" class="pvtrap" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <p class="pvdlg-msg" role="status" aria-live="polite"></p>
+    <div class="pvdlg-f"><button type="button" class="pvbtn-q" data-x>Cancel</button><button type="submit" class="pvbtn">Send message</button></div>
+  </form>
+</dialog>
+<dialog class="pvdlg" id="pvReport" aria-labelledby="pvReportH">
+  <form method="dialog" class="pvdlg-in" id="pvReportForm" novalidate>
+    <div class="pvdlg-h"><h2 id="pvReportH">Report an issue</h2><button type="button" class="pvdlg-x" data-x aria-label="Close">&times;</button></div>
+    <p class="pvdlg-note">Found a wrong answer, a typo or something that doesn't work? Tell us what you saw. Provo fills in the exam, page, version and browser for you.</p>
+    <label>What kind of issue?<select name="kind">
+      <option>Wrong or unclear answer</option><option>Typo or wording</option><option>Something doesn't work</option><option>Suggestion</option><option>Other</option></select></label>
+    <label>What happened?<textarea name="details" rows="5" required placeholder="For a question, paste or describe it, and say which answer you think is right and why."></textarea></label>
+    <input type="hidden" name="exam" value="Network+ N10-009">
+    <p class="pvdlg-auto"></p>
+    <p class="pvdlg-msg" role="status" aria-live="polite"></p>
+    <div class="pvdlg-f"><button type="button" class="pvbtn-q" data-x>Cancel</button><button type="submit" class="pvbtn">Continue on GitHub</button></div>
+    <p class="pvhint">Opens a pre-filled report on GitHub in a new tab. Submitting it needs a free GitHub account.</p>
+  </form>
+</dialog>
+<script>
+/* ===== Site menu, Contact Us, Report an Issue (web pages only; absent inside Joplin) ===== */
+(function(){
+  /* Contact Us goes to Formspree. Paste the form's ID (the part after /f/ in its endpoint) here. */
+  const FORMSPREE_ID = "xgakvlyn";
+  const REPO = "https://github.com/benmhsmith/Provo";
+  const btn = document.getElementById("pvMenuBtn"), panel = document.getElementById("pvMenu");
+  if (!btn || !panel) return;
+  const place = () => { if (window.innerWidth < 560) { const r = btn.getBoundingClientRect(); Object.assign(panel.style, { position: "fixed", top: (r.bottom + 8) + "px", left: "16px", right: "16px" }); } else panel.removeAttribute("style"); };
+  const open = (v) => { if (v) place(); panel.hidden = !v; btn.setAttribute("aria-expanded", v); if (v) { const f = panel.querySelector("a,button"); f && f.focus(); } };
+  btn.addEventListener("click", (e) => { e.stopPropagation(); open(panel.hidden); });
+  document.addEventListener("click", (e) => { if (!panel.hidden && !panel.contains(e.target)) open(false); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !panel.hidden) { open(false); btn.focus(); } });
+  panel.addEventListener("keydown", (e) => {
+    if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+    const items = [...panel.querySelectorAll("a,button")]; const i = items.indexOf(document.activeElement);
+    items[(i + (e.key === "ArrowDown" ? 1 : items.length - 1)) % items.length].focus(); e.preventDefault();
+  });
+  panel.querySelectorAll("[data-close]").forEach(a => a.addEventListener("click", () => open(false)));
+  const pageName = () => {
+    const h = (location.hash || "").slice(1);
+    const t = document.querySelector("#app h1, #app h2");
+    const name = t ? t.textContent.trim().replace(/\s+/g, " ").slice(0, 80) : document.title;
+    return name + (h ? " (#" + h + ")" : "");
+  };
+  const version = () => { const b = document.querySelector("footer .badge, .badge"); return b ? b.textContent.trim() : ""; };
+  const browser = () => { const u = navigator.userAgent; const m = u.match(/(Edg|OPR|Chrome|Firefox|Version)\/(\d+)/); const name = m ? ({Edg:"Edge",OPR:"Opera",Version:"Safari"}[m[1]] || m[1]) + " " + m[2] : "Unknown browser";
+    const os = /iPhone|iPad/.test(u) ? "iOS" : /Android/.test(u) ? "Android" : /Mac/.test(u) ? "macOS" : /Windows/.test(u) ? "Windows" : /Linux|CrOS/.test(u) ? "Linux/ChromeOS" : "";
+    return name + (os ? " on " + os : ""); };
+  const show = (id) => { const d = document.getElementById(id); if (!d) return; open(false);
+    const msg = d.querySelector(".pvdlg-msg"); msg.textContent = ""; msg.className = "pvdlg-msg";
+    d.querySelectorAll("[aria-invalid]").forEach(x => x.removeAttribute("aria-invalid"));
+    const auto = d.querySelector(".pvdlg-auto");
+    if (auto) auto.textContent = "Included automatically: " + [version() && "version " + version(), "page " + pageName(), browser()].filter(Boolean).join(" · ");
+    const sb = d.querySelector('button[type="submit"]');
+    if (id === "pvContact" && !FORMSPREE_ID) { sb.disabled = true; msg.dataset.keep = "1"; msg.textContent = "The contact form isn't connected yet. Please use Report an issue for now."; msg.className = "pvdlg-msg bad"; }
+    if (typeof d.showModal === "function") d.showModal(); else d.setAttribute("open", "");
+    const first = d.querySelector("input:not([type=hidden]):not(.pvtrap),select,textarea"); first && first.focus(); };
+  document.querySelectorAll("[data-dlg]").forEach(b => b.addEventListener("click", () => show(b.dataset.dlg)));
+  document.querySelectorAll(".pvdlg").forEach(d => {
+    d.querySelectorAll("[data-x]").forEach(x => x.addEventListener("click", () => d.close ? d.close() : d.removeAttribute("open")));
+    d.addEventListener("click", (e) => { if (e.target === d) d.close(); });
+  });
+  document.querySelectorAll(".pvdlg form").forEach(f => f.addEventListener("input", (e) => { e.target.removeAttribute("aria-invalid"); const m = f.querySelector(".pvdlg-msg"); if (m.classList.contains("bad") && !m.dataset.keep) { m.textContent = ""; m.className = "pvdlg-msg"; } }));
+  const check = (form) => { let ok = true;
+    form.querySelectorAll("[required]").forEach(el => { const bad = !el.value.trim() || (el.type === "email" && !/^\S+@\S+\.\S+$/.test(el.value.trim()));
+      el.toggleAttribute("aria-invalid", bad); if (bad) el.setAttribute("aria-invalid", "true"); if (bad && ok) { el.focus(); ok = false; } });
+    return ok; };
+  const say = (form, text, cls) => { const m = form.querySelector(".pvdlg-msg"); m.textContent = text; m.className = "pvdlg-msg " + cls; };
+
+  const rf = document.getElementById("pvReportForm");
+  rf && rf.addEventListener("submit", (e) => { e.preventDefault();
+    if (!check(rf)) { say(rf, "Please describe what happened.", "bad"); return; }
+    const fd = new FormData(rf), kind = fd.get("kind"), exam = fd.get("exam") || "";
+    const q = new URLSearchParams({ template: "report.yml", title: "[" + (exam.split(" ")[0] || "Provo") + "] " + kind + ": " + fd.get("details").trim().replace(/\s+/g, " ").slice(0, 60),
+      exam, kind, page: pageName(), details: fd.get("details").trim(), version: version(), browser: browser() });
+    window.open(REPO + "/issues/new?" + q.toString(), "_blank", "noopener");
+    say(rf, "Your report opened in a new tab. Check it over and select Create to send it.", "ok"); });
+
+  const cf = document.getElementById("pvContactForm");
+  cf && cf.addEventListener("submit", async (e) => { e.preventDefault();
+    if (!FORMSPREE_ID) return;
+    if (!check(cf)) { say(cf, "Please fill in your name, a valid email and a message.", "bad"); return; }
+    const sb = cf.querySelector('button[type="submit"]'); sb.disabled = true; say(cf, "Sending…", "");
+    try {
+      const fd = new FormData(cf); fd.append("page", pageName()); fd.append("version", version());
+      fd.append("_subject", "Provo contact: " + (fd.get("exam") || "website") + " from " + fd.get("name"));
+      const r = await fetch("https://formspree.io/f/" + FORMSPREE_ID, { method: "POST", body: fd, headers: { Accept: "application/json" } });
+      if (r.ok) { cf.reset(); say(cf, "Thanks! Your message was sent. We'll reply by email.", "ok"); return; }
+      /* Formspree answers errors as {errors:[{field, message}]}: flag the field and show its message */
+      const data = await r.json().catch(() => ({}));
+      const errs = Array.isArray(data.errors) ? data.errors : [];
+      errs.forEach(x => { const el = x.field && cf.querySelector('[name="' + x.field + '"]'); el && el.setAttribute("aria-invalid", "true"); });
+      say(cf, errs.length ? errs.map(x => x.message).join(" ") : "Sorry, your message didn't send. Please try again, or use Report an issue.", "bad");
+    } catch (err) { say(cf, "Sorry, your message didn't send. Check your connection and try again, or use Report an issue.", "bad"); }
+    finally { sb.disabled = false; } });
+})();
+</script>
+
 
 </body>
 </html>

@@ -1,5 +1,10 @@
 # Provo Network+ changelog
 
+## v5.2.0
+- A menu in the top bar links to the Provo home page (all exams), this exam's home, Contact us, and Report an issue. Selecting the Provo icon also returns to the Provo home page.
+- Report an issue opens a pre-filled GitHub report with the exam, page, version and browser filled in.
+- Contact us sends a message by email from inside the page.
+
 ## v5.1.0
 - Every answer is explained. After any multiple-choice question, Provo now shows why the correct answer is right and why each of the other options is wrong, with your own pick marked. This covers every drill and question type, from acronyms and terms to the question qualifiers.
 - Mini-exams still give no feedback while you take them. Afterwards, the new Review your answers section walks through every question the same way: missed questions first, with a button to see all of them.
