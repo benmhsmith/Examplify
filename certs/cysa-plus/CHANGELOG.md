@@ -1,5 +1,11 @@
 # Provo CySA+ changelog
 
+## v0.1.1
+- Every performance-based question is now a new variation each run: findings, phishing brands, hosts, ports, alerts, users, and times are drawn from pools, and the drop-down choices are shuffled so the right answer is never in a fixed spot. Clear each PBQ 3 times to master it; retrying the same variation is for review and does not count.
+- New PBQ 7, **Which files match the YARA rule?**: a new rule and five collected files every run. The answers were checked against the real YARA engine on 1,000 generated files.
+- New **YARA Reader** lab in 05 Analysis Tools: eight rules covering meta, text and hex strings, nocase, wide, fullword, wildcards and jumps, counts, offsets, file-type and size checks, the pe module, exclusions, and `yara -r -s` output. Six new YARA terms and a Reading YARA rules cram card.
+- The IR phases PBQ now also has a web-server compromise scenario.
+
 ## v0.1.0
 - First release of Provo CySA+ for CompTIA CySA+ CS0-004, built from the official CS0-004 Exam Objectives (v2.0) and weighted 34 / 26 / 24 / 16 across the four domains.
 - 17 modules: Acronyms (100), thirteen topic modules covering every objective from 1.1 to 4.2 (296 terms), Performance-Based Questions (6 simulations), Question Qualifiers (25 analyst scenarios), and Mini-Exams drawn from 115 scenario questions, 12 of them built around a real-looking log.

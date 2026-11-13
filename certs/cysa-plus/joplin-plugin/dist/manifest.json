@@ -2,7 +2,7 @@
   "manifest_version": 1,
   "id": "io.github.provo.cysaplus",
   "app_min_version": "2.12",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "name": "Provo CySA+",
   "description": "Provo: exam readiness for CompTIA CySA+ (CS0-004). Acronyms, architecture and IAM, indicators of malicious activity, analysis tools, threat intelligence and hunting, automation and AI, vulnerability scanning, prioritization, controls and risk, attack frameworks, incident response, reporting, question qualifiers, mini-exams, and a one-page cram sheet. To add it, choose Tools > Provo CySA+ > Add Provo CySA+ note. It creates a note named Provo CySA+ and opens it in the full-width tool.",
   "author": "Benjamin Smith",

@@ -6,7 +6,7 @@ Provo's study lab for the **CompTIA CySA+ CS0-004** exam. It drills every exam o
 
 **Current version:** see the [CySA+ releases](https://github.com/benmhsmith/Provo/releases?q=cysa-plus) · [What changed](CHANGELOG.md)
 
-Built from the official CompTIA CySA+ CS0-004 Exam Objectives (v2.0): 100 exam-focused acronyms, 296 terms, two log-analysis labs, six performance-based questions, and 115 analyst scenarios, including the new CS0-004 topics such as reading XML and JSON logs, AI in security operations, EPSS, SBOM and SCA, STRIDE, the Pyramid of Pain, LOLBins, and business email compromise.
+Built from the official CompTIA CySA+ CS0-004 Exam Objectives (v2.0): 100 exam-focused acronyms, 302 terms, log-analysis and YARA labs, seven performance-based questions, and 115 analyst scenarios, including the new CS0-004 topics such as reading XML and JSON logs, AI in security operations, EPSS, SBOM and SCA, STRIDE, the Pyramid of Pain, LOLBins, and business email compromise.
 
 ## What's inside
 
@@ -18,7 +18,7 @@ Built from the official CompTIA CySA+ CS0-004 Exam Objectives (v2.0): 100 exam-f
 | | 02 Architecture, IAM & Data | Logging, OS internals, cloud native, zero trust and SASE, PAM and secrets, data protection, OT/ICS/SCADA | 1.1 |
 | 2 · Detect & analyze | 03 Indicators of Malicious Activity | Network, host, application, cloud, identity, and email indicators, including LOLBins, impossible travel, and BEC | 1.2 |
 | | 04 Log Analysis | XML, JSON, YAML, syslog, and web logs; Windows event IDs and logon types; Zulu time and DST; true, false, and benign positives. Labs: **Log Reader** (12 logs) and **Zulu Time** | 1.1, 1.3, 2.3, 3.3 |
-| | 05 Analysis Tools | Wireshark, tcpdump, Snort, Suricata, Zeek, YARA, sandboxes, OTX, MISP, OpenCTI, CyberChef, MXToolbox, EDR/XDR, UEBA | 1.3 |
+| | 05 Analysis Tools | Wireshark, tcpdump, Snort, Suricata, Zeek, sandboxes, OTX, MISP, OpenCTI, CyberChef, MXToolbox, EDR/XDR, UEBA, and reading YARA rules. Lab: **YARA Reader** (8 rules) | 1.3 |
 | | 06 Threat Intel & Hunting | Actors, TTPs, ATT&CK heat maps, the Pyramid of Pain, intel confidence, IoC types, STRIDE, threat mapping, deception | 1.4 |
 | | 07 Automation & Efficiency | Playbooks, runbooks, SOAR, IaC, tuning, enrichment, dashboards, APIs, webhooks, plug-ins | 1.5 |
 | | 08 AI in Security Operations | Hallucination, data exposure, poisoning, prompt injection, excessive agency, AI usage policy, NIST AI RMF, EU AI Act, and the six AI use cases | 1.6 |
@@ -28,7 +28,7 @@ Built from the official CompTIA CySA+ CS0-004 Exam Objectives (v2.0): 100 exam-f
 | 4 · Respond & report | 12 Attack Frameworks | Cyber Kill Chain, Diamond Model, MITRE ATT&CK | 3.1 |
 | | 13 Incident Response | The seven-phase process, plans and exercises, triage, timelines, evidence, isolation, and root cause | 3.2–3.3 |
 | | 14 Reporting & Communication | Scorecards, action plans, inhibitors to remediation, incident communication, and metrics | 4.1–4.2 |
-| 5 · Exam skills & test | 15 Performance-Based Questions | Six exam-style simulations: scan prioritization, phishing headers, compromised hosts, Nmap hardening, IR phases and order of volatility, alert triage | All |
+| 5 · Exam skills & test | 15 Performance-Based Questions | Seven exam-style simulations, a new variation every run: scan prioritization, phishing headers, compromised hosts, Nmap hardening, IR phases and order of volatility, alert triage, YARA matching | All |
 | | 16 Question Qualifiers | FIRST, NEXT, BEST, MOST likely, and MINIMUM analyst scenarios | All |
 | | 17 Mini-Exams | 10, 20, or 40 questions, timed and weighted to the domains, with a full review | All |
 
@@ -89,6 +89,7 @@ To build without releasing: `python3 certs/cysa-plus/scripts/release.py --build-
 - [CompTIA CySA+ certification page](https://www.comptia.org/en-us/certifications/cybersecurity-analyst/)
 - FIRST: CVSS and EPSS · CISA Known Exploited Vulnerabilities catalog · MITRE ATT&CK
 - Microsoft Learn: Windows security auditing events and logon types · Microsoft Sysinternals Sysmon · AWS CloudTrail record contents · RFC 5424 (syslog)
+- YARA documentation (yara.readthedocs.io); PBQ matches verified against YARA 4.5
 - NIST AI Risk Management Framework (AI 100-1) · OWASP Top 10 for LLM Applications · EU AI Act
 
 ---
