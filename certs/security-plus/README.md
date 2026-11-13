@@ -87,7 +87,7 @@ Joplin on iPhone and iPad only allows plugins from its recommended list, so use 
 - **Term modules (02–10)** all run on one engine. Each term is asked several ways (name it, define it, a scenario, and for attacks, the best defense). A term is mastered after two different kinds of question about it are answered correctly. Content lives in `TERMSETS` in the source file, one entry per module.
 - **Acronyms** use the same engine as Network+. `ACRO` holds the 178 exam-focused acronyms chosen from CompTIA's full list.
 - **Type the answer** is turned on per module with `typed:true` in `TERMSETS`. Answers are matched with `tyMatch` (case, spacing, punctuation, a trailing "control" or "s", small typos, and each term's `alt` names). A clean correct answer gives two kinds of credit (`typed`, `typed2`), which masters the term.
-- **Question Qualifiers** use `QUAL`; **Mini-Exams** draw from `BANK` plus `QUAL`, picked by domain weight.
+- **Question Qualifiers** use `QUAL`; **Mini-Exams** draw from `BANK` plus the original `QUAL` items, picked by domain weight. `QUAL` items marked `drill:1` are qualifier-trap practice only and never appear in mini-exams.
 - Progress is saved under its own key, so Security+ and Network+ never overwrite each other, even on the same website.
 - The Joplin plugin has its own ID (`io.github.provo.securityplus`) and its own note block, ` ```sec+ `, so it installs beside Provo Network+.
 
