@@ -1,5 +1,11 @@
 # Provo CySA+ changelog
 
+## v0.1.2
+- New module **15 · Skill Drill**: 160 original questions across the 53 skills in the CySA+ skills blueprint, each tagged with its objective. Practice one skill, a whole domain, every Heavy skill, only the best-fit questions, or just the ones you haven't got right yet.
+- Four question styles: **Direct**, **Scenario**, **Exhibit** (42 questions built around access logs, sign-in tables, Nmap output, SIEM results, IDS alerts, EDR process trees, NetFlow, DNS, email headers, CVSS vectors, and policy tables), and **Best fit** (73 plain-English, deliberately round questions where several answers fit part of the scenario and one fits best).
+- Every answer choice explains why it is right or why it almost fits. The skill questions also join the mini-exam pool (now 250 questions), and the exam review shows each question's skill and style.
+- The build now flags any question whose stem gives away its own answer.
+
 ## v0.1.1
 - Every performance-based question is now a new variation each run: findings, phishing brands, hosts, ports, alerts, users, and times are drawn from pools, and the drop-down choices are shuffled so the right answer is never in a fixed spot. Clear each PBQ 3 times to master it; retrying the same variation is for review and does not count.
 - New PBQ 7, **Which files match the YARA rule?**: a new rule and five collected files every run. The answers were checked against the real YARA engine on 1,000 generated files.
