@@ -1,33 +1,38 @@
 # Provo CySA+
 
+> **Preview.** Provo CySA+ is new and still being tested. Report anything that looks wrong through the [issue form](https://github.com/benmhsmith/Provo/issues/new/choose).
+
 Provo's study lab for the **CompTIA CySA+ CS0-004** exam. It drills every exam objective, tracks what you have mastered, and finishes with timed mini-exams weighted to the official domains.
 
 **Current version:** see the [CySA+ releases](https://github.com/benmhsmith/Provo/releases?q=cysa-plus) · [What changed](CHANGELOG.md)
 
-Built from the official CompTIA CySA+ CS0-004 Exam Objectives (v2.0): 97 exam-focused acronyms, 243 terms, and 95 analyst scenarios, including the new CS0-004 topics such as AI in security operations, EPSS, SBOM and SCA, STRIDE, the Pyramid of Pain, LOLBins, and business email compromise.
+Built from the official CompTIA CySA+ CS0-004 Exam Objectives (v2.0): 100 exam-focused acronyms, 296 terms, two log-analysis labs, six performance-based questions, and 115 analyst scenarios, including the new CS0-004 topics such as reading XML and JSON logs, AI in security operations, EPSS, SBOM and SCA, STRIDE, the Pyramid of Pain, LOLBins, and business email compromise.
 
 ## What's inside
 
-14 modules in 5 stages. Work through them in order.
+17 modules in 5 stages. Work through them in order.
 
 | Stage | Module | What you practice | Objectives |
 |---|---|---|---|
-| 1 · Foundations | 01 Acronyms | The 97 acronyms most likely on the exam, asked four ways | Acronyms |
+| 1 · Foundations | 01 Acronyms | The 100 acronyms most likely on the exam, asked four ways | Acronyms |
 | | 02 Architecture, IAM & Data | Logging, OS internals, cloud native, zero trust and SASE, PAM and secrets, data protection, OT/ICS/SCADA | 1.1 |
 | 2 · Detect & analyze | 03 Indicators of Malicious Activity | Network, host, application, cloud, identity, and email indicators, including LOLBins, impossible travel, and BEC | 1.2 |
-| | 04 Analysis Tools | Wireshark, tcpdump, Snort, Suricata, Zeek, YARA, sandboxes, OTX, MISP, OpenCTI, CyberChef, MXToolbox, EDR/XDR, UEBA | 1.3 |
-| | 05 Threat Intel & Hunting | Actors, TTPs, ATT&CK heat maps, the Pyramid of Pain, intel confidence, IoC types, STRIDE, threat mapping, deception | 1.4 |
-| | 06 Automation, Efficiency & AI | Playbooks, runbooks, SOAR, IaC, tuning, enrichment, webhooks, and AI risks and governance | 1.5–1.6 |
-| 3 · Vulnerability management | 07 Vulnerability Scanning & Tools | Scan types and planning, baselines, Nmap to Nuclei, ScoutSuite, Prowler, Trivy, Checkov, Atomic Red Team, Caldera | 2.1–2.2 |
-| | 08 Prioritize & Mitigate | CVSS metrics, EPSS, active exploitation, context awareness, mitigation, and validation | 2.3 |
-| | 09 Controls, Risk & AppSec | Control types and functions, risk concepts and strategies, SLOs, SAST, DAST, SAMM, SCA, SBOM | 2.4 |
-| 4 · Respond & report | 10 Attack Frameworks | Cyber Kill Chain, Diamond Model, MITRE ATT&CK | 3.1 |
-| | 11 Incident Response | The seven-phase process, plans and exercises, triage, timelines, evidence, isolation, and root cause | 3.2–3.3 |
-| | 12 Reporting & Communication | Scorecards, action plans, inhibitors to remediation, incident communication, and metrics | 4.1–4.2 |
-| 5 · Exam skills & test | 13 Question Qualifiers | FIRST, NEXT, BEST, MOST likely, and MINIMUM analyst scenarios | All |
-| | 14 Mini-Exams | 10, 20, or 40 questions, timed and weighted to the domains, with a full review | All |
+| | 04 Log Analysis | XML, JSON, YAML, syslog, and web logs; Windows event IDs and logon types; Zulu time and DST; true, false, and benign positives. Labs: **Log Reader** (12 logs) and **Zulu Time** | 1.1, 1.3, 2.3, 3.3 |
+| | 05 Analysis Tools | Wireshark, tcpdump, Snort, Suricata, Zeek, YARA, sandboxes, OTX, MISP, OpenCTI, CyberChef, MXToolbox, EDR/XDR, UEBA | 1.3 |
+| | 06 Threat Intel & Hunting | Actors, TTPs, ATT&CK heat maps, the Pyramid of Pain, intel confidence, IoC types, STRIDE, threat mapping, deception | 1.4 |
+| | 07 Automation & Efficiency | Playbooks, runbooks, SOAR, IaC, tuning, enrichment, dashboards, APIs, webhooks, plug-ins | 1.5 |
+| | 08 AI in Security Operations | Hallucination, data exposure, poisoning, prompt injection, excessive agency, AI usage policy, NIST AI RMF, EU AI Act, and the six AI use cases | 1.6 |
+| 3 · Vulnerability management | 09 Vulnerability Scanning & Tools | Scan types and planning, baselines, Nmap to Nuclei, ScoutSuite, Prowler, Trivy, Checkov, Atomic Red Team, Caldera | 2.1–2.2 |
+| | 10 Prioritize & Mitigate | CVSS metrics, EPSS, active exploitation, context awareness, mitigation, and validation | 2.3 |
+| | 11 Controls, Risk & AppSec | Control types and functions, risk concepts and strategies, SLOs, SAST, DAST, SAMM, SCA, SBOM | 2.4 |
+| 4 · Respond & report | 12 Attack Frameworks | Cyber Kill Chain, Diamond Model, MITRE ATT&CK | 3.1 |
+| | 13 Incident Response | The seven-phase process, plans and exercises, triage, timelines, evidence, isolation, and root cause | 3.2–3.3 |
+| | 14 Reporting & Communication | Scorecards, action plans, inhibitors to remediation, incident communication, and metrics | 4.1–4.2 |
+| 5 · Exam skills & test | 15 Performance-Based Questions | Six exam-style simulations: scan prioritization, phishing headers, compromised hosts, Nmap hardening, IR phases and order of volatility, alert triage | All |
+| | 16 Question Qualifiers | FIRST, NEXT, BEST, MOST likely, and MINIMUM analyst scenarios | All |
+| | 17 Mini-Exams | 10, 20, or 40 questions, timed and weighted to the domains, with a full review | All |
 
-Modules 02–12 each offer **Questions** (multiple choice and typed) and **Type the answer** (read a scenario and type the term). Every question explains why the right answer is right and why each other option is wrong. There is also a one-page **Cram Sheet** and a **Progress** page.
+Modules 02–14 each offer **Questions** (multiple choice and typed) and **Type the answer** (read a scenario and type the term). Every question explains why the right answer is right and why each other option is wrong. There is also a one-page **Cram Sheet** and a **Progress** page.
 
 ### Domain weights (CS0-004)
 
@@ -83,6 +88,8 @@ To build without releasing: `python3 certs/cysa-plus/scripts/release.py --build-
 - CompTIA CySA+ CS0-004 Exam Objectives, document version 2.0 (domains, weights, and objectives)
 - [CompTIA CySA+ certification page](https://www.comptia.org/en-us/certifications/cybersecurity-analyst/)
 - FIRST: CVSS and EPSS · CISA Known Exploited Vulnerabilities catalog · MITRE ATT&CK
+- Microsoft Learn: Windows security auditing events and logon types · Microsoft Sysinternals Sysmon · AWS CloudTrail record contents · RFC 5424 (syslog)
+- NIST AI Risk Management Framework (AI 100-1) · OWASP Top 10 for LLM Applications · EU AI Act
 
 ---
 
