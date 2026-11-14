@@ -537,6 +537,21 @@ html.mobile .sr-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 .lr-case small{color:var(--muted)}
 .pbq-sec{margin:16px 0 6px;font-size:1rem}
 .tag.bpx{color:var(--accent,#2563eb);border-color:currentColor;font-weight:700}
+.tblwrap{overflow-x:auto}.zt{border-collapse:collapse;margin:10px 0;font-size:.92rem}.zt th,.zt td{border:1px solid var(--line);padding:6px 10px;text-align:left}.zt th{background:var(--sunk)}
+.pbq-ex{margin-top:14px}.pbq-ex h4{margin:0 0 4px;font-size:.95rem}.pbqt td{vertical-align:top;font-size:.88rem}
+.pbq-sec{margin:16px 0 6px;font-size:1rem}.pbq-sec:first-child{margin-top:0}
+.pbq-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:6px 14px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:8px;margin-top:8px}
+.pbq-row select{width:100%;min-height:40px;font:inherit;padding:6px 8px;border-radius:6px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink)}
+.pbq-row.ok{border-color:var(--ok)}.pbq-row.bad{border-color:var(--bad)}
+.pbq-x{grid-column:1/-1;font-size:.92rem;color:var(--muted)}.pbq-row.ok .pbq-x b{color:var(--ok)}.pbq-row.bad .pbq-x b{color:var(--bad)}
+.pbq-flow{display:flex;flex-direction:column;align-items:stretch;gap:2px;max-width:560px;margin-top:6px}
+.pf-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:8px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--sunk)}
+.pf-t{font-weight:700;font-size:.9rem;min-width:9em}.pf-items{display:flex;flex-wrap:wrap;gap:6px}
+.pf-slot{display:inline-grid;place-items:center;min-width:2.1em;height:2.1em;border-radius:8px;border:2px dashed var(--accent,#2563eb);color:var(--accent,#2563eb);font-weight:800}
+.pf-chip{display:inline-block;padding:4px 10px;border-radius:8px;border:1px solid var(--line);background:var(--surface);font-size:.85rem}
+.pf-arrow{text-align:center;color:var(--muted);line-height:1}
+@media (max-width:700px){.pbq-row{grid-template-columns:1fr}}
+html.mobile .pbq-row{grid-template-columns:1fr}
 </style>
 
 </head>
@@ -1567,7 +1582,7 @@ const MODULES = [
  {id:"grc",n:"10",stage:3,name:"Governance, Risk & Compliance",desc:"Policies, roles, risk responses, vendors, and audits.",covers:"Domain 5.0: governance (5.1), risk management (5.2), third-party risk (5.3), compliance (5.4), audits and assessments (5.5), and security awareness (5.6)."},
  {id:"qualifier",n:"11",stage:4,name:"Question Qualifiers",desc:"Questions where FIRST, NEXT, BEST, MOST likely, or MINIMUM decides the answer.",covers:"All domains. Scenarios across five qualifiers, each with a defensible runner-up, and the explanation says why it loses."},
  {id:"drill",n:"12",stage:4,name:"Exam-Style Drill",desc:"All 169 exam-style questions in one place, by skill and domain. You also meet them mixed into every objective module.",covers:"All domains. Practice one skill, one domain, every Heavy skill, or only the round best-fit questions."},
- {id:"pbq",n:"13",stage:4,name:"Performance-Based Questions",soon:true,desc:"Hands-on, multi-part tasks. Coming soon.",covers:"Simulated performance-based questions built from the Given-a-scenario objectives. This module is being built and does not count toward the Mastery Badge yet."},
+ {id:"pbq",n:"13",stage:4,name:"Performance-Based Questions",desc:"Six exam-style simulations, a new variation every run: CIA and control types, attacks and controls, device placement, a broken site-to-site VPN, key-based SSH, and an outbreak trace.",covers:"Simulated performance-based questions for the Given-a-scenario objectives: 1.1-1.2 controls and the CIA triad, 2.2-2.5 attacks and mitigations, 3.2 secure network design and VPNs, 4.1/4.6 hardening and key-based authentication, and 4.8-4.9 incident response with data sources."},
  {id:"exam",n:"14",stage:5,name:"Mini-Exams",desc:"10, 20, or 40 multiple-choice questions, timed and weighted to the official domains.",covers:"All five domains, picked in proportion to CompTIA's weights (12 / 22 / 18 / 28 / 20)."},
  {id:"cram",n:"",menu:true,name:"Cram Sheet",desc:"The high-yield facts on one page, for the night before.",covers:"The highest-yield facts from every module."},
  {id:"progress",n:"",menu:true,name:"Progress",desc:"Mastery per module and what to study next.",covers:"Progress is stored only in this browser. Clearing browser data or switching devices starts fresh."}
@@ -1811,6 +1826,7 @@ function mastery(id){
   if(TERMSETS[id]) return termMastery(id);
   switch(id){
     case "drill":{ const all=BANK.filter(q=>q.sk), n=all.filter(q=>(P.bp||{})[q.id]).length; return {v:n/all.length,cap:`${n} of ${all.length} exam-style questions right`}; }
+    case "pbq":{ const v=CPBQ.reduce((a,x)=>a+pbqProgress(x.id),0)/CPBQ.length, n=CPBQ.filter(x=>pbqClears(x.id)>=PBQ_NEED).length; return {v,cap:`${n} of ${CPBQ.length} PBQs mastered`}; }
     case "acro":{ const l=acroCore(); const n=acroMastered(l); return {v:n/l.length,cap:`${n} of ${l.length} acronyms mastered`}; }
     case "qualifier":{ const Q=qualState(); const done=Q.filter(x=>x.mastered).length; const v=Q.reduce((a,x)=>a+Math.min(x.c,QUAL_NEED)/QUAL_NEED,0)/Q.length; return {v,cap:`${done} of ${Q.length} qualifiers mastered`}; }
     case "exam":{ const full=P.exams.filter(e=>e.total>=EXAM_FULL_MIN).slice(-EXAM_NEED); if(!full.length) return {v:0,cap:P.exams.length?"Take a 20- or 40-question exam to count":"No exams yet"}; const v=full.reduce((a,e)=>a+e.score/e.total,0)/EXAM_NEED; return {v,cap:`Last ${full.length} of ${EXAM_NEED} full exams · avg ${pct(full.reduce((a,e)=>a+e.score/e.total,0)/full.length)}%`}; }
@@ -1849,7 +1865,7 @@ function viewHome(){
     </a>`;}).join("")}
   </div></section>`).join("")}</div>
   <p class="note" style="margin-top:14px">Progress saves in this browser only. To start over, open Progress and choose Reset all progress.</p>
-  <p class="note">Provo Security+ <span class="badge">v1.3.0</span> · © 2026 Benjamin Smith. All rights reserved.</p>`;
+  <p class="note">Provo Security+ <span class="badge">v1.4.0</span> · © 2026 Benjamin Smith. All rights reserved.</p>`;
 }
 
 /* ---- generic pool runner ---- */
@@ -3360,7 +3376,7 @@ function viewGuide(){
   <ul><li><b>Stage 1</b> builds the vocabulary: acronyms, security controls, and cryptography.</li>
   <li><b>Stage 2</b> covers what attackers do and how secure architecture stops it.</li>
   <li><b>Stage 3</b> is day-to-day security work: operations, identity, incident response, and governance. Domain 4.0 alone is 28% of the exam.</li>
-  <li><b>Stage 4</b> is exam technique. Performance-based questions are coming soon.</li>
+  <li><b>Stage 4</b> is exam technique: question qualifiers, the Exam-Style Drill, and six performance-based questions.</li>
   <li><b>Stage 5</b> is timed multiple-choice practice, weighted to the official domains.</li></ul>
   <h3>Scope</h3>
   <p>Content follows CompTIA's SY0-701 exam objectives. Each module lists the objectives it covers. CompTIA notes that its bulleted lists "are not exhaustive," so the modules focus on the tested concepts rather than every example term.</p>
@@ -3371,6 +3387,280 @@ function viewGuide(){
 }
 
 /* ================= ROUTER / MODE ================= */
+/*PBQ-START*/
+/* ---- Security+ performance-based questions ----
+   Original simulations built from the SY0-701 objectives (no CompTIA exam content). Each PBQ is a generator: every run
+   draws a new variation (scenario, names, addresses, settings, faults) and shows exhibits with drop-down items.
+   Drop-down options are shuffled each run, except lists with a natural order. A run at 90%+ is a clear (PBQ_CLEAR). */
+const pbqPick=a=>a[Math.floor(Math.random()*a.length)];
+const pbqPickN=(a,n)=>shuffle(a.slice()).slice(0,n);
+const pbqR=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+
+/* 1. CIA triad, non-repudiation, and control types */
+const CIA_O=["Confidentiality","Integrity","Availability","Non-repudiation"];
+const CIA_POOL=[
+ {s:"A lost laptop's drive was protected with full-disk encryption.",a:0,x:"Encryption keeps the data unreadable to whoever has the laptop: confidentiality."},
+ {s:"A spreadsheet of employee salaries was posted to a public share by mistake.",a:0,x:"Private data reached people who should not see it: a confidentiality failure."},
+ {s:"Support agents see only the last four digits of each card number.",a:0,x:"Masking limits who can see the full value: confidentiality."},
+ {s:"Someone in the airport lounge watches a contractor type a password.",a:0,x:"Shoulder surfing exposes a secret to an unauthorized person: confidentiality."},
+ {s:"The admin compares a download's SHA-256 hash with the vendor's published hash.",a:1,x:"Matching hashes show the file was not changed: integrity."},
+ {s:"An attacker changes product prices in the store's database to $0.01.",a:1,x:"Unauthorized changes to data are an integrity failure."},
+ {s:"File integrity monitoring alerts when a system file on the web server changes.",a:1,x:"FIM detects unauthorized modification: integrity."},
+ {s:"An on-path attacker edits the amount in a wire transfer before it reaches the bank.",a:1,x:"The data was altered in transit: integrity."},
+ {s:"A flood of traffic takes the customer portal offline for three hours.",a:2,x:"Users cannot reach the service: availability."},
+ {s:"The server room gets a UPS and a generator.",a:2,x:"Keeping systems powered through an outage protects availability."},
+ {s:"Two web servers sit behind a load balancer so one can fail without an outage.",a:2,x:"Redundancy keeps the service up: availability."},
+ {s:"A construction crew cuts the office's only fiber line.",a:2,x:"Nobody can reach online services: availability."},
+ {s:"A purchase order is approved with the manager's digital signature.",a:3,x:"A signature made with the manager's private key proves who approved it, so they cannot deny it: non-repudiation."},
+ {s:"A contractor signs code commits with a personal key, so authorship can be proven later.",a:3,x:"Signing ties each change to one person's private key: non-repudiation."}];
+const CT_O=["Preventive","Detective","Corrective","Deterrent","Compensating","Directive"];
+const CT_POOL=[
+ {s:"A firewall rule drops inbound RDP from the internet.",a:0,x:"It stops the event from happening: preventive."},
+ {s:"A badge lock on the server room door.",a:0,x:"It stops unauthorized entry: preventive."},
+ {s:"An IDS raises an alert on an exploit attempt.",a:1,x:"It discovers and reports the event: detective."},
+ {s:"A motion-activated camera records the loading dock.",a:1,x:"It records events for review: detective."},
+ {s:"The team reviews firewall logs every Monday.",a:1,x:"Reviewing logs finds events after they happen: detective."},
+ {s:"Files are restored from backup after ransomware.",a:2,x:"It repairs the damage after the event: corrective."},
+ {s:"Antivirus quarantines a malicious file it just found.",a:2,x:"It fixes the problem once found: corrective."},
+ {s:"A login banner warns that all activity is monitored and prosecuted.",a:3,x:"It discourages attempts: deterrent."},
+ {s:"A \"24-hour video surveillance\" sign on the fence.",a:3,x:"The sign itself discourages intruders: deterrent."},
+ {s:"An old app cannot do MFA, so it is placed behind a VPN that requires MFA.",a:4,x:"It provides equivalent protection where the primary control cannot be used: compensating."},
+ {s:"A server that cannot be patched gets extra monitoring and strict ACLs until it is replaced.",a:4,x:"Alternative controls stand in for the patch: compensating."},
+ {s:"A policy states that USB drives must be encrypted.",a:5,x:"It tells people what to do: directive."},
+ {s:"A procedure requires two people to approve wire transfers.",a:5,x:"A required instruction for staff: directive."}];
+function genCIA(){
+  let cia; do{ cia=pbqPickN(CIA_POOL,6); }while(new Set(cia.map(c=>c.a)).size<4);
+  const types=shuffle([0,1,2,3,4,5]).slice(0,5).map(t=>pbqPick(CT_POOL.filter(c=>c.a===t)));
+  return {brief:"A new analyst is building a training sheet. For each event or control, choose the security property it MOST directly protects or harms. Then classify each control by type.",ex:[],
+   items:[...cia.map((c,i)=>({sec:i?null:"Which property does each item MOST directly affect?",q:c.s,o:CIA_O,ord:1,a:c.a,x:c.x})),
+          ...types.map((c,i)=>({sec:i?null:"What type of control is each one?",q:c.s,o:CT_O,ord:1,a:c.a,x:c.x}))]};
+}
+
+/* 2. Attack and best control */
+const TH_POOL=[
+ {g:"mal",s:"Overnight, files on the shared drive got a new extension, and a note in each folder demands cryptocurrency. The backup share connected to the same server was encrypted too.",atk:"Ransomware",ctl:"Offline, immutable backups",x:"Encrypted files plus a ransom note is ransomware. Backups the malware cannot reach are what get you back without paying."},
+ {g:"mal",s:"Antivirus finds nothing, yet the server keeps sending data out. A scan from a bootable USB finds a modified kernel driver hiding a process.",atk:"Rootkit",ctl:"Secure Boot with measured boot",x:"Hiding at the kernel level is a rootkit. Secure Boot stops unsigned or modified boot and kernel components from loading."},
+ {g:"mal2",s:"A payroll script contains code that deletes records if one specific employee ID ever disappears from the HR system.",atk:"Logic bomb",ctl:"Code review and separation of duties",x:"Code waiting for a condition is a logic bomb. Reviews by someone other than the author catch it before it ships."},
+ {g:"mal2",s:"A free screen-recording tool from a forum works fine, but after install the PC starts accepting remote-control connections.",atk:"Trojan with a remote access tool",ctl:"Application allow listing",x:"Malware hidden in useful software is a trojan. Allow listing blocks unapproved software from running at all."},
+ {g:"mal",s:"Malware spreads across 300 servers in an hour through an unpatched file-sharing service, with nobody clicking anything.",atk:"Worm",ctl:"Patch management and network segmentation",x:"Self-spreading without user action is a worm. Patching closes the hole, and segmentation limits how far it can travel."},
+ {g:"mal2",s:"EDR shows PowerShell running encoded commands that load code straight into memory. Nothing is ever written to disk.",atk:"Fileless malware",ctl:"EDR with script and memory monitoring",x:"Living only in memory is fileless malware. File scanning misses it; behavior-based EDR and script logging catch it."},
+ {g:"soc",s:"Caller ID shows the bank's real number. The caller asks the controller to read back the one-time code just sent to her phone.",atk:"Vishing",ctl:"Policy that codes are never shared, with callback to a known number",x:"A voice call pretending to be a trusted party is vishing (caller ID is easily spoofed). Hang up and call back on a number you already have."},
+ {g:"phys",s:"A person carrying two large boxes follows employees through the badge door every morning.",atk:"Tailgating",ctl:"Access control vestibule",x:"Following someone through a secured door is tailgating. A vestibule lets only one person through per badge."},
+ {g:"soc2",s:"The real, compromised mailbox of a long-time supplier asks accounts payable to send future payments to a new bank account.",atk:"Business email compromise",ctl:"Out-of-band verification of payment changes",x:"A trusted mailbox used to redirect money is BEC. Confirm any bank change through a separate, known channel."},
+ {g:"soc2",s:"Attackers plant malware on an industry association's website that the target company's engineers visit every week.",atk:"Watering hole attack",ctl:"Web filtering with browser isolation",x:"Compromising a site the victims trust is a watering hole. Isolation runs web content away from the endpoint."},
+ {g:"soc3",s:"Staff who mistype the HR portal's address land on a look-alike login page with a near-identical domain.",atk:"Typosquatting",ctl:"Registering look-alike domains and DNS filtering",x:"Look-alike domains catch typos. Registering them yourself and filtering known bad domains closes the gap."},
+ {g:"phys",s:"Printed customer lists from the sales floor are found in the open recycling bins behind the building.",atk:"Dumpster diving",ctl:"Cross-cut shredding policy",x:"Pulling information from trash is dumpster diving. Shred anything sensitive before it leaves the building."},
+ {g:"phys",s:"Several USB drives labeled \"Bonus list\" are found in the parking lot. One was plugged into a finance PC.",atk:"Baiting",ctl:"Blocking unknown USB storage on endpoints",x:"Leaving infected media for curious people is baiting. Blocking unapproved USB storage stops it from running."},
+ {g:"net",s:"A coffee shop has two networks with the same name. One is run from a device in a stranger's backpack.",atk:"Evil twin",ctl:"WPA3-Enterprise with certificate validation",x:"A fake AP copying a real SSID is an evil twin. Validating the network's certificate stops clients from trusting it."},
+ {g:"cred",s:"Right after a big retailer's breach, many accounts here see one login attempt each using that user's email and an old password.",atk:"Credential stuffing",ctl:"Multifactor authentication",x:"Leaked username and password pairs tried elsewhere is credential stuffing. MFA makes a correct stolen password useless."},
+ {g:"app",s:"Typing ' OR 1=1-- into the store's search box returns every customer record.",atk:"SQL injection",ctl:"Parameterized queries",x:"Input changing the database query is SQL injection. Parameterized queries keep input as data, never as code."},
+ {g:"app",s:"A comment posted on the support forum runs a script in every visitor's browser that sends their session cookie elsewhere.",atk:"Cross-site scripting",ctl:"Output encoding and input validation",x:"Script injected into a page other users load is XSS. Encoding output stops the browser from treating it as code."},
+ {g:"net",s:"Hosts on one switch keep caching the attacker's MAC address for the default gateway's IP.",atk:"ARP poisoning",ctl:"Dynamic ARP inspection",x:"False ARP replies put the attacker on-path. DAI checks ARP replies against known bindings and drops fakes."},
+ {g:"net2",s:"Thousands of hosts around the world flood the online store with requests on its biggest sales day.",atk:"DDoS attack",ctl:"Cloud-based DDoS scrubbing service",x:"Many sources overwhelming one service is DDoS. Scrubbing services absorb and filter the flood upstream."},
+ {g:"net2",s:"An attacker captures a valid login exchange on the network and sends it again later to get in.",atk:"Replay attack",ctl:"Session tokens with timestamps and nonces",x:"Resending captured traffic is replay. Values that are only valid once make old captures useless."}];
+function genThreats(){
+  let set; do{ set=pbqPickN(TH_POOL,5); }while(new Set(set.map(s=>s.g)).size<5);
+  const others=TH_POOL.filter(t=>!set.includes(t)), dA=pbqPickN(others,3), dC=pbqPickN(others.filter(t=>!dA.includes(t)),3);
+  const atks=[...set.map(s=>s.atk),...dA.map(s=>s.atk)], ctls=[...set.map(s=>s.ctl),...dC.map(s=>s.ctl)];
+  const items=[];
+  set.forEach((s,i)=>{ items.push({sec:`Scenario ${i+1}`,q:s.s+" Which attack is this?",o:atks,a:atks.indexOf(s.atk),x:s.x});
+                       items.push({q:"Which control BEST prevents it from working again?",o:ctls,a:ctls.indexOf(s.ctl),x:s.x}); });
+  return {brief:"The security team logged five incidents this month. For each one, identify the attack, then choose the control that BEST stops it. Each answer is used once.",ex:[],items};
+}
+
+/* 3. Place the security devices */
+const PL_VARIANTS=[
+ {name:"Online store (on premises)",
+  brief:"The company hosts its online store in its own data center. Requirements: filter traffic at the internet edge; inspect web requests for SQL injection and XSS before they reach the web servers; spread requests across three web servers; keep order records unreachable from the internet; admins must connect through one hardened, logged host; and watch a copy of internal traffic without ever blocking it.",
+  flow:[{t:"Internet"},{t:"Edge",s:[1]},{t:"Web zone",s:[2,3],e:["Web server ×3"]},{t:"Internal firewall"},{t:"Internal network",s:[4],e:["Core switch"]},{t:"SPAN port on the core switch",s:[6]},{t:"Management network",s:[5]}],
+  dev:["Next-generation firewall","Web application firewall","Load balancer","Database server","Jump server","IDS (sensor on the SPAN port)","IPS (inline)","Forward proxy"],
+  slots:[[1,0,"The edge firewall filters everything entering from the internet."],[2,1,"The WAF inspects HTTP requests for application attacks before they reach any web server."],[3,2,"The load balancer spreads requests across the three web servers."],[4,3,"Order records live on the internal network, behind a second firewall, with no route from the internet."],[5,4,"Admins reach servers only through the hardened, logged jump server."],[6,5,"A SPAN port receives a copy of traffic, so the sensor there can only alert: an IDS. An IPS must sit inline to block."]],
+  sub:[["The web zone should be a…",["Screened subnet (DMZ)","Part of the internal network","Guest network","Directly on the internet with no firewall"],0,"Public-facing servers belong in a screened subnet, with a firewall on each side, so a compromised web server does not land on the internal network."]]},
+ {name:"Cloud web app (VPC)",
+  brief:"The app runs in a cloud virtual private cloud (VPC) across two availability zones. Requirements: give the VPC a route to the internet; inspect web requests for application attacks first; spread traffic across zones; add and remove app servers automatically with demand; let private servers download patches without being reachable from the internet; and keep the database in the most isolated tier.",
+  flow:[{t:"Internet"},{t:"VPC edge",s:[1]},{t:"In front of the app",s:[2]},{t:"Subnet X",s:[3,5]},{t:"Subnet Y",s:[4]},{t:"Subnet Z",s:[6]}],
+  dev:["Internet gateway","Web application firewall","Application load balancer","Auto scaling group of app servers","NAT gateway","Managed database","VPN gateway","Public IP on every app server"],
+  slots:[[1,0,"The internet gateway connects the VPC to the internet."],[2,1,"The WAF filters HTTP requests before the load balancer passes them on."],[3,2,"The load balancer sits in the public subnet and spreads traffic across availability zones."],[4,3,"The auto scaling group adds and removes app servers in the private subnet."],[5,4,"A NAT gateway in the public subnet lets private servers reach out for patches while blocking connections in."],[6,5,"The database goes in the most isolated subnet, reachable only from the app tier."]],
+  sub:[["Subnet X",["Public subnet (routes to the internet gateway)","Private subnet (outbound only, through NAT)","Isolated subnet (no internet route)"],0,"The load balancer and the NAT gateway must talk to the internet directly, so Subnet X is public."],["Subnet Y",["Private subnet (outbound only, through NAT)","Public subnet (routes to the internet gateway)","Isolated subnet (no internet route)"],0,"App servers need outbound access for patches but must not be reachable from the internet: private, through the NAT gateway."],["Subnet Z",["Isolated subnet (no internet route)","Public subnet (routes to the internet gateway)","Private subnet (outbound only, through NAT)"],0,"The database needs no internet access at all, only connections from the app tier."]]},
+ {name:"Branch office with remote workers",
+  brief:"A 60-person branch office also supports 40 remote workers. Requirements: one appliance at the edge for firewall, IPS, and content filtering; encrypted tunnels for remote workers; check each device's patch and antivirus status before it joins a switch port or Wi-Fi; authenticate Wi-Fi and VPN users against the directory; send all staff web browsing through a filter; and collect logs from every device in one place.",
+  flow:[{t:"Internet"},{t:"Edge",s:[1]},{t:"Screened subnet",s:[2]},{t:"Office network",s:[3,4],e:["Staff PCs","Wi-Fi access points"]},{t:"Server network",s:[5,6]}],
+  dev:["UTM appliance","VPN concentrator","NAC","Forward proxy","RADIUS server","SIEM","Load balancer","Honeypot"],
+  slots:[[1,0,"A UTM combines firewall, IPS, and content filtering in one edge appliance, which suits a branch office."],[2,1,"The VPN concentrator terminates remote workers' tunnels; its outside interface belongs in the screened subnet."],[3,2,"NAC checks device health before granting access on switch ports and Wi-Fi."],[4,3,"The forward proxy filters staff web browsing."],[5,4,"RADIUS checks Wi-Fi (802.1X) and VPN logins against the directory."],[6,5,"The SIEM collects and correlates logs from every device."]],
+  sub:[]}];
+const PL_CONCEPT=[
+ {q:"Why does an IPS have to sit inline?",o:["It must be in the traffic path to drop packets","Inline sensors see less traffic","SPAN ports are encrypted","An IPS only reads logs"],a:0,x:"Blocking requires being in the path. A sensor on a SPAN or tap gets a copy and can only alert."},
+ {q:"What is the main job of a screened subnet?",o:["Expose public services while keeping a firewall between them and internal systems","Speed up internal traffic","Store backups offline","Replace the internal firewall"],a:0,x:"A screened subnet (DMZ) limits what an attacker reaches if a public server is compromised."},
+ {q:"Which device is purpose-built to stop SQL injection and XSS?",o:["Web application firewall","Layer 4 firewall","Load balancer","NAT gateway"],a:0,x:"A WAF reads HTTP requests and blocks application-layer attacks; port-based filtering cannot."},
+ {q:"What does fail-closed mean for an inline security device?",o:["If it fails, traffic stops rather than passing uninspected","If it fails, traffic passes uninspected","It closes idle sessions","It blocks all traffic at night"],a:0,x:"Fail-closed favors security over availability; fail-open favors availability."}];
+function genPlace(){
+  const V=pbqPick(PL_VARIANTS);
+  const items=V.slots.map(([n,d,x],i)=>({sec:i?null:"Choose the device for each numbered slot",q:`Slot ${n}`,o:V.dev,a:d,x}));
+  V.sub.forEach(([q,o,a,x],i)=>items.push({sec:i?null:"Classify the subnets",q,o,a,x}));
+  items.push(pbqPick(PL_CONCEPT));
+  return {brief:`${V.name}. ${V.brief} Place a device in each numbered slot. Some devices are not used.`,ex:[{t:"Network diagram",flow:V.flow}],items};
+}
+
+/* 4. Fix the site-to-site VPN */
+const VPN_CITIES=["Denver","Boise","Tulsa","Omaha","Reno","Spokane","Wichita","Tucson","Fresno","Billings"];
+const VPN_ROWS=[
+ {k:"ike",n:"IKE version",ph:1,bad:["IKEv1 (aggressive mode)"],x:"IKEv2 is the current standard. IKEv1 aggressive mode exposes the identity and a crackable hash, and a version mismatch stops Phase 1 outright."},
+ {k:"auth",n:"Authentication",ph:1,x:"Both peers must use the method the policy requires. A mismatch fails at IKE_AUTH."},
+ {k:"enc1",n:"Phase 1 encryption",ph:1,bad:["3DES","DES","AES-128"],x:"Both peers must offer the same cipher, and the policy requires AES-256. DES and 3DES are deprecated."},
+ {k:"int1",n:"Phase 1 integrity",ph:1,bad:["MD5","SHA-1"],x:"MD5 and SHA-1 are broken for this use; both peers must use the policy hash."},
+ {k:"dh",n:"Diffie-Hellman group",ph:1,bad:["Group 2 (1024-bit)","Group 5 (1536-bit)"],x:"DH groups 2 and 5 are too small. Both peers need the same group, at least the policy's."},
+ {k:"proto",n:"Phase 2 protocol",ph:2,bad:["AH"],x:"AH authenticates packets but does not encrypt them. ESP provides confidentiality, which the policy requires."},
+ {k:"mode",n:"Phase 2 mode",ph:2,bad:["Transport"],x:"Gateway-to-gateway VPNs use tunnel mode, which wraps and encrypts the whole original packet. Transport mode is for host-to-host."},
+ {k:"enc2",n:"Phase 2 encryption",ph:2,bad:["3DES","DES","NULL (none)"],x:"The data tunnel needs the same strong cipher on both ends: AES-256 per the policy."}];
+const VPN_CONCEPT=[
+ {q:"Which ports must the edge firewalls allow between the two peers?",o:["UDP 500 and UDP 4500 (plus ESP, IP protocol 50)","TCP 443 only","TCP 22 and TCP 23","UDP 53 and UDP 123"],a:0,x:"IKE uses UDP 500, NAT traversal uses UDP 4500, and ESP is IP protocol 50."},
+ {q:"What does the Diffie-Hellman exchange do?",o:["Lets the peers agree on shared keys over an untrusted network","Encrypts the bulk data","Signs each packet","Authenticates the users"],a:0,x:"DH derives a shared secret without ever sending it; the cipher then uses keys derived from it."},
+ {q:"Why must each site's local and remote networks mirror the other site's?",o:["The traffic selectors must match or Phase 2 is rejected","It speeds up encryption","It avoids NAT","It is only cosmetic"],a:0,x:"Site A's local network must be Site B's remote network, and the reverse. Otherwise the peers reject the child SA (TS_UNACCEPTABLE)."},
+ {q:"What does perfect forward secrecy (PFS) add?",o:["New DH keys for each Phase 2 SA, so one stolen key does not expose past traffic","Longer pre-shared keys","Compression","A second tunnel for backup"],a:0,x:"With PFS, compromising one session key does not unlock other sessions."}];
+function genVPN(){
+  const [ca,cb]=pbqPickN(VPN_CITIES,2), pa=`203.0.113.${pbqR(10,240)}`, pb=`198.51.100.${pbqR(10,240)}`;
+  const na=`10.${pbqR(10,90)}.${pbqR(0,250)}.0/24`, nb=`172.${pbqR(16,31)}.${pbqR(0,250)}.0/24`, gwA=na.replace(".0/24",".1"), gwB=nb.replace(".0/24",".1");
+  const pol={ike:"IKEv2",auth:pbqPick(["Certificates","Pre-shared key"]),enc1:"AES-256",int1:pbqPick(["SHA-256","SHA-384"]),dh:pbqPick(["Group 14 (2048-bit)","Group 19 (256-bit ECP)","Group 20 (384-bit ECP)"]),proto:"ESP",mode:"Tunnel",enc2:"AES-256"};
+  const rows=VPN_ROWS.map(r=>({...r,good:pol[r.k],bad:r.k==="auth"?[pol.auth==="Certificates"?"Pre-shared key":"Certificates"]:r.bad}));
+  const n1=pbqPick([0,1,2,2]), p1=pbqPickN(rows.filter(r=>r.ph===1),n1), p2=pbqPickN(rows.filter(r=>r.ph===2),n1?pbqR(1,2):2), faults=[...p1,...p2];
+  const A={},B={}; rows.forEach(r=>{ A[r.k]=B[r.k]=r.good; r.side=0; });
+  faults.forEach(r=>{ const side=Math.random()<.18?3:pbqR(1,2); r.side=side; const v=pbqPick(r.bad); if(side!==2) A[r.k]=v; if(side!==1) B[r.k]=v; });
+  const peerFault=Math.random()<.5, tsFault=Math.random()<.5;
+  const bPeer=peerFault?pbqPick([pb,gwA]):pa, bLocal=tsFault?na:nb, bRemote=tsFault?nb:na;
+  const ex=[{t:"Tunnel policy",log:`Encryption ${pol.enc1} for both phases · Integrity ${pol.int1} · DH ${pol.dh}
+${pol.ike} · Authentication: ${pol.auth} · ESP in tunnel mode`},
+   {t:`Current configuration`,table:[["Setting",`Site A (${ca})`,`Site B (${cb})`],["Public IP of this peer",pa,pb],["Remote peer address",pb,bPeer],
+     ...rows.map(r=>[r.n,A[r.k],B[r.k]]),["Local network",na,bLocal],["Remote network",nb,bRemote]]}];
+  const ikeF=rows[0].side, cryF=rows.filter(r=>["enc1","int1","dh"].includes(r.k)&&r.side).length, authF=rows[1].side;
+  const ph1=!!(ikeF||cryF||authF||peerFault);
+  const lg=ikeF?`IKE_SA_INIT: received IKEv1 packet from ${pb}; this peer requires IKEv2. Negotiation failed.`:(cryF||peerFault)?`IKE_SA_INIT: peer ${pb} returned NO_PROPOSAL_CHOSEN. Phase 1 failed.`:authF?`IKE_AUTH: AUTHENTICATION_FAILED from ${pb}. Phase 1 failed.`:`IKE_SA established with ${pb}. CREATE_CHILD_SA: ${tsFault?"TS_UNACCEPTABLE":"NO_PROPOSAL_CHOSEN"}. Phase 2 failed.`;
+  ex.push({t:`Site A (${ca}) tunnel log`,log:lg});
+  const FIX=r=>["No change needed",`Change Site A to ${r.good}`,`Change Site B to ${r.good}`,`Change both sites to ${r.good}`];
+  const sideTxt=s=>["Both sites already match the policy.","Site A is the one that is wrong.","Site B is the one that is wrong.","Both sites are wrong."][s];
+  const items=[{sec:"Read the log",q:"What does Site A's log tell you?",o:ph1?["Phase 1 (the IKE SA) failed, so no data tunnel was built","Phase 1 succeeded; only Phase 2 failed","The tunnel is up and passing traffic","The ISP is blocking the traffic"]:["Phase 1 succeeded; only Phase 2 failed","Phase 1 (the IKE SA) failed, so no data tunnel was built","The tunnel is up and passing traffic","The ISP is blocking the traffic"],a:0,
+    x:ph1?"IKE_SA_INIT and IKE_AUTH are Phase 1. Until they succeed, no child SA (the data tunnel) can form.":"The IKE SA came up, so Phase 1 settings agree. The failure is in CREATE_CHILD_SA, the Phase 2 proposal."},
+   ...rows.map((r,i)=>({sec:i?null:"Fix each setting to meet the policy",q:r.n,o:FIX(r),ord:1,a:r.side,x:`${sideTxt(r.side)} ${r.x}`})),
+   {sec:"Addresses and networks",q:"Site B: remote peer address",o:[pa,pb,gwA,gwB],a:0,x:`Site B must point at Site A's public IP, ${pa}.${peerFault?` It was set to ${bPeer}, which is ${bPeer===pb?"Site B's own address":"Site A's private LAN gateway, unreachable across the internet"}.`:""}`},
+   {q:"Site B: local network",o:[nb,na,`${pb}/32`,"0.0.0.0/0"],a:0,x:`Site B protects its own LAN, ${nb}.${tsFault?" The selectors were swapped.":""}`},
+   {q:"Site B: remote network",o:[na,nb,`${pa}/32`,"0.0.0.0/0"],a:0,x:`The remote network is Site A's LAN, ${na}, mirroring Site A's settings.`},
+   pbqPick(VPN_CONCEPT)];
+  return {brief:`The site-to-site IPsec tunnel between ${ca} (Site A) and ${cb} (Site B) will not come up. Compare both peers' settings with the tunnel policy and the log, then fix every setting.`,ex,items};
+}
+
+/* 5. Key-based SSH */
+const SSH_USERS=["jlopez","akim","mreyes","tshaw","dpatel","cnovak","bwright","eyoung"];
+const SSH_HOSTS=["web01","db02","app03","files01","build04","log01"];
+function genSSH(){
+  const u=pbqPick(SSH_USERS), h=pbqPick(SSH_HOSTS), ip=`10.${pbqR(10,90)}.${pbqR(0,250)}.${pbqR(10,240)}`, win=Math.random()<.5, ed=Math.random()<.6;
+  const kn=ed?"id_ed25519":"id_rsa", home=win?"$env:USERPROFILE\\.ssh\\":"~/.ssh/", kp=home+kn;
+  const gen=ed?`ssh-keygen -t ed25519 -f ${kp}`:`ssh-keygen -t rsa -b 4096 -f ${kp}`;
+  const copy=win?`type ${kp}.pub | ssh ${u}@${ip} "cat >> ~/.ssh/authorized_keys"`:`ssh-copy-id -i ${kp}.pub ${u}@${ip}`;
+  const ok=Math.random()<.5;
+  const cfgPw=pbqPick(["yes","yes","no"]), cfgRoot=pbqPick(["yes","prohibit-password"]);
+  const vlog=ok?`debug1: Offering public key: ${kp.replace("$env:USERPROFILE","C:\\Users\\"+u)} ${ed?"ED25519":"RSA"} SHA256:${pbqPick(["q3Vt","Zk8p","Lm2x"])}…
+debug1: Server accepts key: ${kp.replace("$env:USERPROFILE","C:\\Users\\"+u)} ${ed?"ED25519":"RSA"}
+Authenticated to ${ip} ([${ip}]:22) using "publickey".`:`debug1: Offering public key: ${kp.replace("$env:USERPROFILE","C:\\Users\\"+u)} ${ed?"ED25519":"RSA"} SHA256:${pbqPick(["q3Vt","Zk8p","Lm2x"])}…
+debug1: Authentications that can continue: publickey,password
+debug1: Next authentication method: password
+${u}@${ip}'s password:
+Authenticated to ${ip} ([${ip}]:22) using "password".`;
+  const srv=`Authentication refused: bad ownership or modes for directory /home/${u}/.ssh`;
+  const items=[
+   {sec:"Set up the key",q:"1. Create the key pair on your workstation",o:[gen,ed?"ssh-keygen -t dsa -b 1024":`ssh-keygen -t rsa -b 1024 -f ${kp}`,`ssh-keygen -R ${ip}`,`ssh-copy-id ${u}@${ip}`],a:0,x:`${ed?"Ed25519 is the modern default":"RSA needs at least 3072 bits today; 4096 is common"}. -f sets the file name. ${ed?"DSA is deprecated.":"1024-bit RSA is too weak."} -R only removes a known_hosts entry.`},
+   {q:"2. Put the public key on the server",o:[copy,win?`type ${kp} | ssh ${u}@${ip} "cat >> ~/.ssh/authorized_keys"`:`ssh-copy-id -i ${kp} ${u}@${ip}`,`scp ${kp} ${u}@${ip}:~/.ssh/`,`ssh-keygen -y -f ${kp}`],a:0,
+    x:`Only the .pub file ever leaves your machine; the private key stays put.${win?" Windows does not include ssh-copy-id, so the public key is piped over SSH and appended to authorized_keys.":" ssh-copy-id appends it to authorized_keys and sets permissions."}`},
+   {q:"3. Which file on the server holds the keys allowed to log in?",o:[`/home/${u}/.ssh/authorized_keys`,`/home/${u}/.ssh/known_hosts`,"/etc/ssh/sshd_config",`/home/${u}/.ssh/${kn}`],a:0,x:"authorized_keys lists public keys allowed to log in as that user. known_hosts stores servers' keys on the client."},
+   {sec:"Test the login",q:`Read the ssh -v output (Exhibit 2). Which method authenticated the session?`,o:["Public key","Password","Kerberos","Host-based"],ord:1,a:ok?0:1,x:ok?"\"Server accepts key\" and \"using publickey\" prove the key worked.":"The server did not accept the key and fell back to password, as the last line shows."},
+   ok?{q:"The key works. What is the NEXT step?",o:["Keep this session open, set PasswordAuthentication no, restart sshd, and test from a second session","Delete the private key; the server has a copy","Set PasswordAuthentication no before testing the key","Copy the private key to every server"],a:0,x:"Disable passwords only after proving the key works, and keep a working session open in case you lock yourself out."}
+     :{q:`The server's auth log shows: "${srv}". What fixes it?`,o:[`chmod 700 ~/.ssh and chmod 600 ~/.ssh/authorized_keys on the server`,"chmod 777 ~/.ssh so sshd can read it","Generate a new key pair","Set PasswordAuthentication yes"],a:0,x:"sshd refuses keys if the .ssh folder or authorized_keys is writable by others. 700 and 600 fix it; 777 makes it worse."},
+   {sec:"Harden sshd_config",q:`PasswordAuthentication (currently ${cfgPw})`,o:["no","yes"],ord:1,a:0,x:"After key login works, turn passwords off so they cannot be guessed or sprayed."},
+   {q:`PermitRootLogin (currently ${cfgRoot})`,o:["no","yes","prohibit-password"],ord:1,a:0,x:"The policy says root never logs in remotely. Admins log in as themselves and use sudo, which keeps an audit trail. prohibit-password still allows root with a key."},
+   {q:"PubkeyAuthentication",o:["yes","no"],ord:1,a:0,x:"Key authentication must stay on, or nobody can log in once passwords are off."},
+   {q:"Which change takes effect only after a restart?",o:["Edits to sshd_config (restart or reload sshd)","Adding a key to authorized_keys","Changing folder permissions","Creating the key pair"],a:0,x:"sshd reads its config at start. authorized_keys is read at every login, so new keys work immediately."}];
+  return {brief:`You are moving ${u}'s admin access to ${h} (${ip}) from passwords to SSH keys. Your workstation runs ${win?"Windows (PowerShell)":"Linux"}. Policy: ${ed?"Ed25519":"RSA 4096"} keys, no password logins, and no direct root logins once keys work.`,
+   ex:[{t:"Exhibit 1 · Current /etc/ssh/sshd_config (excerpt)",log:`Port 22
+PermitRootLogin ${cfgRoot}
+PubkeyAuthentication yes
+PasswordAuthentication ${cfgPw}
+AuthorizedKeysFile .ssh/authorized_keys`},{t:`Exhibit 2 · ssh -v -i ${kp} ${u}@${ip}`,log:vlog}],items};
+}
+
+/* 6. Trace the outbreak */
+const OB_HOSTS=["FIN-PC12","FIN-PC17","HR-LT04","MKT-PC08","ENG-WS21","ENG-WS33","OPS-PC02","SALES-LT11","RECEPT-01","LAB-PC05"];
+const OB_ENTRY=[
+ {k:"Phishing attachment",ev:(f)=>`OUTLOOK.EXE → WINWORD.EXE opened ${pbqPick(["Invoice_8812.docm","PO_Update.docm","Shipping_Notice.docm"])}; WINWORD.EXE spawned powershell.exe -enc …; ${f} written to %APPDATA%`},
+ {k:"Infected USB drive",ev:(f)=>`explorer.exe launched E:\\Photos.lnk from removable drive E:; cmd.exe copied ${f} to C:\\Users\\Public`},
+ {k:"Exposed RDP with a guessed password",ev:(f)=>`4625 x 412 then 4624 LogonType 10 (RDP) for "admin" from 185.${pbqR(10,250)}.${pbqR(0,250)}.${pbqR(1,250)}; ${f} downloaded by the RDP session`},
+ {k:"Drive-by download",ev:(f)=>`chrome.exe downloaded ${f} from a compromised ad network page; ${f} executed by the user`}];
+const OB_SPREAD=[{p:"445",n:"SMB",tool:"PsExec-style service install"},{p:"5985",n:"WinRM",tool:"remote PowerShell (WinRM)"},{p:"135",n:"RPC/WMI",tool:"WMI remote process creation"}];
+function genOutbreak(){
+  const hosts=pbqPickN(OB_HOSTS,5), [p0,s1,s2,bl,cl]=hosts, ips={}; hosts.forEach(hh=>ips[hh]=`10.40.${pbqR(1,9)}.${pbqR(10,250)}`);
+  const f=pbqPick(["svcupd.exe","winhelper.exe","msupdate64.exe","dllhostx.exe"]), E=pbqPick(OB_ENTRY), S=pbqPick(OB_SPREAD), c2=`192.0.2.${pbqR(10,250)}`;
+  const H=pbqR(8,15), t=(m,s)=>`${String(H).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s===undefined?pbqR(0,59):s).padStart(2,"0")}`;
+  const edr=[[t(2),p0,E.ev(f),"Alert only"],[t(19),s1,`${f} created by ${S.tool}; persistence: scheduled task "Updater"`,"Alert only"],
+   [t(23),bl,`${f} created by ${S.tool}`,"Blocked and quarantined"],[t(26),s2,`${f} created by ${S.tool}; Run key added`,"Alert only"],
+   [t(40),cl,`Signature update completed; scheduled scan clean`,"None"]];
+  const flows=[[t(4),ips[p0],c2,"443","38 KB"],[t(18),ips[p0],ips[s1],S.p,"1.2 MB"],[t(22),ips[p0],ips[bl],S.p,"1.1 MB"],[t(25),ips[p0],ips[s2],S.p,"1.2 MB"],
+   [t(31),ips[s1],c2,"443","41 KB"],[t(33),ips[s2],c2,"443","39 KB"],[t(36),ips[cl],"10.40.0.10","53","2 KB"]];
+  const ST=["Patient zero (first infected)","Infected through lateral movement","Targeted, but EDR blocked it","Not involved"];
+  const role={[p0]:[0,`The earliest event, the initial access (${E.k.toLowerCase()}), and the source of every ${S.n} connection.`],[s1]:[1,`Received ${S.n} (${S.p}) from ${p0}, then ${f} ran and it beaconed to ${c2}.`],[s2]:[1,`Received ${S.n} (${S.p}) from ${p0}, then ${f} ran and it beaconed to ${c2}.`],[bl]:[2,`${p0} reached it over ${S.n}, but EDR blocked and quarantined ${f}, and it never contacted ${c2}.`],[cl]:[3,"No connections from the infected host and no detections; only normal DNS traffic."]};
+  const order=shuffle(hosts.slice());
+  const items=[...order.map((hh,i)=>({sec:i?null:"Classify each host",q:`${hh} (${ips[hh]})`,o:ST,ord:1,a:role[hh][0],x:role[hh][1]})),
+   {sec:"Findings",q:"How did the attacker get in?",o:OB_ENTRY.map(e=>e.k),a:OB_ENTRY.indexOf(E),x:`${p0}'s first event shows it: ${E.ev(f).split(";")[0]}.`},
+   {q:"Which protocol did the malware use to spread?",o:OB_SPREAD.map(s=>`${s.n} (port ${s.p})`),a:OB_SPREAD.indexOf(S),x:`Every lateral connection from ${p0} goes to port ${S.p} (${S.n}).`},
+   {q:"Which data source BEST proves the spread between hosts?",o:["Network flow logs","Endpoint antivirus definitions","Vulnerability scan report","Badge access logs"],a:0,x:"Flow records show which host connected to which, on what port, and when."},
+   {q:"What should happen to the infected hosts NEXT?",o:["Isolate them from the network (containment)","Reimage them right away","Run a full scan and return them to users","Close the ticket; EDR handled it"],a:0,x:"Containment comes before eradication: cut the hosts off so the malware cannot spread or beacon, and preserve evidence before wiping."},
+   {q:`Which indicator should be blocked at the firewall right away?`,o:[c2,ips[p0],"10.40.0.10","Port 53"],a:0,x:`${c2} is the command-and-control server all infected hosts beacon to. Blocking internal IPs or DNS would break normal service.`}];
+  return {brief:`EDR flagged ${f} on several hosts this morning. Use the EDR detections and the network flow log to work out how the attack started and how far it spread.`,
+   ex:[{t:"EDR detections",table:[["Time (UTC)","Host","Detection","Action"],...edr.sort((a,b)=>a[0]<b[0]?-1:1)]},{t:"Network flow log",table:[["Time (UTC)","Source","Destination","Port","Bytes"],...flows.sort((a,b)=>a[0]<b[0]?-1:1)]}],items};
+}
+
+const CPBQ=[
+ {id:"cia",name:"CIA triad and control types",dom:1,gen:genCIA},
+ {id:"threats",name:"Name the attack, pick the control",dom:2,gen:genThreats},
+ {id:"place",name:"Place the security devices",dom:3,gen:genPlace},
+ {id:"vpn",name:"Fix the site-to-site VPN",dom:3,gen:genVPN},
+ {id:"ssh",name:"Move to key-based SSH",dom:4,gen:genSSH},
+ {id:"outbreak",name:"Trace the outbreak",dom:4,gen:genOutbreak}];
+function viewCPBQ(){
+  const m=M("pbq");
+  app.innerHTML=modHead(m)+`<p style="max-width:70ch;margin:0 0 14px">Exam-style simulations. Every run is a new variation: different scenarios, names, addresses, settings, and faults, with the answer choices shuffled. Read the exhibits, answer every drop-down, then check. A run at ${Math.round(PBQ_CLEAR*100)}% or better clears the PBQ; clear each one ${PBQ_NEED} times to master it.<\/p>
+  <div class="lr-list">${CPBQ.map((x,i)=>{ const h=P.pbq[x.id]||[]; return `<button class="lr-case${pbqClears(x.id)>=PBQ_NEED?" solved":""}" type="button" data-i="${i}"><span class="tag">${esc(DOM[x.dom])}<\/span><b>PBQ ${i+1} · ${esc(x.name)}<\/b><small>${pbqClears(x.id)} of ${PBQ_NEED} clears${h.length?` · best ${Math.max(...h.map(r=>Math.round(r.score/r.total*100)))}%`:""}<\/small><\/button>`; }).join("")}<\/div>`;
+  app.querySelectorAll(".lr-case").forEach(b=>b.addEventListener("click",()=>runCPBQ(+b.dataset.i)));
+}
+function cpbqFlow(fl){
+  const slot=n=>`<span class="pf-slot">${n}<\/span>`, chip=t=>`<span class="pf-chip">${esc(t)}<\/span>`;
+  return `<div class="pbq-flow">${fl.map((r,i)=>`${i?`<div class="pf-arrow" aria-hidden="true">↓<\/div>`:""}<div class="pf-row"><span class="pf-t">${esc(r.t)}<\/span><span class="pf-items">${(r.s||[]).map(slot).join("")}${(r.e||[]).map(chip).join("")}${(r.s2||[]).map(slot).join("")}${(r.e2||[]).map(chip).join("")}<\/span><\/div>`).join("")}<\/div>`;
+}
+function cpbqEx(e){
+  const body=e.flow?cpbqFlow(e.flow):e.table?`<div class="tblwrap"><table class="zt pbqt"><thead><tr>${e.table[0].map(h=>`<th>${esc(h)}<\/th>`).join("")}<\/tr><\/thead><tbody>${e.table.slice(1).map(r=>`<tr>${r.map(c=>`<td>${esc(c)}<\/td>`).join("")}<\/tr>`).join("")}<\/tbody><\/table><\/div>`:logBlock(e.log);
+  return `<div class="pbq-ex"><h4>${esc(e.t)}<\/h4>${body}<\/div>`;
+}
+function runCPBQ(i,keep){
+  const x=CPBQ[i], v=keep||x.gen(); let checked=false;
+  const orders={}; const orderFor=it=>{ if(it.ord) return it.o.map((_,j)=>j); const k=JSON.stringify(it.o); return orders[k]||(orders[k]=shuffle(it.o.map((_,j)=>j))); };
+  app.innerHTML=modHead(M("pbq"))+`<div class="examtop"><button class="chipbtn" id="pbqlist" type="button">← All PBQs<\/button><span>PBQ ${i+1} of ${CPBQ.length}: ${esc(x.name)}<\/span><\/div>
+   <div class="card"><div class="q-meta">${domTag(x.dom)}<span class="tag">Performance-based<\/span><\/div><p style="margin:.2em 0 0;max-width:80ch">${esc(v.brief)}<\/p>${v.ex.map(cpbqEx).join("")}<\/div>
+   <div class="card" style="margin-top:14px" id="pbqitems">${v.items.map((it,k)=>`${it.sec?`<h4 class="pbq-sec">${esc(it.sec)}<\/h4>`:""}<div class="pbq-row" data-k="${k}"><label for="pq${k}">${esc(it.q)}<\/label><select id="pq${k}"><option value="">Choose…<\/option>${orderFor(it).map(j=>`<option value="${j}">${esc(it.o[j])}<\/option>`).join("")}<\/select><div class="pbq-x" hidden><\/div><\/div>`).join("")}
+   <div class="q-actions" style="margin-top:14px"><button class="btn" id="pbqcheck" type="button">Check answers<\/button><button class="btn" id="pbqnew" type="button" hidden>New variation<\/button><button class="btn ghost" id="pbqreset" type="button" hidden>Retry this one<\/button><button class="btn ghost" id="pbqnext" type="button" hidden>${i+1<CPBQ.length?"Next PBQ":"All PBQs"}<\/button><\/div><div class="fb" id="pbqfb" hidden><\/div><\/div>`;
+  $("#pbqlist").addEventListener("click",viewCPBQ);
+  $("#pbqcheck").addEventListener("click",()=>{
+    if(checked) return;
+    const sels=[...app.querySelectorAll("#pbqitems select")]; const empty=sels.filter(s=>s.value==="").length;
+    if(empty){ $("#pbqfb").hidden=false; $("#pbqfb").innerHTML=`<div class="v bad">Answer all ${empty} remaining item${empty>1?"s":""} first.<\/div>`; return; }
+    checked=true; let score=0;
+    sels.forEach((s,k)=>{ const it=v.items[k], ok=+s.value===it.a; if(ok) score++; const row=s.closest(".pbq-row"); row.classList.add(ok?"ok":"bad"); s.disabled=true;
+      const xe=row.querySelector(".pbq-x"); xe.hidden=false; xe.innerHTML=`<b>${ok?"✓ Correct.":"✗ Answer: "+esc(it.o[it.a])+"."}<\/b> ${esc(it.x)}`; });
+    const total=v.items.length, pct=Math.round(score/total*100), clear=score/total>=PBQ_CLEAR;
+    if(mode==="student"&&!keep){ (P.pbq[x.id]=P.pbq[x.id]||[]).push({score,total,at:Date.now()}); save(); }
+    $("#pbqfb").hidden=false; $("#pbqfb").innerHTML=`<div class="v ${clear?"ok":"bad"}">${score} of ${total} (${pct}%). ${clear?`Cleared · ${pbqClears(x.id)} of ${PBQ_NEED} clears.`:`${Math.round(PBQ_CLEAR*100)}% clears it. Read the explanations, then try a new variation.`}<\/div>${keep?`<p class="note">Retries of the same variation are for review and do not count toward clears.<\/p>`:""}`;
+    $("#pbqcheck").hidden=true; $("#pbqnew").hidden=false; $("#pbqreset").hidden=false; $("#pbqnext").hidden=false;
+  });
+  $("#pbqnew").addEventListener("click",()=>runCPBQ(i));
+  $("#pbqreset").addEventListener("click",()=>runCPBQ(i,v));
+  $("#pbqnext").addEventListener("click",()=>i+1<CPBQ.length?runCPBQ(i+1):viewCPBQ());
+}
+/*PBQ-END*/
 /*BP-START*/
 function hlLog(t){ let s=String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
   s=s.replace(/"(?:[^"\\\n]|\\.)*"/g,m=>`<span class="ls">${m}</span>`); return s.replace(/(&lt;\/?[A-Za-z!?][\w:.\-]*|\/?&gt;)/g,'<span class="lt">$1</span>'); }
@@ -3457,7 +3747,7 @@ function runObj(mod,qs,title){
 }
 /*BPMIX-END*/
 /*BP-END*/
-const ROUTES={drill:viewDrill,home:viewHome,acro:viewAcro,qualifier:viewQual,pbq:viewSoon,exam:viewExam,cram:viewCram,progress:viewProgress,guide:viewGuide};
+const ROUTES={drill:viewDrill,home:viewHome,acro:viewAcro,qualifier:viewQual,pbq:viewCPBQ,exam:viewExam,cram:viewCram,progress:viewProgress,guide:viewGuide};
 Object.keys(TERMSETS).forEach(k=>{ ROUTES[k]=()=>viewTerms(k); });
 /* Grand Architect (all 5 secret badges): a soft RGB glow that slowly cycles colour.
    Inside a Joplin note it is drawn on the tool's own frame (Joplin redraws the page around it);

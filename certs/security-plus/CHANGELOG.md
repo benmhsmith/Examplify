@@ -1,5 +1,15 @@
 # Provo Security+ changelog
 
+## v1.4.0
+- Performance-Based Questions (module 13) is now live with six original simulations. Every run generates a new variation, with the answer choices shuffled:
+  - **CIA triad and control types:** choose the property each event or control affects, then classify each control.
+  - **Name the attack, pick the control:** five incidents drawn from a pool of 20, each matched to its attack and its best control.
+  - **Place the security devices:** an on-premises store, a cloud VPC, or a branch office, with numbered slots and subnet types.
+  - **Fix the site-to-site VPN:** compare both peers with the tunnel policy, read the tunnel log, and fix each mismatched or weak setting.
+  - **Move to key-based SSH:** build the commands for Linux or Windows, read `ssh -v` output, and harden `sshd_config`.
+  - **Trace the outbreak:** use EDR detections and a network flow log to find patient zero, the spread, and the next step.
+- A run at 90% or better clears a PBQ. Clear each one three times to master it. The module now counts toward the Mastery Badge.
+
 ## v1.3.0
 - Question Qualifiers: 30 new practice questions (70 in all), 6 for each qualifier. Each is built around a trap CompTIA uses, such as a runner-up answer that also works or a detail that rules out the obvious choice, and explains the trap after you answer. These practice questions never appear in the mini-exams.
 - Exam-Style Drill (new module): 169 original exam-style questions across 38 skills taken from the exam objectives, weighted Heavy, Core, or Light, with up to six variations each. Four styles: direct, scenario, exhibit (logs, email headers, scan results, and tables), and round best-fit questions in plain English, where several answers fit part of the question and one fits best. Every answer, right or wrong, is explained. These questions also appear in the mini-exams.
