@@ -6,21 +6,27 @@ Provo's study lab for the **CompTIA Network+ N10-009** exam. It drills the topic
 
 ## What's inside
 
-The lab has 11 modules in 5 stages. Work through them in order.
+The lab has 15 modules in 5 stages. Work through them in order.
 
 | Stage | Module | What you practice |
 |---|---|---|
 | 1 · Foundations | 01 Acronyms | 104 core exam acronyms, asked four ways |
 | | 02 OSI Model | Devices, protocols, and data units by layer |
 | | 03 Ports & Protocols | All 20 ports on the official N10-009 list |
-| 2 · Core skills | 04 Subnetting | Every prefix from /16 to /30: mask, CIDR, hosts, network, broadcast |
-| | 05 Media & Wireless | Cabling, fiber, connectors, transceivers, Wi-Fi, installation |
-| | 06 Security | 59 security concepts, attacks, and defenses (Domain 4.0) |
-| 3 · Troubleshooting | 07 Troubleshooting Methodology | The 7-step method and what comes next |
-| | 08 Tools & Commands | Hardware tools and CLI commands, with output and pictures |
-| 4 · Exam skills | 09 Question Qualifiers | FIRST, NEXT, BEST, MOST likely, and MINIMUM questions |
-| | 10 Performance-Based Questions | 10 performance-based questions with randomized scenarios |
-| 5 · Test | 11 Mini-Exams | Timed exams with PBQs first, weighted to the official domains |
+| | 04 Network Concepts | Appliances, cloud, topologies, SDN, SD-WAN, and IPv6 (1.2, 1.3, 1.6, 1.8), in exam-style questions |
+| 2 · Core skills | 05 Subnetting | Every prefix from /16 to /30: mask, CIDR, hosts, network, broadcast |
+| | 06 Routing & Switching | Routing tables, routing protocols, VLANs, trunks, and spanning tree (2.1–2.2), in exam-style questions |
+| | 07 Media & Wireless | Cabling, fiber, connectors, transceivers, Wi-Fi, installation |
+| | 08 Network Operations | DHCP and DNS, monitoring, documentation, disaster recovery, remote access (3.1–3.5), in exam-style questions |
+| | 09 Security | 59 security concepts, attacks, and defenses (Domain 4.0) |
+| 3 · Troubleshooting | 10 Troubleshooting Methodology | The 7-step method and what comes next |
+| | 11 Tools & Commands | Hardware tools and CLI commands, with output and pictures |
+| 4 · Exam skills | 12 Question Qualifiers | FIRST, NEXT, BEST, MOST likely, and MINIMUM questions |
+| | 13 Exam-Style Drill | All 136 exam-style questions across 25 skills: direct, scenario, exhibit (command output, routing tables, logs), and round best-fit. Practice by skill, domain, Heavy skills, or misses |
+| | 14 Performance-Based Questions | 10 performance-based questions with randomized scenarios |
+| 5 · Test | 15 Mini-Exams | Timed exams with PBQs first, weighted to the official domains |
+
+Every objective module also mixes in the new exam-style questions for its objectives, one in every four questions, so you practice the way the exam asks from the first module on. A right answer there also counts in the Exam-Style Drill.
 
 There is also a one-page **Cram Sheet** and a **Progress** page.
 

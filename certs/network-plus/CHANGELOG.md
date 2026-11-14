@@ -1,5 +1,12 @@
 # Provo Network+ changelog
 
+## v5.3.0
+- Question Qualifiers: 30 new practice questions (65 in all), 6 for each qualifier. Each is built around a trap CompTIA uses, such as a runner-up answer that also works or a detail that rules out the obvious choice, and explains the trap after you answer. These practice questions never appear in the mini-exams.
+- Exam-Style Drill (new module): 136 original exam-style questions across 25 skills taken from the exam objectives, weighted Heavy, Core, or Light, with up to six variations each. Four styles: direct, scenario, exhibit (command output, routing tables, switch output, and logs), and round best-fit questions in plain English, where several answers fit part of the question and one fits best. Every answer, right or wrong, is explained. These questions also appear in the mini-exams.
+- Exam-style questions are now mixed into every objective module: one in every four questions comes from the Exam-Style Drill for that module's objectives, so you practice the way the exam asks from the first module on. A right answer there also counts in the drill.
+- New objective modules, built from exam-style questions: Network Concepts (1.2, 1.3, 1.6, 1.8), Routing & Switching (2.1–2.2), and Network Operations (3.1–3.5). The lab now has 15 modules.
+- The last modules are now in this order: Question Qualifiers, Exam-Style Drill, Performance-Based Questions, Mini-Exams.
+
 ## v5.2.0
 - A menu in the top bar links to the Provo home page (all exams), this exam's home, Contact us, and Report an issue. Selecting the Provo icon also returns to the Provo home page.
 - Report an issue opens a pre-filled GitHub report with the exam, page, version and browser filled in.

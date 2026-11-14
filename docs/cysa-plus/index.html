@@ -558,6 +558,7 @@ html.mobile .sr-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 :root{--pvm-accent:#2258A9;--pvm-accent-strong:#2258A9;--pvm-good:#2E8657;--pvm-bad:#C23A3A;}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]):not(.light){--pvm-accent:#6EA4E8;--pvm-accent-strong:#2F6CC4;--pvm-good:#4DBA80;--pvm-bad:#F07070;}}
 :root[data-theme="dark"],:root.dark{--pvm-accent:#6EA4E8;--pvm-accent-strong:#2F6CC4;--pvm-good:#4DBA80;--pvm-bad:#F07070;}
+.tag.bpx{color:var(--accent,#2563eb);border-color:currentColor;font-weight:700}
 </style>
 
 </head>
@@ -1335,9 +1336,9 @@ const MODULES = [
  {id:"frame",n:"12",stage:4,name:"Attack Frameworks",desc:"Cyber Kill Chain, Diamond Model, and MITRE ATT&CK.",covers:"Domain 3.0: attack methodology frameworks (3.1)."},
  {id:"ir",n:"13",stage:4,name:"Incident Response",desc:"The seven-phase process, plans, triage, evidence, and recovery.",covers:"Domain 3.0: the incident response process (3.2) and incident response techniques (3.3)."},
  {id:"report",n:"14",stage:4,name:"Reporting & Communication",desc:"Vulnerability reports, inhibitors, incident communication, and metrics.",covers:"Domain 4.0: vulnerability management reporting (4.1) and security operations and incident response reporting (4.2)."},
- {id:"drill",n:"15",stage:5,name:"Skill Drill",desc:"160 questions across the 53 skills the exam asks you to demonstrate, in four styles: direct, scenario, exhibit, and best fit.",covers:"All four domains. Practice one skill, one domain, every Heavy skill, or only the round best-fit questions."},
- {id:"pbq",n:"16",stage:5,name:"Performance-Based Questions",desc:"Seven exam-style simulations that change every run: scan prioritization, phishing headers, compromised hosts, Nmap hardening, IR phases, alert triage, and YARA matching.",covers:"All four domains, in the drop-down simulation style of the exam. Every run is a new variation with shuffled choices, and every item is explained when you check."},
- {id:"qualifier",n:"17",stage:5,name:"Question Qualifiers",desc:"Questions where FIRST, NEXT, BEST, MOST likely, or MINIMUM decides the answer.",covers:"All domains. 25 analyst scenarios across five qualifiers, each with a defensible runner-up, and the explanation says why it loses."},
+ {id:"qualifier",n:"15",stage:5,name:"Question Qualifiers",desc:"Questions where FIRST, NEXT, BEST, MOST likely, or MINIMUM decides the answer.",covers:"All domains. 25 analyst scenarios across five qualifiers, each with a defensible runner-up, and the explanation says why it loses."},
+ {id:"drill",n:"16",stage:5,name:"Exam-Style Drill",desc:"All 160 exam-style questions in one place, by skill and domain. You also meet them mixed into every objective module.",covers:"All four domains. Practice one skill, one domain, every Heavy skill, or only the round best-fit questions."},
+ {id:"pbq",n:"17",stage:5,name:"Performance-Based Questions",desc:"Seven exam-style simulations that change every run: scan prioritization, phishing headers, compromised hosts, Nmap hardening, IR phases, alert triage, and YARA matching.",covers:"All four domains, in the drop-down simulation style of the exam. Every run is a new variation with shuffled choices, and every item is explained when you check."},
  {id:"exam",n:"18",stage:5,name:"Mini-Exams",desc:"10, 20, or 40 multiple-choice questions, timed and weighted to the official domains.",covers:"All four domains, picked in proportion to CompTIA's weights (34 / 26 / 24 / 16) from 275 scenario questions."},
  {id:"cram",n:"",menu:true,name:"Cram Sheet",desc:"The high-yield facts on one page, for the night before.",covers:"The highest-yield CS0-004 facts on one page."},
  {id:"progress",n:"",menu:true,name:"Progress",desc:"Mastery per module and what to study next.",covers:"Progress is stored only in this browser. Clearing browser data or switching devices starts fresh."}
@@ -1598,7 +1599,7 @@ function mastery(id){
   if(TERMSETS[id]) return termMastery(id);
   switch(id){
     case "pbq":{ const v=CPBQ.reduce((a,x)=>a+pbqProgress(x.id),0)/CPBQ.length, n=CPBQ.filter(x=>pbqClears(x.id)>=PBQ_NEED).length; return {v,cap:`${n} of ${CPBQ.length} PBQs mastered`}; }
-    case "drill":{ const all=BANK.filter(q=>q.sk), n=all.filter(q=>(P.bp||{})[q.id]).length; return {v:n/all.length,cap:`${n} of ${all.length} skill questions right`}; }
+    case "drill":{ const all=BANK.filter(q=>q.sk), n=all.filter(q=>(P.bp||{})[q.id]).length; return {v:n/all.length,cap:`${n} of ${all.length} exam-style questions right`}; }
     case "acro":{ const l=acroCore(); const n=acroMastered(l); return {v:n/l.length,cap:`${n} of ${l.length} acronyms mastered`}; }
     case "qualifier":{ const Q=qualState(); const done=Q.filter(x=>x.mastered).length; const v=Q.reduce((a,x)=>a+Math.min(x.c,QUAL_NEED)/QUAL_NEED,0)/Q.length; return {v,cap:`${done} of ${Q.length} qualifiers mastered`}; }
     case "exam":{ const full=P.exams.filter(e=>e.total>=EXAM_FULL_MIN).slice(-EXAM_NEED); if(!full.length) return {v:0,cap:P.exams.length?"Take a 20- or 40-question exam to count":"No exams yet"}; const v=full.reduce((a,e)=>a+e.score/e.total,0)/EXAM_NEED; return {v,cap:`Last ${full.length} of ${EXAM_NEED} full exams · avg ${pct(full.reduce((a,e)=>a+e.score/e.total,0)/full.length)}%`}; }
@@ -1637,7 +1638,7 @@ function viewHome(){
     </a>`;}).join("")}
   </div></section>`).join("")}</div>
   <p class="note" style="margin-top:14px">Progress saves in this browser only. To start over, open Progress and choose Reset all progress.</p>
-  <p class="note">Provo CySA+ <span class="badge">v0.1.2</span> · © 2026 Benjamin Smith. All rights reserved.</p>`;
+  <p class="note">Provo CySA+ <span class="badge">v0.1.3</span> · © 2026 Benjamin Smith. All rights reserved.</p>`;
 }
 
 /* ---- generic pool runner ---- */
@@ -2123,7 +2124,7 @@ Object.assign(LABS,{
   zulu:{name:"Zulu Time",run:labZulu,desc:"Convert log timestamps between UTC (Z) and Eastern, Central, Mountain, and Pacific time, with daylight saving time and dates that change at midnight. 10 questions a round; 8 to pass."}
 });
 const BP_SKILLS={"s1": ["1.2", "Spot impossible travel", "Heavy"], "s2": ["1.2", "Find cleartext remote access", "Heavy"], "s3": ["1.2", "Identify web attacks in access logs", "Heavy"], "s4": ["1.2", "Find the compromised host or process", "Heavy"], "s5": ["1.2", "Beaconing, exfiltration, DNS tunneling", "Heavy"], "s6": ["1.2", "Host indicators and persistence", "Core"], "s7": ["1.2", "Identity and cloud indicators", "Core"], "s8": ["1.2", "Email indicators", "Core"], "s9": ["1.3", "Read SIEM output, pick the next step", "Heavy"], "s10": ["1.3", "Interpret IDS/IPS alerts", "Heavy"], "s11": ["1.3", "EDR/XDR telemetry and containment", "Heavy"], "s12": ["1.3", "Choose the right tool for the goal", "Core"], "s13": ["1.3", "YARA rules", "Light"], "s14": ["1.3", "Read JSON/XML logs, decode obfuscation", "Core"], "s15": ["1.3", "Correlate sources by time", "Core"], "s16": ["1.4", "Pyramid of Pain", "Light"], "s17": ["1.4", "Threat intel sources and confidence", "Core"], "s18": ["1.4", "Threat hunting", "Core"], "s19": ["1.5", "Automation: SOAR, playbooks, runbooks", "Core"], "s20": ["1.6", "AI risks and governance", "Core"], "s21": ["1.1", "Architecture: segmentation, NTP, PAM", "Core"], "v1": ["2.3", "Prioritize by exposure, not just CVSS", "Heavy"], "v2": ["2.3", "Read a CVSS vector", "Heavy"], "v3": ["2.3", "EPSS and CISA KEV", "Core"], "v4": ["2.4", "Apply a remediation policy table", "Heavy"], "v5": ["2.4", "Patch, compensate, except, or accept", "Heavy"], "v6": ["2.2", "Spot scan false positives", "Core"], "v7": ["2.2", "Read Nmap output and flags", "Heavy"], "v8": ["2.1", "Plan a scan", "Core"], "v9": ["2.1", "Pick the assessment tool", "Core"], "v10": ["2.4", "SAST, DAST, SCA, SBOM", "Light"], "v11": ["2.4", "Match a web flaw to its fix", "Core"], "v12": ["2.4", "Control types and functions", "Core"], "v13": ["2.4", "Inhibitors to remediation", "Core"], "i1": ["3.2", "Place actions in IR phases", "Heavy"], "i2": ["3.2", "First or next step in detection", "Heavy"], "i3": ["3.3", "Build an action plan", "Heavy"], "i4": ["3.3", "Contain while preserving evidence", "Heavy"], "i5": ["3.3", "Order of volatility, chain of custody", "Core"], "i6": ["3.3", "Root cause from a timeline", "Core"], "i7": ["3.1", "Pick the right framework", "Heavy"], "i8": ["3.1", "Map behavior to stage or tactic", "Heavy"], "i9": ["3.1", "Control that breaks a stage", "Core"], "i10": ["3.2", "Preparation activities", "Core"], "i11": ["3.2", "Post-incident activity", "Core"], "i12": ["3.3", "Escalate, contain, tune, or close", "Heavy"], "r1": ["4.2", "Who to notify", "Core"], "r2": ["4.2", "Write for the audience", "Core"], "r3": ["4.2", "Pick the right metric", "Core"], "r4": ["4.1", "Vulnerability action plans", "Heavy"], "r5": ["4.1", "Read scorecards and trends", "Core"], "r6": ["4.1", "Inhibitors and escalation", "Core"], "r7": ["4.2", "Lessons-learned content", "Light"]};
-/* ---- Skill Drill: the blueprint bank, practiced one skill, one domain, or all Heavy skills at a time ----
+/* ---- Exam-Style Drill: the blueprint bank, practiced one skill, one domain, or all Heavy skills at a time ----
    Each blueprint question carries sk (skill id), st (style). A question counts once answered right. */
 const BP_STYLE={direct:"Direct",scenario:"Scenario",exhibit:"Exhibit",round:"Best fit"};
 const bpQs=()=>BANK.filter(q=>q.sk);
@@ -2133,7 +2134,7 @@ function viewDrill(){
   const skillRow=([id,s])=>{ const qs=all.filter(q=>q.sk===id), n=qs.filter(q=>done[q.id]).length;
     return `<button class="lr-case${n===qs.length?" solved":""}" type="button" data-sk="${id}"><span class="tag">${esc(s[0])} · ${esc(s[2])}</span><b>${esc(s[1])}</b><small>${qs.length} question${qs.length>1?"s":""} · ${n} right${[...new Set(qs.map(q=>q.st))].map(t=>" · "+BP_STYLE[t]).join("")}</small></button>`; };
   const n=all.filter(q=>done[q.id]).length;
-  app.innerHTML=modHead(m)+`<p style="max-width:72ch;margin:0 0 12px">Each skill is something the exam asks you to <b>demonstrate</b>. Questions come in four styles: <b>Direct</b>, <b>Scenario</b>, <b>Exhibit</b> (a log or scan output), and <b>Best fit</b> (plain-English and deliberately round, like the real exam: several answers fit part of it, and one fits best). ${n} of ${all.length} answered right so far.</p>
+  app.innerHTML=modHead(m)+`<p style="max-width:72ch;margin:0 0 12px">Each skill is something the exam asks you to <b>demonstrate</b>. These questions also turn up mixed into each objective module. Questions come in four styles: <b>Direct</b>, <b>Scenario</b>, <b>Exhibit</b> (a log or scan output), and <b>Best fit</b> (plain-English and deliberately round, like the real exam: several answers fit part of it, and one fits best). ${n} of ${all.length} answered right so far.</p>
    <div class="q-actions" style="margin:0 0 6px"><button class="btn" id="dr-heavy" type="button">Practice all Heavy skills</button><button class="btn ghost" id="dr-round" type="button">Best-fit questions only</button><button class="btn ghost" id="dr-miss" type="button">Ones I haven't got right yet</button></div>
    ${DOMS.map(d=>{ const sk=Object.entries(BP_SKILLS).filter(([id])=>({s:1,v:2,i:3,r:4})[id[0]]===d); return `<h3 class="pbq-sec" style="margin-top:22px">${esc(DOM_LONG[d])} <button class="chipbtn" type="button" data-dom="${d}">Practice this domain</button></h3><div class="lr-list">${sk.map(skillRow).join("")}</div>`; }).join("")}`;
   const go=(qs,title)=>runDrill(shuffle(qs.slice()),title);
@@ -3274,7 +3275,7 @@ function viewTerms(mod){
     $("#tmquit").addEventListener("click",()=>{ R.quit=true; finish(R,before,N,drill); });
     const KN={name:"Name it",def:"Define it",scen:"Scenario",fix:"Best defense"};
     function next(){
-      if(R.t>=N) return finish(R,before,N,drill);
+      if(R.t>=N) return finish(R,before,N,drill); if(bpTurn(mod)) return bpAsk(area,mod,R,next,"#tmprog",N);
       $("#tmprog").textContent=`Question ${R.t+1} of ${N}`;
       const q=build(); lastId=q.it.id; const c=termMastered(mod,q.it.id)?NEED:Math.min(Object.keys(termKeys(mod,q.it.id)).length,NEED);
       const meta=`${domTag(q.it.d)}<span class="tag">${KN[q.kind]}</span><span class="tag" title="Different kinds of question answered correctly for this term.">Strength <span class="strength">${"●".repeat(c)}${"○".repeat(NEED-c)}</span></span>${c>=NEED?`<span class="tag" style="color:var(--green);border-color:var(--green)">Mastered</span>`:""}`;
@@ -3657,6 +3658,46 @@ function viewGuide(){
 }
 
 /* ================= ROUTER / MODE ================= */
+/*BPMIX-START*/
+/* Exam-style questions mixed into each objective module: one in every 4 questions comes from the
+   Exam-Style Drill bank for that module's objectives. A right answer counts in the drill too. */
+const BP_MOD={"s21":"arch","s1":"ind","s2":"ind","s3":"ind","s4":"ind","s5":"ind","s6":"ind","s7":"ind","s8":"ind","s9":"logs","s14":"logs","s15":"logs","s10":"tools","s11":"tools","s12":"tools","s13":"tools","s16":"intel","s17":"intel","s18":"intel","s19":"auto","s20":"ai","v6":"scan","v7":"scan","v8":"scan","v9":"scan","v1":"prio","v2":"prio","v3":"prio","v4":"risk","v5":"risk","v10":"risk","v11":"risk","v12":"risk","v13":"risk","i7":"frame","i8":"frame","i9":"frame","i1":"ir","i2":"ir","i3":"ir","i4":"ir","i5":"ir","i6":"ir","i10":"ir","i11":"ir","i12":"ir","r1":"report","r2":"report","r3":"report","r4":"report","r5":"report","r6":"report","r7":"report"};
+const bpMixN={}; let bpLast=null;
+function bpModQs(mod){ return BANK.filter(q=>q.sk&&BP_MOD[q.sk]===mod); }
+function bpTurn(mod){ if(!bpModQs(mod).length) return false; bpMixN[mod]=(bpMixN[mod]||0)+1; return bpMixN[mod]%4===0; }
+function bpPick(mod){ const all=bpModQs(mod), pool=all.length>1?all.filter(q=>q.id!==bpLast):all, done=bpDone(), open=pool.filter(q=>!done[q.id]); return pick(open.length&&Math.random()<0.8?open:pool); }
+function bpQ(area,q,cfg){ const s=BP_SKILLS[q.sk];
+  choiceQ(area,{meta:`${domTag(q.d)}<span class="tag bpx">Exam-style</span><span class="tag">${esc(BP_STYLE[q.st])}</span><span class="tag">${esc(s[0])} ${esc(s[1])}</span>${cfg.tag||""}`,
+    prompt:esc(q.q)+logBlock(q.h),options:q.o,answer:q.a,why:q.w.map(esc),explain:esc(q.x),nextLabel:cfg.nextLabel||"Next",
+    onResult:ok=>{ if(ok&&mode==="student"){ bpDone()[q.id]=1; save(); } if(cfg.onResult) cfg.onResult(ok); },onNext:cfg.onNext}); }
+function bpAsk(area,mod,S,onNext,prog,N){ const q=bpPick(mod); bpLast=q.id;
+  if(prog&&N&&$(prog)) $(prog).textContent=`Question ${S.t+1} of ${N}`;
+  bpQ(area,q,{nextLabel:N&&S.t+1>=N?"Finish":"Next",onResult:ok=>{ if(S){ S.t++; if(ok) S.r++; scoreUpd(S.r,S.t); } },onNext}); }
+/* A module built only from exam-style questions (Network+ objectives with no term engine). */
+function viewObj(mod){
+  const m=M(mod), all=bpModQs(mod), done=bpDone(), n=all.filter(q=>done[q.id]).length;
+  const sk=Object.entries(BP_SKILLS).filter(([id])=>BP_MOD[id]===mod);
+  app.innerHTML=modHead(m)+`<p style="max-width:72ch;margin:0 0 12px">Exam-style questions for these objectives: direct, scenario, exhibit (command output, tables, and logs), and best fit, where several answers fit part of the question and one fits best. Every answer is explained. ${n} of ${all.length} answered right so far.</p>
+   <div class="q-actions" style="margin:0 0 6px"><button class="btn" id="ob-all" type="button">All ${all.length} questions, shuffled</button><button class="btn ghost" id="ob-miss" type="button">Ones I haven't got right yet</button></div>
+   <h3 class="pbq-sec" style="margin-top:22px">Practice one skill</h3><div class="lr-list">${sk.map(([id,s])=>{ const qs=all.filter(q=>q.sk===id), c=qs.filter(q=>done[q.id]).length;
+     return `<button class="lr-case${c===qs.length?" solved":""}" type="button" data-sk="${id}"><span class="tag">${esc(s[0])} · ${esc(s[2])}</span><b>${esc(s[1])}</b><small>${qs.length} question${qs.length>1?"s":""} · ${c} right</small></button>`; }).join("")}</div>`;
+  const go=(qs,title)=>{ if(qs.length) runObj(mod,shuffle(qs.slice()),title); };
+  app.querySelectorAll("[data-sk]").forEach(b=>b.addEventListener("click",()=>go(all.filter(q=>q.sk===b.dataset.sk),BP_SKILLS[b.dataset.sk][1])));
+  $("#ob-all").addEventListener("click",()=>go(all,"All questions"));
+  $("#ob-miss").addEventListener("click",()=>{ const o=all.filter(q=>!done[q.id]); go(o.length?o:all,o.length?"Not yet right":"All questions"); });
+}
+function runObj(mod,qs,title){
+  let k=0; const S={r:0,t:0};
+  app.innerHTML=modHead(M(mod))+`<div class="examtop"><button class="chipbtn" id="obback" type="button">← ${esc(M(mod).name)}</button><span id="obprog"></span></div><div id="area"></div>`;
+  $("#obback").addEventListener("click",()=>viewObj(mod));
+  const ask=()=>{ if(k>=qs.length) return finish();
+    $("#obprog").textContent=`${title} · ${k+1} of ${qs.length}`;
+    bpQ($("#area"),qs[k],{nextLabel:k+1<qs.length?"Next":"Finish",onResult:ok=>{ S.t++; if(ok) S.r++; scoreUpd(S.r,S.t); },onNext:()=>{ k++; ask(); const el=$("#area"); if(el&&el.getBoundingClientRect().top<0) el.scrollIntoView({block:"start"}); }}); };
+  const finish=()=>{ $("#area").innerHTML=`<div class="card"><div class="fb"><div class="v ${S.r/qs.length>=0.8?"ok":"bad"}">${S.r} of ${qs.length} right on the first try (${Math.round(S.r/qs.length*100)}%).</div></div><div class="q-actions"><button class="btn" id="obagain" type="button">Again, reshuffled</button><button class="btn ghost" id="obmenu" type="button">${esc(M(mod).name)} menu</button></div></div>`;
+    $("#obagain").addEventListener("click",()=>runObj(mod,shuffle(qs.slice()),title)); $("#obmenu").addEventListener("click",()=>viewObj(mod)); };
+  ask();
+}
+/*BPMIX-END*/
 const ROUTES={home:viewHome,acro:viewAcro,qualifier:viewQual,pbq:viewCPBQ,drill:viewDrill,exam:viewExam,cram:viewCram,progress:viewProgress,guide:viewGuide};
 Object.keys(TERMSETS).forEach(k=>{ ROUTES[k]=()=>viewTerms(k); });
 /* Grand Architect (all 5 secret badges): a soft RGB glow that slowly cycles colour.
