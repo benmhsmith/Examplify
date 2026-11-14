@@ -558,7 +558,15 @@ html.mobile .sr-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 :root{--pvm-accent:#2258A9;--pvm-accent-strong:#2258A9;--pvm-good:#2E8657;--pvm-bad:#C23A3A;}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]):not(.light){--pvm-accent:#6EA4E8;--pvm-accent-strong:#2F6CC4;--pvm-good:#4DBA80;--pvm-bad:#F07070;}}
 :root[data-theme="dark"],:root.dark{--pvm-accent:#6EA4E8;--pvm-accent-strong:#2F6CC4;--pvm-good:#4DBA80;--pvm-bad:#F07070;}
-.tag.bpx{color:var(--accent,#2563eb);border-color:currentColor;font-weight:700}
+.tag.bpx{font-weight:700}
+/*THEME-START*/
+:root{--bgpat:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' fill='none' stroke='rgba%2871%2C85%2C105%2C.085%29' stroke-width='1.6' stroke-linecap='round'%3E %3Cpath d='M24 30 l-10 10 l10 10 M44 30 l10 10 l-10 10'/%3E%3Cpath d='M70 40 h60 M70 52 h90 M70 64 h40'/%3E %3Cpath d='M168 120 c-8 0 -8 4 -8 10 s0 10 -8 10 c8 0 8 4 8 10 s0 10 8 10 M196 120 c8 0 8 4 8 10 s0 10 8 10 c-8 0 -8 4 -8 10 s0 10 -8 10'/%3E %3Ccircle cx='60' cy='160' r='16'/%3E%3Cpath d='M72 172 l14 14'/%3E%3Cpath d='M20 220 h70 M100 220 h40 M150 220 h60'/%3E %3Cpath d='M150 70 h40 M150 82 h60'/%3E%3C/svg%3E")}
+[data-theme="dark"],:root.dark{--bgpat:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' fill='none' stroke='rgba%28226%2C232%2C240%2C.05%29' stroke-width='1.6' stroke-linecap='round'%3E %3Cpath d='M24 30 l-10 10 l10 10 M44 30 l10 10 l-10 10'/%3E%3Cpath d='M70 40 h60 M70 52 h90 M70 64 h40'/%3E %3Cpath d='M168 120 c-8 0 -8 4 -8 10 s0 10 -8 10 c8 0 8 4 8 10 s0 10 8 10 M196 120 c8 0 8 4 8 10 s0 10 8 10 c-8 0 -8 4 -8 10 s0 10 -8 10'/%3E %3Ccircle cx='60' cy='160' r='16'/%3E%3Cpath d='M72 172 l14 14'/%3E%3Cpath d='M20 220 h70 M100 220 h40 M150 220 h60'/%3E %3Cpath d='M150 70 h40 M150 82 h60'/%3E%3C/svg%3E")}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bgpat:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' fill='none' stroke='rgba%28226%2C232%2C240%2C.05%29' stroke-width='1.6' stroke-linecap='round'%3E %3Cpath d='M24 30 l-10 10 l10 10 M44 30 l10 10 l-10 10'/%3E%3Cpath d='M70 40 h60 M70 52 h90 M70 64 h40'/%3E %3Cpath d='M168 120 c-8 0 -8 4 -8 10 s0 10 -8 10 c8 0 8 4 8 10 s0 10 8 10 M196 120 c8 0 8 4 8 10 s0 10 8 10 c-8 0 -8 4 -8 10 s0 10 -8 10'/%3E %3Ccircle cx='60' cy='160' r='16'/%3E%3Cpath d='M72 172 l14 14'/%3E%3Cpath d='M20 220 h70 M100 220 h40 M150 220 h60'/%3E %3Cpath d='M150 70 h40 M150 82 h60'/%3E%3C/svg%3E")}}
+body{background-image:var(--bgpat);background-size:240px 240px;background-attachment:fixed}
+.tag[data-tc]{background:color-mix(in srgb,var(--tc) 15%,var(--surface));color:color-mix(in srgb,var(--tc) 78%,var(--ink));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--tc) 35%,transparent)}
+.tag[data-tc="obj"]{background:transparent;color:var(--muted);box-shadow:inset 0 0 0 1px var(--line)}
+/*THEME-END*/
 </style>
 
 </head>
@@ -1339,7 +1347,7 @@ const MODULES = [
  {id:"qualifier",n:"15",stage:5,name:"Question Qualifiers",desc:"Questions where FIRST, NEXT, BEST, MOST likely, or MINIMUM decides the answer.",covers:"All domains. 25 analyst scenarios across five qualifiers, each with a defensible runner-up, and the explanation says why it loses."},
  {id:"drill",n:"16",stage:5,name:"Exam-Style Drill",desc:"All 160 exam-style questions in one place, by skill and domain. You also meet them mixed into every objective module.",covers:"All four domains. Practice one skill, one domain, every Heavy skill, or only the round best-fit questions."},
  {id:"pbq",n:"17",stage:5,name:"Performance-Based Questions",desc:"Seven exam-style simulations that change every run: scan prioritization, phishing headers, compromised hosts, Nmap hardening, IR phases, alert triage, and YARA matching.",covers:"All four domains, in the drop-down simulation style of the exam. Every run is a new variation with shuffled choices, and every item is explained when you check."},
- {id:"exam",n:"18",stage:5,name:"Mini-Exams",desc:"10, 20, or 40 multiple-choice questions, timed and weighted to the official domains.",covers:"All four domains, picked in proportion to CompTIA's weights (34 / 26 / 24 / 16) from 275 scenario questions."},
+ {id:"exam",n:"18",stage:6,name:"Mini-Exams",desc:"10, 20, or 40 multiple-choice questions, timed and weighted to the official domains.",covers:"All four domains, picked in proportion to CompTIA's weights (34 / 26 / 24 / 16) from 275 scenario questions."},
  {id:"cram",n:"",menu:true,name:"Cram Sheet",desc:"The high-yield facts on one page, for the night before.",covers:"The highest-yield CS0-004 facts on one page."},
  {id:"progress",n:"",menu:true,name:"Progress",desc:"Mastery per module and what to study next.",covers:"Progress is stored only in this browser. Clearing browser data or switching devices starts fresh."}
 ];
@@ -1588,7 +1596,7 @@ function modHead(m,extra="",noScore=false){
 }
 function scoreUpd(r,t){ const s=$("#score"); if(!s) return; const b=s.querySelector("b"); if(!t){ s.dataset.state="none"; b.textContent="No answers yet"; return; } const p=r/t; s.dataset.state=p>=0.8?"good":p>=0.6?"mid":"low"; b.textContent=`${r} of ${t} correct (${Math.round(p*100)}%)`; }
 const M=id=>MODULES.find(m=>m.id===id);
-const STAGES={1:["Foundations","Acronyms and the architecture every analyst needs."],2:["Detect & analyze","Indicators, tools, threat intelligence, and automation."],3:["Vulnerability management","Scanning, prioritizing, and the controls and risk around it."],4:["Respond & report","Frameworks, incident response, and communication."],5:["Exam skills & test","Question technique and timed checkpoints."]};
+const STAGES={1:["Foundations","Acronyms and the architecture every analyst needs."],2:["Detect & analyze","Indicators, tools, threat intelligence, and automation."],3:["Vulnerability management","Scanning, prioritizing, and the controls and risk around it."],4:["Respond & report","Frameworks, incident response, and communication."],5:["Exam skills","Question technique and performance-based practice."],6:["Test","Timed checkpoints under exam conditions."]};
 
 /* PBQ: a PBQ is mastered after PBQ_NEED attempts (different random scenarios) scoring PBQ_CLEAR or better. Exams: the average of the last EXAM_NEED full-size exams (20+ points), missing ones count as 0. */
 const PBQ_NEED=3, PBQ_CLEAR=0.9, EXAM_NEED=3, EXAM_FULL_MIN=20;
@@ -1629,7 +1637,7 @@ function viewHome(){
   </section>
   <div class="section-label">Modules</div>
   <div class="rank-key"><span>Module rank, from your progress bar:</span>${RANKS.map((x,i)=>`${rankBadge(x.min)}<span>${i===0?`under ${Math.round(RANKS[1].min*100)}%`:x.min>=1?"100%":Math.round(x.min*100)+"%+"}</span>`).join("")}</div>
-  <div class="stages">${[1,2,3,4,5].map(st=>`<section class="stage"><div class="stage-h"><span class="stage-n">Stage ${st}</span><h2>${STAGES[st][0]}</h2><p>${STAGES[st][1]}</p></div>
+  <div class="stages">${[1,2,3,4,5,6].map(st=>`<section class="stage"><div class="stage-h"><span class="stage-n">Stage ${st}</span><h2>${STAGES[st][0]}</h2><p>${STAGES[st][1]}</p></div>
   <div class="panel">${MODULES.filter(m=>m.stage===st).map(m=>{ const ms=mastery(m.id); return `
     <a class="prow ${ms&&ms.v+1e-9>=1?"gm":""}" href="#${m.id}">
       <span class="jack">${m.n}</span>
@@ -1638,7 +1646,7 @@ function viewHome(){
     </a>`;}).join("")}
   </div></section>`).join("")}</div>
   <p class="note" style="margin-top:14px">Progress saves in this browser only. To start over, open Progress and choose Reset all progress.</p>
-  <p class="note">Provo CySA+ <span class="badge">v1.0.0</span> · © 2026 Benjamin Smith. All rights reserved.</p>`;
+  <p class="note">Provo CySA+ <span class="badge">v1.0.1</span> · © 2026 Benjamin Smith. All rights reserved.</p>`;
 }
 
 /* ---- generic pool runner ---- */
@@ -3644,11 +3652,12 @@ function viewGuide(){
   app.innerHTML=`<a class="back" href="#home">← All modules</a><div class="mhead"><h2>Instructor Guide</h2></div>
   <div class="card guide">
   <h3>How the modules fit together</h3>
-  <ul><li><b>Stage 1</b> builds the vocabulary: acronyms, security controls, and cryptography.</li>
-  <li><b>Stage 2</b> covers what attackers do and how secure architecture stops it.</li>
-  <li><b>Stage 3</b> is day-to-day security work: operations, identity, incident response, and governance. Domain 4.0 alone is 28% of the exam.</li>
-  <li><b>Stage 4</b> is exam technique. Performance-based questions are coming soon.</li>
-  <li><b>Stage 5</b> is timed multiple-choice practice, weighted to the official domains.</li></ul>
+  <ul><li><b>Stage 1</b> builds the vocabulary: acronyms and the architecture an analyst works in.</li>
+  <li><b>Stage 2</b> is detection and analysis: indicators, logs, tools, threat intelligence, automation, and AI. Domain 1.0 is 34% of the exam.</li>
+  <li><b>Stage 3</b> is vulnerability management: scanning, prioritizing, and the controls and risk decisions around it.</li>
+  <li><b>Stage 4</b> is response and reporting: attack frameworks, incident response, and communication.</li>
+  <li><b>Stage 5</b> is exam technique: question qualifiers, the Exam-Style Drill, and seven performance-based questions.</li>
+  <li><b>Stage 6</b> is timed multiple-choice practice, weighted to the official domains.</li></ul>
   <h3>Scope</h3>
   <p>Content follows CompTIA's CS0-004 exam objectives. Each module lists the objectives it covers. CompTIA notes that its bulleted lists "are not exhaustive," so the modules focus on the tested concepts rather than every example term.</p>
   <h3>Sources</h3>
@@ -3698,6 +3707,31 @@ function runObj(mod,qs,title){
   ask();
 }
 /*BPMIX-END*/
+/*THEME-START*/
+/* Color-code question tags: fixed colors for known tags, a stable color per label for the rest (question kinds, categories). */
+const TAG_FIXED={"Exam-style":"#7c3aed","Direct":"#475569","Scenario":"#2563eb","Exhibit":"#0d9488","Best fit":"#d97706","Round":"#d97706",
+ "Performance-based":"#db2777","Lab":"#16a34a","Type the answer":"#0891b2"};
+const TAG_PAL=["#2563eb","#0d9488","#d97706","#7c3aed","#db2777","#16a34a","#ea580c","#0891b2","#e11d48"];
+function tagTint(root){
+  const rows=new Map();
+  (root||document).querySelectorAll(".tag:not(.dom):not([data-tc])").forEach(t=>{ const r=t.parentElement; if(!rows.has(r)) rows.set(r,[]); rows.get(r).push(t); });
+  rows.forEach((tags,row)=>{
+    const used=new Set([...row.querySelectorAll(".tag[data-tc='1']")].map(t=>t.style.getPropertyValue("--tc")));
+    tags.forEach(t=>{
+      const s=t.textContent.trim(); if(!s) return;
+      if(/strength|^\d+ of \d+|coming soon/i.test(s)){ t.dataset.tc="none"; return; }
+      if(/^\d\.\d/.test(s)){ t.dataset.tc="obj"; return; }
+      let c=TAG_FIXED[s];
+      if(!c){ let h=0; for(const ch of s) h=(h*31+ch.charCodeAt(0))>>>0; let k=h%TAG_PAL.length;
+        for(let n=0;n<TAG_PAL.length&&used.has(TAG_PAL[k]);n++) k=(k+1)%TAG_PAL.length; c=TAG_PAL[k]; }
+      used.add(c); t.dataset.tc="1"; t.style.setProperty("--tc",c);
+    });
+  });
+}
+(()=>{ let q=false; const run=()=>{ q=false; tagTint(); };
+  new MutationObserver(()=>{ if(!q){ q=true; requestAnimationFrame(run); } }).observe(document.documentElement,{childList:true,subtree:true});
+  if(document.readyState!=="loading") run(); else document.addEventListener("DOMContentLoaded",run); })();
+/*THEME-END*/
 const ROUTES={home:viewHome,acro:viewAcro,qualifier:viewQual,pbq:viewCPBQ,drill:viewDrill,exam:viewExam,cram:viewCram,progress:viewProgress,guide:viewGuide};
 Object.keys(TERMSETS).forEach(k=>{ ROUTES[k]=()=>viewTerms(k); });
 /* Grand Architect (all 5 secret badges): a soft RGB glow that slowly cycles colour.

@@ -433,7 +433,15 @@ html.mobile .dg::after{content:"Swipe sideways to see the whole diagram.";displa
 .lr-case.solved{border-color:var(--ok)}
 .lr-case small{color:var(--muted)}
 .pbq-sec{margin:16px 0 6px;font-size:1rem}
-.tag.bpx{color:var(--accent,#2563eb);border-color:currentColor;font-weight:700}
+.tag.bpx{font-weight:700}
+/*THEME-START*/
+:root{--bgpat:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' fill='none' stroke='rgba%2871%2C85%2C105%2C.085%29' stroke-width='1.6'%3E %3Cpath d='M30 40 L110 70 L190 30 M110 70 L120 150 L40 170 M120 150 L200 180 M190 30 L200 180 M40 170 L30 40'/%3E %3Ccircle cx='30' cy='40' r='7'/%3E%3Ccircle cx='190' cy='30' r='7'/%3E%3Ccircle cx='40' cy='170' r='7'/%3E%3Ccircle cx='200' cy='180' r='7'/%3E %3Crect x='100' y='60' width='20' height='20' rx='3'/%3E%3Crect x='110' y='140' width='20' height='20' rx='3'/%3E %3Cpath d='M160 220 h40 M170 214 v12 M180 214 v12 M190 214 v12'/%3E%3C/svg%3E")}
+[data-theme="dark"],:root.dark{--bgpat:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' fill='none' stroke='rgba%28226%2C232%2C240%2C.05%29' stroke-width='1.6'%3E %3Cpath d='M30 40 L110 70 L190 30 M110 70 L120 150 L40 170 M120 150 L200 180 M190 30 L200 180 M40 170 L30 40'/%3E %3Ccircle cx='30' cy='40' r='7'/%3E%3Ccircle cx='190' cy='30' r='7'/%3E%3Ccircle cx='40' cy='170' r='7'/%3E%3Ccircle cx='200' cy='180' r='7'/%3E %3Crect x='100' y='60' width='20' height='20' rx='3'/%3E%3Crect x='110' y='140' width='20' height='20' rx='3'/%3E %3Cpath d='M160 220 h40 M170 214 v12 M180 214 v12 M190 214 v12'/%3E%3C/svg%3E")}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bgpat:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' fill='none' stroke='rgba%28226%2C232%2C240%2C.05%29' stroke-width='1.6'%3E %3Cpath d='M30 40 L110 70 L190 30 M110 70 L120 150 L40 170 M120 150 L200 180 M190 30 L200 180 M40 170 L30 40'/%3E %3Ccircle cx='30' cy='40' r='7'/%3E%3Ccircle cx='190' cy='30' r='7'/%3E%3Ccircle cx='40' cy='170' r='7'/%3E%3Ccircle cx='200' cy='180' r='7'/%3E %3Crect x='100' y='60' width='20' height='20' rx='3'/%3E%3Crect x='110' y='140' width='20' height='20' rx='3'/%3E %3Cpath d='M160 220 h40 M170 214 v12 M180 214 v12 M190 214 v12'/%3E%3C/svg%3E")}}
+body{background-image:var(--bgpat);background-size:240px 240px;background-attachment:fixed}
+.tag[data-tc]{background:color-mix(in srgb,var(--tc) 15%,var(--surface));color:color-mix(in srgb,var(--tc) 78%,var(--ink));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--tc) 35%,transparent)}
+.tag[data-tc="obj"]{background:transparent;color:var(--muted);box-shadow:inset 0 0 0 1px var(--line)}
+/*THEME-END*/
 </style>
 
 </head>
@@ -1368,7 +1376,7 @@ function viewHome(){
     </a>`;}).join("")}
   </div></section>`).join("")}</div>
   <p class="note" style="margin-top:14px">Progress saves in this browser only. To start over, open Progress and choose Reset all progress.</p>
-  <p class="note">Provo Network+ <span class="badge">v5.3.0</span> · © 2026 Benjamin Smith. All rights reserved.</p>`;
+  <p class="note">Provo Network+ <span class="badge">v5.3.1</span> · © 2026 Benjamin Smith. All rights reserved.</p>`;
 }
 
 /* ---- Ports ---- */
@@ -4185,6 +4193,31 @@ function runObj(mod,qs,title){
 }
 /*BPMIX-END*/
 /*BP-END*/
+/*THEME-START*/
+/* Color-code question tags: fixed colors for known tags, a stable color per label for the rest (question kinds, categories). */
+const TAG_FIXED={"Exam-style":"#7c3aed","Direct":"#475569","Scenario":"#2563eb","Exhibit":"#0d9488","Best fit":"#d97706","Round":"#d97706",
+ "Performance-based":"#db2777","Lab":"#16a34a","Type the answer":"#0891b2"};
+const TAG_PAL=["#2563eb","#0d9488","#d97706","#7c3aed","#db2777","#16a34a","#ea580c","#0891b2","#e11d48"];
+function tagTint(root){
+  const rows=new Map();
+  (root||document).querySelectorAll(".tag:not(.dom):not([data-tc])").forEach(t=>{ const r=t.parentElement; if(!rows.has(r)) rows.set(r,[]); rows.get(r).push(t); });
+  rows.forEach((tags,row)=>{
+    const used=new Set([...row.querySelectorAll(".tag[data-tc='1']")].map(t=>t.style.getPropertyValue("--tc")));
+    tags.forEach(t=>{
+      const s=t.textContent.trim(); if(!s) return;
+      if(/strength|^\d+ of \d+|coming soon/i.test(s)){ t.dataset.tc="none"; return; }
+      if(/^\d\.\d/.test(s)){ t.dataset.tc="obj"; return; }
+      let c=TAG_FIXED[s];
+      if(!c){ let h=0; for(const ch of s) h=(h*31+ch.charCodeAt(0))>>>0; let k=h%TAG_PAL.length;
+        for(let n=0;n<TAG_PAL.length&&used.has(TAG_PAL[k]);n++) k=(k+1)%TAG_PAL.length; c=TAG_PAL[k]; }
+      used.add(c); t.dataset.tc="1"; t.style.setProperty("--tc",c);
+    });
+  });
+}
+(()=>{ let q=false; const run=()=>{ q=false; tagTint(); };
+  new MutationObserver(()=>{ if(!q){ q=true; requestAnimationFrame(run); } }).observe(document.documentElement,{childList:true,subtree:true});
+  if(document.readyState!=="loading") run(); else document.addEventListener("DOMContentLoaded",run); })();
+/*THEME-END*/
 const ROUTES={concepts:()=>viewObj("concepts"),routing:()=>viewObj("routing"),netops:()=>viewObj("netops"),drill:viewDrill,home:viewHome,security:viewSecurity,ports:viewPorts,subnet:viewSubnet,osi:viewOSI,ladder:viewLadder,qualifier:viewQual,tools:viewTools,media:viewMedia,exam:viewExam,cram:viewCram,progress:viewProgress,acro:viewAcro,pbq:viewPBQ,"pbq-subnet":viewPBQSubnet,"pbq-routing":viewPBQRouting,"pbq-firewall":viewPBQFirewall,"pbq-placement":viewPBQPlacement,"pbq-wireless":viewPBQWireless,"pbq-matching":()=>viewPBQMatching(),"pbq-vlan":viewPBQVlan,"pbq-swport":viewPBQSwport,"pbq-cable":viewPBQCable,"pbq-noc":viewPBQNoc};
 /* Grand Architect (all 5 secret badges): a soft RGB glow that slowly cycles colour.
    Inside a Joplin note it is drawn on the tool's own frame (Joplin redraws the page around it);
