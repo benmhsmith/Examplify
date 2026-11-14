@@ -1,5 +1,9 @@
 # Provo Network+ changelog
 
+## v5.3.1
+- Question tags are color-coded. Each kind of tag gets its own soft color (exam-style, question style, question kind, category, lab, performance-based), and no two tags in the same row share a color. Domain tags keep their domain colors, and objective tags stay neutral.
+- A faint background pattern drawn for this exam (a network topology of nodes and links) fills the page margins. It adapts to light and dark mode and never sits behind question text.
+
 ## v5.3.0
 - Question Qualifiers: 30 new practice questions (65 in all), 6 for each qualifier. Each is built around a trap CompTIA uses, such as a runner-up answer that also works or a detail that rules out the obvious choice, and explains the trap after you answer. These practice questions never appear in the mini-exams.
 - Exam-Style Drill (new module): 136 original exam-style questions across 25 skills taken from the exam objectives, weighted Heavy, Core, or Light, with up to six variations each. Four styles: direct, scenario, exhibit (command output, routing tables, switch output, and logs), and round best-fit questions in plain English, where several answers fit part of the question and one fits best. Every answer, right or wrong, is explained. These questions also appear in the mini-exams.

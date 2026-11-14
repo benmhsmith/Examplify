@@ -1,5 +1,11 @@
 # Provo CySA+ changelog
 
+## v1.0.1
+- The module list now matches Network+ and Security+. **Exam skills** (Question Qualifiers, Exam-Style Drill, Performance-Based Questions) is its own stage, and the Mini-Exams sit alone in a new **Test** stage, stage 6.
+- The Instructor Guide now describes the CySA+ stages. It previously repeated the Security+ text, including an out-of-date note that performance-based questions were coming soon.
+- Question tags are color-coded. Each kind of tag gets its own soft color (exam-style, question style, question kind, category, lab, performance-based), and no two tags in the same row share a color. Domain tags keep their domain colors, and objective tags stay neutral.
+- A faint background pattern drawn for this exam (log lines, brackets, and a magnifier) fills the page margins. It adapts to light and dark mode and never sits behind question text.
+
 ## v1.0.0
 - **Provo CySA+ 1.0: the first full release.** It is no longer a preview.
 - Exam-style questions are now mixed into every objective module: one in every four questions comes from the Exam-Style Drill (formerly Skill Drill) for that module's objectives, so you practice the way the exam asks from the first module on. A right answer there also counts in the drill.

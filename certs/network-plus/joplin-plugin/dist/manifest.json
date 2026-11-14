@@ -2,7 +2,7 @@
   "manifest_version": 1,
   "id": "io.github.netplusfasttrack",
   "app_min_version": "2.12",
-  "version": "5.3.0",
+  "version": "5.3.1",
   "name": "Provo Network+",
   "description": "Provo: exam readiness for CompTIA Network+ (N10-009). Acronyms, OSI model, ports, subnetting, media and wireless, security, troubleshooting, tools and commands, question qualifiers, performance-based questions, mini-exams, and a one-page cram sheet. To add it, choose Tools > Provo Network+ > Add Provo Network+ note. It creates a note named Provo Network+ and opens it in the full-width tool.",
   "author": "Benjamin Smith",

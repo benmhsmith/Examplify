@@ -1,5 +1,9 @@
 # Provo Security+ changelog
 
+## v1.4.1
+- Question tags are color-coded. Each kind of tag gets its own soft color (exam-style, question style, question kind, category, lab, performance-based), and no two tags in the same row share a color. Domain tags keep their domain colors, and objective tags stay neutral.
+- A faint background pattern drawn for this exam (shields, padlocks, and keys) fills the page margins. It adapts to light and dark mode and never sits behind question text.
+
 ## v1.4.0
 - Performance-Based Questions (module 13) is now live with six original simulations. Every run generates a new variation, with the answer choices shuffled:
   - **CIA triad and control types:** choose the property each event or control affects, then classify each control.
