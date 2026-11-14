@@ -1,5 +1,10 @@
 # Provo CySA+ changelog
 
+## v1.0.0
+- **Provo CySA+ 1.0: the first full release.** It is no longer a preview.
+- Exam-style questions are now mixed into every objective module: one in every four questions comes from the Exam-Style Drill (formerly Skill Drill) for that module's objectives, so you practice the way the exam asks from the first module on. A right answer there also counts in the drill.
+- The last modules are now in this order: Question Qualifiers, Exam-Style Drill, Performance-Based Questions, Mini-Exams.
+
 ## v0.1.2
 - New module **15 · Skill Drill**: 160 original questions across the 53 skills in the CySA+ skills blueprint, each tagged with its objective. Practice one skill, a whole domain, every Heavy skill, only the best-fit questions, or just the ones you haven't got right yet.
 - Four question styles: **Direct**, **Scenario**, **Exhibit** (42 questions built around access logs, sign-in tables, Nmap output, SIEM results, IDS alerts, EDR process trees, NetFlow, DNS, email headers, CVSS vectors, and policy tables), and **Best fit** (73 plain-English, deliberately round questions where several answers fit part of the scenario and one fits best).

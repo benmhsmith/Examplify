@@ -35,6 +35,8 @@ LOG = os.path.join(CERT, 'CHANGELOG.md')
 UNREL = os.path.join(CERT, 'UNRELEASED.md')
 PAGES = os.path.join(REPO, 'docs', 'security-plus', 'index.html')
 REPO_URL = 'https://github.com/benmhsmith/Provo'
+sys.path.insert(0, os.path.join(REPO, 'core'))
+import current_release  # noqa: E402
 
 
 def run(cmd, cwd):
@@ -94,7 +96,7 @@ def build(version):
 
 
 def release_notes(version):
-    return (f'**Provo Security+ v{version}** for CompTIA Security+ SY0-701.\n\n'
+    return (current_release.NOTE + f'**Provo Security+ v{version}** for CompTIA Security+ SY0-701.\n\n'
             '## Downloads\n'
             f'- **Joplin plugin (desktop and Android):** `provo-security-plus-v{version}.jpl`\n'
             f'- **Standalone web page (works offline):** `Provo-Security-Plus-v{version}.html`\n'
@@ -138,6 +140,8 @@ def new_version(version, notes):
     m['version'] = version
     json.dump(m, open(os.path.join(DIST, 'manifest.json'), 'w'), indent=2)
 
+    for f in current_release.update(REPO, 'security-plus', version):
+        print('current release link updated:', f)
     jpl, page = build(version)
     os.makedirs(os.path.dirname(PAGES), exist_ok=True)
     shutil.copyfile(page, PAGES)
