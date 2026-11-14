@@ -2,9 +2,9 @@
 
 Provo's study lab for the **CompTIA Security+ SY0-701** exam. It drills every exam domain, tracks what you have mastered, and finishes with timed mini-exams weighted to the official domains.
 
-**Current release:** [v1.3.0](https://github.com/benmhsmith/Provo/releases/tag/security-plus-v1.3.0) · [All Security+ releases](https://github.com/benmhsmith/Provo/releases?q=security-plus) · [What changed](CHANGELOG.md)
+**Current release:** [v1.4.0](https://github.com/benmhsmith/Provo/releases/tag/security-plus-v1.4.0) · [All Security+ releases](https://github.com/benmhsmith/Provo/releases?q=security-plus) · [What changed](CHANGELOG.md)
 
-Every module covers its full objectives: 178 exam-focused acronyms, 394 terms, 336 exam-style questions (including 169 in the Exam-Style Drill), and 24 hands-on labs. Performance-based questions are coming soon.
+Every module covers its full objectives: 178 exam-focused acronyms, 394 terms, 336 exam-style questions (including 169 in the Exam-Style Drill), and 24 hands-on labs. Six performance-based questions generate a new variation on every run.
 
 ## What's inside
 
@@ -24,7 +24,7 @@ Every module covers its full objectives: 178 exam-focused acronyms, 394 terms, 3
 | | 10 Governance, Risk & Compliance | Policies, roles, risk responses, vendors, audits. Labs: Risk Calculator, Risk Responses, Policy or Procedure?, Agreement Match | 5.1–5.6 |
 | 4 · Exam skills | 11 Question Qualifiers | FIRST, NEXT, BEST, MOST likely, and MINIMUM questions | All |
 | | 12 Exam-Style Drill | All 169 exam-style questions across 38 skills: direct, scenario, exhibit (logs, headers, tables), and round best-fit. Practice by skill, domain, Heavy skills, or misses | All |
-| | 13 Performance-Based Questions | **Coming soon** | Given-a-scenario objectives |
+| | 13 Performance-Based Questions | Six simulations, a new variation every run: CIA and control types, attacks and controls, device placement, a broken site-to-site VPN, key-based SSH, and an outbreak trace | 1.1–1.2, 2.2–2.5, 3.2, 4.1, 4.6, 4.8–4.9 |
 | 5 · Test | 14 Mini-Exams | 10, 20, or 40 multiple-choice questions, timed and weighted | All |
 
 Modules 02–10 each offer three ways to study: **Questions** (multiple choice and typed), **Type the answer** (read a scenario and type the term; a clean answer masters the term in one go), and **hands-on labs** (drag-and-drop, sorting, ordering, and inspection tasks that work with a mouse or a finger). Module 01 has a **Type it** mode as well. Every objective module also mixes in the new exam-style questions for its objectives, one in every four questions, so you practice the way the exam asks from the first module on. A right answer there also counts in the Exam-Style Drill.
