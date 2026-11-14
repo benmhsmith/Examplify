@@ -1,6 +1,7 @@
 # Provo CySA+ changelog
 
-## v0.1.3
+## v1.0.0
+- **Provo CySA+ 1.0: the first full release.** It is no longer a preview.
 - Exam-style questions are now mixed into every objective module: one in every four questions comes from the Exam-Style Drill (formerly Skill Drill) for that module's objectives, so you practice the way the exam asks from the first module on. A right answer there also counts in the drill.
 - The last modules are now in this order: Question Qualifiers, Exam-Style Drill, Performance-Based Questions, Mini-Exams.
 

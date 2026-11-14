@@ -64,8 +64,7 @@ jobs:
         run: |
           gh release create "$TAG" \
             --target "$GITHUB_SHA" \
-            --title "Provo CySA+ v$VERSION (Preview)" \
-            --prerelease \
+            --title "Provo CySA+ v$VERSION" \
             --notes-file release-notes.md \
             --latest=false \
             "certs/cysa-plus/build/provo-cysa-plus-v$VERSION.jpl" \

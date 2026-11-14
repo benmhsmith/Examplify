@@ -94,7 +94,7 @@ def build(version):
 
 
 def release_notes(version):
-    return (f'**Provo CySA+ v{version}** for CompTIA CySA+ CS0-004. **Preview:** new and still being tested.\n\n'
+    return (f'**Provo CySA+ v{version}** for CompTIA CySA+ CS0-004.\n\n'
             '## Downloads\n'
             f'- **Joplin plugin (desktop and Android):** `provo-cysa-plus-v{version}.jpl`\n'
             f'- **Standalone web page (works offline):** `Provo-CySA-Plus-v{version}.html`\n'

@@ -1,6 +1,6 @@
 # Provo CySA+
 
-> **Preview.** Provo CySA+ is new and still being tested. Report anything that looks wrong through the [issue form](https://github.com/benmhsmith/Provo/issues/new/choose).
+> Report anything that looks wrong through the [issue form](https://github.com/benmhsmith/Provo/issues/new/choose).
 
 Provo's study lab for the **CompTIA CySA+ CS0-004** exam. It drills every exam objective, tracks what you have mastered, and finishes with timed mini-exams weighted to the official domains.
 
