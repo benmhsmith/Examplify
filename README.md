@@ -28,12 +28,14 @@ Provo is built by an IT instructor for students who are new to IT and working th
 
 ## Exams
 
-| Exam | Exam code | Status | Start here |
-|---|---|---|---|
-| CompTIA Network+ | N10-009 | **Available** | [Provo Network+](certs/network-plus/) |
-| CompTIA Security+ | SY0-701 | **Available** | [Provo Security+](certs/security-plus/) |
-| CompTIA CySA+ | CS0-004 | **Available** | [Provo CySA+](certs/cysa-plus/) |
-| CompTIA A+ | Current version when built | Planned | — |
+Each exam is released on its own, so check the **Current release** column here rather than the **Latest** badge on the Releases page.
+
+| Exam | Exam code | Status | Current release | Start here |
+|---|---|---|---|---|
+| CompTIA Network+ | N10-009 | **Available** | [v5.3.0](https://github.com/benmhsmith/Provo/releases/tag/network-plus-v5.3.0) | [Provo Network+](certs/network-plus/) |
+| CompTIA Security+ | SY0-701 | **Available** | [v1.3.0](https://github.com/benmhsmith/Provo/releases/tag/security-plus-v1.3.0) | [Provo Security+](certs/security-plus/) |
+| CompTIA CySA+ | CS0-004 | **Available** | [v1.0.0](https://github.com/benmhsmith/Provo/releases/tag/cysa-plus-v1.0.0) | [Provo CySA+](certs/cysa-plus/) |
+| CompTIA A+ | Current version when built | Planned | — | — |
 
 ## See it in action
 

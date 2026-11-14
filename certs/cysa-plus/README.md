@@ -4,7 +4,7 @@
 
 Provo's study lab for the **CompTIA CySA+ CS0-004** exam. It drills every exam objective, tracks what you have mastered, and finishes with timed mini-exams weighted to the official domains.
 
-**Current version:** see the [CySA+ releases](https://github.com/benmhsmith/Provo/releases?q=cysa-plus) · [What changed](CHANGELOG.md)
+**Current release:** [v1.0.0](https://github.com/benmhsmith/Provo/releases/tag/cysa-plus-v1.0.0) · [All CySA+ releases](https://github.com/benmhsmith/Provo/releases?q=cysa-plus) · [What changed](CHANGELOG.md)
 
 Built from the official CompTIA CySA+ CS0-004 Exam Objectives (v2.0): 100 exam-focused acronyms, 302 terms, log-analysis and YARA labs, seven performance-based questions, a 160-question Exam-Style Drill, and 250 analyst scenarios, including the new CS0-004 topics such as reading XML and JSON logs, AI in security operations, EPSS, SBOM and SCA, STRIDE, the Pyramid of Pain, LOLBins, and business email compromise.
 
@@ -56,7 +56,7 @@ Progress is saved in that browser on that device, separately from Network+ and S
 
 ### Option 2: As a single file (works offline)
 
-1. Go to the [Releases page](https://github.com/benmhsmith/Provo/releases?q=cysa-plus) and open the newest **Provo CySA+** release.
+1. Open the [current CySA+ release](https://github.com/benmhsmith/Provo/releases/tag/cysa-plus-v1.0.0) (v1.0.0).
 2. Download `Provo-CySA-Plus-vX.Y.Z.html` and double-click it. No internet needed after that.
 
 ### Option 3: Inside Joplin (desktop and Android)
